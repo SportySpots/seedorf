@@ -29,18 +29,23 @@ SECRET_KEY = env('DJANGO_SECRET_KEY')
 # This ensures that Django will be able to detect a secure connection
 # properly on Heroku.
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+
 # raven sentry client
 # See https://docs.sentry.io/clients/python/integrations/django/
+# ------------------------------------------------------------------------------
 INSTALLED_APPS += ['raven.contrib.django.raven_compat', ]
 
 # Use Whitenoise to serve static files
 # See: https://whitenoise.readthedocs.io/
+# ------------------------------------------------------------------------------
 WHITENOISE_MIDDLEWARE = ['whitenoise.middleware.WhiteNoiseMiddleware', ]
 MIDDLEWARE = WHITENOISE_MIDDLEWARE + MIDDLEWARE
 RAVEN_MIDDLEWARE = ['raven.contrib.django.raven_compat.middleware.SentryResponseErrorIdMiddleware']
 MIDDLEWARE = RAVEN_MIDDLEWARE + MIDDLEWARE
+
 # opbeat integration
 # See https://opbeat.com/languages/django/
+# ------------------------------------------------------------------------------
 INSTALLED_APPS += ['opbeat.contrib.django', ]
 OPBEAT = {
     'ORGANIZATION_ID': env('DJANGO_OPBEAT_ORGANIZATION_ID'),
@@ -51,9 +56,9 @@ MIDDLEWARE = ['opbeat.contrib.django.middleware.OpbeatAPMMiddleware', ] + MIDDLE
 
 
 # SECURITY CONFIGURATION
-# ------------------------------------------------------------------------------
 # See https://docs.djangoproject.com/en/dev/ref/middleware/#module-django.middleware.security
 # and https://docs.djangoproject.com/en/dev/howto/deployment/checklist/#run-manage-py-check-deploy
+# ------------------------------------------------------------------------------
 
 # set this to 60 seconds and then to 518400 when you can prove it works
 SECURE_HSTS_SECONDS = 60
@@ -70,20 +75,19 @@ CSRF_COOKIE_HTTPONLY = True
 X_FRAME_OPTIONS = 'DENY'
 
 # SITE CONFIGURATION
-# ------------------------------------------------------------------------------
 # Hosts/domain names that are valid for this site
 # See https://docs.djangoproject.com/en/dev/ref/settings/#allowed-hosts
+# ------------------------------------------------------------------------------
 ALLOWED_HOSTS = env.list('DJANGO_ALLOWED_HOSTS', default=['sportyspots.com', ])
-# END SITE CONFIGURATION
 
 INSTALLED_APPS += ['gunicorn', ]
 
 
 # STORAGE CONFIGURATION
-# ------------------------------------------------------------------------------
 # Uploaded Media Files
 # ------------------------
 # See: http://django-storages.readthedocs.io/en/latest/index.html
+# ------------------------------------------------------------------------------
 INSTALLED_APPS += ['storages', ]
 
 AWS_ACCESS_KEY_ID = env('DJANGO_AWS_ACCESS_KEY_ID')
@@ -110,7 +114,7 @@ DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 
 
 # Static Assets
-# ------------------------
+# ------------------------------------------------------------------------------
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 # COMPRESSOR
@@ -118,6 +122,7 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 COMPRESS_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 COMPRESS_URL = STATIC_URL
 COMPRESS_ENABLED = env.bool('COMPRESS_ENABLED', default=True)
+
 # EMAIL
 # ------------------------------------------------------------------------------
 DEFAULT_FROM_EMAIL = env('DJANGO_DEFAULT_FROM_EMAIL',
@@ -126,6 +131,7 @@ EMAIL_SUBJECT_PREFIX = env('DJANGO_EMAIL_SUBJECT_PREFIX', default='[seedorf]')
 SERVER_EMAIL = env('DJANGO_SERVER_EMAIL', default=DEFAULT_FROM_EMAIL)
 
 # Anymail with Mailgun
+# ------------------------------------------------------------------------------
 INSTALLED_APPS += ['anymail', ]
 ANYMAIL = {
     'MAILGUN_API_KEY': env('DJANGO_MAILGUN_API_KEY'),
@@ -134,9 +140,9 @@ ANYMAIL = {
 EMAIL_BACKEND = 'anymail.backends.mailgun.EmailBackend'
 
 # TEMPLATE CONFIGURATION
-# ------------------------------------------------------------------------------
 # See:
 # https://docs.djangoproject.com/en/dev/ref/templates/api/#django.template.loaders.cached.Loader
+# ------------------------------------------------------------------------------
 TEMPLATES[0]['OPTIONS']['loaders'] = [
     ('django.template.loaders.cached.Loader', [
         'django.template.loaders.filesystem.Loader', 'django.template.loaders.app_directories.Loader', ]),
@@ -149,9 +155,9 @@ TEMPLATES[0]['OPTIONS']['loaders'] = [
 # Raises ImproperlyConfigured exception if DATABASE_URL not in os.environ
 DATABASES['default'] = env.db('DATABASE_URL')
 
+
 # CACHING
 # ------------------------------------------------------------------------------
-
 REDIS_LOCATION = '{0}/{1}'.format(env('REDIS_URL', default='redis://127.0.0.1:6379'), 0)
 # Heroku URL does not pass the DB number, so we parse it in
 CACHES = {
@@ -166,8 +172,8 @@ CACHES = {
     }
 }
 
-
 # Sentry Configuration
+# ------------------------------------------------------------------------------
 SENTRY_DSN = env('DJANGO_SENTRY_DSN')
 SENTRY_CLIENT = env('DJANGO_SENTRY_CLIENT', default='raven.contrib.django.raven_compat.DjangoClient')
 LOGGING = {

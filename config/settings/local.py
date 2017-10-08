@@ -24,7 +24,6 @@ SECRET_KEY = env('DJANGO_SECRET_KEY', default='u^*n1SI0y`_*xY0m)4t/AB$y~Ko:@~|mh
 
 # Mail settings
 # ------------------------------------------------------------------------------
-
 EMAIL_PORT = 1025
 
 EMAIL_HOST = env('EMAIL_HOST', default='mailhog')
@@ -69,10 +68,11 @@ INSTALLED_APPS += ['django_extensions', ]
 # ------------------------------------------------------------------------------
 TEST_RUNNER = 'django.test.runner.DiscoverRunner'
 
-########## CELERY
+# CELERY
+# ------------------------------------------------------------------------------
 # In development, all tasks will be executed locally by blocking until the task returns
 CELERY_ALWAYS_EAGER = True
-########## END CELERY
+
 
 # Your local stuff: Below this line define 3rd party library settings
 # ------------------------------------------------------------------------------

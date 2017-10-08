@@ -265,16 +265,18 @@ LOGIN_REDIRECT_URL = 'users:redirect'
 LOGIN_URL = 'account_login'
 
 # SLUGLIFIER
+# ------------------------------------------------------------------------------
 AUTOSLUG_SLUGIFY_FUNCTION = 'slugify.slugify'
 
-########## CELERY
+# CELERY
+# ------------------------------------------------------------------------------
 INSTALLED_APPS += ['seedorf.taskapp.celery.CeleryConfig']
 CELERY_BROKER_URL = env('CELERY_BROKER_URL', default='django://')
 if CELERY_BROKER_URL == 'django://':
     CELERY_RESULT_BACKEND = 'redis://'
 else:
     CELERY_RESULT_BACKEND = CELERY_BROKER_URL
-########## END CELERY
+
 # django-compressor
 # ------------------------------------------------------------------------------
 INSTALLED_APPS += ['compressor']
