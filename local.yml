@@ -16,18 +16,15 @@ services:
       - mailhog
     volumes:
       - .:/app
-    environment:
-      - POSTGRES_USER=seedorf
-      - USE_DOCKER=yes
+    env_file:
+      - ./.env
     ports:
       - "8000:8000"
-    logging:
-      driver: "json-file"
-      options:
-        max-size: "200k"
-        max-file: "10"
     restart: "no"
-    command: /start.sh"
+    command: /start.sh
+#    environment:
+#      - POSTGRES_USER=seedorf
+#      - USE_DOCKER=yes
 #    args:
 #      - GIT_COMMIT
 #    env_file:
@@ -40,6 +37,11 @@ services:
 #      interval: 1m30s
 #      timeout: 10s
 #      retries: 3
+#    logging:
+#      driver: "json-file"
+#      options:
+#        max-size: "200k"
+#        max-file: "10"
 
   celeryworker:
     # https://github.com/docker/compose/issues/3220
@@ -63,7 +65,7 @@ services:
       - postgres
       - mailhog
     ports: []
-    command: /start-celerybeat.sh"
+    command: /start-celerybeat.sh
 
   postgres:
     container_name: sportyspots-postgres
@@ -73,8 +75,8 @@ services:
     volumes:
       - sportyspots_postgres_data_local:/var/lib/postgresql/data
       - sportyspots_postgres_backup_local:/backups
-    environment:
-      - POSTGRES_USER=seedorf
+    env_file:
+      - ./.env
 
   mailhog:
     container_name: sportyspots-mailhog
@@ -85,6 +87,3 @@ services:
   redis:
     container_name: sportyspots-redis
     image: redis:4.0
-
-
-
