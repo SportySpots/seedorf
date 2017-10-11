@@ -1,14 +1,16 @@
-version: '2'
+version: '3'
 
 volumes:
-  postgres_data_local: {}
-  postgres_backup_local: {}
+  sportyspots_postgres_data_local: {}
+  sportyspots_postgres_backup_local: {}
 
 services:
   django: &django
+    container_name: sportyspots-django
     build:
       context: .
       dockerfile: ./compose/local/django/Dockerfile
+    image: sportyspots-django:latest
     depends_on:
       - postgres
       - mailhog
@@ -19,30 +21,31 @@ services:
       - USE_DOCKER=yes
     ports:
       - "8000:8000"
-    command: /start.sh
-
-  postgres:
-    build:
-      context: .
-      dockerfile: ./compose/production/postgres/Dockerfile
-    volumes:
-      - postgres_data_local:/var/lib/postgresql/data
-      - postgres_backup_local:/backups
-    environment:
-      - POSTGRES_USER=seedorf
-
-  mailhog:
-    image: mailhog/mailhog:v1.0.0
-    ports:
-      - "8025:8025"
-
-
-  redis:
-    image: redis:3.0
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "200k"
+        max-file: "10"
+    restart: "no"
+    command: /start.sh"
+#    args:
+#      - GIT_COMMIT
+#    env_file:
+#      - ./.env
+#    extra_hosts:
+#      - "somehost:162.242.195.82"
+#      - "otherhost:50.31.209.229"
+#    healthcheck:
+#      test: ["CMD", "curl", "-f", "http://localhost"]
+#      interval: 1m30s
+#      timeout: 10s
+#      retries: 3
 
   celeryworker:
     # https://github.com/docker/compose/issues/3220
     <<: *django
+    container_name: sportyspots-celeryworker
+    image: sportyspots-celeryworker:latest
     depends_on:
       - redis
       - postgres
@@ -53,10 +56,35 @@ services:
   celerybeat:
     # https://github.com/docker/compose/issues/3220
     <<: *django
+    container_name: sportyspots-celerybeat
+    image: sportyspots-celerybeat:latest
     depends_on:
       - redis
       - postgres
       - mailhog
     ports: []
-    command: /start-celerybeat.sh
+    command: /start-celerybeat.sh"
+
+  postgres:
+    container_name: sportyspots-postgres
+    build:
+      context: .
+      dockerfile: ./compose/production/postgres/Dockerfile
+    volumes:
+      - sportyspots_postgres_data_local:/var/lib/postgresql/data
+      - sportyspots_postgres_backup_local:/backups
+    environment:
+      - POSTGRES_USER=seedorf
+
+  mailhog:
+    container_name: sportyspots-mailhog
+    image: mailhog/mailhog:v1.0.0
+    ports:
+      - "8025:8025"
+
+  redis:
+    container_name: sportyspots-redis
+    image: redis:4.0
+
+
 

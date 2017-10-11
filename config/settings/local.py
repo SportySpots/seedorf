@@ -8,6 +8,8 @@ Local settings
 - Add Django Debug Toolbar
 - Add django-extensions as app
 """
+import socket
+import os
 
 from .base import *  # noqa
 
@@ -17,17 +19,15 @@ DEBUG = env.bool('DJANGO_DEBUG', default=True)
 TEMPLATES[0]['OPTIONS']['debug'] = DEBUG
 
 # SECRET CONFIGURATION
-# ------------------------------------------------------------------------------
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#secret-key
 # Note: This key only used for development and testing.
+# ------------------------------------------------------------------------------
 SECRET_KEY = env('DJANGO_SECRET_KEY', default='u^*n1SI0y`_*xY0m)4t/AB$y~Ko:@~|mh^/qAP<daS+](8APRg')
 
 # Mail settings
 # ------------------------------------------------------------------------------
 EMAIL_PORT = 1025
-
 EMAIL_HOST = env('EMAIL_HOST', default='mailhog')
-
 
 # CACHING
 # ------------------------------------------------------------------------------
@@ -45,9 +45,6 @@ INSTALLED_APPS += ['debug_toolbar', ]
 
 INTERNAL_IPS = ['127.0.0.1', '10.0.2.2', ]
 
-
-import socket
-import os
 # tricks to have debug toolbar when developing with docker
 if os.environ.get('USE_DOCKER') == 'yes':
     ip = socket.gethostbyname(socket.gethostname())

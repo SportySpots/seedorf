@@ -32,7 +32,6 @@ markdown = { version = "==2.6.9" }
 opbeat = { version = "==3.5.2" }
 pillow = { version = "==4.3.0" }
 "psycopg2" = { version = "==2.7.3.1" }
-"pytest-sugar" = { version = "==0.9.0" }
 pytz = { version = "==2017.2" }
 raven = { version = "==6.2.1" }
 rcssmin = { version = "==1.0.6" }
@@ -46,16 +45,17 @@ zappa = { version = "==0.44.3" }
 
 [dev-packages]
 
-coverage = "*"
-"django-coverage-plugin" = "*"
-"django-debug-toolbar" = "*"
-"django-extensions" = "*"
-"django-test-plus" = "*"
-"factory-boy" = "*"
-"flake8" = "*"
-ipdb = "*"
-"pytest-django" = "*"
-sphinx = "*"
+coverage = { version = "==4.4.1" }
+"django-coverage-plugin" = { version = "==1.5.1a0" }
+"django-debug-toolbar" = { version = "==1.8" }
+"django-extensions" = { version = "==1.9.1" }
+"django-test-plus" = { version = "==1.0.18" }
+"factory-boy" = { version = "==2.9.2" }
+"flake8" = { version = "*" }
+ipdb = { version = "*" }
+"pytest-django" = { version = "==3.1.2" }
+"pytest-sugar" = { version = "==0.9.0" }
+sphinx = { version = "==1.6.4" }
 
 [requires]
 python_version = "3.6.3"
