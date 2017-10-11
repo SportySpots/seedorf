@@ -32,28 +32,21 @@ LABEL org.label-schema.schema-version="1.0.0-rc.1" \
 
 ENV PYTHONUNBUFFERED=1
 
-# Requirements have to be pulled and installed here, otherwise caching won't work
-#COPY ./requirements /requirements
-#RUN pip install -r /requirements/local.txt
-
+# Pipfile.lock has to be pulled and installed here, otherwise caching won't work
 COPY Pipfile.lock /Pipfile.lock
 RUN pip install pipenv && \
     pipenv install --dev --deploy --system --three --ignore-pipfile
 
 COPY ./compose/production/django/entrypoint.sh /entrypoint.sh
-RUN sed -i 's/\r//' /entrypoint.sh
 RUN chmod +x /entrypoint.sh
 
 COPY ./compose/local/django/start.sh /start.sh
-RUN sed -i 's/\r//' /start.sh
 RUN chmod +x /start.sh
 
 COPY ./compose/local/django/celery/worker/start.sh /start-celeryworker.sh
-RUN sed -i 's/\r//' /start-celeryworker.sh
 RUN chmod +x /start-celeryworker.sh
 
 COPY ./compose/local/django/celery/beat/start.sh /start-celerybeat.sh
-RUN sed -i 's/\r//' /start-celerybeat.sh
 RUN chmod +x /start-celerybeat.sh
 
 WORKDIR /app
