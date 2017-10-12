@@ -30,7 +30,22 @@ LABEL org.label-schema.schema-version="1.0.0-rc.1" \
       org.label-schema.docker.cmd.help="docker exec -it sportyspots /bin/bash --help" \
       org.label-schema.docker.params="NO_THREADS=integer number of threads to launch"
 
-ENV PYTHONUNBUFFERED=1
+ENV DEBIAN_FRONTEND=noninteractive \
+    PYTHONUNBUFFERED=1
+
+RUN apt-get update \
+    && apt-get install --assume-yes --quiet --no-install-recommends \
+                    binutils \
+                    libproj-dev \
+                    proj-bin \
+                    proj-data \
+                    python3-pyproj \
+                    gdal-bin \
+                    python-gdal \
+                    libgeoip1 \
+                    libgeos-dev \
+    && rm --recursive --force /var/lib/apt/lists/* \
+    && apt-get --assume-yes autoclean
 
 # Pipfile.lock has to be pulled and installed here, otherwise caching won't work
 COPY Pipfile.lock /Pipfile.lock

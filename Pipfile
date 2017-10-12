@@ -37,11 +37,13 @@ raven = { version = "==6.2.1" }
 rcssmin = { version = "==1.0.6" }
 redis = { version = "==2.10.6" }
 rules = { version = "==1.2.1" }
-sphinx = { version = "==1.6.4" }
 wheel = "*"
 whitenoise = { version = "==4.0.b4" }
 zappa = { version = "==0.44.3" }
 "graphene-django" = "*"
+hashids = "*"
+"django-parler" = { version = "==1.8" }
+"django-haystack" = { version = "==2.7.dev0" }
 
 [dev-packages]
 
