@@ -53,7 +53,8 @@ THIRD_PARTY_APPS = [
     'parler',  # translations
     'rest_framework',  # rest framework
     'graphene_django',  # graphql
-    'haystack'  # solr/elastic-search
+    'haystack',  # solr/elastic-search
+    'taggit',  # tagging
 ]
 
 # Apps specific for this project go here.
@@ -61,7 +62,10 @@ LOCAL_APPS = [
     # custom users app
     'seedorf.users.apps.UsersConfig',
     # Your stuff: custom apps go here
-    'seedorf.locations.apps.LocationsConfig'
+    'seedorf.games.apps.GamesConfig',
+    'seedorf.locations.apps.LocationsConfig',
+    'seedorf.sports.apps.SportsConfig',
+    'seedorf.spots.apps.SpotsConfig',
 ]
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps

@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "d62f18b5a1209a07bf2b51f82a6fdc85ef786710c8fd2a0c47f2ee345cca1b71"
+            "sha256": "469e5e9fdfa3d1be4450eab57a1ae369ebfc04bea0830f45b75fd4767150f2a6"
         },
         "host-environment-markers": {
             "implementation_name": "cpython",
@@ -302,6 +302,13 @@
                 "sha256:bc8e4c1f483608c5dd1212072fd41042f3ef2d2a2896ec4fb12dbc62c82996a0"
             ],
             "version": "==1.6.5"
+        },
+        "django-taggit": {
+            "hashes": [
+                "sha256:969a68dc244fd3051589b6b917e26777cdf186f95dd51bf2f023f5446e2ca89e",
+                "sha256:87eeae942a2db48bf6e78c081e29d863d8aeab7430427bea3f08b46e801a5191"
+            ],
+            "version": "==0.22.1"
         },
         "djangorestframework": {
             "hashes": [
@@ -935,7 +942,6 @@
                 "sha256:5b26757dc6f79a3b7dc9fab95359328d5747fcb2409d331ea66d0272b90ab2a0",
                 "sha256:8b995ffe925347a2138d7ac0fe77155e4311a0ea6d6da4f5128fe4b3cbe5ed71"
             ],
-            "markers": "sys_platform == 'darwin'",
             "version": "==0.1.0"
         },
         "babel": {
