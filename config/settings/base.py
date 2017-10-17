@@ -44,6 +44,8 @@ DJANGO_APPS = [
 
     # Admin
     'django.contrib.admin',
+    # Additional support for Full text search, JSONB Field, HSTORE Field
+    'django.contrib.postgres'
 ]
 THIRD_PARTY_APPS = [
     'crispy_forms',  # Form layouts
@@ -54,7 +56,7 @@ THIRD_PARTY_APPS = [
     'rest_framework',  # rest framework
     'graphene_django',  # graphql
     'haystack',  # solr/elastic-search
-    'taggit',  # tagging
+    'storages',  # cloud file storages
 ]
 
 # Apps specific for this project go here.
@@ -66,6 +68,7 @@ LOCAL_APPS = [
     'seedorf.locations.apps.LocationsConfig',
     'seedorf.sports.apps.SportsConfig',
     'seedorf.spots.apps.SpotsConfig',
+    'seedorf.reactions.apps.ReactionsConfig',
 ]
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps

@@ -44,7 +44,7 @@ zappa = { version = "==0.44.3" }
 hashids = "*"
 "django-parler" = { version = "==1.8" }
 "django-haystack" = { version = "==2.7.dev0" }
-"django-taggit" = "*"
+"django-cities" = "*"
 
 [dev-packages]
 
