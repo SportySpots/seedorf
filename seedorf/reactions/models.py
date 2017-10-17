@@ -10,16 +10,16 @@ class ReactionsManager(models.Manager):
     use_for_related_fields = True
 
     def likes(self):
-        return self.get_queryset().filter(reaction=Reactions.LIKE)
+        return self.get_queryset().filter(reaction=Reaction.LIKE)
 
     def dislikes(self):
-        return self.get_queryset().filter(reaction=Reactions.DISLIKE)
+        return self.get_queryset().filter(reaction=Reaction.DISLIKE)
 
     def like_count(self):
-        return self.get_queryset().filter(reaction=Reactions.LIKE).count()
+        return self.get_queryset().filter(reaction=Reaction.LIKE).count()
 
     def dislike_count(self):
-        return self.get_queryset().filter(reaction=Reactions.DISLIKE).count()
+        return self.get_queryset().filter(reaction=Reaction.DISLIKE).count()
 
     def spots(self):
         return self.get_queryset().filter(content_type__model='spots').order_by('-spot_reactions__created_at')
