@@ -162,14 +162,24 @@ class Spot(CommonModelPropertiesMixin):
     is_verified = models.BooleanField(
         blank=False,
         default=False,
-        help_text=_('Is Spot verfified by the SportySpots team ?'),
+        help_text=_('Is this Spot verfified by the SportySpots team ?'),
         null=False,
     )
     is_permanently_closed = models.BooleanField(
         blank=False,
         default=False,
-        help_text=_('Is Spot permanently closed ?'),
+        help_text=_('Is this Spot permanently closed ?'),
         null=False,
+    )
+    is_public = models.BooleanField(
+        blank=False,
+        default=True,
+        help_text=_('Is this Spot a public spot ?')
+    )
+    # TODO: Validation there can be only one non-permanently closed spot at an address
+    address = models.ForeignKey(
+        'locations.Address',
+        related_name='spot_address'
     )
     sports = models.ManyToManyField(
         'sports.Sport',
@@ -178,6 +188,23 @@ class Spot(CommonModelPropertiesMixin):
     reaction = GenericRelation(
         'reactions.Reaction',
         related_query_name='spot_reactions',
+    )
+    # TODO: We need a cron job to set temporary spots are permanently closed
+    # TODO: We need to validate if the spot is temporary, then it must have a establishment date and closure date
+    is_temporary = models.BooleanField(
+        blank=False,
+        default=False,
+        help_text=_('Is this spot temporary (e.g. for a special event) ?'),
+        null=False,
+    )
+    establishment_date = models.DateField(
+        blank=True,
+        null=False
+    )
+    # REF: Closure date can be in the future, incase of temporary events
+    closure_date = models.DateField(
+        blank=True,
+        null=False
     )
 
     class Meta:
@@ -215,7 +242,7 @@ class SpotImage(CommonModelPropertiesMixin):
 
 class SpotOpeningTime(models.Model):
     """
-    TODO: Add validation
+    TODO: Validation
     A spot can have multiple opening times during a day
     A spot can be closed for the whole day or for the certain time in a day
     A spot can be closed yearly for a certain days like public holidays

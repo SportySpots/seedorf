@@ -4,7 +4,7 @@ from django.db import models
 from django.utils.translation import ugettext_lazy as _
 
 
-class Place(models.Model):
+class Address(models.Model):
     GEOCODER_GOOGLE_MAPS = 'google'
     GEOCODER_BING = 'bing'
     GEOCODER_OSM = 'open_street_maps'
@@ -42,8 +42,11 @@ class Place(models.Model):
         max_length=255,
         null=False
     )
+    location = gis_models.PointField(
+        blank=False,
+        null=False
+    )
 
-    location = gis_models.PointField()
     location_type = None  # REF: Google Maps https://developers.google.com/maps/documentation/geocoding/start
     viewport = None  # REF: Google Maps https://developers.google.com/maps/documentation/geocoding/start
     types = None  # REF: Google Maps https://developers.google.com/maps/documentation/geocoding/start

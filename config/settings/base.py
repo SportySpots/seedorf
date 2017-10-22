@@ -38,21 +38,19 @@ DJANGO_APPS = [
     'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-
-    # Useful template tags:
-    # 'django.contrib.humanize',
+    'django.contrib.humanize',
 
     # Admin
     'django.contrib.admin',
     # Additional support for Full text search, JSONB Field, HSTORE Field
-    'django.contrib.postgres'
+    'django.contrib.postgres',
+    'django.contrib.gis',
 ]
 THIRD_PARTY_APPS = [
     'crispy_forms',  # Form layouts
     'allauth',  # registration
     'allauth.account',  # registration
     'allauth.socialaccount',  # registration
-    'parler',  # translations
     'rest_framework',  # rest framework
     'graphene_django',  # graphql
     'haystack',  # solr/elastic-search
@@ -123,8 +121,15 @@ MANAGERS = ADMINS
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#databases
 # Uses django-environ to accept uri format
 # See: https://django-environ.readthedocs.io/en/latest/#supported-types
+# DATABASES = {
+#     'default': env.db('DATABASE_URL', default='postgres:///seedorf'),
+# }
 DATABASES = {
-    'default': env.db('DATABASE_URL', default='postgres:///seedorf'),
+    'default': {
+        'NAME': 'seedorf',
+        'ENGINE': 'django.contrib.gis.db.backends.postgis',
+        'DATABASE_URL': env.db('DATABASE_URL', default='postgres:///seedorf'),
+    }
 }
 DATABASES['default']['ATOMIC_REQUESTS'] = True
 
@@ -310,22 +315,21 @@ REST_FRAMEWORK = {
     # or allow read-only access for unauthenticated users.
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
-    ]
+    ],
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
+    'PAGE_SIZE': 100,
+    'DEFAULT_VERSIONING_CLASS': 'rest_framework.versioning.NamespaceVersioning',
 }
 
-PARLER_LANGUAGES = {
-    None: (
-        {'code': 'en', },
-        {'code': 'nl', },
-    ),
-    'default': {
-        'fallback': 'en',             # defaults to PARLER_DEFAULT_LANGUAGE_CODE
-        'hide_untranslated': False,   # the default; let .active_translations() return fallbacks too.
-    }
+# i18n nece settings
+# REF: https://github.com/tatterdemalion/django-nece
+TRANSLATIONS_DEFAULT = 'en_us'
+TRANSLATIONS_MAP = {
+    "en": "en_us",
+    "nl": "nl_nl",
 }
 
-PARLER_DEFAULT_LANGUAGE_CODE = 'en'
-
+# Haystack - Elasticsearch / Solr Integration
 HAYSTACK_CONNECTIONS = {
     'default': {
         'ENGINE': 'haystack.backends.simple_backend.SimpleEngine',

@@ -2,9 +2,10 @@ from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from seedorf.utils.mixins import CommonModelPropertiesMixin
 from django.contrib.contenttypes.fields import GenericRelation
+from nece.models import TranslationModel
 
 
-class Sport(CommonModelPropertiesMixin):
+class Sport(CommonModelPropertiesMixin, TranslationModel):
     BASKETBALL = 'basketball'
     BEACH_VOLLEYBALL = 'beach_volleyball'
     BOOTCAMP = 'bootcamp'
@@ -26,28 +27,33 @@ class Sport(CommonModelPropertiesMixin):
         (SOCCER, _('Soccer')),
         (TENNIS, _('Tennis')),
     )
-    code = models.CharField(
+    category = models.CharField(
         blank=False,
         choices=SPORTS,
         default=OTHERS,
         max_length=50,
         null=False,
-        unique=True,
     )
     name = models.CharField(
         blank=False,
-        null=False,
+        help_text=_('Name of the sub category of the sport (e.g. Soccer 5x5).'),
         max_length=255,
+        null=False,
         unique=True,
+        verbose_name=_('Sport Name')
     )
     reaction = GenericRelation(
         'reactions.Reaction',
+        blank=True,
+        null=True,
         related_query_name='sport_reactions',
     )
 
     class Meta:
         verbose_name = _('Sport')
         verbose_name_plural = _('Sports')
+        ordering = ('category', 'name')
+        translatable_fields = ('name',)
 
     def __str__(self):
         return self.name

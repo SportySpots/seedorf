@@ -3,7 +3,7 @@ from django.apps import AppConfig
 
 class UsersConfig(AppConfig):
     name = 'seedorf.users'
-    verbose_name = "Users"
+    verbose_name = 'Users'
 
     def ready(self):
         """Override this to put in:

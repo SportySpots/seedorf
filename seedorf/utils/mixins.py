@@ -49,7 +49,7 @@ class CommonModelPropertiesMixin(models.Model):
     deleted_at = models.DateTimeField(
         blank=True,
         editable=False,
-        null=False,
+        null=True,
         verbose_name=_('Deleted At')
     )
 
