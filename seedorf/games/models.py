@@ -1,8 +1,9 @@
 import pytz
 from django.conf import settings
+from django.core.validators import MinValueValidator
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
-from django.core.validators import MinValueValidator
+
 from seedorf.utils.mixins import CommonModelPropertiesMixin
 
 
@@ -16,30 +17,30 @@ class Game(CommonModelPropertiesMixin):
     """
 
     # Predefined Values
-    STATUS_PLANNED = 'planned'
     STATUS_CANCELED = 'canceled'
-    STATUS_LIVE = 'live'
-    STATUS_STARTED = 'started'
-    STATUS_ENDED = 'ended'
     STATUS_COMPLETED = 'completed'
+    STATUS_ENDED = 'ended'
+    STATUS_LIVE = 'live'
+    STATUS_PLANNED = 'planned'
+    STATUS_STARTED = 'started'
 
     STATUSES = (
-        (STATUS_PLANNED, _('Planned')),
         (STATUS_CANCELED, _('Cancelled')),
-        (STATUS_LIVE, _('Live')),
-        (STATUS_STARTED, _('Started')),
-        (STATUS_ENDED, _('Ended')),
         (STATUS_COMPLETED, _('Completed')),
+        (STATUS_ENDED, _('Ended')),
+        (STATUS_LIVE, _('Live')),
+        (STATUS_PLANNED, _('Planned')),
+        (STATUS_STARTED, _('Started')),
     )
 
-    INVITE_MODE_OPEN = 'open',
     INVITE_MODE_APPROVAL = 'approval'
     INVITE_MODE_INVITE_ONLY = 'invite_only'
+    INVITE_MODE_OPEN = 'open',
 
     INVITE_MODES = (
-        (INVITE_MODE_OPEN, _('Open')),
         (INVITE_MODE_APPROVAL, _('Approval')),
         (INVITE_MODE_INVITE_ONLY, _('Invite Only')),
+        (INVITE_MODE_OPEN, _('Open')),
     )
 
     # TODO: Translations of the timezones
@@ -66,6 +67,12 @@ class Game(CommonModelPropertiesMixin):
     )
 
     # Instance Fields
+    # TODO: Maybe auto generate the game name based on the organizer, e.g. Soccer with Sam at Oosterpark
+    name = models.CharField(
+        blank=True,
+        max_length=255,
+        null=False,
+    )
     # TODO: Evaluate if start_time / end_time could be replaced by DateTimeRangeField
     # REF: https://docs.djangoproject.com/en/1.11/ref/contrib/postgres/fields/#datetimerangefield
     start_time = models.DateTimeField(
@@ -173,6 +180,14 @@ class Game(CommonModelPropertiesMixin):
         verbose_name=_('Is Featured'),
     )
 
+    class Meta:
+        verbose_name = _('Game')
+        verbose_name_plural = _('Games')
+        ordering = ('-start_time',)
+
+    def __str__(self):
+        return self.uuid
+
 
 class RSVPStatus(CommonModelPropertiesMixin):
     """
@@ -217,3 +232,11 @@ class RSVPStatus(CommonModelPropertiesMixin):
         null=True,
         verbose_name=_('RSVP Status'),
     )
+
+    class Meta:
+        verbose_name = _('RSVP Status')
+        verbose_name_plural = _('RSVP Statuses')
+        ordering = ('-created_at',)
+
+    def __str__(self):
+        return self.uuid

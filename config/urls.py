@@ -10,6 +10,8 @@ from rest_framework.schemas import get_schema_view
 
 from seedorf.users.viewsets import UserViewSet, GroupViewSet
 from seedorf.games.viewsets import GameViewSet, RSVPViewset
+from seedorf.sports.viewsets import SportViewSet
+from seedorf.spots.viewsets import SpotViewSet
 
 schema_view = get_schema_view(title='SportySpots API')
 
@@ -18,8 +20,8 @@ router = routers.DefaultRouter()
 router.register(r'users', UserViewSet)
 router.register(r'groups', GroupViewSet)
 
-# router.register(r'sports', SportViewSet)
-# router.register(r'spots', SpotViewSet)
+router.register(r'sports', SportViewSet)
+router.register(r'spots', SpotViewSet)
 # router.register(r'reactions', ReactionViewSet)
 # router.register(r'locations', LocationViewSet)
 router.register(r'games', GameViewSet)

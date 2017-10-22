@@ -1,105 +1,15 @@
 import datetime
 
-from django.conf import settings
+from django.contrib.contenttypes.fields import GenericRelation
 from django.contrib.postgres.fields import JSONField
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from django_extensions.db.fields import AutoSlugField
 from django_extensions.db.models import TimeStampedModel
-from django.contrib.contenttypes.fields import GenericRelation
 
 from seedorf.utils.mixins import CommonModelPropertiesMixin
 from . import AMENITIES_TYPE
 from .validators import AllowedKeysValidator
-
-"""
-REF Standards:
-
-Currency : ISO 4217
-Time:
-Geography: 
-Language: 
-"""
-
-"""
-Spots
-
-* Spots have a non-unique name (names should be localizable)
-* Only one spot can belong to one geo-location
-* Spots have a size (in sq. m but this should be localizable)
-* Spots can be indoor, outdoor, covered, non-covered
-* Spots can have opening times during the week, during the year and be closed on certain days of the year
-* Spots can have various types of surfaces
-* Spots could have age group restrictions
-* Spots could be closed down
-* One spot could have multiple sports (e.g. park, sports stadium, sport club) spot_type=multi_sport
-* Spots could require membership
-* Spots could have ratings
-* Spots could have descriptions (should be localizable)
-* Spots could have what3words address
-* Spots have an address
-* Spots could have facilities
-* Spots could have their own website or links to more info on the municipality website
-* Spots have a founding date
-* Spots could have closing/closed date
-* Spots could be temporary (for e.g festivals)
-* Hide the creation date and modification date in the api
-* Spots will have pictures assoicated with them
-* Spot pictures could also be user added
-* Spot could have a social profile / page on twitter/ facebook etc
-* Spot could be permanently closed
-* Spot could be verified
-* Spot could have stats
-stats	Contains checkinsCount (total checkins ever here), usersCount (total users who have ever checked in here), and tipCount (number of tips here).
-* Spots could have popular hours
-* Spots could have a price category
-https://developer.foursquare.com/docs/api/venues/details
-* Spots could have herenow / games on now / occupied now
-* Spots could be tagged
-* Spots could be favourited by the user
-* Spots could have a been here for the user
-* Spots can have canonical url
-* Spot could have likes
-* Spot could have liked by user
-* Spot could have been disliked by user
-* Spot could have geometry
-* Spot has a local timezone
-* Spot could have multiple emails or phone numbers
-
-  "location": {
-     "address": "W 4th St",
-     "crossStreet": "btwn MacDougal St & University Pl",
-     "lat": 40.73076755657555,
-     "lng": -73.99745069069391,
-     "distance": 0,
-     "postalCode": "10012",
-     "cc": "US",
-     "city": "New York",
-     "state": "NY",
-     "country": "United States"
-     //...
-  },
-    "categories": [
-     {
-        "id": "4bf58dd8d48988d163941735",
-        "name": "Park",
-        "pluralName": "Parks",
-        "shortName": "Park",
-        "icon": {
-          "prefix": "https://ss3.4sqi.net/img/categories_v2/parks_outdoors/park_",
-          "suffix": ".png"
-        },
-        "primary": true
-     }
-  ],
-  "
-    "stats": {
-        "checkinsCount": 190068,
-        "usersCount": 74788,
-        "tipCount": 652
-  },
-  
-"""
 
 
 def get_logo_upload_directory(instance, filename):
@@ -117,6 +27,18 @@ def get_images_upload_directory(instance, filename):
 
 
 class Spot(CommonModelPropertiesMixin):
+    # Foreign Keys
+    # TODO: Validation there can be only one non-permanently closed spot at an address
+    address = models.ForeignKey(
+        'locations.Address',
+        related_name='spot_address'
+    )
+    sports = models.ManyToManyField(
+        'sports.Sport',
+        related_name='sport_spots',
+    )
+
+    # Instance Fields
     name = models.CharField(
         blank=False,
         max_length=255,
@@ -176,19 +98,6 @@ class Spot(CommonModelPropertiesMixin):
         default=True,
         help_text=_('Is this Spot a public spot ?')
     )
-    # TODO: Validation there can be only one non-permanently closed spot at an address
-    address = models.ForeignKey(
-        'locations.Address',
-        related_name='spot_address'
-    )
-    sports = models.ManyToManyField(
-        'sports.Sport',
-        related_name='sport_spots',
-    )
-    reaction = GenericRelation(
-        'reactions.Reaction',
-        related_query_name='spot_reactions',
-    )
     # TODO: We need a cron job to set temporary spots are permanently closed
     # TODO: We need to validate if the spot is temporary, then it must have a establishment date and closure date
     is_temporary = models.BooleanField(
@@ -201,10 +110,16 @@ class Spot(CommonModelPropertiesMixin):
         blank=True,
         null=False
     )
-    # REF: Closure date can be in the future, incase of temporary events
+    # NOTE: Closure date can be in the future, incase of temporary events
     closure_date = models.DateField(
         blank=True,
         null=False
+    )
+
+    # Generic Keys
+    reaction = GenericRelation(
+        'reactions.Reaction',
+        related_query_name='spot_reactions',
     )
 
     class Meta:
@@ -212,13 +127,19 @@ class Spot(CommonModelPropertiesMixin):
         verbose_name_plural = _('Spots')
         ordering = ('-created_at',)
 
+    def __str__(self):
+        return self.name
+
 
 class SpotImage(CommonModelPropertiesMixin):
+    # Foreign Keys
     spot = models.ForeignKey(
         'spots.Spot',
         on_delete=models.CASCADE,
         related_name='spot_images',
     )
+
+    # Instance Fields
     image = models.ImageField(
         blank=True,
         null=False,
@@ -238,6 +159,9 @@ class SpotImage(CommonModelPropertiesMixin):
         verbose_name = _('Spot Image')
         verbose_name_plural = _('Spot Images')
         ordering = ('-created_at',)
+
+    def __str__(self):
+        return self.uuid
 
 
 class SpotOpeningTime(models.Model):
@@ -308,6 +232,7 @@ class SpotOpeningTime(models.Model):
 
 
 class SpotAmenity(models.Model):
+    # Foreign Keys
     spot = models.ForeignKey(
         'spots.Spot',
         on_delete=models.CASCADE,
@@ -320,6 +245,8 @@ class SpotAmenity(models.Model):
         related_name='sports_amenities',
         verbose_name=_('Sport Amenity'),
     )
+
+    # Instance Fields
     data = JSONField(
         validators=[AllowedKeysValidator(list(AMENITIES_TYPE.keys()))]
     )
@@ -329,5 +256,5 @@ class SpotAmenity(models.Model):
         verbose_name_plural = _('Spot Amenities')
 
     def __str__(self):
-        # TODO: Return name of sport, key and value
+        # TODO: Return name of sport, key and value pairs of data
         return '{}'.format(self.data)

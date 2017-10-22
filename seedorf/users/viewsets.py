@@ -1,7 +1,7 @@
 from django.contrib.auth.models import Group
 from rest_framework import viewsets
 
-
+from seedorf.utils.regex import UUID as REGEX_UUID
 from .models import User
 from .serializers import UserSerializer, GroupSerializer
 
@@ -13,7 +13,7 @@ class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all().order_by('-date_joined')
     serializer_class = UserSerializer
     lookup_field = 'uuid'
-    lookup_value_regex = '[0-9a-f]{32}'
+    lookup_value_regex = REGEX_UUID
 
 
 class GroupViewSet(viewsets.ModelViewSet):
