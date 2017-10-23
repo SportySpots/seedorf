@@ -4,45 +4,50 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.views import defaults as default_views
 from django.views.generic import TemplateView
-from rest_framework import routers
 from graphene_django.views import GraphQLView
+from rest_framework import routers
+from rest_framework.documentation import include_docs_urls
 from rest_framework.schemas import get_schema_view
+from rest_framework_jwt.views import obtain_jwt_token, refresh_jwt_token, verify_jwt_token
+from rest_framework.permissions import AllowAny
 
-from seedorf.users.viewsets import UserViewSet, GroupViewSet
+
 from seedorf.games.viewsets import GameViewSet, RSVPViewset
 from seedorf.sports.viewsets import SportViewSet
 from seedorf.spots.viewsets import SpotViewSet
+from seedorf.users.viewsets import UserViewSet, GroupViewSet
 
 schema_view = get_schema_view(title='SportySpots API')
 
 # Routers provide an easy way of automatically determining the URL conf.
 router = routers.DefaultRouter()
-router.register(r'users', UserViewSet)
-router.register(r'groups', GroupViewSet)
 
+router.register(r'games', GameViewSet)
+router.register(r'groups', GroupViewSet)
+router.register(r'rsvps', RSVPViewset)
 router.register(r'sports', SportViewSet)
 router.register(r'spots', SpotViewSet)
+router.register(r'users', UserViewSet)
 # router.register(r'reactions', ReactionViewSet)
 # router.register(r'locations', LocationViewSet)
-router.register(r'games', GameViewSet)
-router.register(r'rsvps', RSVPViewset)
 
 urlpatterns = [
-
-    url(r'^$', TemplateView.as_view(template_name='pages/home.html'), name='home'),
-
     # Django Admin, use {% url 'admin:index' %}
     url(settings.ADMIN_URL, admin.site.urls),
 
-    # User management
-    # url(r'^users/', include('seedorf.users.urls', namespace='users')),
-    url(r'^accounts/', include('allauth.urls')),
-
     # Your stuff: custom urls includes go here
-    url(r'^api/schema/$', schema_view),
     url(r'^api/', include(router.urls)),
     url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
+
+    url(r'^api-token-auth/', obtain_jwt_token),
+    url(r'^api-token-refresh/', refresh_jwt_token),
+    url(r'^api-token-verify/', verify_jwt_token),
+
+    url(r'^social-auth/', include('rest_framework_social_oauth2.urls')),
     url(r'^graphql$', GraphQLView.as_view(graphiql=True), name='graphql'),
+
+    url(r'^schema/$', schema_view),
+    url(r'^docs/', include_docs_urls(title='SportySpots API Docs', permission_classes=(AllowAny,))),
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

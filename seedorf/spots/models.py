@@ -7,7 +7,7 @@ from django.utils.translation import ugettext_lazy as _
 from django_extensions.db.fields import AutoSlugField
 from django_extensions.db.models import TimeStampedModel
 
-from seedorf.utils.mixins import CommonModelPropertiesMixin
+from seedorf.utils.models import CommonPropertiesModel
 from . import AMENITIES_TYPE
 from .validators import AllowedKeysValidator
 
@@ -26,7 +26,7 @@ def get_images_upload_directory(instance, filename):
     return 'spots/{0}/images/{1}'.format(instance.uuid, filename)
 
 
-class Spot(CommonModelPropertiesMixin):
+class Spot(CommonPropertiesModel):
     # Foreign Keys
     # TODO: Validation there can be only one non-permanently closed spot at an address
     address = models.ForeignKey(
@@ -74,7 +74,7 @@ class Spot(CommonModelPropertiesMixin):
         upload_to=get_logo_upload_directory,
         verbose_name=_('Spot Logo'),
     )
-    url = models.URLField(
+    homepage_url = models.URLField(
         blank=True,
         help_text=_('Where can we find out more about this spot ?'),
         max_length=500,
@@ -131,7 +131,7 @@ class Spot(CommonModelPropertiesMixin):
         return self.name
 
 
-class SpotImage(CommonModelPropertiesMixin):
+class SpotImage(CommonPropertiesModel):
     # Foreign Keys
     spot = models.ForeignKey(
         'spots.Spot',

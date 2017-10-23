@@ -28,7 +28,7 @@ djangorestframework = { version = "==3.7.0" }
 "elasticsearch-dsl" = { version = "==5.3.0" }
 gevent = { version = "==1.2.2" }
 gunicorn = { version = "==19.7.1" }
-markdown = { version = "==2.6.9" }
+markdown = "*"
 opbeat = { version = "==3.5.2" }
 pillow = { version = "==4.3.0" }
 "psycopg2" = { version = "==2.7.3.1" }
@@ -45,9 +45,11 @@ hashids = { version = "==1.2.0" }
 "django-haystack" = { version = "==2.7.dev0" }
 "django-cities" = { version = "==0.5.0.5" }
 nece = "*"
-pip = "*"
 "drf-extensions" = "*"
 "drf-openapi" = "*"
+"djangorestframework-jwt" = "*"
+"django-rest-framework-social-oauth2" = "*"
+pygments = "*"
 
 [dev-packages]
 

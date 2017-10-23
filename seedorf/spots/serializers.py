@@ -6,9 +6,9 @@ from .models import Spot, SpotAmenity, SpotImage, SpotOpeningTime
 class SpotSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Spot
-        fields = ('uuid', 'address', 'sports', 'name', 'slug', 'owner', 'description', 'logo', 'url', 'is_verified',
-                  'is_permanently_closed', 'is_public', 'is_temporary', 'establishment_date', 'closure_date',
-                  'created_at', 'modified_at', 'deleted_at')
+        fields = ('uuid', 'address', 'sports', 'name', 'slug', 'owner', 'description', 'logo', 'homepage_url',
+                  'is_verified', 'is_permanently_closed', 'is_public', 'is_temporary', 'establishment_date',
+                  'closure_date', 'created_at', 'modified_at', 'deleted_at')
         extra_kwargs = {
             'url': {'lookup_field': 'uuid'}
         }

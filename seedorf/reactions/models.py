@@ -4,7 +4,7 @@ from django.contrib.contenttypes.models import ContentType
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 
-from seedorf.utils.mixins import CommonModelPropertiesMixin
+from seedorf.utils.models import CommonPropertiesModel
 
 
 class ReactionsManager(models.Manager):
@@ -29,7 +29,7 @@ class ReactionsManager(models.Manager):
         return self.get_queryset().filter(content_type__model='sports').order_by('-sport_reactions__created_at')
 
 
-class Reaction(CommonModelPropertiesMixin):
+class Reaction(CommonPropertiesModel):
     DISLIKE = 'dislike'
     LIKE = 'like'
 

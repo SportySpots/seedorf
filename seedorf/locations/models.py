@@ -3,8 +3,10 @@ from django.contrib.postgres.fields import JSONField
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 
+from seedorf.utils.models import CommonPropertiesModel
 
-class Address(models.Model):
+
+class Address(CommonPropertiesModel):
     GEOCODER_GOOGLE_MAPS = 'google'
     GEOCODER_BING = 'bing'
     GEOCODER_OSM = 'open_street_maps'

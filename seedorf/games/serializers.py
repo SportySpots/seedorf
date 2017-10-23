@@ -4,6 +4,19 @@ from .models import Game, RSVPStatus
 
 
 class GameSerializer(serializers.HyperlinkedModelSerializer):
+    organizer = serializers.HyperlinkedRelatedField(
+        many=True,
+        read_only=True,
+        lookup_field='uuid',
+        view_name='user-detail'
+    )
+    sport = serializers.HyperlinkedRelatedField(
+        many=True,
+        read_only=True,
+        lookup_field='uuid',
+        view_name='sport-detail'
+    )
+
     class Meta:
         model = Game
         fields = ('uuid', 'organizer', 'sport', 'spot', 'name', 'start_time', 'start_timezone', 'end_time',
