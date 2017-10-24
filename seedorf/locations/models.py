@@ -57,4 +57,5 @@ class Address(CommonPropertiesModel):
     utc_offset= None  # REF: Maybe use django-cities
 
     class Meta:
-        pass
+        verbose_name = _('Address')
+        verbose_name_plural = _('Addresses')

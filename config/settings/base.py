@@ -54,11 +54,11 @@ THIRD_PARTY_APPS = [
     'crispy_forms',  # Form layouts
     'graphene_django',  # graphql
     'haystack',  # solr/elastic-search
-    'oauth2_provider',  # https://github.com/PhilipGarnero/django-rest-framework-social-oauth2
     'rest_framework',  # rest framework
-    'rest_framework.authtoken', # http://www.django-rest-framework.org/api-guide/authentication/#tokenauthentication
-    'rest_framework_social_oauth2',  # https://github.com/PhilipGarnero/django-rest-framework-social-oauth2
-    'social_django',  # https://github.com/PhilipGarnero/django-rest-framework-social-oauth2
+    'rest_framework.authtoken',  # http://www.django-rest-framework.org/api-guide/authentication/#tokenauthentication
+    # 'oauth2_provider',  # https://github.com/PhilipGarnero/django-rest-framework-social-oauth2
+    # 'rest_framework_social_oauth2',  # https://github.com/PhilipGarnero/django-rest-framework-social-oauth2
+    # 'social_django',  # https://github.com/PhilipGarnero/django-rest-framework-social-oauth2
     'storages',  # cloud file storages
 ]
 
@@ -130,12 +130,16 @@ MANAGERS = ADMINS
 #     'default': env.db('DATABASE_URL', default='postgres:///seedorf'),
 # }
 DATABASES = {
-    'default': {
-        'NAME': 'seedorf',
-        'ENGINE': 'django.contrib.gis.db.backends.postgis',
-        'DATABASE_URL': env.db('DATABASE_URL', default='postgres:///seedorf'),
-    }
+    'default': env.db('DATABASE_URL', default='postgis:///seedorf'),
 }
+DATABASES['default']['ENGINE'] = 'django.contrib.gis.db.backends.postgis'
+# DATABASES = {
+#     'default': {
+#         'NAME': 'seedorf',
+#         'ENGINE': 'django.contrib.gis.db.backends.postgis',
+#         'DATABASE_URL': env.db('DATABASE_URL', default='postgres:///seedorf'),
+#     }
+# }
 DATABASES['default']['ATOMIC_REQUESTS'] = True
 
 
@@ -198,8 +202,8 @@ TEMPLATES = [
                 'django.template.context_processors.tz',
                 'django.contrib.messages.context_processors.messages',
                 # Your stuff: custom template context processors go here
-                'social_django.context_processors.backends',
-                'social_django.context_processors.login_redirect',
+                # 'social_django.context_processors.backends',
+                # 'social_django.context_processors.login_redirect',
             ],
         },
     },
@@ -281,11 +285,11 @@ AUTHENTICATION_BACKENDS = [
     'allauth.account.auth_backends.AuthenticationBackend',
 
     # django-rest-framework-social-oauth2
-    'rest_framework_social_oauth2.backends.DjangoOAuth2',
+    #'rest_framework_social_oauth2.backends.DjangoOAuth2',
 
     # Facebook OAuth2
-    'social_core.backends.facebook.FacebookAppOAuth2',
-    'social_core.backends.facebook.FacebookOAuth2',
+    #'social_core.backends.facebook.FacebookAppOAuth2',
+    #'social_core.backends.facebook.FacebookOAuth2',
 ]
 
 # Some really nice defaults
@@ -333,8 +337,8 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.BasicAuthentication',
         'rest_framework.authentication.SessionAuthentication',
         'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
-        'oauth2_provider.contrib.rest_framework.OAuth2Authentication',
-        'rest_framework_social_oauth2.authentication.SocialAuthentication',
+        #'oauth2_provider.contrib.rest_framework.OAuth2Authentication',
+        #'rest_framework_social_oauth2.authentication.SocialAuthentication',
     ),
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'

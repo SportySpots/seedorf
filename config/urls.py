@@ -3,7 +3,6 @@ from django.conf.urls import include, url
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.views import defaults as default_views
-from django.views.generic import TemplateView
 from graphene_django.views import GraphQLView
 from rest_framework import routers
 from rest_framework.documentation import include_docs_urls
@@ -43,7 +42,7 @@ urlpatterns = [
     url(r'^api-token-refresh/', refresh_jwt_token),
     url(r'^api-token-verify/', verify_jwt_token),
 
-    url(r'^social-auth/', include('rest_framework_social_oauth2.urls')),
+    # url(r'^social-auth/', include('rest_framework_social_oauth2.urls')),
     url(r'^graphql$', GraphQLView.as_view(graphiql=True), name='graphql'),
 
     url(r'^schema/$', schema_view),

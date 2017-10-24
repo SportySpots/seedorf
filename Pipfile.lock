@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "678be6d538422a25230fdffaa0d7a0ab7059a8c074df87ce3d2142762fb4074c"
+            "sha256": "290015f80a53ca985c7f159b4adb2fcb3f1d4653fa16e98488677af9bc6d6194"
         },
         "host-environment-markers": {
             "implementation_name": "cpython",
@@ -216,13 +216,6 @@
             ],
             "version": "==1.0.2"
         },
-        "django-braces": {
-            "hashes": [
-                "sha256:6be8277a535565e2140f7b1eb83ec26aa8d181acc8bb046875142a2792e4babe",
-                "sha256:5898ab2ce4ca7c85b21aedf789b96e90c59dc75d26db6d9a4dc0cff3fc7a7aca"
-            ],
-            "version": "==1.11.0"
-        },
         "django-cities": {
             "hashes": [
                 "sha256:897cab1ff3821aa9b120cecbfcff01e8ddbd14e3fbb098b060316acc2b2e3499"
@@ -282,12 +275,6 @@
             ],
             "version": "==3.0.0"
         },
-        "django-oauth-toolkit": {
-            "hashes": [
-                "sha256:23ca6ffc06167cf9a1e94f98e7662b5b4724e2b9acc607373b8811ba62adbb23"
-            ],
-            "version": "==1.0.0"
-        },
         "django-redis": {
             "hashes": [
                 "sha256:9660332cf9de5689a7ebbe0c623c4a0de79e0916a6ae867b5d0b94759bba46c9",
@@ -306,12 +293,6 @@
                 "sha256:2b1553d98b63526f5f7c71682f513227773d58b330db13eea19335c91ba12198"
             ],
             "version": "==0.3.2"
-        },
-        "django-rest-framework-social-oauth2": {
-            "hashes": [
-                "sha256:5dbb611beddad85445f193c15aeb97247655357f31b4cf65c0403f9d0fc062d1"
-            ],
-            "version": "==1.0.8"
         },
         "django-rest-swagger": {
             "hashes": [
@@ -736,13 +717,6 @@
             ],
             "version": "==2.6.1"
         },
-        "python-openid": {
-            "hashes": [
-                "sha256:92c51c3ecec846cbec4aeff11f9ff47303d4a63f93b0e6ac0ec02a091fed70ef",
-                "sha256:c2d133e47e0a7705c9272eef00d7a09c174f5bf17a127fed8e2c6499556cc782"
-            ],
-            "version": "==2.2.5"
-        },
         "python-slugify": {
             "hashes": [
                 "sha256:c3733135d3b184196fdb8844f6a74bbfb9cf6720d1dcce3254bdc434353f938f",
@@ -902,22 +876,6 @@
                 "sha256:70e8a77beed4562e7f14fe23a786b54f6296e34344c23bc42f07b15018ff98e9"
             ],
             "version": "==1.11.0"
-        },
-        "social-auth-app-django": {
-            "hashes": [
-                "sha256:babc03c024ce719808af534167b9f5b76bb8b0aa0adfd1db01b124542ab906e1",
-                "sha256:c853c15bf287e8400c687340b11278539838c1d2b911df264a38e60add0ac6f3",
-                "sha256:3476aa7463ca821d1b1d8381d46b4c186b2b874d0e55541b087be596b2413acb"
-            ],
-            "version": "==1.2.0"
-        },
-        "social-auth-core": {
-            "hashes": [
-                "sha256:8a1b83995e891989195ef34ad46bd8fd6e98d8bc4510d3e5b34f7c24acc794c4",
-                "sha256:c5c150e048a81bc292f57f6f05cad0a13d5a29589b3e085fcf39007c2312223b",
-                "sha256:f83005f42cf3d870b49a3c9fddc2b2e8ec28fbb367626a304190b52e151e059d"
-            ],
-            "version": "==1.4.0"
         },
         "swapper": {
             "hashes": [
@@ -1192,10 +1150,10 @@
         },
         "flake8": {
             "hashes": [
-                "sha256:f1a9d8886a9cbefb52485f4f4c770832c7fb569c084a9a314fb1eaa37c0c2c86",
-                "sha256:c20044779ff848f67f89c56a0e4624c04298cd476e25253ac0c36f910a1a11d8"
+                "sha256:c7841163e2b576d435799169b78703ad6ac1bbb0f199994fc05f700b2a90ea37",
+                "sha256:7253265f7abd8b313e3892944044a365e3f4ac3fcdcfb4298f55ee9ddf188ba0"
             ],
-            "version": "==3.4.1"
+            "version": "==3.5.0"
         },
         "idna": {
             "hashes": [
@@ -1317,10 +1275,10 @@
         },
         "pyflakes": {
             "hashes": [
-                "sha256:cc5eadfb38041f8366128786b4ca12700ed05bbf1403d808e89d57d67a3875a7",
-                "sha256:aa0d4dff45c0cc2214ba158d29280f8fa1129f3e87858ef825930845146337f4"
+                "sha256:08bd6a50edf8cffa9fa09a463063c425ecaaf10d1eb0335a7e8b1401aef89e6f",
+                "sha256:8d616a382f243dbf19b54743f280b80198be0bca3a5396f1d2e1fca6223e8805"
             ],
-            "version": "==1.5.0"
+            "version": "==1.6.0"
         },
         "pygments": {
             "hashes": [
