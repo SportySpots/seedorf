@@ -17,11 +17,13 @@ services:
     volumes:
       - .:/app
     env_file:
-      - ./.env
+      - ./.env.local
     ports:
       - "8000:8000"
     restart: "no"
     command: /start.sh
+    environment:
+      - USE_DOCKER=yes
 #    environment:
 #      - POSTGRES_USER=seedorf
 #      - USE_DOCKER=yes
@@ -76,7 +78,7 @@ services:
       - sportyspots_postgres_data_local:/var/lib/postgresql/data
       - sportyspots_postgres_backup_local:/backups
     env_file:
-      - ./.env
+      - ./.env.local
 
   mailhog:
     container_name: sportyspots-mailhog
