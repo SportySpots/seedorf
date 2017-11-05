@@ -4,7 +4,7 @@ import uuid
 from django.utils import timezone
 
 
-class CommonPropertiesModel(models.Model):
+class BasePropertiesModel(models.Model):
     uuid = models.UUIDField(
         blank=False,
         default=uuid.uuid4,

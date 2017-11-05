@@ -3,10 +3,10 @@ from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from nece.models import TranslationModel
 
-from seedorf.utils.models import CommonPropertiesModel
+from seedorf.utils.models import BasePropertiesModel
 
 
-class Sport(CommonPropertiesModel, TranslationModel):
+class Sport(BasePropertiesModel, TranslationModel):
     # Predefined Values
     BASKETBALL = 'basketball'
     BEACH_VOLLEYBALL = 'beach_volleyball'

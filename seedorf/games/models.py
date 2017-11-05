@@ -4,10 +4,10 @@ from django.core.validators import MinValueValidator
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 
-from seedorf.utils.models import CommonPropertiesModel
+from seedorf.utils.models import BasePropertiesModel
 
 
-class Game(CommonPropertiesModel):
+class Game(BasePropertiesModel):
     """
     TODO: Validation
 
@@ -25,7 +25,7 @@ class Game(CommonPropertiesModel):
     STATUS_STARTED = 'started'
 
     STATUSES = (
-        (STATUS_CANCELED, _('Cancelled')),
+        (STATUS_CANCELED, _('Canceled')),
         (STATUS_COMPLETED, _('Completed')),
         (STATUS_ENDED, _('Ended')),
         (STATUS_LIVE, _('Live')),
@@ -189,7 +189,7 @@ class Game(CommonPropertiesModel):
         return self.uuid
 
 
-class RSVPStatus(CommonPropertiesModel):
+class RSVPStatus(BasePropertiesModel):
     """
     TODO:
     Define State Machine to handle RSVP Status Transitions

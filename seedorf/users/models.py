@@ -4,11 +4,11 @@ from django.db import models
 from django.utils.encoding import python_2_unicode_compatible
 from django.utils.translation import ugettext_lazy as _
 
-from seedorf.utils.models import CommonPropertiesModel
+from seedorf.utils.models import BasePropertiesModel
 
 
 @python_2_unicode_compatible
-class User(AbstractUser, CommonPropertiesModel):
+class User(AbstractUser, BasePropertiesModel):
 
     # First Name and Last Name do not cover name patterns
     # around the globe.
