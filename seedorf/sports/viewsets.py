@@ -13,4 +13,3 @@ class SportViewSet(viewsets.ReadOnlyModelViewSet):
     serializer_class = SportSerializer
     lookup_field = 'uuid'
     lookup_value_regex = REGEX_UUID
-

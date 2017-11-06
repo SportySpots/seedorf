@@ -46,6 +46,13 @@ class Sport(BasePropertiesModel, TranslationModel):
         unique=True,
         verbose_name=_('Sport Name')
     )
+    description = models.TextField(
+        blank=True,
+        default='',
+        max_length=4096,
+        null=False,
+        verbose_name=_('Sport Description'),
+    )
 
     # Generic Relations
     reaction = GenericRelation(
@@ -59,7 +66,7 @@ class Sport(BasePropertiesModel, TranslationModel):
         verbose_name = _('Sport')
         verbose_name_plural = _('Sports')
         ordering = ('category', 'name')
-        translatable_fields = ('name',)
+        translatable_fields = ('name', 'description')
 
     def __str__(self):
         return self.name

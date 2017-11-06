@@ -1,0 +1,54 @@
+[
+{
+    "model": "sports.sport",
+    "pk": 1,
+    "fields": {
+        "created_at": "1970-01-01T00:00:00.000Z",
+        "modified_at": "1970-01-01T00:00:00.000Z",
+        "deleted_at": null,
+        "translations": null,
+        "category": "basketball",
+        "name": "Basketball",
+        "description": ""
+    }
+},
+{
+    "model": "sports.sport",
+    "pk": 2,
+    "fields": {
+        "created_at": "1970-01-01T00:00:00.000Z",
+        "modified_at": "1970-01-01T00:00:00.000Z",
+        "deleted_at": null,
+        "translations": null,
+        "category": "beach_volleyball",
+        "name": "Beach Volleyball",
+        "description": ""
+    }
+},
+{
+    "model": "sports.sport",
+    "pk": 3,
+    "fields": {
+        "created_at": "1970-01-01T00:00:00.000Z",
+        "modified_at": "1970-01-01T00:00:00.000Z",
+        "deleted_at": null,
+        "translations": null,
+        "category": "soccer",
+        "name": "Soccer",
+        "description": ""
+    }
+},
+{
+    "model": "sports.sport",
+    "pk": 4,
+    "fields": {
+        "created_at": "1970-01-01T00:00:00.000Z",
+        "modified_at": "1970-01-01T00:00:00.000Z",
+        "deleted_at": null,
+        "translations": null,
+        "category": "tennis",
+        "name": "Tennis",
+        "description": ""
+    }
+}
+]
