@@ -17,12 +17,12 @@ class Game(BasePropertiesModel):
     """
 
     # Predefined Values
-    STATUS_CANCELED = 'canceled'
-    STATUS_COMPLETED = 'completed'
-    STATUS_ENDED = 'ended'
-    STATUS_LIVE = 'live'
-    STATUS_PLANNED = 'planned'
-    STATUS_STARTED = 'started'
+    STATUS_CANCELED = 'canceled'  # When the organizer cancels the event
+    STATUS_COMPLETED = 'completed'  # When the organizer confirms the game took place
+    STATUS_ENDED = 'ended'  # When the system sets the state automatically based on end time
+    STATUS_LIVE = 'live'  # When the organizer confirms the game is
+    STATUS_PLANNED = 'planned'  # When the game is in planning phase
+    STATUS_STARTED = 'started'  # When the system sets the state automatically based on start time
 
     STATUSES = (
         (STATUS_CANCELED, _('Canceled')),
@@ -195,20 +195,20 @@ class RSVPStatus(BasePropertiesModel):
     Define State Machine to handle RSVP Status Transitions
     """
     # Predefined Values
+    ACCEPTED = 'accepted'  # When the game is approval based
     ATTENDING = 'attending'
     CHECKED_IN = 'checked_in'
     DECLINED = 'declined'
     INTERESTED = 'interested'
     INVITED = 'invited'
-    MAYBE = 'maybe'
 
     STATUS = (
+        (ACCEPTED, _('Accepted')),
         (ATTENDING, _('Attending')),
         (CHECKED_IN, _('Checked In')),
         (DECLINED, _('Declined')),
         (INTERESTED, _('Interested')),
         (INVITED, _('Invited')),
-        (MAYBE, _('Maybe')),
     )
 
     # Foreign Keys
