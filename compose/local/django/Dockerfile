@@ -49,7 +49,7 @@ RUN apt-get update \
 
 # Pipfile.lock has to be pulled and installed here, otherwise caching won't work
 COPY Pipfile.lock /Pipfile.lock
-RUN pip install pipenv && \
+RUN pip install pipenv==9.0.1 && \
     pipenv install --dev --deploy --system --three --ignore-pipfile
 
 COPY ./compose/production/django/entrypoint.sh /entrypoint.sh
