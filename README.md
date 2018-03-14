@@ -1,5 +1,7 @@
 # seedorf
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/SportySpots/seedorf.svg)](https://greenkeeper.io/)
+
 ## Introduction
 Find sporty spots and sporty people near you.
 
