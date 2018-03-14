@@ -69,7 +69,7 @@ sphinx = { version = "==1.6.4" }
 "coreapi-cli" = "*"
 
 [requires]
-python_version = "3.6.3"
+python_version = "3.6.4"
 
 [pipenv]
 "allow_prereleases" = true
