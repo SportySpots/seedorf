@@ -358,8 +358,7 @@ pyvenv.cfg
 pip-selfcheck.json
 
 
-
-
+### Seedorf Application
 seedorf/media/
 
 # Added to maintain local compose files which are ignored by something above.
