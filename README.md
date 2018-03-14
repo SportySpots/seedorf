@@ -1,6 +1,8 @@
 # seedorf
 
-[![Build Status](https://travis-ci.org/SportySpots/seedorf.svg?branch=master)](https://travis-ci.org/SportySpots/seedorf) [![Greenkeeper badge](https://badges.greenkeeper.io/SportySpots/seedorf.svg)](https://greenkeeper.io/)
+[![Build Status](https://travis-ci.org/SportySpots/seedorf.svg?branch=master)](https://travis-ci.org/SportySpots/seedorf) [![Greenkeeper badge](https://badges.greenkeeper.io/SportySpots/seedorf.svg)](https://greenkeeper.io/) [![Updates](https://pyup.io/repos/github/SportySpots/seedorf/shield.svg)](https://pyup.io/repos/github/SportySpots/seedorf/) [![Python 3](https://pyup.io/repos/github/SportySpots/seedorf/python-3-shield.svg)](https://pyup.io/repos/github/SportySpots/seedorf/)
+
+
 
 ## Introduction
 Find sporty spots and sporty people near you.
