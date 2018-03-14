@@ -1,11 +1,11 @@
 # seedorf
 
-[![Greenkeeper badge](https://badges.greenkeeper.io/SportySpots/seedorf.svg)](https://greenkeeper.io/)
+[![Build Status](https://travis-ci.org/SportySpots/seedorf.svg?branch=master)](https://travis-ci.org/SportySpots/seedorf) [![Greenkeeper badge](https://badges.greenkeeper.io/SportySpots/seedorf.svg)](https://greenkeeper.io/)
 
 ## Introduction
 Find sporty spots and sporty people near you.
 
-[![Build Status](https://travis-ci.org/SportySpots/seedorf.svg?branch=master)](https://travis-ci.org/SportySpots/seedorf)
+
 
 
 :License: MIT
