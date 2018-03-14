@@ -8,6 +8,13 @@ Find sporty spots and sporty people near you.
 
 :License: MIT
 
+## Requirements
+
+* python = 3.6.4
+* pipenv = 11.7.2
+* docker = 
+* docker-compose = 
+* postgresql = 9.6.8
 
 ## Settings
 
