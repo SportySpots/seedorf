@@ -15,6 +15,7 @@ Find sporty spots and sporty people near you.
 * docker-compose = 
 * postgresql = 9.6.8
 * terraform = v0.11.3
+* git-crypt = 0.6.0
 
 ## Settings
 
@@ -23,7 +24,38 @@ Moved to settings_.
 [settings](http://cookiecutter-django.readthedocs.io/en/latest/settings.html)
 
 
-## Infrastructure
+## Git Crypt
+### Install
+
+```bash
+$ brew install git-crypt
+```
+
+### Introduction
+Git crypt is used encrypt the sensitive data (e.g. *.tfstate). The files encrypted by git-crypt are defined in .gitattributes 
+
+### Generate a new GPG key
+[Github Article](https://help.github.com/articles/generating-a-new-gpg-key/)
+
+### Adding new contributors
+
+```bash
+$ gpg --list-secret-keys --keyid-format LONG
+/Users/hubot/.gnupg/secring.gpg
+------------------------------------
+sec   4096R/3AA5C34371567BD2 2016-03-10 [expires: 2017-03-10]
+uid                          Hubot
+ssb   4096R/42B317FD4BA89E7A 2016-03-10
+
+$ git-crypt add-gpg-user --trusted 3AA5C34371567BD2
+
+```
+
+### Decrypting 
+```bash
+$ cd seedorf
+$ git-crypt unlock
+```
 
 ## Terraform
 
