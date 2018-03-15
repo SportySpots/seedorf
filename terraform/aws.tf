@@ -676,6 +676,8 @@ resource "aws_default_security_group" "eu_central_1_dev" {
 resource "aws_s3_bucket" "logs" {
   region = "${var.default_aws_region}"
   bucket = "sportyspots-logs"
+
+  # REF: https://docs.aws.amazon.com/AmazonS3/latest/dev/acl-overview.html#canned-acl
   acl    = "log-delivery-write"
 
   tags {
@@ -684,7 +686,10 @@ resource "aws_s3_bucket" "logs" {
 }
 
 resource "aws_s3_bucket" "config" {
+  region = "${var.default_aws_region}"
   bucket = "sportyspots-config"
+
+  # REF: https://docs.aws.amazon.com/AmazonS3/latest/dev/acl-overview.html#canned-acl
   acl    = "private"
 
   versioning {
@@ -698,5 +703,53 @@ resource "aws_s3_bucket" "config" {
 
   tags {
     Environment = "ops"
+  }
+}
+
+resource "aws_s3_bucket" "media_prd" {
+  region = "${var.default_aws_region}"
+  bucket = "sportyspots"
+
+  # REF: https://docs.aws.amazon.com/AmazonS3/latest/dev/acl-overview.html#canned-acl
+  acl    = "public-read"
+
+  tags {
+    Environment = "prd"
+  }
+}
+
+resource "aws_s3_bucket" "media_stg" {
+  region = "${var.default_aws_region}"
+  bucket = "sportyspots-stg"
+
+  # REF: https://docs.aws.amazon.com/AmazonS3/latest/dev/acl-overview.html#canned-acl
+  acl    = "public-read"
+
+  tags {
+    Environment = "stg"
+  }
+}
+
+resource "aws_s3_bucket" "media_tst" {
+  region = "${var.default_aws_region}"
+  bucket = "sportyspots-tst"
+
+  # REF: https://docs.aws.amazon.com/AmazonS3/latest/dev/acl-overview.html#canned-acl
+  acl    = "public-read"
+
+  tags {
+    Environment = "tst"
+  }
+}
+
+resource "aws_s3_bucket" "media_dev" {
+  region = "${var.default_aws_region}"
+  bucket = "sportyspots-dev"
+
+  # REF: https://docs.aws.amazon.com/AmazonS3/latest/dev/acl-overview.html#canned-acl
+  acl    = "public-read"
+
+  tags {
+    Environment = "dev"
   }
 }
