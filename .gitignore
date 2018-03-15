@@ -359,9 +359,9 @@ pip-selfcheck.json
 
 ### Terraform
 .terraform
-terraform.tfstate
-terraform.tfstate.backup
 .terraform.tfstate.lock.info
+# terraform.tfstate
+# terraform.tfstate.backup
 
 ### Seedorf Application
 seedorf/media/

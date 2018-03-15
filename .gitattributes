@@ -1,1 +1,11 @@
 * text=auto
+*.key filter=git-crypt diff=git-crypt
+*.tfstate filter=git-crypt diff=git-crypt
+*.tfstate.backup filter=git-crypt diff=git-crypt
+
+# secretfile filter=git-crypt diff=git-crypt
+# *.password filter=git-crypt diff=git-crypt
+# *.env filter=git-crypt diff=git-crypt
+# *.env.json filter=git-crypt diff=git-crypt
+# *.yaml filter=git-crypt diff=git-crypt
+# *.yml filter=git-crypt diff=git-crypt

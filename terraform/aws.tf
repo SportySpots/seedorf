@@ -670,3 +670,33 @@ resource "aws_default_security_group" "eu_central_1_dev" {
     Environment = "dev"
   }
 }
+
+## S3 Buckets
+
+resource "aws_s3_bucket" "logs" {
+  region = "${var.default_aws_region}"
+  bucket = "sportyspots-logs"
+  acl    = "log-delivery-write"
+
+  tags {
+    Environment = "ops"
+  }
+}
+
+resource "aws_s3_bucket" "config" {
+  bucket = "sportyspots-config"
+  acl    = "private"
+
+  versioning {
+    enabled = true
+  }
+
+  logging {
+    target_bucket = "${aws_s3_bucket.logs.id}"
+    target_prefix = "logs/configs/"
+  }
+
+  tags {
+    Environment = "ops"
+  }
+}
