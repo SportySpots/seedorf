@@ -1,6 +1,8 @@
 provider "aws" {
   access_key = "${var.aws_root_access_key_id}"
   secret_key = "${var.aws_root_access_key_secret}"
+
+  # REF: https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-regions-availability-zones.html
   region     = "${var.default_aws_region}"
 }
 
@@ -752,4 +754,83 @@ resource "aws_s3_bucket" "media_dev" {
   tags {
     Environment = "dev"
   }
+}
+
+## Route 53
+
+resource "aws_route53_zone" "prd" {
+  region = "${var.default_aws_region}"
+  name = "sportyspots.com"
+
+  tags {
+    Environment = "prd"
+  }
+}
+
+
+resource "aws_route53_zone" "stg" {
+  region = "${var.default_aws_region}"
+  name = "stg.sportyspots.com"
+
+  tags {
+    Environment = "stg"
+  }
+}
+
+resource "aws_route53_record" "stg-ns" {
+  zone_id = "${aws_route53_zone.prd.zone_id}"
+  name    = "stg.sportyspots.com"
+  type    = "NS"
+  ttl     = "30"
+
+  records = [ "${aws_route53_zone.stg.name_servers.0}",
+              "${aws_route53_zone.stg.name_servers.1}",
+              "${aws_route53_zone.stg.name_servers.2}",
+              "${aws_route53_zone.stg.name_servers.3}"
+            ]
+}
+
+
+resource "aws_route53_zone" "tst" {
+  region = "${var.default_aws_region}"
+  name = "tst.sportyspots.com"
+
+  tags {
+    Environment = "tst"
+  }
+}
+
+resource "aws_route53_record" "tst-ns" {
+  zone_id = "${aws_route53_zone.prd.zone_id}"
+  name    = "tst.sportyspots.com"
+  type    = "NS"
+  ttl     = "30"
+
+  records = [ "${aws_route53_zone.tst.name_servers.0}",
+              "${aws_route53_zone.tst.name_servers.1}",
+              "${aws_route53_zone.tst.name_servers.2}",
+              "${aws_route53_zone.tst.name_servers.3}"
+            ]
+}
+
+resource "aws_route53_zone" "dev" {
+  region = "${var.default_aws_region}"
+  name = "dev.sportyspots.com"
+
+  tags {
+    Environment = "dev"
+  }
+}
+
+resource "aws_route53_record" "dev-ns" {
+  zone_id = "${aws_route53_zone.prd.zone_id}"
+  name    = "dev.sportyspots.com"
+  type    = "NS"
+  ttl     = "30"
+
+  records = [ "${aws_route53_zone.dev.name_servers.0}",
+              "${aws_route53_zone.dev.name_servers.1}",
+              "${aws_route53_zone.dev.name_servers.2}",
+              "${aws_route53_zone.dev.name_servers.3}",
+            ]
 }
