@@ -357,6 +357,11 @@ tags
 pyvenv.cfg
 pip-selfcheck.json
 
+### Terraform
+.terraform
+terraform.tfstate
+terraform.tfstate.backup
+.terraform.tfstate.lock.info
 
 ### Seedorf Application
 seedorf/media/
@@ -364,4 +369,5 @@ seedorf/media/
 # Added to maintain local compose files which are ignored by something above.
 # See issue https://github.com/pydanny/cookiecutter-django/issues/1321
 !/compose/local/
+
 
