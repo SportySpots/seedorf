@@ -7,9 +7,9 @@ name = "pypi"
 
 "argon2-cffi" = { version = "==16.3.0" }
 "awesome-slugify" = { version = "==1.6.5" }
-"boto3" = { version = "==1.4.7" }
+"boto3" = { version = "==1.6.11" }
 "django-allauth" = { version = "==0.33.0" }
-"django-anymail" = { version = "==1.0" }
+"django-anymail" = { version = "==2.0" }
 "django-cities" = { version = "==0.5.0.5" }
 "django-compressor" = { version = "==2.2" }
 "django-crispy-forms" = { version = "==1.6.1" }
@@ -39,19 +39,19 @@ djangorestframework = { version = "==3.7.0" }
 gevent = { version = "==1.2.2" }
 gunicorn = { version = "==19.7.1" }
 hashids = { version = "==1.2.0" }
-markdown = { version = "==2.6.9" }
+markdown = { version = "==2.6.11" }
 nece = { version = "==0.7.5" }
 opbeat = { version = "==3.5.2" }
 pillow = { version = "==4.3.0" }
 pygments = { version = "==2.2.0" }
 pytz = { version = "==2017.2" }
-raven = { version = "==6.2.1" }
+raven = { version = "==6.6.0" }
 rcssmin = { version = "==1.0.6" }
 redis = { version = "==2.10.6" }
 rules = { version = "==1.2.1" }
 wheel = { version = "==0.30.0" }
 whitenoise = { version = "==4.0.b4" }
-zappa = { version = "==0.44.3" }
+zappa = { version = "==0.45.1" }
 
 [dev-packages]
 
@@ -64,9 +64,9 @@ zappa = { version = "==0.44.3" }
 "flake8" = { version = "*" }
 "pytest-django" = { version = "==3.1.2" }
 "pytest-sugar" = { version = "==0.9.0" }
-coverage = { version = "==4.4.1" }
+coverage = { version = "==4.5.1" }
 ipdb = { version = "*" }
-sphinx = { version = "==1.6.4" }
+sphinx = { version = "==1.7.1" }
 
 [requires]
 python_version = "3.6.4"
