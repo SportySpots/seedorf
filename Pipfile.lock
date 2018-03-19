@@ -142,9 +142,9 @@
         },
         "cfn-flip": {
             "hashes": [
-                "sha256:edc8862361d1e91d42016c105be09aee9aaff7443cf78c4f536954eea9fca055"
+                "sha256:9c61039c71995ab204c005ec46d47d0f7a109e9f1b6d63569397f8bc648a8151"
             ],
-            "version": "==1.0.2"
+            "version": "==1.0.3"
         },
         "chardet": {
             "hashes": [
