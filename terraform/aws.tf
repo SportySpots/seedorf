@@ -759,7 +759,7 @@ resource "aws_s3_bucket" "media_dev" {
 ## Route 53
 
 resource "aws_route53_zone" "prd" {
-  region = "${var.default_aws_region}"
+  vpc_region = "${var.default_aws_region}"
   name = "sportyspots.com"
 
   tags {
@@ -769,7 +769,7 @@ resource "aws_route53_zone" "prd" {
 
 
 resource "aws_route53_zone" "stg" {
-  region = "${var.default_aws_region}"
+  vpc_region = "${var.default_aws_region}"
   name = "stg.sportyspots.com"
 
   tags {
@@ -792,7 +792,7 @@ resource "aws_route53_record" "stg-ns" {
 
 
 resource "aws_route53_zone" "tst" {
-  region = "${var.default_aws_region}"
+  vpc_region = "${var.default_aws_region}"
   name = "tst.sportyspots.com"
 
   tags {
@@ -814,7 +814,7 @@ resource "aws_route53_record" "tst-ns" {
 }
 
 resource "aws_route53_zone" "dev" {
-  region = "${var.default_aws_region}"
+  vpc_region = "${var.default_aws_region}"
   name = "dev.sportyspots.com"
 
   tags {
