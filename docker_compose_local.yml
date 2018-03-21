@@ -6,7 +6,7 @@ volumes:
 
 services:
   django: &django
-    container_name: sportyspots-django
+    container_name: sportyspots_django
     build:
       context: .
       dockerfile: ./compose/local/django/Dockerfile
@@ -48,7 +48,7 @@ services:
   celeryworker:
     # https://github.com/docker/compose/issues/3220
     <<: *django
-    container_name: sportyspots-celeryworker
+    container_name: sportyspots_celeryworker
     image: sportyspots-celeryworker:latest
     depends_on:
       - redis
@@ -60,7 +60,7 @@ services:
   celerybeat:
     # https://github.com/docker/compose/issues/3220
     <<: *django
-    container_name: sportyspots-celerybeat
+    container_name: sportyspots_celerybeat
     image: sportyspots-celerybeat:latest
     depends_on:
       - redis
@@ -70,7 +70,7 @@ services:
     command: /start-celerybeat.sh
 
   postgres:
-    container_name: sportyspots-postgres
+    container_name: sportyspots_postgres
     build:
       context: .
       dockerfile: ./compose/production/postgres/Dockerfile
@@ -81,11 +81,11 @@ services:
       - ./.env.local
 
   mailhog:
-    container_name: sportyspots-mailhog
+    container_name: sportyspots_mailhog
     image: mailhog/mailhog:v1.0.0
     ports:
       - "8025:8025"
 
   redis:
-    container_name: sportyspots-redis
+    container_name: sportyspots_redis
     image: redis:4.0
