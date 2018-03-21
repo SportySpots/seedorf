@@ -1,8 +1,6 @@
 provider "aws" {
   access_key = "${var.aws_root_access_key_id}"
   secret_key = "${var.aws_root_access_key_secret}"
-
-  # REF: https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-regions-availability-zones.html
   region     = "${var.default_aws_region}"
 }
 
@@ -756,7 +754,7 @@ resource "aws_s3_bucket" "media_dev" {
   }
 }
 
-## Route 53
+# Route 53 Setup
 
 resource "aws_route53_zone" "prd" {
   vpc_region = "${var.default_aws_region}"
@@ -777,6 +775,24 @@ resource "aws_route53_zone" "stg" {
   }
 }
 
+resource "aws_route53_zone" "tst" {
+  vpc_region = "${var.default_aws_region}"
+  name = "tst.sportyspots.com"
+
+  tags {
+    Environment = "tst"
+  }
+}
+
+resource "aws_route53_zone" "dev" {
+  vpc_region = "${var.default_aws_region}"
+  name = "dev.sportyspots.com"
+
+  tags {
+    Environment = "dev"
+  }
+}
+
 resource "aws_route53_record" "stg-ns" {
   zone_id = "${aws_route53_zone.prd.zone_id}"
   name    = "stg.sportyspots.com"
@@ -788,16 +804,6 @@ resource "aws_route53_record" "stg-ns" {
               "${aws_route53_zone.stg.name_servers.2}",
               "${aws_route53_zone.stg.name_servers.3}"
             ]
-}
-
-
-resource "aws_route53_zone" "tst" {
-  vpc_region = "${var.default_aws_region}"
-  name = "tst.sportyspots.com"
-
-  tags {
-    Environment = "tst"
-  }
 }
 
 resource "aws_route53_record" "tst-ns" {
@@ -813,15 +819,6 @@ resource "aws_route53_record" "tst-ns" {
             ]
 }
 
-resource "aws_route53_zone" "dev" {
-  vpc_region = "${var.default_aws_region}"
-  name = "dev.sportyspots.com"
-
-  tags {
-    Environment = "dev"
-  }
-}
-
 resource "aws_route53_record" "dev-ns" {
   zone_id = "${aws_route53_zone.prd.zone_id}"
   name    = "dev.sportyspots.com"
@@ -834,3 +831,246 @@ resource "aws_route53_record" "dev-ns" {
               "${aws_route53_zone.dev.name_servers.3}",
             ]
 }
+
+resource "aws_route53_record" "root" {
+  zone_id = "${aws_route53_zone.prd.zone_id}"
+  name    = "@"
+  type    = "A"
+  ttl     = "300"
+  records = ["52.85.62.129"]
+}
+
+resource "aws_route53_record" "mx-gandi" {
+  zone_id = "${aws_route53_zone.prd.zone_id}"
+  name    = "@"
+  type    = "MX"
+  ttl     = "300"
+  records = [
+    "10 spool.mail.gandi.net.",
+    "50 fb.mail.gandi.net."
+  ]
+}
+
+resource "aws_route53_record" "txt-gandi-spf" {
+  zone_id = "${aws_route53_zone.prd.zone_id}"
+  name    = "@"
+  type    = "TXT"
+  ttl     = "300"
+  records = [
+    "v=spf1 include:_mailcust.gandi.net ?all"
+  ]
+}
+
+resource "aws_route53_record" "txt-google-verification" {
+  zone_id = "${aws_route53_zone.prd.zone_id}"
+  name    = "@"
+  type    = "TXT"
+  ttl     = "300"
+  records = [
+    "google-site-verification=Rrn1qnVhrS32n_FVJQgcyRqfueBCv9cZSGDow-2KETs"
+  ]
+}
+
+resource "aws_route53_record" "cname-imap" {
+  zone_id = "${aws_route53_zone.prd.zone_id}"
+  name    = "imap"
+  type    = "CNAME"
+  ttl     = "300"
+  records = ["mail.gandi.net."]
+}
+
+resource "aws_route53_record" "cname-mail" {
+  zone_id = "${aws_route53_zone.prd.zone_id}"
+  name    = "mail"
+  type    = "CNAME"
+  ttl     = "300"
+  records = ["webmail.gandi.net."]
+}
+
+resource "aws_route53_record" "cname-pop" {
+  zone_id = "${aws_route53_zone.prd.zone_id}"
+  name    = "pop"
+  type    = "CNAME"
+  ttl     = "300"
+  records = ["mail.gandi.net."]
+}
+
+#resource "aws_route53_record" "cname-www" {
+#  zone_id = "${aws_route53_zone.prd.zone_id}"
+#  name    = "www"
+#  type    = "CNAME"
+#  ttl     = "300"
+#  records = ["d1wlhp2yjktro3.cloudfront.net."]
+#}
+
+#resource "aws_route53_record" "cname-cloudfront-website-acm-validation-1" {
+#  zone_id = "${aws_route53_zone.prd.zone_id}"
+#  name    = "_cefcb3fef89a600535ada5f1acd9cbc8.www"
+#  type    = "CNAME"
+#  ttl     = "300"
+#  records = ["_d087855d050e7e17fac3d28a6ed043f0.acm-validations.aws."]
+#}
+
+#resource "aws_route53_record" "cname-cloudfront-website-acm-validation-2" {
+#  zone_id = "${aws_route53_zone.prd.zone_id}"
+#  name    = "_f27fb96223e454b8147243095cec387c"
+#  type    = "CNAME"
+#  ttl     = "300"
+#  records = ["_6a8ea2983012ac9ec9a56074ed6923d6.acm-validations.aws."]
+#}
+
+## IAM Setup
+
+### IAM Groups
+resource "aws_iam_group" "admins" {
+  name = "admins"
+}
+
+# devops user without access to console
+resource "aws_iam_group" "devops" {
+  name = "devops"
+}
+
+resource "aws_iam_group" "developers" {
+  name = "developers"
+}
+
+
+### IAM Users
+resource "aws_iam_user" "ashutosh" {
+  name          = "ashutosh"
+  force_destroy = true
+}
+
+resource "aws_iam_user_login_profile" "ashutosh" {
+  user    = "${aws_iam_user.ashutosh.name}"
+  pgp_key = "keybase:ashutoshb"
+}
+
+output "iam_user_ashutosh_password" {
+  value = "${aws_iam_user_login_profile.ashutosh.encrypted_password}"
+}
+
+resource "aws_iam_user_ssh_key" "ashutosh" {
+  username   = "${aws_iam_user.ashutosh.name}"
+  encoding   = "SSH"
+  public_key = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC9BkSIa5SGn1Mj8RJxYppkthUd8JchlhKjqrfm0t/p9bEgcUCJ4IG1h1MiMM+zhEDH5K07D5tYaAR0xUS98s/KG/Kecb5Mtc9G2Agsy7abV5sQ7UpYzC+0ziYPh4tpVGBT67YIrYaRDDNkq+3JbzPw6F7dae3avcJo9XfSK4B8VxPFpaHzs5RWL6/yFf4270Z2KYRDtFgNONnf1KmGgFmmrUn65HWCxhHipFjBJtwrjufBO1WST4WBeRETfAl9nsu/xsEoaCG0q6L72wW6gJ6a6Msx3aSO2OM4SKlnosRIHidpc2PbHkzCYjwSXOUatIK98F/QefqlnOQ7J6AKCKal ashutoshb@gmail.com"
+}
+
+
+### IAM User Group Membership
+resource "aws_iam_group_membership" "admins" {
+  name = "admin-group-membership"
+
+  users = [
+    "${aws_iam_user.ashutosh.name}"
+  ]
+
+  group = "${aws_iam_group.admins.name}"
+}
+
+
+## ACM - AWS Certificate Manager
+#resource "aws_acm_certificate" "wildcard" {
+#  domain_name = "*.sportyspots.com"
+#  validation_method = "DNS"
+#
+#  tags {
+#    Environment = "prd"
+#  }
+#}
+
+#resource "aws_acm_certificate" "stg" {
+#  domain_name = "stg.sportyspots.com"
+#  validation_method = "DNS"
+#  subject_alternative_names = [
+#    "api.stg.sportyspots.com",
+#    "www.stg.sportyspots.com"
+#  ]
+#
+#  tags {
+#    Environment = "stg"
+#  }
+#}
+
+#resource "aws_acm_certificate" "tst" {
+#  domain_name = "tst.sportyspots.com"
+#  validation_method = "DNS"
+#  subject_alternative_names = [
+#    "api.tst.sportyspots.com",
+#    "www.tst.sportyspots.com"
+#  ]
+#
+# tags {
+#    Environment = "tst"
+#  }
+#}
+
+#resource "aws_acm_certificate" "dev" {
+#  domain_name = "dev.sportyspots.com"
+#  validation_method = "DNS"
+#  subject_alternative_names = [
+#    "api.dev.sportyspots.com",
+#    "www.dev.sportyspots.com"
+#  ]
+#
+#  tags {
+#    Environment = "dev"
+#  }
+#}
+
+### prd cert validation
+#resource "aws_route53_record" "wildcard-cert-validation" {
+#  name = "${aws_acm_certificate.wildcard.domain_validation_options.0.resource_record_name}"
+#  type = "${aws_acm_certificate.wildcard.domain_validation_options.0.resource_record_type}"
+#  zone_id = "${aws_route53_zone.prd.id}"
+#  records = ["${aws_acm_certificate.wildcard.domain_validation_options.0.resource_record_value}"]
+#  ttl = 60
+#}
+
+#resource "aws_acm_certificate_validation" "wildcard-cert" {
+#  certificate_arn = "${aws_acm_certificate.wildcard.arn}"
+#  validation_record_fqdns = ["${aws_route53_record.wildcard-cert-validation.fqdn}"]
+#}
+
+### stg cert validation
+#resource "aws_route53_record" "stg-cert-validation" {
+#  name = "${aws_acm_certificate.stg.domain_validation_options.0.resource_record_name}"
+#  type = "${aws_acm_certificate.stg.domain_validation_options.0.resource_record_type}"
+#  zone_id = "${aws_route53_zone.stg.id}"
+#  records = ["${aws_acm_certificate.stg.domain_validation_options.0.resource_record_value}"]
+#  ttl = 60
+#}
+
+#resource "aws_acm_certificate_validation" "stg-cert" {
+#  certificate_arn = "${aws_acm_certificate.stg.arn}"
+#  validation_record_fqdns = ["${aws_route53_record.stg-cert-validation.fqdn}"]
+#}
+
+### tst cert validation
+#resource "aws_route53_record" "tst-cert-validation" {
+#  name = "${aws_acm_certificate.tst.domain_validation_options.0.resource_record_name}"
+#  type = "${aws_acm_certificate.tst.domain_validation_options.0.resource_record_type}"
+#  zone_id = "${aws_route53_zone.tst.id}"
+#  records = ["${aws_acm_certificate.tst.domain_validation_options.0.resource_record_value}"]
+#  ttl = 60
+#}
+
+#resource "aws_acm_certificate_validation" "tst-cert" {
+#  certificate_arn = "${aws_acm_certificate.tst.arn}"
+#  validation_record_fqdns = ["${aws_route53_record.tst-cert-validation.fqdn}"]
+#}
+
+### dev cert validation
+#resource "aws_route53_record" "dev-cert-validation" {
+#  name = "${aws_acm_certificate.dev.domain_validation_options.0.resource_record_name}"
+#  type = "${aws_acm_certificate.dev.domain_validation_options.0.resource_record_type}"
+#  zone_id = "${aws_route53_zone.dev.id}"
+#  records = ["${aws_acm_certificate.dev.domain_validation_options.0.resource_record_value}"]
+#  ttl = 60
+#}
+
+#resource "aws_acm_certificate_validation" "dev-cert" {
+#  certificate_arn = "${aws_acm_certificate.dev.arn}"
+#  validation_record_fqdns = ["${aws_route53_record.dev-cert-validation.fqdn}"]
+#}
