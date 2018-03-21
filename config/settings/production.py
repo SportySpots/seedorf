@@ -5,10 +5,7 @@ Production Configurations
 - Use Amazon's S3 for storing uploaded media
 - Use mailgun to send emails
 - Use Redis for cache
-
 - Use sentry for error logging
-
-
 - Use opbeat for error reporting
 
 """
@@ -127,7 +124,7 @@ COMPRESS_ENABLED = env.bool('COMPRESS_ENABLED', default=True)
 # ------------------------------------------------------------------------------
 DEFAULT_FROM_EMAIL = env('DJANGO_DEFAULT_FROM_EMAIL',
                          default='SportySpots <noreply@sportyspots.com>')
-EMAIL_SUBJECT_PREFIX = env('DJANGO_EMAIL_SUBJECT_PREFIX', default='[seedorf]')
+EMAIL_SUBJECT_PREFIX = env('DJANGO_EMAIL_SUBJECT_PREFIX', default='[SportySpots]')
 SERVER_EMAIL = env('DJANGO_SERVER_EMAIL', default=DEFAULT_FROM_EMAIL)
 
 # Anymail with Mailgun
