@@ -1,8 +1,8 @@
-version: '2'
+version: '3'
 
 volumes:
-  postgres_data: {}
-  postgres_backup: {}
+  sportyspots_postgres_data: {}
+  sportyspots_postgres_backup: {}
   caddy: {}
 
 services:
@@ -11,19 +11,9 @@ services:
       context: .
       dockerfile: ./compose/production/django/Dockerfile
     depends_on:
-      - postgres
       - redis
     env_file: .env
     command: /gunicorn.sh
-
-  postgres:
-    build:
-      context: .
-      dockerfile: ./compose/production/postgres/Dockerfile
-    volumes:
-      - postgres_data:/var/lib/postgresql/data
-      - postgres_backup:/backups
-    env_file: .env
 
   caddy:
     build:
@@ -39,7 +29,7 @@ services:
       - "0.0.0.0:443:443"
 
   redis:
-    image: redis:3.0
+    image: redis:4.0
 
   celeryworker:
     <<: *django
@@ -51,7 +41,6 @@ services:
   celerybeat:
     <<: *django
     depends_on:
-      - postgres
       - redis
     command: /start-celerybeat.sh
 

@@ -961,6 +961,85 @@ resource "aws_iam_group_membership" "admins" {
 }
 
 
+## ECR
+
+resource "aws_ecr_repository" "sportyspots" {
+  name = "sportyspots"
+}
+
+resource "aws_ecr_repository_policy" "sportyspots" {
+  repository = "${aws_ecr_repository.sportyspots.name}"
+
+  policy = <<EOF
+{
+    "Version": "2008-10-17",
+    "Statement": [
+        {
+            "Sid": "AllowAll",
+            "Effect": "Allow",
+            "Principal": "*",
+            "Action": [
+                "ecr:*",
+            ]
+        }
+    ]
+}
+EOF
+}
+
+resource "aws_ecr_lifecycle_policy" "untagged" {
+  repository = "${aws_ecr_repository.sportyspots.name}"
+
+  policy = <<EOF
+{
+    "rules": [
+        {
+            "rulePriority": 1,
+            "description": "Expire images older than 14 days",
+            "selection": {
+                "tagStatus": "untagged",
+                "countType": "sinceImagePushed",
+                "countUnit": "days",
+                "countNumber": 14
+            },
+            "action": {
+                "type": "expire"
+            }
+        }
+    ]
+}
+EOF
+}
+
+resource "aws_ecr_lifecycle_policy" "tagged" {
+  repository = "${aws_ecr_repository.sportyspots.name}"
+
+  policy = <<EOF
+{
+    "rules": [
+        {
+            "rulePriority": 1,
+            "description": "Keep last 30 images",
+            "selection": {
+                "tagStatus": "tagged",
+                "tagPrefixList": ["v"],
+                "countType": "imageCountMoreThan",
+                "countNumber": 30
+            },
+            "action": {
+                "type": "expire"
+            }
+        }
+    ]
+}
+EOF
+}
+
+resource "aws_ecs_cluster" "seedorf" {
+  name = "seedorf"
+}
+
+
 ## Elastic Beanstalk
 
 #resource "aws_elastic_beanstalk_application" "prd" {

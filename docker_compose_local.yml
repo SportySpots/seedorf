@@ -12,7 +12,7 @@ services:
       dockerfile: ./compose/local/django/Dockerfile
     image: sportyspots-django:latest
     depends_on:
-      - postgres
+      - redis
       - mailhog
     volumes:
       - .:/app
@@ -52,7 +52,6 @@ services:
     image: sportyspots-celeryworker:latest
     depends_on:
       - redis
-      - postgres
       - mailhog
     ports: []
     command: /start-celeryworker.sh
@@ -64,21 +63,10 @@ services:
     image: sportyspots-celerybeat:latest
     depends_on:
       - redis
-      - postgres
       - mailhog
     ports: []
     command: /start-celerybeat.sh
 
-  postgres:
-    container_name: sportyspots_postgres
-    build:
-      context: .
-      dockerfile: ./compose/production/postgres/Dockerfile
-    volumes:
-      - sportyspots_postgres_data_local:/var/lib/postgresql/data
-      - sportyspots_postgres_backup_local:/backups
-    env_file:
-      - ./.env.local
 
   mailhog:
     container_name: sportyspots_mailhog

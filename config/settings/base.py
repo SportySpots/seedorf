@@ -43,6 +43,7 @@ DJANGO_APPS = [
 
     # Admin
     'django.contrib.admin',
+
     # Additional support for Full text search, JSONB Field, HSTORE Field
     'django.contrib.postgres',
     'django.contrib.gis',
@@ -66,6 +67,7 @@ THIRD_PARTY_APPS = [
 LOCAL_APPS = [
     # custom users app
     'seedorf.users.apps.UsersConfig',
+
     # Your stuff: custom apps go here
     'seedorf.games.apps.GamesConfig',
     'seedorf.locations.apps.LocationsConfig',
@@ -115,7 +117,7 @@ EMAIL_BACKEND = env('DJANGO_EMAIL_BACKEND', default='django.core.mail.backends.s
 # ------------------------------------------------------------------------------
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#admins
 ADMINS = [
-    ("""Ashutosh Bandiwdekar""", 'ashutoshb@gmail.com'),
+    ('Admin - SportySpots', 'admin@sportyspots.com'),
 ]
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#managers
@@ -126,20 +128,10 @@ MANAGERS = ADMINS
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#databases
 # Uses django-environ to accept uri format
 # See: https://django-environ.readthedocs.io/en/latest/#supported-types
-# DATABASES = {
-#     'default': env.db('DATABASE_URL', default='postgres:///seedorf'),
-# }
 DATABASES = {
     'default': env.db('DATABASE_URL', default='postgis:///seedorf'),
 }
 DATABASES['default']['ENGINE'] = 'django.contrib.gis.db.backends.postgis'
-# DATABASES = {
-#     'default': {
-#         'NAME': 'seedorf',
-#         'ENGINE': 'django.contrib.gis.db.backends.postgis',
-#         'DATABASE_URL': env.db('DATABASE_URL', default='postgres:///seedorf'),
-#     }
-# }
 DATABASES['default']['ATOMIC_REQUESTS'] = True
 
 

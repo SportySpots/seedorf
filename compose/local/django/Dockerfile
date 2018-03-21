@@ -1,7 +1,7 @@
-FROM python:3.6.3
+FROM python:3.6.4
 
 
-# TODO: refer to see below, for non-root user
+# TODO: see below, for non-root user
 # REF: https://github.com/docker-library/redis/blob/master/4.0/Dockerfile
 # REF: https://github.com/docker-library/postgres/blob/master/10/Dockerfile
 
@@ -49,7 +49,7 @@ RUN apt-get update \
 
 # Pipfile.lock has to be pulled and installed here, otherwise caching won't work
 COPY Pipfile.lock /Pipfile.lock
-RUN pip install pipenv==9.0.1 && \
+RUN pip install pipenv==9.0.2 && \
     pipenv install --dev --deploy --system --three --ignore-pipfile
 
 COPY ./compose/production/django/entrypoint.sh /entrypoint.sh

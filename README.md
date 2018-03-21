@@ -124,6 +124,28 @@ $ terraform init
 | eu-west-1    | eu-west-1c        | 10.13.32.0/20 | 10.13.32.0 | 10.13.47.255 | 4096      | DEV |
 
 
+## Docker
+
+### Commands
+
+Build and run local docker compose setup
+
+```bash
+$ docker-compose -f docker_compose_local.yml up -d
+``` 
+
+Stop setup
+
+```bash
+$ docker-compose -f docker_compose_local.yml down
+```
+
+Create superuser 
+
+```bash
+$ docker-compose -f docker_compose_local.yml run django python manage.py createsuperuser --username admin --email admin@sportyspots.com
+```
+
 
 ## Basic Commands
 
