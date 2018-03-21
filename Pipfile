@@ -1,38 +1,40 @@
 [[source]]
+
 url = "https://pypi.python.org/simple"
 verify_ssl = true
 name = "pypi"
 
+
 [packages]
 
-"argon2-cffi" = { version = "==16.3.0" }
-"awesome-slugify" = { version = "==1.6.5" }
-"boto3" = { version = "==1.6.11" }
-"django-allauth" = { version = "==0.33.0" }
-"django-anymail" = { version = "==2.0" }
-"django-cities" = { version = "==0.5.0.5" }
-"django-compressor" = { version = "==2.2" }
-"django-crispy-forms" = { version = "==1.6.1" }
-"django-elasticsearch-dsl" = { version = "==0.4.0" }
-"django-environ" = { version = "==0.4.4" }
-"django-filter" = { version = "==1.0.4" }
-"django-guardian" = { version = "==1.4.9" }
-"django-haystack" = { version = "==2.7.dev0" }
-"django-redis" = { version = "==4.8.0" }
-"django-rest-auth" = { version = "==0.9.2" }
-"django-rest-elasticsearch" = { version = "==0.3.2" }
-"django-rest-swagger" = { version = "==2.1.2" }
-"django-storages" = { version = "==1.6.5" }
-"djangorestframework-jwt" = { version = "==1.11.0" }
-"drf-extensions" = { version = "==0.3.1" }
-"drf-openapi" = { version = "==1.0.0" }
-"elasticsearch-dsl" = { version = "==5.3.0" }
-"graphene-django" = "*"
-"psycopg2" = { version = "==2.7.3.1" }
 # "django-oauth-toolkit" = "*"
 # "django-rest-framework-social-oauth2" = "*"
 # "social-auth-app-django" = "*"
 celery = { version = "==4.1.0" }
+"argon2-cffi" = { version = "==16.3.0" }
+awesome-slugify = { version = "==1.6.5" }
+"boto3" = { version = "==1.6.11" }
+django-allauth = { version = "==0.33.0" }
+django-anymail = { version = "==2.0" }
+django-cities = { version = "==0.5.0.5" }
+django-compressor = { version = "==2.2" }
+django-crispy-forms = { version = "==1.6.1" }
+django-elasticsearch-dsl = { version = "==0.4.0" }
+django-environ = { version = "==0.4.4" }
+django-filter = { version = "==1.0.4" }
+django-guardian = { version = "==1.4.9" }
+django-haystack = { version = "==2.7.dev0" }
+django-redis = { version = "==4.8.0" }
+django-rest-auth = { version = "==0.9.2" }
+django-rest-elasticsearch = { version = "==0.3.2" }
+django-rest-swagger = { version = "==2.1.2" }
+django-storages = { version = "==1.6.5" }
+djangorestframework-jwt = { version = "==1.11.0" }
+drf-extensions = { version = "==0.3.1" }
+drf-openapi = { version = "==1.0.0" }
+elasticsearch-dsl = { version = "==5.3.0" }
+graphene-django = "*"
+"psycopg2" = { version = "==2.7.3.1" }
 coreapi = { version = "==2.3.3" }
 django = { version = "==1.11.6" }
 djangorestframework = { version = "==3.7.0" }
@@ -53,23 +55,29 @@ wheel = { version = "==0.30.0" }
 whitenoise = { version = "==4.0.b4" }
 zappa = { version = "==0.45.1" }
 
+
 [dev-packages]
 
-"coreapi-cli" = "*"
-"django-coverage-plugin" = { version = "==1.5.1a0" }
-"django-debug-toolbar" = { version = "==1.8" }
-"django-extensions" = { version = "==1.9.1" }
-"django-test-plus" = { version = "==1.0.18" }
-"factory-boy" = { version = "==2.9.2" }
+coreapi-cli = "*"
+django-coverage-plugin = { version = "==1.5.1a0" }
+django-debug-toolbar = { version = "==1.8" }
+django-extensions = { version = "==1.9.1" }
+django-test-plus = { version = "==1.0.18" }
+factory-boy = { version = "==2.9.2" }
 "flake8" = { version = "*" }
-"pytest-django" = { version = "==3.1.2" }
-"pytest-sugar" = { version = "==0.9.0" }
+pytest-django = { version = "==3.1.2" }
+pytest-sugar = { version = "==0.9.0" }
 coverage = { version = "==4.5.1" }
 ipdb = { version = "*" }
 sphinx = { version = "==1.7.1" }
+awsebcli = "*"
+
 
 [requires]
+
 python_version = "3.6.4"
 
+
 [pipenv]
+
 "allow_prereleases" = true
