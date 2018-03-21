@@ -886,29 +886,29 @@ resource "aws_route53_record" "cname-pop" {
   records = ["mail.gandi.net."]
 }
 
-#resource "aws_route53_record" "cname-www" {
-#  zone_id = "${aws_route53_zone.prd.zone_id}"
-#  name    = "www"
-#  type    = "CNAME"
-#  ttl     = "300"
-#  records = ["d1wlhp2yjktro3.cloudfront.net."]
-#}
+resource "aws_route53_record" "cname-www" {
+  zone_id = "${aws_route53_zone.prd.zone_id}"
+  name    = "www"
+  type    = "CNAME"
+  ttl     = "300"
+  records = ["d1wlhp2yjktro3.cloudfront.net."]
+}
 
-#resource "aws_route53_record" "cname-cloudfront-website-acm-validation-1" {
-#  zone_id = "${aws_route53_zone.prd.zone_id}"
-#  name    = "_cefcb3fef89a600535ada5f1acd9cbc8.www"
-#  type    = "CNAME"
-#  ttl     = "300"
-#  records = ["_d087855d050e7e17fac3d28a6ed043f0.acm-validations.aws."]
-#}
+resource "aws_route53_record" "cname-cloudfront-website-acm-validation-1" {
+  zone_id = "${aws_route53_zone.prd.zone_id}"
+  name    = "_cefcb3fef89a600535ada5f1acd9cbc8.www"
+  type    = "CNAME"
+  ttl     = "300"
+  records = ["_d087855d050e7e17fac3d28a6ed043f0.acm-validations.aws."]
+}
 
-#resource "aws_route53_record" "cname-cloudfront-website-acm-validation-2" {
-#  zone_id = "${aws_route53_zone.prd.zone_id}"
-#  name    = "_f27fb96223e454b8147243095cec387c"
-#  type    = "CNAME"
-#  ttl     = "300"
-#  records = ["_6a8ea2983012ac9ec9a56074ed6923d6.acm-validations.aws."]
-#}
+resource "aws_route53_record" "cname-cloudfront-website-acm-validation-2" {
+  zone_id = "${aws_route53_zone.prd.zone_id}"
+  name    = "_f27fb96223e454b8147243095cec387c"
+  type    = "CNAME"
+  ttl     = "300"
+  records = ["_6a8ea2983012ac9ec9a56074ed6923d6.acm-validations.aws."]
+}
 
 ## IAM Setup
 
