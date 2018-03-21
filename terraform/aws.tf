@@ -834,7 +834,7 @@ resource "aws_route53_record" "dev-ns" {
 
 resource "aws_route53_record" "root" {
   zone_id = "${aws_route53_zone.prd.zone_id}"
-  name    = "@"
+  name    = ""
   type    = "A"
   ttl     = "300"
   records = ["52.85.62.129"]
@@ -842,7 +842,7 @@ resource "aws_route53_record" "root" {
 
 resource "aws_route53_record" "mx-gandi" {
   zone_id = "${aws_route53_zone.prd.zone_id}"
-  name    = "@"
+  name    = ""
   type    = "MX"
   ttl     = "300"
   records = [
@@ -851,23 +851,14 @@ resource "aws_route53_record" "mx-gandi" {
   ]
 }
 
-resource "aws_route53_record" "txt-gandi-spf" {
+resource "aws_route53_record" "txt" {
   zone_id = "${aws_route53_zone.prd.zone_id}"
-  name    = "@"
+  name    = ""
   type    = "TXT"
   ttl     = "300"
   records = [
+    "google-site-verification=Rrn1qnVhrS32n_FVJQgcyRqfueBCv9cZSGDow-2KETs",
     "v=spf1 include:_mailcust.gandi.net ?all"
-  ]
-}
-
-resource "aws_route53_record" "txt-google-verification" {
-  zone_id = "${aws_route53_zone.prd.zone_id}"
-  name    = "@"
-  type    = "TXT"
-  ttl     = "300"
-  records = [
-    "google-site-verification=Rrn1qnVhrS32n_FVJQgcyRqfueBCv9cZSGDow-2KETs"
   ]
 }
 
@@ -968,6 +959,15 @@ resource "aws_iam_group_membership" "admins" {
 
   group = "${aws_iam_group.admins.name}"
 }
+
+
+## Elastic Beanstalk
+
+#resource "aws_elastic_beanstalk_application" "prd" {
+#  name        = "sportyspots-prd"
+#  description = "SportySpots Production Application"
+#}
+
 
 
 ## ACM - AWS Certificate Manager
