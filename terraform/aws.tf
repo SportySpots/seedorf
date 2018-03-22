@@ -673,21 +673,57 @@ resource "aws_default_security_group" "eu_central_1_dev" {
 
 ## S3 Buckets
 
-resource "aws_s3_bucket" "logs" {
+resource "aws_s3_bucket" "prd_logs" {
   region = "${var.default_aws_region}"
-  bucket = "sportyspots-logs"
+  bucket = "sportyspots-prd-logs"
 
   # REF: https://docs.aws.amazon.com/AmazonS3/latest/dev/acl-overview.html#canned-acl
   acl    = "log-delivery-write"
 
   tags {
-    Environment = "ops"
+    Environment = "prd"
   }
 }
 
-resource "aws_s3_bucket" "config" {
+resource "aws_s3_bucket" "stg_logs" {
   region = "${var.default_aws_region}"
-  bucket = "sportyspots-config"
+  bucket = "sportyspots-stg-logs"
+
+  # REF: https://docs.aws.amazon.com/AmazonS3/latest/dev/acl-overview.html#canned-acl
+  acl    = "log-delivery-write"
+
+  tags {
+    Environment = "stg"
+  }
+}
+
+resource "aws_s3_bucket" "tst_logs" {
+  region = "${var.default_aws_region}"
+  bucket = "sportyspots-tst-logs"
+
+  # REF: https://docs.aws.amazon.com/AmazonS3/latest/dev/acl-overview.html#canned-acl
+  acl    = "log-delivery-write"
+
+  tags {
+    Environment = "tst"
+  }
+}
+
+resource "aws_s3_bucket" "dev_logs" {
+  region = "${var.default_aws_region}"
+  bucket = "sportyspots-dev-logs"
+
+  # REF: https://docs.aws.amazon.com/AmazonS3/latest/dev/acl-overview.html#canned-acl
+  acl    = "log-delivery-write"
+
+  tags {
+    Environment = "dev"
+  }
+}
+
+resource "aws_s3_bucket" "prd_config" {
+  region = "${var.default_aws_region}"
+  bucket = "sportyspots-prd-config"
 
   # REF: https://docs.aws.amazon.com/AmazonS3/latest/dev/acl-overview.html#canned-acl
   acl    = "private"
@@ -697,12 +733,76 @@ resource "aws_s3_bucket" "config" {
   }
 
   logging {
-    target_bucket = "${aws_s3_bucket.logs.id}"
-    target_prefix = "logs/configs/"
+    target_bucket = "${aws_s3_bucket.prd_logs.id}"
+    target_prefix = "prd/logs/configs/"
   }
 
   tags {
-    Environment = "ops"
+    Environment = "prd"
+  }
+}
+
+
+resource "aws_s3_bucket" "stg_config" {
+  region = "${var.default_aws_region}"
+  bucket = "sportyspots-stg-config"
+
+  # REF: https://docs.aws.amazon.com/AmazonS3/latest/dev/acl-overview.html#canned-acl
+  acl    = "private"
+
+  versioning {
+    enabled = true
+  }
+
+  logging {
+    target_bucket = "${aws_s3_bucket.stg_logs.id}"
+    target_prefix = "stg/logs/configs/"
+  }
+
+  tags {
+    Environment = "stg"
+  }
+}
+
+resource "aws_s3_bucket" "tst_config" {
+  region = "${var.default_aws_region}"
+  bucket = "sportyspots-tst-config"
+
+  # REF: https://docs.aws.amazon.com/AmazonS3/latest/dev/acl-overview.html#canned-acl
+  acl    = "private"
+
+  versioning {
+    enabled = true
+  }
+
+  logging {
+    target_bucket = "${aws_s3_bucket.tst_logs.id}"
+    target_prefix = "tst/logs/configs/"
+  }
+
+  tags {
+    Environment = "tst"
+  }
+}
+
+resource "aws_s3_bucket" "dev_config" {
+  region = "${var.default_aws_region}"
+  bucket = "sportyspots-dev-config"
+
+  # REF: https://docs.aws.amazon.com/AmazonS3/latest/dev/acl-overview.html#canned-acl
+  acl    = "private"
+
+  versioning {
+    enabled = true
+  }
+
+  logging {
+    target_bucket = "${aws_s3_bucket.dev_logs.id}"
+    target_prefix = "dev/logs/configs/"
+  }
+
+  tags {
+    Environment = "dev"
   }
 }
 
@@ -961,6 +1061,83 @@ resource "aws_iam_group_membership" "admins" {
 }
 
 
+
+### IAM Roles
+
+#### Power User
+resource "aws_iam_role" "power_user_access_role" {
+  name = "power-user-access-role"
+  path = "/"
+  assume_role_policy = <<EOF
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Action": "sts:AssumeRole",
+      "Principal": {
+        "Service": "ec2.amazonaws.com"
+      },
+      "Effect": "Allow",
+      "Sid": ""
+    }
+  ]
+}
+EOF
+}
+
+resource "aws_iam_role_policy_attachment" "power_user_access_attach" {
+    role       = "${aws_iam_role.power_user_access_role.name}"
+    policy_arn = "arn:aws:iam::aws:policy/PowerUserAccess"
+}
+
+resource "aws_iam_instance_profile" "power_user_access_profile" {
+  name  = "power-user-access-profile"
+  role = "${aws_iam_role.power_user_access_role.name}"
+}
+
+#### Elastic Beanstalk Role
+resource "aws_iam_role" "elastic_beanstalk_role" {
+  name = "elastic-beanstalk-role"
+  path = "/"
+  assume_role_policy = <<EOF
+{
+    "Version": "2012-10-17",
+    "Statement": [
+      {
+        "Sid": "",
+        "Effect": "Allow",
+        "Principal": {
+          "Service": "elasticbeanstalk.amazonaws.com"
+        },
+        "Action": "sts:AssumeRole",
+        "Condition": {
+          "StringEquals": {
+            "sts:ExternalId": "elasticbeanstalk"
+          }
+        }
+      }
+    ]
+}
+EOF
+}
+
+resource "aws_iam_role_policy_attachment" "elastic_beanstalk_service_attach" {
+    role       = "${aws_iam_role.elastic_beanstalk_role.name}"
+    policy_arn = "arn:aws:iam::aws:policy/service-role/AWSElasticBeanstalkService"
+}
+
+resource "aws_iam_role_policy_attachment" "elastic_beanstalk_enhanced_health_attach" {
+    role       = "${aws_iam_role.elastic_beanstalk_role.name}"
+    policy_arn = "arn:aws:iam::aws:policy/service-role/AWSElasticBeanstalkEnhancedHealth"
+}
+
+resource "aws_iam_instance_profile" "elastic_beanstalk_profile" {
+  name  = "elastic-beanstalk-profile"
+  role = "${aws_iam_role.elastic_beanstalk_role.name}"
+}
+
+
+
 ## ECR
 
 resource "aws_ecr_repository" "sportyspots" {
@@ -979,7 +1156,20 @@ resource "aws_ecr_repository_policy" "sportyspots" {
             "Effect": "Allow",
             "Principal": "*",
             "Action": [
-                "ecr:*",
+                "ecr:GetDownloadUrlForLayer",
+                "ecr:BatchGetImage",
+                "ecr:BatchCheckLayerAvailability",
+                "ecr:PutImage",
+                "ecr:InitiateLayerUpload",
+                "ecr:UploadLayerPart",
+                "ecr:CompleteLayerUpload",
+                "ecr:DescribeRepositories",
+                "ecr:GetRepositoryPolicy",
+                "ecr:ListImages",
+                "ecr:DeleteRepository",
+                "ecr:BatchDeleteImage",
+                "ecr:SetRepositoryPolicy",
+                "ecr:DeleteRepositoryPolicy"
             ]
         }
     ]
@@ -1035,121 +1225,272 @@ resource "aws_ecr_lifecycle_policy" "tagged" {
 EOF
 }
 
+
+/*
+## ECS
 resource "aws_ecs_cluster" "seedorf" {
   name = "seedorf"
 }
+*/
 
-
+/*
 ## Elastic Beanstalk
 
-#resource "aws_elastic_beanstalk_application" "prd" {
-#  name        = "sportyspots-prd"
-#  description = "SportySpots Production Application"
-#}
+resource "aws_elastic_beanstalk_application" "sportyspots" {
+  name        = "sportyspots"
+  description = "SportySpots Production Application"
+}
+
+resource "aws_elastic_beanstalk_environment" "prd" {
+  name                = "sportyspots-prd"
+  application         = "${aws_elastic_beanstalk_application.sportyspots.name}"
+  solution_stack_name = "64bit Amazon Linux 2017.09 v2.9.0 running Multi-container Docker 17.12.0-ce (Generic)"
+  cname_prefix = "sportyspots"
+  tier = "WebServer"
+  version_label = "latest"
+
+  # REF: https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/command-options-general.html#command-options-general-autoscalingasg
+  setting {
+    namespace = "aws:autoscaling:asg"
+    name = "Availability Zones"
+    value = "Any 1"
+  }
+
+  setting {
+    namespace = "aws:autoscaling:asg"
+    name = "Custom Availability Zones"
+    value = "eu-central-1"
+  }
+
+  setting {
+    namespace = "aws:autoscaling:asg"
+    name = "MinSize"
+    value = "1"
+  }
+
+  setting {
+    namespace = "aws:autoscaling:asg"
+    name = "MaxSize"
+    value = "4"
+  }
+
+  setting {
+    namespace = "aws:autoscaling:launchconfiguration"
+    name = "EC2KeyName"
+    value = ""
+  }
+
+  setting {
+    namespace = "aws:autoscaling:launchconfiguration"
+    name = "IamInstanceProfile"
+    value = ""
+  }
 
 
+  setting {
+    namespace = "aws:autoscaling:launchconfiguration"
+    name = "InstanceType"
+    value = "t1.micro"
+  }
 
+
+  setting {
+    namespace = "aws:autoscaling:launchconfiguration"
+    name = "SecurityGroups"
+    value = ""
+  }
+
+
+  setting {
+    namespace = "aws:ec2:vpc"
+    name      = "VPCId"
+    value     = "${aws_vpc.eu_central_1_prd.id}"
+  }
+
+  setting {
+    namespace = "aws:ec2:vpc"
+    name      = "Subnets"
+    value     = "${aws_subnet.eu_central_1a_prd.id},${aws_subnet.eu_central_1b_prd},${aws_subnet.eu_central_1c_prd}"
+  }
+
+  setting {
+    namespace = "aws:ec2:vpc"
+    name = "ELBSubnets"
+    value = "${aws_subnet.eu_central_1a_prd.id},${aws_subnet.eu_central_1b_prd},${aws_subnet.eu_central_1c_prd}"
+  }
+
+  setting {
+    namespace = "aws:ec2:vpc"
+    name = "AssociatePublicIpAddress"
+    value = "true"
+  }
+
+  setting {
+    namespace = "aws:elasticbeanstalk:application"
+    name = "Application Healthcheck URL"
+    value = "HTTPS:443/"
+  }
+
+  # TODO: Add extra env variables here
+  setting {
+    namespace = "aws:elasticbeanstalk:application:environment"
+    name = "ENV"
+    value = "prd"
+  }
+
+  setting {
+    namespace = "aws:elasticbeanstalk:cloudwatch:logs"
+    name = "RetentionInDays"
+    value = "90"
+  }
+
+  setting {
+    name = "DeploymentPolicy"
+    namespace = "aws:elasticbeanstalk:command"
+    value = "AllAtOnce"
+  }
+
+  setting {
+    name = "LogPublicationControl"
+    namespace = "aws:elasticbeanstalk:hostmanager"
+    value = "true"
+  }
+
+  setting {
+    name = "ManagedActionsEnabled"
+    namespace = "aws:elasticbeanstalk:managedactions"
+    value = "true"
+  }
+
+  setting {
+    name = "PreferredStartTime"
+    namespace = "aws:elasticbeanstalk:managedactions"
+    value = "Sun:07:00"
+  }
+
+  setting {
+    name = "UpdateLevel"
+    namespace = "aws:elasticbeanstalk:managedactions:platformupdate"
+    value = "minor"
+  }
+
+  setting {
+    name = "InstanceRefreshEnabled"
+    namespace = "aws:elasticbeanstalk:managedactions:platformupdate"
+    value = "true"
+  }
+
+  tags {
+    Environment = "prd"
+  }
+}
+*/
+
+/*
 ## ACM - AWS Certificate Manager
-#resource "aws_acm_certificate" "wildcard" {
-#  domain_name = "*.sportyspots.com"
-#  validation_method = "DNS"
-#
-#  tags {
-#    Environment = "prd"
-#  }
-#}
+resource "aws_acm_certificate" "wildcard" {
+  domain_name = "*.sportyspots.com"
+  validation_method = "DNS"
 
-#resource "aws_acm_certificate" "stg" {
-#  domain_name = "stg.sportyspots.com"
-#  validation_method = "DNS"
-#  subject_alternative_names = [
-#    "api.stg.sportyspots.com",
-#    "www.stg.sportyspots.com"
-#  ]
-#
-#  tags {
-#    Environment = "stg"
-#  }
-#}
+  tags {
+    Environment = "prd"
+  }
+}
 
-#resource "aws_acm_certificate" "tst" {
-#  domain_name = "tst.sportyspots.com"
-#  validation_method = "DNS"
-#  subject_alternative_names = [
-#    "api.tst.sportyspots.com",
-#    "www.tst.sportyspots.com"
-#  ]
-#
-# tags {
-#    Environment = "tst"
-#  }
-#}
+resource "aws_acm_certificate" "stg" {
+  domain_name = "stg.sportyspots.com"
+  validation_method = "DNS"
+  subject_alternative_names = [
+    "api.stg.sportyspots.com",
+    "www.stg.sportyspots.com"
+  ]
 
-#resource "aws_acm_certificate" "dev" {
-#  domain_name = "dev.sportyspots.com"
-#  validation_method = "DNS"
-#  subject_alternative_names = [
-#    "api.dev.sportyspots.com",
-#    "www.dev.sportyspots.com"
-#  ]
-#
-#  tags {
-#    Environment = "dev"
-#  }
-#}
+  tags {
+    Environment = "stg"
+  }
+}
+
+resource "aws_acm_certificate" "tst" {
+  domain_name = "tst.sportyspots.com"
+  validation_method = "DNS"
+  subject_alternative_names = [
+    "api.tst.sportyspots.com",
+    "www.tst.sportyspots.com"
+  ]
+
+ tags {
+    Environment = "tst"
+  }
+}
+
+resource "aws_acm_certificate" "dev" {
+  domain_name = "dev.sportyspots.com"
+  validation_method = "DNS"
+  subject_alternative_names = [
+    "api.dev.sportyspots.com",
+    "www.dev.sportyspots.com"
+  ]
+
+  tags {
+    Environment = "dev"
+  }
+}
+
 
 ### prd cert validation
-#resource "aws_route53_record" "wildcard-cert-validation" {
-#  name = "${aws_acm_certificate.wildcard.domain_validation_options.0.resource_record_name}"
-#  type = "${aws_acm_certificate.wildcard.domain_validation_options.0.resource_record_type}"
-#  zone_id = "${aws_route53_zone.prd.id}"
-#  records = ["${aws_acm_certificate.wildcard.domain_validation_options.0.resource_record_value}"]
-#  ttl = 60
-#}
+resource "aws_route53_record" "wildcard-cert-validation" {
+  name = "${aws_acm_certificate.wildcard.domain_validation_options.0.resource_record_name}"
+  type = "${aws_acm_certificate.wildcard.domain_validation_options.0.resource_record_type}"
+  zone_id = "${aws_route53_zone.prd.id}"
+  records = ["${aws_acm_certificate.wildcard.domain_validation_options.0.resource_record_value}"]
+  ttl = 60
+}
 
-#resource "aws_acm_certificate_validation" "wildcard-cert" {
-#  certificate_arn = "${aws_acm_certificate.wildcard.arn}"
-#  validation_record_fqdns = ["${aws_route53_record.wildcard-cert-validation.fqdn}"]
-#}
+resource "aws_acm_certificate_validation" "wildcard-cert" {
+  certificate_arn = "${aws_acm_certificate.wildcard.arn}"
+  validation_record_fqdns = ["${aws_route53_record.wildcard-cert-validation.fqdn}"]
+}
 
 ### stg cert validation
-#resource "aws_route53_record" "stg-cert-validation" {
-#  name = "${aws_acm_certificate.stg.domain_validation_options.0.resource_record_name}"
-#  type = "${aws_acm_certificate.stg.domain_validation_options.0.resource_record_type}"
-#  zone_id = "${aws_route53_zone.stg.id}"
-#  records = ["${aws_acm_certificate.stg.domain_validation_options.0.resource_record_value}"]
-#  ttl = 60
-#}
+resource "aws_route53_record" "stg-cert-validation" {
+  name = "${aws_acm_certificate.stg.domain_validation_options.0.resource_record_name}"
+  type = "${aws_acm_certificate.stg.domain_validation_options.0.resource_record_type}"
+  zone_id = "${aws_route53_zone.stg.id}"
+  records = ["${aws_acm_certificate.stg.domain_validation_options.0.resource_record_value}"]
+  ttl = 60
+}
 
-#resource "aws_acm_certificate_validation" "stg-cert" {
-#  certificate_arn = "${aws_acm_certificate.stg.arn}"
-#  validation_record_fqdns = ["${aws_route53_record.stg-cert-validation.fqdn}"]
-#}
+resource "aws_acm_certificate_validation" "stg-cert" {
+  certificate_arn = "${aws_acm_certificate.stg.arn}"
+  validation_record_fqdns = ["${aws_route53_record.stg-cert-validation.fqdn}"]
+}
 
 ### tst cert validation
-#resource "aws_route53_record" "tst-cert-validation" {
-#  name = "${aws_acm_certificate.tst.domain_validation_options.0.resource_record_name}"
-#  type = "${aws_acm_certificate.tst.domain_validation_options.0.resource_record_type}"
-#  zone_id = "${aws_route53_zone.tst.id}"
-#  records = ["${aws_acm_certificate.tst.domain_validation_options.0.resource_record_value}"]
-#  ttl = 60
-#}
+resource "aws_route53_record" "tst-cert-validation" {
+  name = "${aws_acm_certificate.tst.domain_validation_options.0.resource_record_name}"
+  type = "${aws_acm_certificate.tst.domain_validation_options.0.resource_record_type}"
+  zone_id = "${aws_route53_zone.tst.id}"
+  records = ["${aws_acm_certificate.tst.domain_validation_options.0.resource_record_value}"]
+  ttl = 60
+}
 
-#resource "aws_acm_certificate_validation" "tst-cert" {
-#  certificate_arn = "${aws_acm_certificate.tst.arn}"
-#  validation_record_fqdns = ["${aws_route53_record.tst-cert-validation.fqdn}"]
-#}
+resource "aws_acm_certificate_validation" "tst-cert" {
+  certificate_arn = "${aws_acm_certificate.tst.arn}"
+  validation_record_fqdns = ["${aws_route53_record.tst-cert-validation.fqdn}"]
+}
 
 ### dev cert validation
-#resource "aws_route53_record" "dev-cert-validation" {
-#  name = "${aws_acm_certificate.dev.domain_validation_options.0.resource_record_name}"
-#  type = "${aws_acm_certificate.dev.domain_validation_options.0.resource_record_type}"
-#  zone_id = "${aws_route53_zone.dev.id}"
-#  records = ["${aws_acm_certificate.dev.domain_validation_options.0.resource_record_value}"]
-#  ttl = 60
-#}
+resource "aws_route53_record" "dev-cert-validation" {
+  name = "${aws_acm_certificate.dev.domain_validation_options.0.resource_record_name}"
+  type = "${aws_acm_certificate.dev.domain_validation_options.0.resource_record_type}"
+  zone_id = "${aws_route53_zone.dev.id}"
+  records = ["${aws_acm_certificate.dev.domain_validation_options.0.resource_record_value}"]
+  ttl = 60
+}
 
-#resource "aws_acm_certificate_validation" "dev-cert" {
-#  certificate_arn = "${aws_acm_certificate.dev.arn}"
-#  validation_record_fqdns = ["${aws_route53_record.dev-cert-validation.fqdn}"]
-#}
+resource "aws_acm_certificate_validation" "dev-cert" {
+  certificate_arn = "${aws_acm_certificate.dev.arn}"
+  validation_record_fqdns = ["${aws_route53_record.dev-cert-validation.fqdn}"]
+}
+
+*/
