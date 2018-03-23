@@ -71,6 +71,7 @@ coverage = { version = "==4.5.1" }
 ipdb = { version = "*" }
 sphinx = { version = "==1.7.1" }
 awsebcli = "*"
+awscli = "*"
 
 
 [requires]

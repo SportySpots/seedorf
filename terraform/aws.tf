@@ -854,6 +854,18 @@ resource "aws_s3_bucket" "media_dev" {
   }
 }
 
+resource "aws_s3_bucket" "elastic_beanstalk_prd" {
+  region = "${var.default_aws_region}"
+  bucket = "sportyspots-prd-elastic-beanstalk"
+
+  # REF: https://docs.aws.amazon.com/AmazonS3/latest/dev/acl-overview.html#canned-acl
+  acl    = "private"
+
+  tags {
+    Environment = "prd"
+  }
+}
+
 # Route 53 Setup
 
 resource "aws_route53_zone" "prd" {
@@ -1008,6 +1020,14 @@ resource "aws_route53_record" "cname-cloudfront-website-acm-validation-2" {
   type    = "CNAME"
   ttl     = "300"
   records = ["_6a8ea2983012ac9ec9a56074ed6923d6.acm-validations.aws."]
+}
+
+
+## EC2
+
+resource "aws_key_pair" "sportyspots-admin" {
+  key_name   = "sportyspots-admin"
+  public_key = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDJSFjROcg5VfsaXftlbAj+HC1eV5Ht25unibQqZ2c3ye+PtmeACy6p1TmNsQPMMZ+24zWSgtx8X8XSDhrgTb6IFjmEdBaEaXm8pYY+5OwafTHGR1UV9CZ8Qrog9Xikz3ufU0DRPgFkGyrlwMHHRx7bb2EAa9GMtzISwlSNwvOSZ1RusdnF5Oh+DhoiQ2mS4Z7DzfiqP3NVK5oQ7tIS+kGjxGzDV33RYO18MWU1pqG2PyozYQqthy1WEqwT85t6QnYu+62jA9qUaeKXpI8eqZ7xU74oT7MTuqUjJxMZ087GI6WcEg/5fCqZuXQ3iB3CGuMSdEXVsaPxId2PqLQM+D+Gf0G224N9yVyXSsAQuMKkwN4iKXBf+U+TRnL09H+BnQLZISkv8ZTA1iggxVqCF/Sjq8L4hDZLSRbAbUjJr3GxYjR8mq/SjFGOsO0y3W1wQQuOm0T9AE34WEWq38gyF+bW9xoKz7AXqG58Zy7vdOQvsXrDW8sUFIfGa8imraHSlzHJQBPALEDeU6+qeOXz83scE3P+O+QMC0StodkkFC0RAlxejibr1S92FdDCsmfWBihCY6WCnFSIlb8gkI1mEkGUvzzrR15RrRblhMXIM07W0BAeIFKUYcPxya5EIzmjBbo73BPTSYsLKya6i/f5qEwt2vKJKRBrsb7HPCUIVa1Lnw== admin@sportyspots.com"
 }
 
 ## IAM Setup
@@ -1177,7 +1197,7 @@ resource "aws_ecr_repository_policy" "sportyspots" {
 EOF
 }
 
-resource "aws_ecr_lifecycle_policy" "untagged" {
+resource "aws_ecr_lifecycle_policy" "expiry_tagged_untagged" {
   repository = "${aws_ecr_repository.sportyspots.name}"
 
   policy = <<EOF
@@ -1195,12 +1215,26 @@ resource "aws_ecr_lifecycle_policy" "untagged" {
             "action": {
                 "type": "expire"
             }
+        },
+        {
+            "rulePriority": 2,
+            "description": "Keep last 30 images",
+            "selection": {
+                "tagStatus": "tagged",
+                "tagPrefixList": ["v"],
+                "countType": "imageCountMoreThan",
+                "countNumber": 30
+            },
+            "action": {
+                "type": "expire"
+            }
         }
     ]
 }
 EOF
 }
 
+/*
 resource "aws_ecr_lifecycle_policy" "tagged" {
   repository = "${aws_ecr_repository.sportyspots.name}"
 
@@ -1224,12 +1258,36 @@ resource "aws_ecr_lifecycle_policy" "tagged" {
 }
 EOF
 }
+*/
 
+## ACM - AWS Certificate Manager
+resource "aws_acm_certificate" "wildcard" {
+  domain_name = "*.sportyspots.com"
+  validation_method = "DNS"
+
+  tags {
+    Environment = "prd"
+  }
+}
+
+### prd cert validation
+resource "aws_route53_record" "wildcard-cert-validation" {
+  name = "${aws_acm_certificate.wildcard.domain_validation_options.0.resource_record_name}"
+  type = "${aws_acm_certificate.wildcard.domain_validation_options.0.resource_record_type}"
+  zone_id = "${aws_route53_zone.prd.id}"
+  records = ["${aws_acm_certificate.wildcard.domain_validation_options.0.resource_record_value}"]
+  ttl = 60
+}
+
+resource "aws_acm_certificate_validation" "wildcard-cert" {
+  certificate_arn = "${aws_acm_certificate.wildcard.arn}"
+  validation_record_fqdns = ["${aws_route53_record.wildcard-cert-validation.fqdn}"]
+}
 
 /*
 ## ECS
-resource "aws_ecs_cluster" "seedorf" {
-  name = "seedorf"
+resource "aws_ecs_cluster" "sportyspots" {
+  name = "sportyspots"
 }
 */
 
@@ -1242,12 +1300,12 @@ resource "aws_elastic_beanstalk_application" "sportyspots" {
 }
 
 resource "aws_elastic_beanstalk_environment" "prd" {
-  name                = "sportyspots-prd"
-  application         = "${aws_elastic_beanstalk_application.sportyspots.name}"
-  solution_stack_name = "64bit Amazon Linux 2017.09 v2.9.0 running Multi-container Docker 17.12.0-ce (Generic)"
+  name = "sportyspots-prd"
+  application = "${aws_elastic_beanstalk_application.sportyspots.name}"
   cname_prefix = "sportyspots"
+  solution_stack_name = "64bit Amazon Linux 2017.09 v2.9.1 running Multi-container Docker 17.12.0-ce (Generic)"
   tier = "WebServer"
-  version_label = "latest"
+  # version_label = "latest"
 
   # REF: https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/command-options-general.html#command-options-general-autoscalingasg
   setting {
@@ -1256,11 +1314,11 @@ resource "aws_elastic_beanstalk_environment" "prd" {
     value = "Any 1"
   }
 
-  setting {
-    namespace = "aws:autoscaling:asg"
-    name = "Custom Availability Zones"
-    value = "eu-central-1"
-  }
+  #setting {
+  #  namespace = "aws:autoscaling:asg"
+  #  name = "Custom Availability Zones"
+  #  value = "eu-central-1"
+  #}
 
   setting {
     namespace = "aws:autoscaling:asg"
@@ -1271,33 +1329,31 @@ resource "aws_elastic_beanstalk_environment" "prd" {
   setting {
     namespace = "aws:autoscaling:asg"
     name = "MaxSize"
-    value = "4"
+    value = "2"
   }
 
   setting {
     namespace = "aws:autoscaling:launchconfiguration"
     name = "EC2KeyName"
-    value = ""
+    value = "${aws_key_pair.sportyspots-admin.key_name}"
   }
 
   setting {
     namespace = "aws:autoscaling:launchconfiguration"
     name = "IamInstanceProfile"
-    value = ""
+    value = "${aws_iam_instance_profile.elastic_beanstalk_profile.arn}"
   }
-
 
   setting {
     namespace = "aws:autoscaling:launchconfiguration"
     name = "InstanceType"
-    value = "t1.micro"
+    value = "t2.micro"
   }
-
 
   setting {
     namespace = "aws:autoscaling:launchconfiguration"
     name = "SecurityGroups"
-    value = ""
+    value = "${aws_default_security_group.eu_central_1_prd.id}"
   }
 
 
@@ -1310,13 +1366,13 @@ resource "aws_elastic_beanstalk_environment" "prd" {
   setting {
     namespace = "aws:ec2:vpc"
     name      = "Subnets"
-    value     = "${aws_subnet.eu_central_1a_prd.id},${aws_subnet.eu_central_1b_prd},${aws_subnet.eu_central_1c_prd}"
+    value     = "${aws_subnet.eu_central_1a_prd.id},${aws_subnet.eu_central_1b_prd.id},${aws_subnet.eu_central_1c_prd.id}"
   }
 
   setting {
     namespace = "aws:ec2:vpc"
     name = "ELBSubnets"
-    value = "${aws_subnet.eu_central_1a_prd.id},${aws_subnet.eu_central_1b_prd},${aws_subnet.eu_central_1c_prd}"
+    value = "${aws_subnet.eu_central_1a_prd.id},${aws_subnet.eu_central_1b_prd.id},${aws_subnet.eu_central_1c_prd.id}"
   }
 
   setting {
@@ -1351,8 +1407,26 @@ resource "aws_elastic_beanstalk_environment" "prd" {
   }
 
   setting {
-    name = "LogPublicationControl"
+    namespace = "aws:elasticbeanstalk:environment"
+    name = "ServiceRole"
+    value = "${aws_iam_role.elastic_beanstalk_role.name}"
+  }
+
+  setting {
+    namespace = "aws:elasticbeanstalk:environment"
+    name = "LoadBalancerType"
+    value = "application"
+  }
+
+  setting {
+    namespace = "aws:elasticbeanstalk:healthreporting:system"
+    name = "SystemType"
+    value = "enhanced"
+  }
+
+  setting {
     namespace = "aws:elasticbeanstalk:hostmanager"
+    name = "LogPublicationControl"
     value = "true"
   }
 
@@ -1363,20 +1437,20 @@ resource "aws_elastic_beanstalk_environment" "prd" {
   }
 
   setting {
-    name = "PreferredStartTime"
     namespace = "aws:elasticbeanstalk:managedactions"
+    name = "PreferredStartTime"
     value = "Sun:07:00"
   }
 
   setting {
-    name = "UpdateLevel"
     namespace = "aws:elasticbeanstalk:managedactions:platformupdate"
+    name = "UpdateLevel"
     value = "minor"
   }
 
   setting {
-    name = "InstanceRefreshEnabled"
     namespace = "aws:elasticbeanstalk:managedactions:platformupdate"
+    name = "InstanceRefreshEnabled"
     value = "true"
   }
 
@@ -1386,17 +1460,10 @@ resource "aws_elastic_beanstalk_environment" "prd" {
 }
 */
 
+
+
+
 /*
-## ACM - AWS Certificate Manager
-resource "aws_acm_certificate" "wildcard" {
-  domain_name = "*.sportyspots.com"
-  validation_method = "DNS"
-
-  tags {
-    Environment = "prd"
-  }
-}
-
 resource "aws_acm_certificate" "stg" {
   domain_name = "stg.sportyspots.com"
   validation_method = "DNS"
@@ -1435,22 +1502,9 @@ resource "aws_acm_certificate" "dev" {
     Environment = "dev"
   }
 }
+*/
 
-
-### prd cert validation
-resource "aws_route53_record" "wildcard-cert-validation" {
-  name = "${aws_acm_certificate.wildcard.domain_validation_options.0.resource_record_name}"
-  type = "${aws_acm_certificate.wildcard.domain_validation_options.0.resource_record_type}"
-  zone_id = "${aws_route53_zone.prd.id}"
-  records = ["${aws_acm_certificate.wildcard.domain_validation_options.0.resource_record_value}"]
-  ttl = 60
-}
-
-resource "aws_acm_certificate_validation" "wildcard-cert" {
-  certificate_arn = "${aws_acm_certificate.wildcard.arn}"
-  validation_record_fqdns = ["${aws_route53_record.wildcard-cert-validation.fqdn}"]
-}
-
+/*
 ### stg cert validation
 resource "aws_route53_record" "stg-cert-validation" {
   name = "${aws_acm_certificate.stg.domain_validation_options.0.resource_record_name}"
