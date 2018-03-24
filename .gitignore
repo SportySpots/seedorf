@@ -371,3 +371,8 @@ seedorf/media/
 !/compose/local/
 
 
+
+# Elastic Beanstalk Files
+.elasticbeanstalk/*
+!.elasticbeanstalk/*.cfg.yml
+!.elasticbeanstalk/*.global.yml
