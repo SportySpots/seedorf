@@ -175,8 +175,6 @@ resource "aws_subnet" "eu_central_1c_prd" {
 }
 
 
-
-
 # Subnet - eu-central-1[a,b,c] - stg
 
 resource "aws_subnet" "eu_central_1a_stg" {
@@ -399,6 +397,11 @@ resource "aws_subnet" "eu_central_1c_dev" {
 resource "aws_default_route_table" "eu_central_1_prd" {
   default_route_table_id = "${aws_vpc.eu_central_1_prd.default_route_table_id}"
 
+  route {
+    cidr_block = "0.0.0.0/0"
+    gateway_id = "${aws_internet_gateway.eu_central_1_prd.id}"
+  }
+
   tags {
     Environment = "prd"
   }
@@ -406,6 +409,11 @@ resource "aws_default_route_table" "eu_central_1_prd" {
 
 resource "aws_default_route_table" "eu_central_1_stg" {
   default_route_table_id = "${aws_vpc.eu_central_1_stg.default_route_table_id}"
+
+  route {
+    cidr_block = "0.0.0.0/0"
+    gateway_id = "${aws_internet_gateway.eu_central_1_stg.id}"
+  }
 
   tags {
     Environment = "stg"
@@ -415,6 +423,11 @@ resource "aws_default_route_table" "eu_central_1_stg" {
 resource "aws_default_route_table" "eu_central_1_tst" {
   default_route_table_id = "${aws_vpc.eu_central_1_tst.default_route_table_id}"
 
+  route {
+    cidr_block = "0.0.0.0/0"
+    gateway_id = "${aws_internet_gateway.eu_central_1_tst.id}"
+  }
+
   tags {
     Environment = "tst"
   }
@@ -422,6 +435,11 @@ resource "aws_default_route_table" "eu_central_1_tst" {
 
 resource "aws_default_route_table" "eu_central_1_dev" {
   default_route_table_id = "${aws_vpc.eu_central_1_dev.default_route_table_id}"
+
+  route {
+    cidr_block = "0.0.0.0/0"
+    gateway_id = "${aws_internet_gateway.eu_central_1_dev.id}"
+  }
 
   tags {
     Environment = "dev"
@@ -587,9 +605,9 @@ resource "aws_default_security_group" "eu_central_1_prd" {
 
   ingress {
     protocol  = -1
-    self      = true
     from_port = 0
     to_port   = 0
+    cidr_blocks = ["0.0.0.0/0"]
   }
 
   egress {
@@ -671,7 +689,7 @@ resource "aws_default_security_group" "eu_central_1_dev" {
   }
 }
 
-## S3 Buckets
+# S3 Buckets
 
 resource "aws_s3_bucket" "prd_logs" {
   region = "${var.default_aws_region}"
@@ -1022,144 +1040,7 @@ resource "aws_route53_record" "cname-cloudfront-website-acm-validation-2" {
   records = ["_6a8ea2983012ac9ec9a56074ed6923d6.acm-validations.aws."]
 }
 
-
-## EC2
-
-resource "aws_key_pair" "sportyspots-admin" {
-  key_name   = "sportyspots-admin"
-  public_key = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDJSFjROcg5VfsaXftlbAj+HC1eV5Ht25unibQqZ2c3ye+PtmeACy6p1TmNsQPMMZ+24zWSgtx8X8XSDhrgTb6IFjmEdBaEaXm8pYY+5OwafTHGR1UV9CZ8Qrog9Xikz3ufU0DRPgFkGyrlwMHHRx7bb2EAa9GMtzISwlSNwvOSZ1RusdnF5Oh+DhoiQ2mS4Z7DzfiqP3NVK5oQ7tIS+kGjxGzDV33RYO18MWU1pqG2PyozYQqthy1WEqwT85t6QnYu+62jA9qUaeKXpI8eqZ7xU74oT7MTuqUjJxMZ087GI6WcEg/5fCqZuXQ3iB3CGuMSdEXVsaPxId2PqLQM+D+Gf0G224N9yVyXSsAQuMKkwN4iKXBf+U+TRnL09H+BnQLZISkv8ZTA1iggxVqCF/Sjq8L4hDZLSRbAbUjJr3GxYjR8mq/SjFGOsO0y3W1wQQuOm0T9AE34WEWq38gyF+bW9xoKz7AXqG58Zy7vdOQvsXrDW8sUFIfGa8imraHSlzHJQBPALEDeU6+qeOXz83scE3P+O+QMC0StodkkFC0RAlxejibr1S92FdDCsmfWBihCY6WCnFSIlb8gkI1mEkGUvzzrR15RrRblhMXIM07W0BAeIFKUYcPxya5EIzmjBbo73BPTSYsLKya6i/f5qEwt2vKJKRBrsb7HPCUIVa1Lnw== admin@sportyspots.com"
-}
-
-## IAM Setup
-
-### IAM Groups
-resource "aws_iam_group" "admins" {
-  name = "admins"
-}
-
-# devops user without access to console
-resource "aws_iam_group" "devops" {
-  name = "devops"
-}
-
-resource "aws_iam_group" "developers" {
-  name = "developers"
-}
-
-
-### IAM Users
-resource "aws_iam_user" "ashutosh" {
-  name          = "ashutosh"
-  force_destroy = true
-}
-
-resource "aws_iam_user_login_profile" "ashutosh" {
-  user    = "${aws_iam_user.ashutosh.name}"
-  pgp_key = "keybase:ashutoshb"
-}
-
-output "iam_user_ashutosh_password" {
-  value = "${aws_iam_user_login_profile.ashutosh.encrypted_password}"
-}
-
-resource "aws_iam_user_ssh_key" "ashutosh" {
-  username   = "${aws_iam_user.ashutosh.name}"
-  encoding   = "SSH"
-  public_key = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC9BkSIa5SGn1Mj8RJxYppkthUd8JchlhKjqrfm0t/p9bEgcUCJ4IG1h1MiMM+zhEDH5K07D5tYaAR0xUS98s/KG/Kecb5Mtc9G2Agsy7abV5sQ7UpYzC+0ziYPh4tpVGBT67YIrYaRDDNkq+3JbzPw6F7dae3avcJo9XfSK4B8VxPFpaHzs5RWL6/yFf4270Z2KYRDtFgNONnf1KmGgFmmrUn65HWCxhHipFjBJtwrjufBO1WST4WBeRETfAl9nsu/xsEoaCG0q6L72wW6gJ6a6Msx3aSO2OM4SKlnosRIHidpc2PbHkzCYjwSXOUatIK98F/QefqlnOQ7J6AKCKal ashutoshb@gmail.com"
-}
-
-
-### IAM User Group Membership
-resource "aws_iam_group_membership" "admins" {
-  name = "admin-group-membership"
-
-  users = [
-    "${aws_iam_user.ashutosh.name}"
-  ]
-
-  group = "${aws_iam_group.admins.name}"
-}
-
-
-
-### IAM Roles
-
-#### Power User
-resource "aws_iam_role" "power_user_access_role" {
-  name = "power-user-access-role"
-  path = "/"
-  assume_role_policy = <<EOF
-{
-  "Version": "2012-10-17",
-  "Statement": [
-    {
-      "Action": "sts:AssumeRole",
-      "Principal": {
-        "Service": "ec2.amazonaws.com"
-      },
-      "Effect": "Allow",
-      "Sid": ""
-    }
-  ]
-}
-EOF
-}
-
-resource "aws_iam_role_policy_attachment" "power_user_access_attach" {
-    role       = "${aws_iam_role.power_user_access_role.name}"
-    policy_arn = "arn:aws:iam::aws:policy/PowerUserAccess"
-}
-
-resource "aws_iam_instance_profile" "power_user_access_profile" {
-  name  = "power-user-access-profile"
-  role = "${aws_iam_role.power_user_access_role.name}"
-}
-
-#### Elastic Beanstalk Role
-resource "aws_iam_role" "elastic_beanstalk_role" {
-  name = "elastic-beanstalk-role"
-  path = "/"
-  assume_role_policy = <<EOF
-{
-    "Version": "2012-10-17",
-    "Statement": [
-      {
-        "Sid": "",
-        "Effect": "Allow",
-        "Principal": {
-          "Service": "elasticbeanstalk.amazonaws.com"
-        },
-        "Action": "sts:AssumeRole",
-        "Condition": {
-          "StringEquals": {
-            "sts:ExternalId": "elasticbeanstalk"
-          }
-        }
-      }
-    ]
-}
-EOF
-}
-
-resource "aws_iam_role_policy_attachment" "elastic_beanstalk_service_attach" {
-    role       = "${aws_iam_role.elastic_beanstalk_role.name}"
-    policy_arn = "arn:aws:iam::aws:policy/service-role/AWSElasticBeanstalkService"
-}
-
-resource "aws_iam_role_policy_attachment" "elastic_beanstalk_enhanced_health_attach" {
-    role       = "${aws_iam_role.elastic_beanstalk_role.name}"
-    policy_arn = "arn:aws:iam::aws:policy/service-role/AWSElasticBeanstalkEnhancedHealth"
-}
-
-resource "aws_iam_instance_profile" "elastic_beanstalk_profile" {
-  name  = "elastic-beanstalk-profile"
-  role = "${aws_iam_role.elastic_beanstalk_role.name}"
-}
-
-
-
-## ECR
-
+# ECR
 resource "aws_ecr_repository" "sportyspots" {
   name = "sportyspots"
 }
@@ -1234,33 +1115,7 @@ resource "aws_ecr_lifecycle_policy" "expiry_tagged_untagged" {
 EOF
 }
 
-/*
-resource "aws_ecr_lifecycle_policy" "tagged" {
-  repository = "${aws_ecr_repository.sportyspots.name}"
-
-  policy = <<EOF
-{
-    "rules": [
-        {
-            "rulePriority": 1,
-            "description": "Keep last 30 images",
-            "selection": {
-                "tagStatus": "tagged",
-                "tagPrefixList": ["v"],
-                "countType": "imageCountMoreThan",
-                "countNumber": 30
-            },
-            "action": {
-                "type": "expire"
-            }
-        }
-    ]
-}
-EOF
-}
-*/
-
-## ACM - AWS Certificate Manager
+# ACM - AWS Certificate Manager
 resource "aws_acm_certificate" "wildcard" {
   domain_name = "*.sportyspots.com"
   validation_method = "DNS"
@@ -1284,6 +1139,371 @@ resource "aws_acm_certificate_validation" "wildcard-cert" {
   validation_record_fqdns = ["${aws_route53_record.wildcard-cert-validation.fqdn}"]
 }
 
+
+## EC2
+resource "aws_key_pair" "sportyspots-admin" {
+  key_name   = "sportyspots-admin"
+  public_key = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDJSFjROcg5VfsaXftlbAj+HC1eV5Ht25unibQqZ2c3ye+PtmeACy6p1TmNsQPMMZ+24zWSgtx8X8XSDhrgTb6IFjmEdBaEaXm8pYY+5OwafTHGR1UV9CZ8Qrog9Xikz3ufU0DRPgFkGyrlwMHHRx7bb2EAa9GMtzISwlSNwvOSZ1RusdnF5Oh+DhoiQ2mS4Z7DzfiqP3NVK5oQ7tIS+kGjxGzDV33RYO18MWU1pqG2PyozYQqthy1WEqwT85t6QnYu+62jA9qUaeKXpI8eqZ7xU74oT7MTuqUjJxMZ087GI6WcEg/5fCqZuXQ3iB3CGuMSdEXVsaPxId2PqLQM+D+Gf0G224N9yVyXSsAQuMKkwN4iKXBf+U+TRnL09H+BnQLZISkv8ZTA1iggxVqCF/Sjq8L4hDZLSRbAbUjJr3GxYjR8mq/SjFGOsO0y3W1wQQuOm0T9AE34WEWq38gyF+bW9xoKz7AXqG58Zy7vdOQvsXrDW8sUFIfGa8imraHSlzHJQBPALEDeU6+qeOXz83scE3P+O+QMC0StodkkFC0RAlxejibr1S92FdDCsmfWBihCY6WCnFSIlb8gkI1mEkGUvzzrR15RrRblhMXIM07W0BAeIFKUYcPxya5EIzmjBbo73BPTSYsLKya6i/f5qEwt2vKJKRBrsb7HPCUIVa1Lnw== admin@sportyspots.com"
+}
+
+## IAM Setup
+
+### IAM Groups
+resource "aws_iam_group" "admins" {
+  name = "admins"
+}
+
+# devops user without access to console
+resource "aws_iam_group" "devops" {
+  name = "devops"
+}
+
+resource "aws_iam_group" "developers" {
+  name = "developers"
+}
+
+
+### IAM Users
+resource "aws_iam_user" "ashutosh" {
+  name          = "ashutosh"
+  force_destroy = true
+}
+
+resource "aws_iam_user_login_profile" "ashutosh" {
+  user    = "${aws_iam_user.ashutosh.name}"
+  pgp_key = "keybase:ashutoshb"
+}
+
+output "iam_user_ashutosh_password" {
+  value = "${aws_iam_user_login_profile.ashutosh.encrypted_password}"
+}
+
+resource "aws_iam_user_ssh_key" "ashutosh" {
+  username   = "${aws_iam_user.ashutosh.name}"
+  encoding   = "SSH"
+  public_key = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC9BkSIa5SGn1Mj8RJxYppkthUd8JchlhKjqrfm0t/p9bEgcUCJ4IG1h1MiMM+zhEDH5K07D5tYaAR0xUS98s/KG/Kecb5Mtc9G2Agsy7abV5sQ7UpYzC+0ziYPh4tpVGBT67YIrYaRDDNkq+3JbzPw6F7dae3avcJo9XfSK4B8VxPFpaHzs5RWL6/yFf4270Z2KYRDtFgNONnf1KmGgFmmrUn65HWCxhHipFjBJtwrjufBO1WST4WBeRETfAl9nsu/xsEoaCG0q6L72wW6gJ6a6Msx3aSO2OM4SKlnosRIHidpc2PbHkzCYjwSXOUatIK98F/QefqlnOQ7J6AKCKal ashutoshb@gmail.com"
+}
+
+
+### IAM User Group Membership
+resource "aws_iam_group_membership" "admins" {
+  name = "admin-group-membership"
+
+  users = [
+    "${aws_iam_user.ashutosh.name}"
+  ]
+
+  group = "${aws_iam_group.admins.name}"
+}
+
+
+
+### IAM Roles
+
+data "aws_iam_policy_document" "default" {
+  statement {
+    sid = ""
+
+    actions = [
+      "elasticloadbalancing:DescribeInstanceHealth",
+      "elasticloadbalancing:DescribeLoadBalancers",
+      "elasticloadbalancing:DescribeTargetHealth",
+      "ec2:DescribeInstances",
+      "ec2:DescribeInstanceStatus",
+      "ec2:GetConsoleOutput",
+      "ec2:AssociateAddress",
+      "ec2:DescribeAddresses",
+      "ec2:DescribeSecurityGroups",
+      "sqs:GetQueueAttributes",
+      "sqs:GetQueueUrl",
+      "autoscaling:DescribeAutoScalingGroups",
+      "autoscaling:DescribeAutoScalingInstances",
+      "autoscaling:DescribeScalingActivities",
+      "autoscaling:DescribeNotificationConfigurations",
+    ]
+
+    resources = ["*"]
+
+    effect = "Allow"
+  }
+
+  statement {
+    sid = "AllowOperations"
+
+    actions = [
+      "autoscaling:AttachInstances",
+      "autoscaling:CreateAutoScalingGroup",
+      "autoscaling:CreateLaunchConfiguration",
+      "autoscaling:DeleteLaunchConfiguration",
+      "autoscaling:DeleteAutoScalingGroup",
+      "autoscaling:DeleteScheduledAction",
+      "autoscaling:DescribeAccountLimits",
+      "autoscaling:DescribeAutoScalingGroups",
+      "autoscaling:DescribeAutoScalingInstances",
+      "autoscaling:DescribeLaunchConfigurations",
+      "autoscaling:DescribeLoadBalancers",
+      "autoscaling:DescribeNotificationConfigurations",
+      "autoscaling:DescribeScalingActivities",
+      "autoscaling:DescribeScheduledActions",
+      "autoscaling:DetachInstances",
+      "autoscaling:PutScheduledUpdateGroupAction",
+      "autoscaling:ResumeProcesses",
+      "autoscaling:SetDesiredCapacity",
+      "autoscaling:SuspendProcesses",
+      "autoscaling:TerminateInstanceInAutoScalingGroup",
+      "autoscaling:UpdateAutoScalingGroup",
+      "cloudwatch:PutMetricAlarm",
+      "ec2:AssociateAddress",
+      "ec2:AllocateAddress",
+      "ec2:AuthorizeSecurityGroupEgress",
+      "ec2:AuthorizeSecurityGroupIngress",
+      "ec2:CreateSecurityGroup",
+      "ec2:DeleteSecurityGroup",
+      "ec2:DescribeAccountAttributes",
+      "ec2:DescribeAddresses",
+      "ec2:DescribeImages",
+      "ec2:DescribeInstances",
+      "ec2:DescribeKeyPairs",
+      "ec2:DescribeSecurityGroups",
+      "ec2:DescribeSnapshots",
+      "ec2:DescribeSubnets",
+      "ec2:DescribeVpcs",
+      "ec2:DisassociateAddress",
+      "ec2:ReleaseAddress",
+      "ec2:RevokeSecurityGroupEgress",
+      "ec2:RevokeSecurityGroupIngress",
+      "ec2:TerminateInstances",
+      "ecs:CreateCluster",
+      "ecs:DeleteCluster",
+      "ecs:DescribeClusters",
+      "ecs:RegisterTaskDefinition",
+      "elasticbeanstalk:*",
+      "elasticloadbalancing:ApplySecurityGroupsToLoadBalancer",
+      "elasticloadbalancing:ConfigureHealthCheck",
+      "elasticloadbalancing:CreateLoadBalancer",
+      "elasticloadbalancing:DeleteLoadBalancer",
+      "elasticloadbalancing:DeregisterInstancesFromLoadBalancer",
+      "elasticloadbalancing:DescribeInstanceHealth",
+      "elasticloadbalancing:DescribeLoadBalancers",
+      "elasticloadbalancing:DescribeTargetHealth",
+      "elasticloadbalancing:RegisterInstancesWithLoadBalancer",
+      "elasticloadbalancing:DescribeTargetGroups",
+      "elasticloadbalancing:RegisterTargets",
+      "elasticloadbalancing:DeregisterTargets",
+      "iam:ListRoles",
+      "iam:PassRole",
+      "logs:CreateLogGroup",
+      "logs:PutRetentionPolicy",
+      "rds:DescribeDBEngineVersions",
+      "rds:DescribeDBInstances",
+      "rds:DescribeOrderableDBInstanceOptions",
+      "s3:CopyObject",
+      "s3:GetObject",
+      "s3:GetObjectAcl",
+      "s3:GetObjectMetadata",
+      "s3:ListBucket",
+      "s3:listBuckets",
+      "s3:ListObjects",
+      "sns:CreateTopic",
+      "sns:GetTopicAttributes",
+      "sns:ListSubscriptionsByTopic",
+      "sns:Subscribe",
+      "sqs:GetQueueAttributes",
+      "sqs:GetQueueUrl",
+      "codebuild:CreateProject",
+      "codebuild:DeleteProject",
+      "codebuild:BatchGetBuilds",
+      "codebuild:StartBuild",
+    ]
+
+    resources = ["*"]
+
+    effect = "Allow"
+  }
+
+  statement {
+    sid = "AllowS3OperationsOnElasticBeanstalkBuckets"
+
+    actions = [
+      "s3:*",
+    ]
+
+    resources = [
+      "arn:aws:s3:::*",
+    ]
+
+    effect = "Allow"
+  }
+
+  statement {
+    sid = "AllowDeleteCloudwatchLogGroups"
+
+    actions = [
+      "logs:DeleteLogGroup",
+    ]
+
+    resources = [
+      "arn:aws:logs:*:*:log-group:/aws/elasticbeanstalk*",
+    ]
+
+    effect = "Allow"
+  }
+
+  statement {
+    sid = "AllowCloudformationOperationsOnElasticBeanstalkStacks"
+
+    actions = [
+      "cloudformation:*",
+    ]
+
+    resources = [
+      "arn:aws:cloudformation:*:*:stack/awseb-*",
+      "arn:aws:cloudformation:*:*:stack/eb-*",
+    ]
+
+    effect = "Allow"
+  }
+}
+
+data "aws_iam_policy_document" "ec2" {
+  statement {
+    sid = ""
+
+    actions = [
+      "sts:AssumeRole",
+    ]
+
+    principals {
+      type        = "Service"
+      identifiers = ["ec2.amazonaws.com"]
+    }
+
+    effect = "Allow"
+  }
+
+  statement {
+    sid = ""
+
+    actions = [
+      "sts:AssumeRole",
+    ]
+
+    principals {
+      type        = "Service"
+      identifiers = ["ssm.amazonaws.com"]
+    }
+
+    effect = "Allow"
+  }
+}
+
+
+#### Elastic Beanstalk Role
+resource "aws_iam_role" "elastic_beanstalk_role" {
+  name = "elastic-beanstalk-role"
+  path = "/"
+  assume_role_policy = <<EOF
+{
+    "Version": "2012-10-17",
+    "Statement": [
+      {
+        "Sid": "",
+        "Effect": "Allow",
+        "Principal": {
+          "Service": "elasticbeanstalk.amazonaws.com"
+        },
+        "Action": "sts:AssumeRole",
+        "Condition": {
+          "StringEquals": {
+            "sts:ExternalId": "elasticbeanstalk"
+          }
+        }
+      }
+    ]
+}
+EOF
+}
+
+resource "aws_iam_role_policy_attachment" "elastic_beanstalk_service_attach" {
+    role       = "${aws_iam_role.elastic_beanstalk_role.name}"
+    policy_arn = "arn:aws:iam::aws:policy/service-role/AWSElasticBeanstalkService"
+}
+
+resource "aws_iam_role_policy_attachment" "elastic_beanstalk_enhanced_health_attach" {
+    role       = "${aws_iam_role.elastic_beanstalk_role.name}"
+    policy_arn = "arn:aws:iam::aws:policy/service-role/AWSElasticBeanstalkEnhancedHealth"
+}
+
+resource "aws_iam_instance_profile" "elastic_beanstalk_profile" {
+  name  = "elastic-beanstalk-profile"
+  role = "${aws_iam_role.elastic_beanstalk_role.name}"
+}
+
+#### EC2 IAM Role
+resource "aws_iam_role" "ec2_role" {
+  name               = "ec2-role"
+  assume_role_policy = "${data.aws_iam_policy_document.ec2.json}"
+}
+
+resource "aws_iam_role_policy" "ec2_default_policy" {
+  name   = "ec2-default"
+  role   = "${aws_iam_role.ec2_role.id}"
+  policy = "${data.aws_iam_policy_document.default.json}"
+}
+
+resource "aws_iam_role_policy_attachment" "ec2_web_tier" {
+  role       = "${aws_iam_role.ec2_role.name}"
+  policy_arn = "arn:aws:iam::aws:policy/AWSElasticBeanstalkWebTier"
+}
+
+resource "aws_iam_role_policy_attachment" "ec2_worker_tier" {
+  role       = "${aws_iam_role.ec2_role.name}"
+  policy_arn = "arn:aws:iam::aws:policy/AWSElasticBeanstalkWorkerTier"
+}
+
+resource "aws_iam_role_policy_attachment" "ec2_ssm" {
+  role       = "${aws_iam_role.ec2_role.name}"
+  policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonEC2RoleforSSM"
+
+  lifecycle {
+    create_before_destroy = true
+  }
+
+}
+
+resource "aws_iam_role_policy_attachment" "ec2_multi_container_docker" {
+  role       = "${aws_iam_role.ec2_role.name}"
+  policy_arn = "arn:aws:iam::aws:policy/AWSElasticBeanstalkMulticontainerDocker"
+}
+
+resource "aws_iam_role_policy_attachment" "ec2_ssm_automation" {
+  role       = "${aws_iam_role.ec2_role.name}"
+  policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonSSMAutomationRole"
+
+  lifecycle {
+    create_before_destroy = true
+  }
+}
+
+# http://docs.aws.amazon.com/elasticbeanstalk/latest/dg/create_deploy_docker.container.console.html
+# http://docs.aws.amazon.com/AmazonECR/latest/userguide/ecr_managed_policies.html#AmazonEC2ContainerRegistryReadOnly
+resource "aws_iam_role_policy_attachment" "ec2_ecr_readonly" {
+  role       = "${aws_iam_role.ec2_role.name}"
+  policy_arn = "arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly"
+}
+
+# TODO: whats a good value for registration limit
+resource "aws_ssm_activation" "ec2_ssm" {
+  name               = "ec-ssm-activation"
+  iam_role           = "${aws_iam_role.ec2_role.id}"
+  registration_limit = "5"
+}
+
+resource "aws_iam_instance_profile" "ec2_instance_profile" {
+  name = "ec2-instance-profile"
+  role = "${aws_iam_role.ec2_role.name}"
+}
+
 /*
 ## ECS
 resource "aws_ecs_cluster" "sportyspots" {
@@ -1291,12 +1511,21 @@ resource "aws_ecs_cluster" "sportyspots" {
 }
 */
 
-/*
+
 ## Elastic Beanstalk
 
 resource "aws_elastic_beanstalk_application" "sportyspots" {
   name        = "sportyspots"
   description = "SportySpots Production Application"
+}
+
+# define elastic beanstalk app version "latest"
+resource "aws_elastic_beanstalk_application_version" "sportyspots_latest" {
+  name        = "latest"
+  application = "${aws_elastic_beanstalk_application.sportyspots.name}"
+  description = "Version latest of app sportyspots"
+  bucket      = "sportyspots-prd-elastic-beanstalk"
+  key         = "latest.zip"
 }
 
 resource "aws_elastic_beanstalk_environment" "prd" {
@@ -1341,7 +1570,7 @@ resource "aws_elastic_beanstalk_environment" "prd" {
   setting {
     namespace = "aws:autoscaling:launchconfiguration"
     name = "IamInstanceProfile"
-    value = "${aws_iam_instance_profile.elastic_beanstalk_profile.arn}"
+    value = "${aws_iam_instance_profile.ec2_instance_profile.arn}"
   }
 
   setting {
@@ -1381,11 +1610,11 @@ resource "aws_elastic_beanstalk_environment" "prd" {
     value = "true"
   }
 
-  setting {
-    namespace = "aws:elasticbeanstalk:application"
-    name = "Application Healthcheck URL"
-    value = "HTTPS:443/"
-  }
+  #setting {
+  #  namespace = "aws:elasticbeanstalk:application"
+  #  name = "Application Healthcheck URL"
+  #  value = "HTTPS:443/"
+  #}
 
   # TODO: Add extra env variables here
   setting {
@@ -1458,9 +1687,6 @@ resource "aws_elastic_beanstalk_environment" "prd" {
     Environment = "prd"
   }
 }
-*/
-
-
 
 
 /*
@@ -1547,4 +1773,38 @@ resource "aws_acm_certificate_validation" "dev-cert" {
   validation_record_fqdns = ["${aws_route53_record.dev-cert-validation.fqdn}"]
 }
 
+*/
+
+
+/*
+#### Power User
+resource "aws_iam_role" "power_user_access_role" {
+  name = "power-user-access-role"
+  path = "/"
+  assume_role_policy = <<EOF
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Action": "sts:AssumeRole",
+      "Principal": {
+        "Service": "ec2.amazonaws.com"
+      },
+      "Effect": "Allow",
+      "Sid": ""
+    }
+  ]
+}
+EOF
+}
+
+resource "aws_iam_role_policy_attachment" "power_user_access_attach" {
+    role       = "${aws_iam_role.power_user_access_role.name}"
+    policy_arn = "arn:aws:iam::aws:policy/PowerUserAccess"
+}
+
+resource "aws_iam_instance_profile" "power_user_access_profile" {
+  name  = "power-user-access-profile"
+  role = "${aws_iam_role.power_user_access_role.name}"
+}
 */
