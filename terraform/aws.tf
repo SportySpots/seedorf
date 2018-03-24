@@ -4,6 +4,8 @@ provider "aws" {
   region     = "${var.default_aws_region}"
 }
 
+### VPC ###
+
 # VPC - eu-central-1 - prd, stg, tst, dev
 
 resource "aws_vpc" "eu_central_1_prd" {
@@ -31,6 +33,7 @@ resource "aws_vpc" "eu_central_1_prd" {
 }
 
 
+### Subnet ###
 
 # Subnet - eu-central-1[a,b,c] - prd
 
@@ -105,9 +108,7 @@ resource "aws_subnet" "eu_central_1c_prd" {
 }
 
 
-
-
-# Route Table
+### Route Table ###
 
 resource "aws_default_route_table" "eu_central_1_prd" {
   default_route_table_id = "${aws_vpc.eu_central_1_prd.default_route_table_id}"
@@ -123,11 +124,13 @@ resource "aws_default_route_table" "eu_central_1_prd" {
 }
 
 
+### Internet Gateway ###
 
 # Internet Gateway VPC - prd, stg, tst, dev
 # Create an internet gateway to give our subnet access to the outside world
 resource "aws_internet_gateway" "eu_central_1_prd" {
   vpc_id = "${aws_vpc.eu_central_1_prd.id}"
+
   tags {
     Environment = "prd"
   }
@@ -135,7 +138,7 @@ resource "aws_internet_gateway" "eu_central_1_prd" {
 
 
 
-### Default Network ACL
+### Default Network ACL ###
 
 resource "aws_default_network_acl" "eu_central_1_prd" {
   default_network_acl_id = "${aws_vpc.eu_central_1_prd.default_network_acl_id}"
@@ -168,7 +171,7 @@ resource "aws_default_network_acl" "eu_central_1_prd" {
 }
 
 
-### Default Security Group
+### Default Security Group ###
 
 resource "aws_default_security_group" "eu_central_1_prd" {
   vpc_id = "${aws_vpc.eu_central_1_prd.id}"
@@ -193,7 +196,7 @@ resource "aws_default_security_group" "eu_central_1_prd" {
 }
 
 
-# S3 Buckets
+### S3 Buckets ###
 
 resource "aws_s3_bucket" "prd_logs" {
   region = "${var.default_aws_region}"
@@ -388,7 +391,8 @@ resource "aws_s3_bucket" "elastic_beanstalk_prd" {
   }
 }
 
-# Route 53 Setup
+
+### Route 53 Setup ###
 
 resource "aws_route53_zone" "prd" {
   vpc_region = "${var.default_aws_region}"
@@ -544,7 +548,9 @@ resource "aws_route53_record" "cname-cloudfront-website-acm-validation-2" {
   records = ["_6a8ea2983012ac9ec9a56074ed6923d6.acm-validations.aws."]
 }
 
-# ECR
+
+### ECR ###
+
 resource "aws_ecr_repository" "sportyspots" {
   name = "sportyspots"
 }
@@ -619,7 +625,8 @@ resource "aws_ecr_lifecycle_policy" "expiry_tagged_untagged" {
 EOF
 }
 
-# ACM - AWS Certificate Manager
+### ACM - AWS Certificate Manager ###
+
 resource "aws_acm_certificate" "wildcard" {
   domain_name = "*.sportyspots.com"
   validation_method = "DNS"
@@ -644,7 +651,8 @@ resource "aws_acm_certificate_validation" "wildcard-cert" {
 }
 
 
-## EC2
+### EC2 ###
+
 resource "aws_key_pair" "sportyspots-admin" {
   key_name   = "sportyspots-admin"
   public_key = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDJSFjROcg5VfsaXftlbAj+HC1eV5Ht25unibQqZ2c3ye+PtmeACy6p1TmNsQPMMZ+24zWSgtx8X8XSDhrgTb6IFjmEdBaEaXm8pYY+5OwafTHGR1UV9CZ8Qrog9Xikz3ufU0DRPgFkGyrlwMHHRx7bb2EAa9GMtzISwlSNwvOSZ1RusdnF5Oh+DhoiQ2mS4Z7DzfiqP3NVK5oQ7tIS+kGjxGzDV33RYO18MWU1pqG2PyozYQqthy1WEqwT85t6QnYu+62jA9qUaeKXpI8eqZ7xU74oT7MTuqUjJxMZ087GI6WcEg/5fCqZuXQ3iB3CGuMSdEXVsaPxId2PqLQM+D+Gf0G224N9yVyXSsAQuMKkwN4iKXBf+U+TRnL09H+BnQLZISkv8ZTA1iggxVqCF/Sjq8L4hDZLSRbAbUjJr3GxYjR8mq/SjFGOsO0y3W1wQQuOm0T9AE34WEWq38gyF+bW9xoKz7AXqG58Zy7vdOQvsXrDW8sUFIfGa8imraHSlzHJQBPALEDeU6+qeOXz83scE3P+O+QMC0StodkkFC0RAlxejibr1S92FdDCsmfWBihCY6WCnFSIlb8gkI1mEkGUvzzrR15RrRblhMXIM07W0BAeIFKUYcPxya5EIzmjBbo73BPTSYsLKya6i/f5qEwt2vKJKRBrsb7HPCUIVa1Lnw== admin@sportyspots.com"
@@ -903,6 +911,7 @@ data "aws_iam_policy_document" "ec2" {
 
 
 #### Elastic Beanstalk Role
+
 resource "aws_iam_role" "elastic_beanstalk_role" {
   name = "elastic-beanstalk-role"
   path = "/"
@@ -1008,14 +1017,6 @@ resource "aws_iam_instance_profile" "ec2_instance_profile" {
   role = "${aws_iam_role.ec2_role.name}"
 }
 
-/*
-## ECS
-resource "aws_ecs_cluster" "sportyspots" {
-  name = "sportyspots"
-}
-*/
-
-/*
 ## Elastic Beanstalk
 
 resource "aws_elastic_beanstalk_application" "sportyspots" {
@@ -1191,4 +1192,3 @@ resource "aws_elastic_beanstalk_environment" "prd" {
     Environment = "prd"
   }
 }
-*/
