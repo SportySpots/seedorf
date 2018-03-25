@@ -17,13 +17,11 @@ services:
     volumes:
       - .:/app
     env_file:
-      - ./.env.local
+      - ./.env
     ports:
       - "8000:8000"
     restart: "no"
     command: /start.sh
-    environment:
-      - USE_DOCKER=yes
 #    environment:
 #      - POSTGRES_USER=seedorf
 #      - USE_DOCKER=yes

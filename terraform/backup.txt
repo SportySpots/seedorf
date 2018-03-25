@@ -627,3 +627,206 @@ resource "aws_iam_instance_profile" "power_user_access_profile" {
   role = "${aws_iam_role.power_user_access_role.name}"
 }
 */
+
+resource "aws_s3_bucket" "stg_logs" {
+  region = "${var.default_aws_region}"
+  bucket = "sportyspots-stg-logs"
+
+  # REF: https://docs.aws.amazon.com/AmazonS3/latest/dev/acl-overview.html#canned-acl
+  acl    = "log-delivery-write"
+
+  tags {
+    Environment = "stg"
+  }
+}
+
+resource "aws_s3_bucket" "tst_logs" {
+  region = "${var.default_aws_region}"
+  bucket = "sportyspots-tst-logs"
+
+  # REF: https://docs.aws.amazon.com/AmazonS3/latest/dev/acl-overview.html#canned-acl
+  acl    = "log-delivery-write"
+
+  tags {
+    Environment = "tst"
+  }
+}
+
+resource "aws_s3_bucket" "dev_logs" {
+  region = "${var.default_aws_region}"
+  bucket = "sportyspots-dev-logs"
+
+  # REF: https://docs.aws.amazon.com/AmazonS3/latest/dev/acl-overview.html#canned-acl
+  acl    = "log-delivery-write"
+
+  tags {
+    Environment = "dev"
+  }
+}
+
+resource "aws_s3_bucket" "stg_config" {
+  region = "${var.default_aws_region}"
+  bucket = "sportyspots-stg-config"
+
+  # REF: https://docs.aws.amazon.com/AmazonS3/latest/dev/acl-overview.html#canned-acl
+  acl    = "private"
+
+  versioning {
+    enabled = true
+  }
+
+  logging {
+    target_bucket = "${aws_s3_bucket.stg_logs.id}"
+    target_prefix = "stg/logs/configs/"
+  }
+
+  tags {
+    Environment = "stg"
+  }
+}
+
+resource "aws_s3_bucket" "tst_config" {
+  region = "${var.default_aws_region}"
+  bucket = "sportyspots-tst-config"
+
+  # REF: https://docs.aws.amazon.com/AmazonS3/latest/dev/acl-overview.html#canned-acl
+  acl    = "private"
+
+  versioning {
+    enabled = true
+  }
+
+  logging {
+    target_bucket = "${aws_s3_bucket.tst_logs.id}"
+    target_prefix = "tst/logs/configs/"
+  }
+
+  tags {
+    Environment = "tst"
+  }
+}
+
+resource "aws_s3_bucket" "dev_config" {
+  region = "${var.default_aws_region}"
+  bucket = "sportyspots-dev-config"
+
+  # REF: https://docs.aws.amazon.com/AmazonS3/latest/dev/acl-overview.html#canned-acl
+  acl    = "private"
+
+  versioning {
+    enabled = true
+  }
+
+  logging {
+    target_bucket = "${aws_s3_bucket.dev_logs.id}"
+    target_prefix = "dev/logs/configs/"
+  }
+
+  tags {
+    Environment = "dev"
+  }
+}
+
+
+resource "aws_s3_bucket" "media_stg" {
+  region = "${var.default_aws_region}"
+  bucket = "sportyspots-stg"
+
+  # REF: https://docs.aws.amazon.com/AmazonS3/latest/dev/acl-overview.html#canned-acl
+  acl    = "public-read"
+
+  tags {
+    Environment = "stg"
+  }
+}
+
+resource "aws_s3_bucket" "media_tst" {
+  region = "${var.default_aws_region}"
+  bucket = "sportyspots-tst"
+
+  # REF: https://docs.aws.amazon.com/AmazonS3/latest/dev/acl-overview.html#canned-acl
+  acl    = "public-read"
+
+  tags {
+    Environment = "tst"
+  }
+}
+
+resource "aws_s3_bucket" "media_dev" {
+  region = "${var.default_aws_region}"
+  bucket = "sportyspots-dev"
+
+  # REF: https://docs.aws.amazon.com/AmazonS3/latest/dev/acl-overview.html#canned-acl
+  acl    = "public-read"
+
+  tags {
+    Environment = "dev"
+  }
+}
+
+resource "aws_route53_zone" "stg" {
+  vpc_region = "${var.default_aws_region}"
+  name = "stg.sportyspots.com"
+
+  tags {
+    Environment = "stg"
+  }
+}
+
+resource "aws_route53_zone" "tst" {
+  vpc_region = "${var.default_aws_region}"
+  name = "tst.sportyspots.com"
+
+  tags {
+    Environment = "tst"
+  }
+}
+
+resource "aws_route53_zone" "dev" {
+  vpc_region = "${var.default_aws_region}"
+  name = "dev.sportyspots.com"
+
+  tags {
+    Environment = "dev"
+  }
+}
+
+resource "aws_route53_record" "stg-ns" {
+  zone_id = "${aws_route53_zone.prd.zone_id}"
+  name    = "stg.sportyspots.com"
+  type    = "NS"
+  ttl     = "30"
+
+  records = [ "${aws_route53_zone.stg.name_servers.0}",
+              "${aws_route53_zone.stg.name_servers.1}",
+              "${aws_route53_zone.stg.name_servers.2}",
+              "${aws_route53_zone.stg.name_servers.3}"
+            ]
+}
+
+resource "aws_route53_record" "tst-ns" {
+  zone_id = "${aws_route53_zone.prd.zone_id}"
+  name    = "tst.sportyspots.com"
+  type    = "NS"
+  ttl     = "30"
+
+  records = [ "${aws_route53_zone.tst.name_servers.0}",
+              "${aws_route53_zone.tst.name_servers.1}",
+              "${aws_route53_zone.tst.name_servers.2}",
+              "${aws_route53_zone.tst.name_servers.3}"
+            ]
+}
+
+resource "aws_route53_record" "dev-ns" {
+  zone_id = "${aws_route53_zone.prd.zone_id}"
+  name    = "dev.sportyspots.com"
+  type    = "NS"
+  ttl     = "30"
+
+  records = [ "${aws_route53_zone.dev.name_servers.0}",
+              "${aws_route53_zone.dev.name_servers.1}",
+              "${aws_route53_zone.dev.name_servers.2}",
+              "${aws_route53_zone.dev.name_servers.3}",
+            ]
+}
+

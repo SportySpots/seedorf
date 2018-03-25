@@ -35,7 +35,7 @@ urlpatterns = [
     url(settings.ADMIN_URL, admin.site.urls),
 
     # Your stuff: custom urls includes go here
-    url(r'^api/', include(router.urls)),
+    url(r'^rest/', include(router.urls)),
     url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
 
     url(r'^api-token-auth/', obtain_jwt_token),
