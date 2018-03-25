@@ -1,7 +1,10 @@
 * text=auto
 *.key filter=git-crypt diff=git-crypt
+*.tf filter=git-crypt diff=git-crypt
 *.tfstate filter=git-crypt diff=git-crypt
 *.tfstate.backup filter=git-crypt diff=git-crypt
+
+Dockerrun.aws.json filter=git-crypt diff=git-crypt
 
 # secretfile filter=git-crypt diff=git-crypt
 # *.password filter=git-crypt diff=git-crypt
