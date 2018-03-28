@@ -2,3 +2,23 @@
 !.coveragerc
 !.env
 !.pylintrc
+
+# elastic beanstalk deploy
+Dockerrun.aws.json
+
+# celery files
+celerybeat-schedule
+celerybeat.pid
+
+# terraform files
+terraform/
+
+# ansible files
+ansible/
+
+# docker compose files
+compose/
+
+# docker files
+docker_compose_local.yml
+docker_compose_production.yml
