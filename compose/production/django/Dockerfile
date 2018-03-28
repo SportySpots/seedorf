@@ -77,4 +77,8 @@ USER django
 
 WORKDIR /app
 
+EXPOSE 80
+
+CMD ["/start.sh"]
+
 ENTRYPOINT ["/entrypoint.sh"]

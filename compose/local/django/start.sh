@@ -14,7 +14,8 @@ then
 elif [ "$ENV" == "prd" ]
 then
     python /app/manage.py collectstatic --noinput
-    /usr/local/bin/gunicorn config.wsgi -w 4 -b 0.0.0.0:5000 --chdir=/app
+    python /app/manage.py migrate
+    /usr/local/bin/gunicorn config.wsgi -w 4 -b 0.0.0.0:80 --chdir=/app
 else
     echo "Invalid ENV variable"
     exit
