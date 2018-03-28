@@ -21,6 +21,7 @@ django-compressor = { version = "==2.2" }
 django-crispy-forms = { version = "==1.6.1" }
 django-elasticsearch-dsl = { version = "==0.4.0" }
 django-environ = { version = "==0.4.4" }
+django-extensions = { version = "==1.9.1" }
 django-filter = { version = "==1.0.4" }
 django-guardian = { version = "==1.4.9" }
 django-haystack = { version = "==2.7.dev0" }
@@ -61,7 +62,6 @@ zappa = { version = "==0.45.1" }
 coreapi-cli = "*"
 django-coverage-plugin = { version = "==1.5.1a0" }
 django-debug-toolbar = { version = "==1.8" }
-django-extensions = { version = "==1.9.1" }
 django-test-plus = { version = "==1.0.18" }
 factory-boy = { version = "==2.9.2" }
 "flake8" = { version = "*" }
