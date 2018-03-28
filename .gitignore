@@ -376,3 +376,6 @@ seedorf/media/
 .elasticbeanstalk/*
 !.elasticbeanstalk/*.cfg.yml
 !.elasticbeanstalk/*.global.yml
+
+# Dockerrun.aws.json
+latest.zip

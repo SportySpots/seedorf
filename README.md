@@ -145,6 +145,28 @@ Create superuser
 ```bash
 $ docker-compose -f docker_compose_local.yml run django python manage.py createsuperuser --username admin --email admin@sportyspots.com
 ```
+Find AWS ECR repository Uri
+
+```bash
+$ aws ecr describe-repositories | jq '.repositories | .[] | .repositoryUri'
+```
+Create production image for ECR
+
+```bash
+$ docker build -t sportyspots --build-arg GIT_COMMIT=$(git log -1 --format="%H") -f compose/production/django/Dockerfile .
+```
+
+Tag image with AWS Uri
+
+```bash
+$ docker tag sportyspots XXXXXX.dkr.ecr.eu-central-1.amazonaws.com/sportyspots
+```
+
+Get login token from ecr if required
+
+```bash
+$ $(aws ecr get-login --no-include-email)
+```
 
 
 ## Basic Commands

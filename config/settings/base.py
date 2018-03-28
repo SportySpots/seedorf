@@ -60,7 +60,7 @@ THIRD_PARTY_APPS = [
     # 'oauth2_provider',  # https://github.com/PhilipGarnero/django-rest-framework-social-oauth2
     # 'rest_framework_social_oauth2',  # https://github.com/PhilipGarnero/django-rest-framework-social-oauth2
     # 'social_django',  # https://github.com/PhilipGarnero/django-rest-framework-social-oauth2
-    'storages',  # cloud file storages
+    # 'storages',  # cloud file storages
 ]
 
 # Apps specific for this project go here.
