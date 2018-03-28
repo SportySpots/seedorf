@@ -1,8 +1,8 @@
 version: '3'
 
 volumes:
-  sportyspots_postgres_data: {}
-  sportyspots_postgres_backup: {}
+  sportyspots_postgres_data_local: {}
+  sportyspots_postgres_backup_local: {}
   caddy: {}
 
 services:
@@ -11,14 +11,16 @@ services:
       context: .
       dockerfile: ./compose/production/django/Dockerfile
     depends_on:
+      - postgres
       - redis
-    env_file: .env
-    command: /gunicorn.sh
+    env_file:
+      - ./.env
+    command: /start.sh
 
   caddy:
     build:
       context: .
-      dockerfile: ./compose/production/caddy/Dockerfile
+      dockerfile: ./compose/local/caddy/Dockerfile
     depends_on:
       - django
     volumes:
@@ -41,6 +43,18 @@ services:
   celerybeat:
     <<: *django
     depends_on:
+      - postgres
       - redis
     command: /start-celerybeat.sh
 
+
+  postgres:
+    container_name: sportyspots_postgres
+    build:
+      context: .
+      dockerfile: ./compose/local/postgres/Dockerfile
+    volumes:
+      - sportyspots_postgres_data_local:/var/lib/postgresql/data
+      - sportyspots_postgres_backup_local:/backups
+    env_file:
+      - ./.env

@@ -14,6 +14,7 @@ services:
     depends_on:
       - redis
       - mailhog
+      - postgres
     volumes:
       - .:/app
     env_file:
@@ -27,8 +28,6 @@ services:
 #      - USE_DOCKER=yes
 #    args:
 #      - GIT_COMMIT
-#    env_file:
-#      - ./.env
 #    extra_hosts:
 #      - "somehost:162.242.195.82"
 #      - "otherhost:50.31.209.229"
@@ -51,6 +50,7 @@ services:
     depends_on:
       - redis
       - mailhog
+      - postgres
     ports: []
     command: /start-celeryworker.sh
 
@@ -62,9 +62,9 @@ services:
     depends_on:
       - redis
       - mailhog
+      - postgres
     ports: []
     command: /start-celerybeat.sh
-
 
   mailhog:
     container_name: sportyspots_mailhog
@@ -75,3 +75,27 @@ services:
   redis:
     container_name: sportyspots_redis
     image: redis:4.0
+
+  postgres:
+    container_name: sportyspots_postgres
+    build:
+      context: .
+      dockerfile: ./compose/local/postgres/Dockerfile
+    volumes:
+      - sportyspots_postgres_data_local:/var/lib/postgresql/data
+      - sportyspots_postgres_backup_local:/backups
+    env_file:
+      - ./.env
+
+  caddy:
+    build:
+      context: .
+      dockerfile: ./compose/local/caddy/Dockerfile
+    depends_on:
+      - django
+    volumes:
+      - caddy:/root/.caddy
+    env_file: .env
+    ports:
+      - "0.0.0.0:80:80"
+      - "0.0.0.0:443:443"

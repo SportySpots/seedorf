@@ -1,9 +1,14 @@
 #!/usr/bin/env bash
 
+${ENV:?"Please set ENV non-empty"}
+
 set -o errexit
 set -o pipefail
 set -o nounset
-set -o xtrace
 
+if [ "$ENV" == "dev" ]
+then
+    set -o xtrace
+fi
 
 celery -A seedorf.taskapp worker -l INFO

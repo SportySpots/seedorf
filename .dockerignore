@@ -16,19 +16,6 @@ terraform/
 # ansible files
 ansible/
 
-# docker compose files
-compose/
-
 # docker files
 docker_compose_local.yml
 docker_compose_production.yml
-
-# git-crypt files
-.git-crypt/
-
-# elastic beanstalk files
-.elasticbeanstalk/
-
-# ignore config folders
-.*/
-

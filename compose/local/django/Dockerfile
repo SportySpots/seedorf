@@ -52,7 +52,7 @@ COPY Pipfile.lock /Pipfile.lock
 RUN pip install pipenv==9.0.2 && \
     pipenv install --dev --deploy --system --three --ignore-pipfile
 
-COPY ./compose/production/django/entrypoint.sh /entrypoint.sh
+COPY ./compose/local/django/entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
 
 COPY ./compose/local/django/start.sh /start.sh
