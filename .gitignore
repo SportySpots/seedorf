@@ -379,3 +379,6 @@ seedorf/media/
 
 # Dockerrun.aws.json
 latest.zip
+
+# temporary deployment script
+deploy.sh
