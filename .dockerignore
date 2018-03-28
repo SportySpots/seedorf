@@ -19,3 +19,6 @@ ansible/
 # docker files
 docker_compose_local.yml
 docker_compose_production.yml
+
+# ignore temp packaged Dockerrun.aws.json
+latest.zip
