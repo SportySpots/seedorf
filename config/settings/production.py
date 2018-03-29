@@ -12,7 +12,9 @@ Production Configurations
 
 
 import logging
-
+import requests
+from requests.exceptions import ConnectionError
+from django.core.exceptions import ImproperlyConfigured
 
 from .base import *  # noqa
 
@@ -90,6 +92,18 @@ AWS_SECRET_ACCESS_KEY = env('DJANGO_AWS_SECRET_ACCESS_KEY')
 AWS_STORAGE_BUCKET_NAME = env('DJANGO_AWS_STORAGE_BUCKET_NAME')
 AWS_AUTO_CREATE_BUCKET = True
 AWS_QUERYSTRING_AUTH = False
+
+# AWS DYNAMIC ALLOWED HOSTS FOR ECS/ ELASTIC BEANSTALK
+if env('CLOUD_PROVIDER', default=None) == 'AWS':
+    url = "http://169.254.169.254/latest/meta-data/local-ipv4"
+    try:
+        r = requests.get(url)
+        instance_ip = r.text
+        ALLOWED_HOSTS += [instance_ip]
+    except ConnectionError:
+        error_msg = "You can only run production settings on an AWS EC2 instance"
+        raise ImproperlyConfigured(error_msg)
+
 
 # AWS cache settings, don't change unless you know what you're doing:
 AWS_EXPIRY = 60 * 60 * 24 * 7

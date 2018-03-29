@@ -47,7 +47,6 @@ services:
       - redis
     command: /start-celerybeat.sh
 
-
   postgres:
     container_name: sportyspots_postgres
     build:

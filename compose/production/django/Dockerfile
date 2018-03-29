@@ -79,6 +79,8 @@ WORKDIR /app
 
 EXPOSE 8080
 
+VOLUME ["/app"]
+
 CMD ["/start.sh"]
 
 ENTRYPOINT ["/entrypoint.sh"]
