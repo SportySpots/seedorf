@@ -44,7 +44,6 @@ gunicorn = { version = "==19.7.1" }
 hashids = { version = "==1.2.0" }
 markdown = { version = "==2.6.11" }
 nece = { version = "==0.7.5" }
-opbeat = { version = "==3.5.2" }
 pillow = { version = "==4.3.0" }
 pygments = { version = "==2.2.0" }
 pytz = { version = "==2017.2" }

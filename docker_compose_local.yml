@@ -3,7 +3,6 @@ version: '3'
 volumes:
   sportyspots_postgres_data_local: {}
   sportyspots_postgres_backup_local: {}
-  caddy: {}
 
 services:
   django: &django
@@ -87,16 +86,3 @@ services:
       - sportyspots_postgres_backup_local:/backups
     env_file:
       - ./.env
-
-  caddy:
-    build:
-      context: .
-      dockerfile: ./compose/local/caddy/Dockerfile
-    depends_on:
-      - django
-    volumes:
-      - caddy:/root/.caddy
-    env_file: .env
-    ports:
-      - "0.0.0.0:80:80"
-      - "0.0.0.0:443:443"
