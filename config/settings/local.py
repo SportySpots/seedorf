@@ -24,6 +24,12 @@ TEMPLATES[0]['OPTIONS']['debug'] = DEBUG
 # ------------------------------------------------------------------------------
 SECRET_KEY = env('DJANGO_SECRET_KEY', default='u^*n1SI0y`_*xY0m)4t/AB$y~Ko:@~|mh^/qAP<daS+](8APRg')
 
+ALLOWED_HOSTS = [
+    "localhost",
+    "0.0.0.0",
+    "127.0.0.1",
+]
+
 # Mail settings
 # ------------------------------------------------------------------------------
 EMAIL_PORT = 1025
