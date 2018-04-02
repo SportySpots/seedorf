@@ -74,7 +74,7 @@ services:
 
   redis:
     container_name: sportyspots_redis
-    image: redis:4.0
+    image: redis:4.0-alpine
 
   postgres:
     container_name: sportyspots_postgres
