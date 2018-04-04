@@ -62,12 +62,16 @@ django-test-plus = { version = "==1.0.22" }
 factory-boy = { version = "==2.9.2" }
 "flake8" = { version = "*" }
 pytest-django = { version = "==3.1.2" }
-pytest-sugar = { version = "==0.9.0" }
 coverage = { version = "==4.5.1" }
 ipdb = { version = "*" }
 sphinx = { version = "==1.7.1" }
 awsebcli = "*"
 awscli = "*"
+
+# NOTE: Disable pytest-sugar till the following issues are fixed
+# REF: https://github.com/pydanny/cookiecutter-django/pull/1472
+# REF: https://github.com/pytest-dev/pytest/issues/3170
+# pytest-sugar = { version = "==0.9.0" }
 
 
 [requires]
