@@ -19,3 +19,22 @@ class User(AbstractUser, BasePropertiesModel):
 
     # def get_absolute_url(self):
     #     return reverse('users:detail', kwargs={'username': self.username})
+
+
+# class UserProfile(models.Model):
+#     # gender
+#     # is_under_age
+#     # country
+#     # language
+#     # timezone
+#     # company
+#     # bio
+#     # year of birth
+#     # avatar
+#     # gravatar_id
+#     # two_factor_authentication
+#     # plan
+#     # blocks
+#     # emails
+#     # followers
+#     pass

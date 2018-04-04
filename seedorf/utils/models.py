@@ -1,7 +1,10 @@
-from django.db import models
-from django.utils.translation import ugettext_lazy as _
 import uuid
+
+from django.conf import settings
+from django.db import models
 from django.utils import timezone
+from django.utils.translation import ugettext_lazy as _
+from hashids import Hashids
 
 
 class BasePropertiesModel(models.Model):
@@ -32,6 +35,16 @@ class BasePropertiesModel(models.Model):
         null=True,
         verbose_name=_('Deleted At')
     )
+
+    @property
+    def hash_slug(self):
+        hasher = Hashids(salt=settings.SECRET_KEY, min_length=6)
+        return hasher.encode(self.id)
+
+    @classmethod
+    def reverse_hash_slug(cls, hash_slug):
+        hasher = Hashids(salt=settings.SECRET_KEY, min_length=6)
+        return hasher.decode(hash_slug)
 
     class Meta:
         abstract = True

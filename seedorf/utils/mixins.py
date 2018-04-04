@@ -1,9 +1,5 @@
 from django.conf import settings
 from hashids import Hashids
-from django.db import models
-from django.utils.translation import ugettext_lazy as _
-import uuid
-from django.utils import timezone
 
 
 class HashSlugMixin:
@@ -20,5 +16,5 @@ class HashSlugMixin:
     def hash_slug(self):
         return self.hasher.encode(self.id)
 
-    def get_id(self, hash_slug):
+    def reverse_hash_slug(self, hash_slug):
         return self.hasher.decode(hash_slug)
