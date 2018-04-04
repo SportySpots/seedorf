@@ -21,7 +21,7 @@ services:
       - ./.env
     ports:
       - "8000:8000"
-    restart: "no"
+    restart: unless-stopped
     command: /start.sh
 #    environment:
 #      - POSTGRES_USER=seedorf
