@@ -195,13 +195,17 @@ $ coverage html
 $ open htmlcov/index.html
 ```
 
-### Running tests with py.test
-
+### Running test 
 
 ```bash
-$ py.test
+$ PIPENV_DOTENV_LOCATION=.env.test pipenv run ./manage.py test
 ```
 
+### Running tests with py.test
+
+```bash
+$ PIPENV_DOTENV_LOCATION=.env.test pipenv run pytest
+```
 
 ## Live reloading and Sass CSS compilation
 
