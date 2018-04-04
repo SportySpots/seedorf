@@ -82,7 +82,7 @@ celerybeat-schedule
 *.sage.py
 
 # Environments
-.env
+.env*
 .venv
 env/
 venv/
@@ -360,8 +360,6 @@ pip-selfcheck.json
 ### Terraform
 .terraform
 .terraform.tfstate.lock.info
-# terraform.tfstate
-# terraform.tfstate.backup
 
 ### Seedorf Application
 seedorf/media/
@@ -369,8 +367,6 @@ seedorf/media/
 # Added to maintain local compose files which are ignored by something above.
 # See issue https://github.com/pydanny/cookiecutter-django/issues/1321
 !/compose/local/
-
-
 
 # Elastic Beanstalk Files
 .elasticbeanstalk/*
@@ -382,3 +378,6 @@ latest.zip
 
 # temporary deployment script
 deploy.sh
+
+# pytest
+.pytest_cache/
