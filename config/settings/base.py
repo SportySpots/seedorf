@@ -48,15 +48,25 @@ DJANGO_APPS = [
     'django.contrib.postgres',
     'django.contrib.gis',
 ]
+
 THIRD_PARTY_APPS = [
+    'rest_framework',  # rest framework
+    'rest_framework.authtoken',  # http://www.django-rest-framework.org/api-guide/authentication/#tokenauthentication
+
+    'rest_auth',  # django-rest-auth
+    'rest_auth.registration',  # django-rest-auth
+
     'allauth',  # registration
     'allauth.account',  # registration
     'allauth.socialaccount',  # registration
+    'allauth.socialaccount.providers.facebook',
+    'allauth.socialaccount.providers.twitter',
+
     'crispy_forms',  # Form layouts
     'graphene_django',  # graphql
     'haystack',  # solr/elastic-search
-    'rest_framework',  # rest framework
-    'rest_framework.authtoken',  # http://www.django-rest-framework.org/api-guide/authentication/#tokenauthentication
+
+
     # 'oauth2_provider',  # https://github.com/PhilipGarnero/django-rest-framework-social-oauth2
     # 'rest_framework_social_oauth2',  # https://github.com/PhilipGarnero/django-rest-framework-social-oauth2
     # 'social_django',  # https://github.com/PhilipGarnero/django-rest-framework-social-oauth2
@@ -271,17 +281,11 @@ AUTH_PASSWORD_VALIDATORS = [
 # AUTHENTICATION CONFIGURATION
 # ------------------------------------------------------------------------------
 AUTHENTICATION_BACKENDS = [
-    # Django
+    # django
     'django.contrib.auth.backends.ModelBackend',
 
+    # allauth
     'allauth.account.auth_backends.AuthenticationBackend',
-
-    # django-rest-framework-social-oauth2
-    #'rest_framework_social_oauth2.backends.DjangoOAuth2',
-
-    # Facebook OAuth2
-    #'social_core.backends.facebook.FacebookAppOAuth2',
-    #'social_core.backends.facebook.FacebookOAuth2',
 ]
 
 # Some really nice defaults
@@ -329,8 +333,6 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.BasicAuthentication',
         'rest_framework.authentication.SessionAuthentication',
         'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
-        #'oauth2_provider.contrib.rest_framework.OAuth2Authentication',
-        #'rest_framework_social_oauth2.authentication.SocialAuthentication',
     ),
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
@@ -342,44 +344,25 @@ REST_FRAMEWORK = {
 # JWT Authentication
 # REF; http://getblimp.github.io/django-rest-framework-jwt/
 JWT_AUTH = {
-    'JWT_ENCODE_HANDLER': 'rest_framework_jwt.utils.jwt_encode_handler',
-
-    'JWT_DECODE_HANDLER': 'rest_framework_jwt.utils.jwt_decode_handler',
-
-    'JWT_PAYLOAD_HANDLER': 'rest_framework_jwt.utils.jwt_payload_handler',
-
-    'JWT_PAYLOAD_GET_USER_ID_HANDLER': 'rest_framework_jwt.utils.jwt_get_user_id_from_payload_handler',
-
-    'JWT_RESPONSE_PAYLOAD_HANDLER': 'rest_framework_jwt.utils.jwt_response_payload_handler',
-
-    'JWT_GET_USER_SECRET_KEY': None,
-    'JWT_PUBLIC_KEY': None,
-    'JWT_PRIVATE_KEY': None,
     'JWT_ALGORITHM': 'HS256',
+    'JWT_ALLOW_REFRESH': False,
+    'JWT_AUDIENCE': None,
+    'JWT_AUTH_COOKIE': None,
+    'JWT_AUTH_HEADER_PREFIX': 'JWT',
+    'JWT_DECODE_HANDLER': 'rest_framework_jwt.utils.jwt_decode_handler',
+    'JWT_ENCODE_HANDLER': 'rest_framework_jwt.utils.jwt_encode_handler',
+    'JWT_EXPIRATION_DELTA': datetime.timedelta(seconds=300),
+    'JWT_GET_USER_SECRET_KEY': None,
+    'JWT_ISSUER': None,
+    'JWT_LEEWAY': 0,
+    'JWT_PAYLOAD_GET_USER_ID_HANDLER': 'rest_framework_jwt.utils.jwt_get_user_id_from_payload_handler',
+    'JWT_PAYLOAD_HANDLER': 'rest_framework_jwt.utils.jwt_payload_handler',
+    'JWT_PRIVATE_KEY': None,
+    'JWT_PUBLIC_KEY': None,
+    'JWT_REFRESH_EXPIRATION_DELTA': datetime.timedelta(days=7),
+    'JWT_RESPONSE_PAYLOAD_HANDLER': 'rest_framework_jwt.utils.jwt_response_payload_handler',
     'JWT_VERIFY': True,
     'JWT_VERIFY_EXPIRATION': True,
-    'JWT_LEEWAY': 0,
-    'JWT_EXPIRATION_DELTA': datetime.timedelta(seconds=300),
-    'JWT_AUDIENCE': None,
-    'JWT_ISSUER': None,
-
-    'JWT_ALLOW_REFRESH': False,
-    'JWT_REFRESH_EXPIRATION_DELTA': datetime.timedelta(days=7),
-
-    'JWT_AUTH_HEADER_PREFIX': 'JWT',
-    'JWT_AUTH_COOKIE': None,
-
-}
-
-# Facebook configuration
-SOCIAL_AUTH_FACEBOOK_KEY = '<your app id goes here>'
-SOCIAL_AUTH_FACEBOOK_SECRET = '<your app secret goes here>'
-
-# Define SOCIAL_AUTH_FACEBOOK_SCOPE to get extra permissions from facebook.
-# Email is not sent by default, to get it, you must request the email permission:
-SOCIAL_AUTH_FACEBOOK_SCOPE = ['email']
-SOCIAL_AUTH_FACEBOOK_PROFILE_EXTRA_PARAMS = {
-    'fields': 'id, name, email'
 }
 
 # i18n nece settings
@@ -396,3 +379,7 @@ HAYSTACK_CONNECTIONS = {
         'ENGINE': 'haystack.backends.simple_backend.SimpleEngine',
     },
 }
+
+# Django Rest Auth
+# REF: http://django-rest-auth.readthedocs.io/en/latest/installation.html#jwt-support-optional
+REST_USE_JWT = True

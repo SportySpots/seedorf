@@ -16,6 +16,7 @@ from seedorf.sports.viewsets import SportViewSet
 from seedorf.spots.viewsets import SpotViewSet
 from seedorf.users.viewsets import UserViewSet, GroupViewSet
 
+
 schema_view = get_schema_view(title='SportySpots API')
 
 # Routers provide an easy way of automatically determining the URL conf.
@@ -35,14 +36,16 @@ urlpatterns = [
     url(settings.ADMIN_URL, admin.site.urls),
 
     # Your stuff: custom urls includes go here
-    url(r'^rest/', include(router.urls)),
+    url(r'^rest-auth/', include('rest_auth.urls')),
+    url(r'^rest-auth/registration/', include('rest_auth.registration.urls')),
+
+    url(r'^api/', include(router.urls)),
     url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
 
     url(r'^api-token-auth/', obtain_jwt_token),
     url(r'^api-token-refresh/', refresh_jwt_token),
     url(r'^api-token-verify/', verify_jwt_token),
 
-    # url(r'^social-auth/', include('rest_framework_social_oauth2.urls')),
     url(r'^graphql$', GraphQLView.as_view(graphiql=True), name='graphql'),
 
     url(r'^schema/$', schema_view),
