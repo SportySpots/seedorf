@@ -36,18 +36,24 @@ urlpatterns = [
     url(settings.ADMIN_URL, admin.site.urls),
 
     # Your stuff: custom urls includes go here
-    url(r'^rest-auth/', include('rest_auth.urls')),
-    url(r'^rest-auth/registration/', include('rest_auth.registration.urls')),
 
+    # Authentication / Registration
+    url(r'^api/auth/registration/', include('rest_auth.registration.urls', namespace='rest_auth_registration')),
+    url(r'^api/auth/token-refresh/', refresh_jwt_token),
+    url(r'^api/auth/token-verify/', verify_jwt_token),
+    url(r'^api/auth/', include('rest_auth.urls', namespace='rest_auth')),
+
+    # url(r'^api/accounts/', include('allauth.urls', namespace='allauth')),
+    # url(r'^api/api-auth/', include('rest_framework.urls', namespace='rest_framework')),
+    # url(r'^api/api-token-auth/', obtain_jwt_token),
+
+    # REST API
     url(r'^api/', include(router.urls)),
-    url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
 
-    url(r'^api-token-auth/', obtain_jwt_token),
-    url(r'^api-token-refresh/', refresh_jwt_token),
-    url(r'^api-token-verify/', verify_jwt_token),
-
+    # GraphQL API
     url(r'^graphql$', GraphQLView.as_view(graphiql=True), name='graphql'),
 
+    # Other
     url(r'^schema/$', schema_view),
     url(r'^docs/', include_docs_urls(title='SportySpots API Docs', permission_classes=(AllowAny,))),
 

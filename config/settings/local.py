@@ -2,12 +2,11 @@
 Local settings
 
 - Run in Debug mode
-
 - Use mailhog for emails
-
 - Add Django Debug Toolbar
 - Add django-extensions as app
 """
+
 import socket
 import os
 

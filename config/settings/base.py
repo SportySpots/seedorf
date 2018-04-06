@@ -66,10 +66,6 @@ THIRD_PARTY_APPS = [
     'graphene_django',  # graphql
     'haystack',  # solr/elastic-search
 
-
-    # 'oauth2_provider',  # https://github.com/PhilipGarnero/django-rest-framework-social-oauth2
-    # 'rest_framework_social_oauth2',  # https://github.com/PhilipGarnero/django-rest-framework-social-oauth2
-    # 'social_django',  # https://github.com/PhilipGarnero/django-rest-framework-social-oauth2
     # 'storages',  # cloud file storages
 ]
 
@@ -204,8 +200,6 @@ TEMPLATES = [
                 'django.template.context_processors.tz',
                 'django.contrib.messages.context_processors.messages',
                 # Your stuff: custom template context processors go here
-                # 'social_django.context_processors.backends',
-                # 'social_django.context_processors.login_redirect',
             ],
         },
     },
@@ -288,20 +282,74 @@ AUTHENTICATION_BACKENDS = [
     'allauth.account.auth_backends.AuthenticationBackend',
 ]
 
-# Some really nice defaults
-ACCOUNT_AUTHENTICATION_METHOD = 'username'
-ACCOUNT_EMAIL_REQUIRED = True
-ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
-
-ACCOUNT_ALLOW_REGISTRATION = env.bool('DJANGO_ACCOUNT_ALLOW_REGISTRATION', True)
-ACCOUNT_ADAPTER = 'seedorf.users.adapters.AccountAdapter'
-SOCIALACCOUNT_ADAPTER = 'seedorf.users.adapters.SocialAccountAdapter'
-
 # Custom user app defaults
 # Select the correct user model
 AUTH_USER_MODEL = 'users.User'
 LOGIN_REDIRECT_URL = 'users:redirect'
 LOGIN_URL = 'account_login'
+
+
+# Allauth settings
+# REF: https://django-allauth.readthedocs.io/en/latest/configuration.html
+# ------------------------------------------------------------------------------
+ACCOUNT_ADAPTER = 'allauth.account.adapter.DefaultAccountAdapter'
+ACCOUNT_AUTHENTICATED_LOGIN_REDIRECTS = False
+ACCOUNT_AUTHENTICATION_METHOD = 'username_email'
+ACCOUNT_CONFIRM_EMAIL_ON_GET = True
+ACCOUNT_EMAIL_CONFIRMATION_ANONYMOUS_REDIRECT_URL = LOGIN_URL
+ACCOUNT_EMAIL_CONFIRMATION_AUTHENTICATED_REDIRECT_URL = None
+ACCOUNT_EMAIL_CONFIRMATION_EXPIRE_DAYS = 3
+ACCOUNT_EMAIL_CONFIRMATION_HMAC = True
+ACCOUNT_EMAIL_REQUIRED = False
+ACCOUNT_EMAIL_VERIFICATION = 'optional'
+ACCOUNT_EMAIL_SUBJECT_PREFIX = '[SportySpots]'
+ACCOUNT_DEFAULT_HTTP_PROTOCOL = 'https'
+ACCOUNT_EMAIL_CONFIRMATION_COOLDOWN = 180
+ACCOUNT_EMAIL_MAX_LENGTH = 254
+ACCOUNT_FORMS = {
+    'add_email': 'allauth.account.forms.AddEmailForm',
+    'change_password': 'allauth.account.forms.ChangePasswordForm',
+    'disconnect': 'allauth.socialaccount.forms.DisconnectForm',
+    'login': 'allauth.account.forms.LoginForm',
+    'reset_password': 'allauth.account.forms.ResetPasswordForm',
+    'reset_password_from_key': 'allauth.account.forms.ResetPasswordKeyForm',
+    'set_password': 'allauth.account.forms.SetPasswordForm',
+    'signup': 'allauth.account.forms.SignupForm'
+}
+ACCOUNT_LOGIN_ATTEMPTS_LIMIT = 5
+ACCOUNT_LOGIN_ATTEMPTS_TIMEOUT = 300
+ACCOUNT_LOGIN_ON_EMAIL_CONFIRMATION = False
+ACCOUNT_LOGOUT_ON_GET = False
+ACCOUNT_LOGOUT_ON_PASSWORD_CHANGE = False
+ACCOUNT_LOGIN_ON_PASSWORD_RESET = False
+ACCOUNT_LOGOUT_REDIRECT_URL = '/'
+ACCOUNT_PASSWORD_INPUT_RENDER_VALUE = False
+ACCOUNT_PRESERVE_USERNAME_CASING = False
+ACCOUNT_SESSION_REMEMBER = None
+ACCOUNT_SIGNUP_EMAIL_ENTER_TWICE = False
+ACCOUNT_SIGNUP_FORM_CLASS = None
+ACCOUNT_SIGNUP_PASSWORD_ENTER_TWICE = True
+ACCOUNT_TEMPLATE_EXTENSION = 'html'
+ACCOUNT_USERNAME_BLACKLIST = []
+ACCOUNT_UNIQUE_EMAIL = True
+ACCOUNT_USER_MODEL_EMAIL_FIELD = 'email'
+ACCOUNT_USER_MODEL_USERNAME_FIELD = 'username'
+ACCOUNT_USERNAME_MIN_LENGTH = 1
+ACCOUNT_USERNAME_REQUIRED = False
+ACCOUNT_USERNAME_VALIDATORS = None
+SOCIALACCOUNT_ADAPTER = 'allauth.socialaccount.adapter.DefaultSocialAccountAdapter'
+SOCIALACCOUNT_AUTO_SIGNUP = True
+SOCIALACCOUNT_EMAIL_VERIFICATION = ACCOUNT_EMAIL_VERIFICATION
+SOCIALACCOUNT_EMAIL_REQUIRED = ACCOUNT_EMAIL_REQUIRED
+SOCIALACCOUNT_FORMS = {}
+SOCIALACCOUNT_PROVIDERS = {}
+SOCIALACCOUNT_QUERY_EMAIL = ACCOUNT_EMAIL_REQUIRED
+SOCIALACCOUNT_STORE_TOKENS = True
+
+
+ACCOUNT_ALLOW_REGISTRATION = env.bool('DJANGO_ACCOUNT_ALLOW_REGISTRATION', True)
+# ACCOUNT_ADAPTER = 'seedorf.users.adapters.AccountAdapter'
+# SOCIALACCOUNT_ADAPTER = 'seedorf.users.adapters.SocialAccountAdapter'
 
 # SLUGLIFIER
 # ------------------------------------------------------------------------------
@@ -342,7 +390,8 @@ REST_FRAMEWORK = {
 }
 
 # JWT Authentication
-# REF; http://getblimp.github.io/django-rest-framework-jwt/
+# REF: http://getblimp.github.io/django-rest-framework-jwt/
+# ------------------------------------------------------------------------------
 JWT_AUTH = {
     'JWT_ALGORITHM': 'HS256',
     'JWT_ALLOW_REFRESH': False,
@@ -367,6 +416,7 @@ JWT_AUTH = {
 
 # i18n nece settings
 # REF: https://github.com/tatterdemalion/django-nece
+# ------------------------------------------------------------------------------
 TRANSLATIONS_DEFAULT = 'en_us'
 TRANSLATIONS_MAP = {
     "en": "en_us",
@@ -374,6 +424,7 @@ TRANSLATIONS_MAP = {
 }
 
 # Haystack - Elasticsearch / Solr Integration
+# ------------------------------------------------------------------------------
 HAYSTACK_CONNECTIONS = {
     'default': {
         'ENGINE': 'haystack.backends.simple_backend.SimpleEngine',
@@ -381,5 +432,23 @@ HAYSTACK_CONNECTIONS = {
 }
 
 # Django Rest Auth
-# REF: http://django-rest-auth.readthedocs.io/en/latest/installation.html#jwt-support-optional
+# REF: https://django-rest-auth.readthedocs.io/en/latest/configuration.html
+# ------------------------------------------------------------------------------
+REST_AUTH_SERIALIZERS = {
+    'LOGIN_SERIALIZER': 'rest_auth.serializers.LoginSerializer',
+    'TOKEN_SERIALIZER': 'rest_auth.serializers.TokenSerializer',
+    'JWT_SERIALIZER': 'rest_auth.serializers.JWTSerializer',
+    'USER_DETAILS_SERIALIZER': 'rest_auth.serializers.UserDetailsSerializer',
+    'PASSWORD_RESET_SERIALIZER': 'rest_auth.serializers.PasswordResetSerializer',
+    'PASSWORD_RESET_CONFIRM_SERIALIZER': 'rest_auth.serializers.PasswordResetConfirmSerializer',
+    'PASSWORD_CHANGE_SERIALIZER': 'rest_auth.serializers.PasswordChangeSerializer'
+}
+REST_AUTH_REGISTER_SERIALIZERS = {
+  'REGISTER_SERIALIZER': 'rest_auth.registration.serializers.RegisterSerializer'
+}
+REST_AUTH_TOKEN_MODEL = 'rest_framework.authtoken.models'
+REST_AUTH_TOKEN_CREATOR = 'rest_auth.utils.default_create_token'
+REST_SESSION_LOGIN = True
 REST_USE_JWT = True
+OLD_PASSWORD_FIELD_ENABLED = False
+LOGOUT_ON_PASSWORD_CHANGE = True
