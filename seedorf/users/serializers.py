@@ -7,7 +7,7 @@ from .models import User
 class UserSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = User
-        fields = ('uuid', 'username', 'email', 'url', 'groups')
+        fields = ('uuid', 'name', 'username', 'email', 'url', 'groups')
         extra_kwargs = {
             'url': {'lookup_field': 'uuid'}
         }
