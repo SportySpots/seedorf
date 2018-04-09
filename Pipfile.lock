@@ -39,10 +39,10 @@
         },
         "argcomplete": {
             "hashes": [
-                "sha256:74e34bbd5bcb902e67a39e2edf1b1ef3dcb504a6a1d4cd23ce3949f25c4aad55",
-                "sha256:d6ea272a93bb0387f758def836e73c36fff0c54170258c212de3e84f7db8d5ed"
+                "sha256:2adef33864dabb77a3316f054c95227437e6448ea0aeb0e1ec1cd69aebcb29d6",
+                "sha256:06c8a54ffaa6bfc9006314498742ec8843601206a3b94212f82657673662ecf1"
             ],
-            "version": "==1.9.2"
+            "version": "==1.9.4"
         },
         "argon2-cffi": {
             "hashes": [
