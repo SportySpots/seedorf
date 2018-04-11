@@ -1,8 +1,7 @@
-
-import json
-
 from django.core.urlresolvers import reverse
 from rest_framework.test import APITestCase
+
+from .factories import UserFactory
 
 
 class UserRegistrationAPIViewTest(APITestCase):
@@ -24,8 +23,21 @@ class UserRegistrationAPIViewTest(APITestCase):
         self.assertEqual(201, response.status_code)
         self.assertTrue("token" in response.data)
 
-    def test_password_validators(self):
-        pass
+    def test_duplicate_user_creation(self):
+        """
+        Test to verify that duplicate user creation is forbidden
+        """
+        user1 = UserFactory(username='test', email='test@example.com')
+
+        user_data = {
+            "username": "test",
+            "email": "test@example.com",
+            "password1": "super_$secure_passw0rd",
+            "password2": "super_$secure_passw0rd"
+        }
+
+        response = self.client.post(self.url, user_data)
+        self.assertEqual(400, response.status_code)
 
 # Create Token Manually
 # from rest_framework_jwt.settings import api_settings
