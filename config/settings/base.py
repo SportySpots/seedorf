@@ -411,6 +411,7 @@ JWT_AUTH = {
     'JWT_PUBLIC_KEY': None,
     'JWT_REFRESH_EXPIRATION_DELTA': datetime.timedelta(days=7),
     'JWT_RESPONSE_PAYLOAD_HANDLER': 'rest_framework_jwt.utils.jwt_response_payload_handler',
+    'JWT_SECRET_KEY': env('DJANGO_SECRET_KEY'),
     'JWT_VERIFY': True,
     'JWT_VERIFY_EXPIRATION': True,
 }
