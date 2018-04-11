@@ -168,6 +168,19 @@ Get login token from ecr if required
 $ $(aws ecr get-login --no-include-email)
 ```
 
+### Django Frontend URLs'
+
+#### API Docs
+http://127.0.0.1:8000/docs
+
+#### Django Admin
+http://127.0.0.1:8000/admin
+
+#### Django API
+http://127.0.0.1:8000/api
+
+#### Mailhog
+http://127.0.0.1:8025/
 
 ## Basic Commands
 
