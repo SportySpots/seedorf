@@ -9,14 +9,13 @@ from rest_framework.documentation import include_docs_urls
 from rest_framework.schemas import get_schema_view
 from rest_framework_jwt.views import obtain_jwt_token, refresh_jwt_token, verify_jwt_token
 from rest_framework.permissions import AllowAny
-
+from allauth.account.views import confirm_email as registration_confirm_email
 
 from seedorf.games.viewsets import GameViewSet, RSVPViewset
 from seedorf.sports.viewsets import SportViewSet
 from seedorf.spots.viewsets import SpotViewSet
 from seedorf.users.viewsets import UserViewSet, GroupViewSet
-from allauth.account.views import ConfirmEmailView
-from seedorf.users.views import null_view, complete_view
+from seedorf.users.views import registration_null_view, registration_complete_view
 
 schema_view = get_schema_view(title='SportySpots API')
 
@@ -40,20 +39,21 @@ urlpatterns = [
 
     # Authentication / Registration
     # REF: https://github.com/blakey22/rest_email_signup
-    # url(r'^api/auth/registration/account-email-verification-sent/',
-    #     null_view,
-    #     name='account_email_verification_sent'),
-    url(r'^api/auth/registration/account-confirm-email/(?P<key>[-:\w]+)/$',
-        ConfirmEmailView.as_view(),
-        name='account_confirm_email'),
-    url(r'^api/auth/registration/complete/$',
-        complete_view,
-        name='account_confirm_complete'),
-    # url(r'^api/auth/password-reset/confirm/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$',
-    #     null_view,
-    #     name='password_reset_confirm'),
+    url(r'^api/auth/registration/email-verification-sent/',
+        registration_null_view, name='account_email_verification_sent'),
+    url(r'^api/auth/registration/confirm-email/(?P<key>[-:\w]+)/$',
+        registration_confirm_email, name='account_confirm_email'),
+    url(r'^api/auth/registration/status/$',
+        registration_complete_view, name='account_confirm_complete'),
+    url(r'^api/auth/registration/',
+        include('rest_auth.registration.urls', namespace='rest_auth_registration')),
 
-    url(r'^api/auth/registration/', include('rest_auth.registration.urls', namespace='rest_auth_registration')),
+
+    url(r'^api/auth/password-reset/confirm/'
+        r'(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$',
+        registration_null_view,
+        name='password_reset_confirm'),
+
     url(r'^api/auth/token-refresh/', refresh_jwt_token),
     url(r'^api/auth/token-verify/', verify_jwt_token),
     url(r'^api/auth/', include('rest_auth.urls', namespace='rest_auth')),
