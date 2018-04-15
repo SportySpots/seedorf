@@ -3,6 +3,8 @@ import copy
 from django.core.exceptions import ValidationError
 from django.utils.deconstruct import deconstructible
 from django.utils.translation import ugettext_lazy as _
+from jsonschema import validate
+from django.core.validators import BaseValidator
 
 
 @deconstructible
@@ -40,3 +42,8 @@ class AllowedKeysValidator(object):
 
     def __ne__(self, other):
         return not (self == other)
+
+
+class JSONSchemaValidator(BaseValidator):
+    def compare(self, a, b):
+        return validate(a, b)

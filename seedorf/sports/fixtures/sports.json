@@ -3,52 +3,126 @@
     "model": "sports.sport",
     "pk": 1,
     "fields": {
-        "created_at": "1970-01-01T00:00:00.000Z",
-        "modified_at": "1970-01-01T00:00:00.000Z",
+        "uuid": "0619c38d-4b21-4663-ba23-b49f682f50a2",
+        "created_at": "2018-04-14T11:51:07.258Z",
+        "modified_at": "2018-04-14T11:51:07.260Z",
         "deleted_at": null,
         "translations": null,
         "category": "basketball",
         "name": "Basketball",
-        "description": ""
+        "description": "Basketball is a limited-contact sport played on a rectangular court. While most often played as a team sport with five players on each side, three-on-three, two-on-two, and one-on-one competitions are also common."
     }
 },
 {
     "model": "sports.sport",
     "pk": 2,
     "fields": {
-        "created_at": "1970-01-01T00:00:00.000Z",
-        "modified_at": "1970-01-01T00:00:00.000Z",
+        "uuid": "672e593a-ac57-432a-b718-63d26074db1c",
+        "created_at": "2018-04-14T11:51:38.698Z",
+        "modified_at": "2018-04-14T11:51:38.700Z",
         "deleted_at": null,
         "translations": null,
         "category": "beach_volleyball",
         "name": "Beach Volleyball",
-        "description": ""
+        "description": "Beach volleyball is a team sport played by two teams of two players on a sand court divided by a net."
     }
 },
 {
     "model": "sports.sport",
     "pk": 3,
     "fields": {
-        "created_at": "1970-01-01T00:00:00.000Z",
-        "modified_at": "1970-01-01T00:00:00.000Z",
+        "uuid": "7d5cac64-e9aa-4889-9f3c-803bcc93462c",
+        "created_at": "2018-04-14T11:52:44.972Z",
+        "modified_at": "2018-04-14T11:52:44.975Z",
         "deleted_at": null,
         "translations": null,
-        "category": "soccer",
-        "name": "Soccer",
-        "description": ""
+        "category": "bootcamp",
+        "name": "Fitness Bootcamp",
+        "description": "A fitness boot camp is a type of group physical training program conducted by gyms, personal trainers, and former military personnel. These programs are designed to build strength and fitness through a variety of intense group intervals over a 1-hour period of time."
     }
 },
 {
     "model": "sports.sport",
     "pk": 4,
     "fields": {
-        "created_at": "1970-01-01T00:00:00.000Z",
-        "modified_at": "1970-01-01T00:00:00.000Z",
+        "uuid": "327bee89-789c-4e18-9a50-1f01c2d36a2f",
+        "created_at": "2018-04-14T11:54:48.033Z",
+        "modified_at": "2018-04-14T11:54:48.035Z",
+        "deleted_at": null,
+        "translations": null,
+        "category": "boules",
+        "name": "Boules",
+        "description": "Boules (French pronunciation: \u200b[bul]) is a collective name for a wide range of games similar to bowls and bocce (In French: jeu or jeux, in Italian: gioco or giochi) in which the objective is to throw or roll heavy balls (called boules in France, and bocce in Italy) as close as possible to a small target ball."
+    }
+},
+{
+    "model": "sports.sport",
+    "pk": 5,
+    "fields": {
+        "uuid": "814e425a-5079-4818-b346-36c03cca1958",
+        "created_at": "2018-04-14T11:56:40.955Z",
+        "modified_at": "2018-04-14T11:56:40.959Z",
+        "deleted_at": null,
+        "translations": null,
+        "category": "fitness",
+        "name": "Gym",
+        "description": ""
+    }
+},
+{
+    "model": "sports.sport",
+    "pk": 6,
+    "fields": {
+        "uuid": "512a417f-f8fd-4637-b1ed-860747c60799",
+        "created_at": "2018-04-14T11:57:04.309Z",
+        "modified_at": "2018-04-14T11:57:04.313Z",
+        "deleted_at": null,
+        "translations": null,
+        "category": "others",
+        "name": "Other",
+        "description": ""
+    }
+},
+{
+    "model": "sports.sport",
+    "pk": 7,
+    "fields": {
+        "uuid": "3662531a-957c-4eef-974e-7d4a09d428ea",
+        "created_at": "2018-04-14T11:57:35.601Z",
+        "modified_at": "2018-04-14T11:57:35.603Z",
+        "deleted_at": null,
+        "translations": null,
+        "category": "skating",
+        "name": "Skating",
+        "description": "Skating involves any sports or recreational activity which consists of traveling on surfaces or on ice using skates."
+    }
+},
+{
+    "model": "sports.sport",
+    "pk": 8,
+    "fields": {
+        "uuid": "2e9c614d-632f-4386-a9f5-0d514cb56c15",
+        "created_at": "2018-04-14T11:58:28.898Z",
+        "modified_at": "2018-04-14T11:58:28.903Z",
+        "deleted_at": null,
+        "translations": null,
+        "category": "soccer",
+        "name": "Soccer",
+        "description": "Association football, more commonly known as football or soccer,[a] is a team sport played between two teams of eleven players with a spherical ball. It is played by 250 million players in over 200 countries and dependencies, making it the world's most popular sport.[3][4][5][6] The game is played on a rectangular field with a goal at each end. The object of the game is to score by moving the ball beyond the goal line into the opposing goal."
+    }
+},
+{
+    "model": "sports.sport",
+    "pk": 9,
+    "fields": {
+        "uuid": "8ef143ce-22d5-4155-9e3a-8d2b5d5fdd5c",
+        "created_at": "2018-04-14T11:58:55.946Z",
+        "modified_at": "2018-04-14T11:58:55.949Z",
         "deleted_at": null,
         "translations": null,
         "category": "tennis",
         "name": "Tennis",
-        "description": ""
+        "description": "Tennis is a racket sport that can be played individually against a single opponent (singles) or between two teams of two players each (doubles). Each player uses a tennis racket that is strung with cord to strike a hollow rubber ball covered with felt over or around a net and into the opponent's court. The object of the game is to play the ball in such a way that the opponent is not able to play a valid return. The player who is unable to return the ball will not gain a point, while the opposite player will."
     }
 }
 ]

@@ -22,31 +22,66 @@ class Address(BasePropertiesModel):
     )
 
     raw_address = models.CharField(
-        blank=False,
-        max_length=255,
-        null=False
+        blank=True,
+        default='',
+        help_text=_('Complete address'),
+        max_length=1024,
+        null=False,
+        verbose_name=_('Address')
     )
-    raw_response = JSONField(
+    raw_geocoder_response = JSONField(
         blank=True,
         help_text=_('Raw api response from the geocoder service. e.g. google maps'),
-        null=False
+        null=True,
+        verbose_name=_('Raw Geocoder Response')
     )
-    geocoder = models.CharField(
+    geocoder_service = models.CharField(
         blank=False,
         choices=GEOCODERS,
         default=GEOCODER_MANUAL,
         help_text=_('Geocoder used to convert raw address into latlong coordinates.'),
         max_length=25,
-        null=True
+        null=True,
+        verbose_name=_('Geocoder')
     )
     formatted_address = models.CharField(
         blank=True,
-        max_length=255,
-        null=False
+        help_text=_('Formatted address returned by the geocoding service'),
+        max_length=1024,
+        null=False,
+        verbose_name=_('Formatted Address')
     )
     location = gis_models.PointField(
-        blank=False,
-        null=False
+        blank=True,
+        null=True
+    )
+    lat = models.DecimalField(
+        blank=True,
+        decimal_places=15,
+        max_digits=18,
+        null=True,
+        verbose_name=_('Latitude')
+    )
+    lng = models.DecimalField(
+        blank=True,
+        decimal_places=15,
+        max_digits=18,
+        null=True,
+        verbose_name=_('Longtiude')
+    )
+    # TODO: https://plus.codes/
+    plus_global_code = models.CharField(
+        blank=True,
+        max_length=255,
+        null=True,
+        verbose_name=_('Google Plus Global Code')
+    )
+    plus_local_code = models.CharField(
+        blank=True,
+        max_length=255,
+        null=True,
+        verbose_name=_('Google Plus Local Code')
+
     )
 
     location_type = None  # REF: Google Maps https://developers.google.com/maps/documentation/geocoding/start
@@ -59,3 +94,6 @@ class Address(BasePropertiesModel):
     class Meta:
         verbose_name = _('Address')
         verbose_name_plural = _('Addresses')
+
+    def __str__(self):
+        return self.raw_address

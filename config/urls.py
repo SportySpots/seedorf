@@ -17,6 +17,7 @@ from seedorf.spots.viewsets import SpotViewSet
 from seedorf.users.viewsets import UserViewSet, GroupViewSet
 from seedorf.users.views import registration_null_view, registration_complete_view
 
+
 schema_view = get_schema_view(title='SportySpots API')
 
 # Routers provide an easy way of automatically determining the URL conf.
@@ -66,7 +67,7 @@ urlpatterns = [
     url(r'^api/', include(router.urls)),
 
     # GraphQL API
-    url(r'^graphql$', GraphQLView.as_view(graphiql=True), name='graphql'),
+    # url(r'^graphql$', GraphQLView.as_view(graphiql=True, schema=schema), name='graphql'),
 
     # Other
     url(r'^schema/$', schema_view),

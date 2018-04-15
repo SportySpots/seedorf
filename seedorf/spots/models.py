@@ -8,8 +8,8 @@ from django_extensions.db.fields import AutoSlugField
 from django_extensions.db.models import TimeStampedModel
 
 from seedorf.utils.models import BasePropertiesModel
-from . import AMENITIES_TYPE
 from .validators import AllowedKeysValidator
+from cerberus import Validator
 
 
 def get_logo_upload_directory(instance, filename):
@@ -29,7 +29,7 @@ def get_images_upload_directory(instance, filename):
 class Spot(BasePropertiesModel):
     # Foreign Keys
     # TODO: Validation there can be only one non-permanently closed spot at an address
-    address = models.ForeignKey(
+    address = models.OneToOneField(
         'locations.Address',
         related_name='spot_address'
     )
@@ -43,43 +43,42 @@ class Spot(BasePropertiesModel):
         blank=False,
         max_length=255,
         null=False,
-        verbose_name=_('Spot Name'),
+        verbose_name=_('Name'),
     )
     slug = AutoSlugField(
-        blank=False,
+        blank=True,
         editable=True,
         populate_from='name',
         unique=True,
-        verbose_name=_('Spot Slug'),
+        verbose_name=_('Slug'),
     )
     owner = models.CharField(
         blank=True,
         default='',
         max_length=255,
         null=False,
-        unique=True,
-        verbose_name=_('Spot Owner'),
+        verbose_name=_('Owner'),
     )
     description = models.TextField(
         blank=True,
         default='',
         max_length=4096,
         null=False,
-        verbose_name=_('Spot Description'),
+        verbose_name=_('Description'),
     )
     logo = models.ImageField(
         blank=True,
         max_length=255,
         null=False,
         upload_to=get_logo_upload_directory,
-        verbose_name=_('Spot Logo'),
+        verbose_name=_('Logo'),
     )
     homepage_url = models.URLField(
         blank=True,
         help_text=_('Where can we find out more about this spot ?'),
         max_length=500,
         null=False,
-        verbose_name=_('Spot Homepage URL'),
+        verbose_name=_('Homepage URL'),
     )
     is_verified = models.BooleanField(
         blank=False,
@@ -108,12 +107,12 @@ class Spot(BasePropertiesModel):
     )
     establishment_date = models.DateField(
         blank=True,
-        null=False
+        null=True
     )
     # NOTE: Closure date can be in the future, incase of temporary events
     closure_date = models.DateField(
         blank=True,
-        null=False
+        null=True
     )
 
     # Generic Keys
@@ -231,7 +230,61 @@ class SpotOpeningTime(models.Model):
                  )
 
 
-class SpotAmenity(models.Model):
+AMENITIES_TYPE_SCHEMA = {
+    'INDOOR': {
+        'type': 'boolean'
+    },
+    'OUTDOOR': {
+        'type': 'boolean'
+    },
+    'WIDTH': {
+        'type': 'integer',
+    },
+    'BREADTH': {
+        'type': 'integer',
+    },
+    'SIZE': {
+        'type': 'integer',
+    },
+    'HAS_FLOODLIGHTS': {
+        'type': 'boolean',
+    },
+    'SURFACE': {
+        'type': 'string',
+    },
+    'LOCATION': {
+        'type': 'string',
+        'allowed': ['']
+    },
+    'FENCE': {
+        'type': 'boolean',
+    },
+    'FIELD_MARKINGS': {
+        'type': 'boolean',
+    },
+    'SOCCER_GOALS_ONE_SIDED': {
+        'type': 'boolean',
+    },
+    'SOCCER_GOALS_BOTH_SIDED': {
+        'type': 'boolean',
+    },
+    'SOCCER_GOALS_SIZE': {
+        'type': 'string',
+        'allowed': ['']
+    },
+    'BASKETBALL_POLE_ONE_SIDED': {
+        'type': 'boolean'
+    },
+    'BASKETBALL_POLE_BOTH_SIDED': {
+        'type': 'boolean'
+    },
+    'MULTISPORT_FIELD': {
+        'type': 'boolean'
+    }
+}
+
+
+class SpotAmenity(BasePropertiesModel):
     # Foreign Keys
     spot = models.ForeignKey(
         'spots.Spot',
@@ -248,7 +301,9 @@ class SpotAmenity(models.Model):
 
     # Instance Fields
     data = JSONField(
-        validators=[AllowedKeysValidator(list(AMENITIES_TYPE.keys()))]
+        validators=[
+            AllowedKeysValidator(list(AMENITIES_TYPE_SCHEMA.keys())),
+        ]
     )
 
     class Meta:

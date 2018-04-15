@@ -2,7 +2,7 @@ import pytz
 from django.conf import settings
 from django.core.validators import MinValueValidator
 from django.db import models
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import ugettext as _
 
 from seedorf.utils.models import BasePropertiesModel
 
@@ -20,7 +20,7 @@ class Game(BasePropertiesModel):
     STATUS_CANCELED = 'canceled'  # When the organizer cancels the event
     STATUS_COMPLETED = 'completed'  # When the organizer confirms the game took place
     STATUS_ENDED = 'ended'  # When the system sets the state automatically based on end time
-    STATUS_LIVE = 'live'  # When the organizer confirms the game is
+    STATUS_LIVE = 'live'  # When the organizer confirms the game is live
     STATUS_PLANNED = 'planned'  # When the game is in planning phase
     STATUS_STARTED = 'started'  # When the system sets the state automatically based on start time
 
@@ -35,7 +35,7 @@ class Game(BasePropertiesModel):
 
     INVITE_MODE_APPROVAL = 'approval'
     INVITE_MODE_INVITE_ONLY = 'invite_only'
-    INVITE_MODE_OPEN = 'open',
+    INVITE_MODE_OPEN = 'open'
 
     INVITE_MODES = (
         (INVITE_MODE_APPROVAL, _('Approval')),
@@ -163,21 +163,21 @@ class Game(BasePropertiesModel):
         default=True,
         help_text=_('If this game is publicly searchable on SportySpots.'),
         null=False,
-        verbose_name=_('Is Listed'),
+        verbose_name=_('Is Listed?'),
     )
     is_shareable = models.BooleanField(
         blank=False,
         default=True,
         help_text=_('If this game shows social sharing buttons.'),
         null=False,
-        verbose_name=_('Is Shareable'),
+        verbose_name=_('Is Shareable?'),
     )
     is_featured = models.BooleanField(
         blank=False,
         default=False,
         help_text=_('If this game is featured.'),
         null=False,
-        verbose_name=_('Is Featured'),
+        verbose_name=_('Is Featured?'),
     )
 
     class Meta:
@@ -230,7 +230,7 @@ class RSVPStatus(BasePropertiesModel):
         default=None,
         max_length=25,
         null=True,
-        verbose_name=_('RSVP Status'),
+        verbose_name=_('Status'),
     )
 
     class Meta:
