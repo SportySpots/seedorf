@@ -56,6 +56,7 @@ apistar = { version = "==0.4.0" }
 jsonschema = "*"
 cerberus = "*"
 drf-writable-nested = "*"
+drf-nested-routers = "*"
 
 
 [dev-packages]

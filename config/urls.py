@@ -13,9 +13,11 @@ from allauth.account.views import confirm_email as registration_confirm_email
 
 from seedorf.games.viewsets import GameViewSet, RSVPViewset
 from seedorf.sports.viewsets import SportViewSet
-from seedorf.spots.viewsets import SpotViewSet
+from seedorf.spots.viewsets import SpotViewSet, SpotAmenityViewSet, SpotImageViewSet, SpotOpeningTimeViewSet
 from seedorf.users.viewsets import UserViewSet, GroupViewSet
 from seedorf.users.views import registration_null_view, registration_complete_view
+
+from rest_framework_nested import routers
 
 
 schema_view = get_schema_view(title='SportySpots API')
@@ -31,6 +33,12 @@ router.register(r'spots', SpotViewSet)
 router.register(r'users', UserViewSet)
 # router.register(r'reactions', ReactionViewSet)
 # router.register(r'locations', LocationViewSet)
+
+spots_router = routers.NestedDefaultRouter(router, r'spots', lookup='spot')
+spots_router.register(r'images', SpotImageViewSet, base_name='spot-images')
+spots_router.register(r'amenities', SpotAmenityViewSet, base_name='spot-amenities')
+spots_router.register(r'opening-times', SpotOpeningTimeViewSet, base_name='spot-opening-time')
+
 
 urlpatterns = [
     # Django Admin, use {% url 'admin:index' %}
@@ -65,6 +73,8 @@ urlpatterns = [
 
     # REST API
     url(r'^api/', include(router.urls)),
+    url(r'^api/', include(spots_router.urls)),
+
 
     # GraphQL API
     # url(r'^graphql$', GraphQLView.as_view(graphiql=True, schema=schema), name='graphql'),

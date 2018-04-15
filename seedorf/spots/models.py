@@ -31,11 +31,11 @@ class Spot(BasePropertiesModel):
     # TODO: Validation there can be only one non-permanently closed spot at an address
     address = models.OneToOneField(
         'locations.Address',
-        related_name='spot_address'
+        related_name='spot'
     )
     sports = models.ManyToManyField(
         'sports.Sport',
-        related_name='sport_spots',
+        related_name='spots',
     )
 
     # Instance Fields
@@ -135,7 +135,7 @@ class SpotImage(BasePropertiesModel):
     spot = models.ForeignKey(
         'spots.Spot',
         on_delete=models.CASCADE,
-        related_name='spot_images',
+        related_name='images',
     )
 
     # Instance Fields
@@ -163,7 +163,7 @@ class SpotImage(BasePropertiesModel):
         return self.uuid
 
 
-class SpotOpeningTime(models.Model):
+class SpotOpeningTime(BasePropertiesModel):
     """
     TODO: Validation
     A spot can have multiple opening times during a day
@@ -194,7 +194,7 @@ class SpotOpeningTime(models.Model):
     spot = models.ForeignKey(
         'spots.Spot',
         on_delete=models.CASCADE,
-        related_name='spot_opening_times',
+        related_name='opening_times',
     )
     day = models.CharField(
         blank=False,
@@ -289,7 +289,7 @@ class SpotAmenity(BasePropertiesModel):
     spot = models.ForeignKey(
         'spots.Spot',
         on_delete=models.CASCADE,
-        related_name='spot_amenities',
+        related_name='amenities',
         verbose_name=_('Spot Amenity'),
     )
     sport = models.ForeignKey(
