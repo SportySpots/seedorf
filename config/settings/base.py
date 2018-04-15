@@ -68,7 +68,7 @@ THIRD_PARTY_APPS = [
     'graphene_django',  # graphql
     'haystack',  # solr/elastic-search
 
-    # 'storages',  # cloud file storages
+    'storages',  # cloud file storages
 ]
 
 # Apps specific for this project go here.
