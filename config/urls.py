@@ -55,7 +55,7 @@ urlpatterns = [
     url(r'^api/auth/registration/status/$',
         registration_complete_view, name='account_confirm_complete'),
     url(r'^api/auth/registration/',
-        include('rest_auth.registration.urls', namespace='rest_auth_registration')),
+        include('rest_auth.registration.urls', app_name='rest_auth', namespace='rest_auth_registration')),
 
 
     url(r'^api/auth/password-reset/confirm/'
@@ -65,7 +65,7 @@ urlpatterns = [
 
     url(r'^api/auth/token-refresh/', refresh_jwt_token),
     url(r'^api/auth/token-verify/', verify_jwt_token),
-    url(r'^api/auth/', include('rest_auth.urls', namespace='rest_auth')),
+    url(r'^api/auth/', include('rest_auth.urls', app_name='rest_auth', namespace='rest_auth')),
 
     # url(r'^api/accounts/', include('allauth.urls', namespace='allauth')),
     # url(r'^api/api-auth/', include('rest_framework.urls', namespace='rest_framework')),
