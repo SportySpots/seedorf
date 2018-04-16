@@ -51,10 +51,6 @@ class Address(BasePropertiesModel):
         null=False,
         verbose_name=_('Formatted Address')
     )
-    location = gis_models.PointField(
-        blank=True,
-        null=True
-    )
     lat = models.DecimalField(
         blank=True,
         decimal_places=15,
@@ -84,12 +80,12 @@ class Address(BasePropertiesModel):
 
     )
 
-    location_type = None  # REF: Google Maps https://developers.google.com/maps/documentation/geocoding/start
-    viewport = None  # REF: Google Maps https://developers.google.com/maps/documentation/geocoding/start
-    types = None  # REF: Google Maps https://developers.google.com/maps/documentation/geocoding/start
-    city = None  # REF: Maybe use django-cities
-    country = None  # REF: Maybe use django-cities
-    utc_offset= None  # REF: Maybe use django-cities
+    # location_type = None  # REF: Google Maps https://developers.google.com/maps/documentation/geocoding/start
+    # viewport = None  # REF: Google Maps https://developers.google.com/maps/documentation/geocoding/start
+    # types = None  # REF: Google Maps https://developers.google.com/maps/documentation/geocoding/start
+    # city = None  # REF: Maybe use django-cities
+    # country = None  # REF: Maybe use django-cities
+    # utc_offset= None  # REF: Maybe use django-cities
 
     class Meta:
         verbose_name = _('Address')

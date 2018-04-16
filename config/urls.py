@@ -18,7 +18,7 @@ from seedorf.users.viewsets import UserViewSet, GroupViewSet
 from seedorf.users.views import registration_null_view, registration_complete_view
 
 from rest_framework_nested import routers
-
+from seedorf.graphql.schema import schema
 
 schema_view = get_schema_view(title='SportySpots API')
 
@@ -77,7 +77,7 @@ urlpatterns = [
 
 
     # GraphQL API
-    # url(r'^graphql$', GraphQLView.as_view(graphiql=True, schema=schema), name='graphql'),
+    url(r'^graphql$', GraphQLView.as_view(graphiql=True, schema=schema), name='graphql'),
 
     # Other
     url(r'^schema/$', schema_view),

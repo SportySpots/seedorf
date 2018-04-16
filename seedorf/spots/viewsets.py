@@ -79,7 +79,6 @@ class SpotImageViewSet(viewsets.ModelViewSet):
     permission_classes = (IsAdminOrReadOnly,)
 
     def get_queryset(self):
-        print(self.kwargs)
         return SpotImage.objects.filter(spot__uuid=self.kwargs['spot_uuid'])
 
 
