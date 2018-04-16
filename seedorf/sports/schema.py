@@ -9,7 +9,7 @@ class SportType(DjangoObjectType):
         model = Sport
 
 
-class Query(graphene.AbstractType):
+class Query(object):
     sports = graphene.List(SportType)
 
     def resolve_sports(self, args, context, info):

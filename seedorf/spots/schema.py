@@ -24,7 +24,7 @@ class SpotOpeningTimeType(DjangoObjectType):
         model = SpotOpeningTime
 
 
-class Query(graphene.AbstractType):
+class Query(object):
     spots = graphene.List(SpotType)
 
     def resolve_spots(self, args, context, info):

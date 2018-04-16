@@ -9,7 +9,7 @@ class AddressType(DjangoObjectType):
         model = Address
 
 
-class Query(graphene.AbstractType):
+class Query(object):
     addresses = graphene.List(AddressType)
 
     def resolve_addresses(self, args, content, info):

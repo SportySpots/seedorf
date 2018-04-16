@@ -14,7 +14,7 @@ class RSVPStatusType(DjangoObjectType):
         model = RSVPStatus
 
 
-class Query(graphene.AbstractType):
+class Query(object):
     games = graphene.List(GameType)
     rsvp_statuses = graphene.List(RSVPStatusType)
 
