@@ -31,11 +31,13 @@ class Spot(BasePropertiesModel):
     # TODO: Validation there can be only one non-permanently closed spot at an address
     address = models.OneToOneField(
         'locations.Address',
-        related_name='spot'
+        related_name='spot',
+        verbose_name=_('Address')
     )
     sports = models.ManyToManyField(
         'sports.Sport',
         related_name='spots',
+        verbose_name=_('Sports')
     )
 
     # Instance Fields
@@ -136,6 +138,13 @@ class SpotImage(BasePropertiesModel):
         'spots.Spot',
         on_delete=models.CASCADE,
         related_name='images',
+        verbose_name=_('Spot')
+    )
+    sport = models.ForeignKey(
+        'sports.Sport',
+        on_delete=models.CASCADE,
+        related_name='images',
+        verbose_name=_('Sport'),
     )
 
     # Instance Fields
@@ -155,8 +164,8 @@ class SpotImage(BasePropertiesModel):
     )
 
     class Meta:
-        verbose_name = _('Spot Image')
-        verbose_name_plural = _('Spot Images')
+        verbose_name = _('Spot Image per Sport')
+        verbose_name_plural = _('Spot Images per Sport')
         ordering = ('-created_at',)
 
     def __str__(self):
@@ -173,16 +182,16 @@ class SpotOpeningTime(BasePropertiesModel):
     A spot can be closed can be closed on special adhoc days
 
     """
-    DAY_MONDAY = 1
-    DAY_TUESDAY = 2
-    DAY_WEDNESDAY = 3
-    DAY_THURSDAY = 4
-    DAY_FRIDAY = 5
-    DAY_SATURDAY = 6
-    DAY_SUNDAY = 7
+    DAY_MONDAY = 'MONDAY'
+    DAY_TUESDAY = 'TUESDAY'
+    DAY_WEDNESDAY = 'WEDNESDAY'
+    DAY_THURSDAY = 'THURSDAY'
+    DAY_FRIDAY = 'FRIDAY'
+    DAY_SATURDAY = 'SATURDAY'
+    DAY_SUNDAY = 'SUNDAY'
 
     DAYS = (
-        (DAY_MONDAY,_('Monday')),
+        (DAY_MONDAY, _('Monday')),
         (DAY_TUESDAY, _('Tuesday')),
         (DAY_WEDNESDAY, _('Wednesday')),
         (DAY_THURSDAY, _('Thursday')),
@@ -195,6 +204,13 @@ class SpotOpeningTime(BasePropertiesModel):
         'spots.Spot',
         on_delete=models.CASCADE,
         related_name='opening_times',
+        verbose_name=_('Spot')
+    )
+    sport = models.ForeignKey(
+        'sports.Sport',
+        on_delete=models.CASCADE,
+        related_name='opening_times',
+        verbose_name=_('Sport'),
     )
     day = models.CharField(
         blank=False,
@@ -216,18 +232,16 @@ class SpotOpeningTime(BasePropertiesModel):
     )
 
     class Meta:
-        verbose_name = _('Spot Opening Time')
-        verbose_name_plural = _('Spot Opening Times')
+        verbose_name = _('Spot Opening Time per Sport')
+        verbose_name_plural = _('Spot Opening Times per Sport')
 
     def __str__(self):
         # TODO: Test if the day is properly translated in different languages
-        return _('Day: {day} Open: {is_closed} From: {start_time} Until: {end_time}'
-                 .format(day=self.get_day_display(),
-                         is_closed=self.is_closed,
-                         start_time=self.start_time,
-                         end_time=self.end_time
-                         )
-                 )
+        return 'Day: {day} Open: {is_closed} From: {start_time} Until: {end_time}'.format(day=self.get_day_display(),
+                                                                                          is_closed=self.is_closed,
+                                                                                          start_time=self.start_time,
+                                                                                          end_time=self.end_time
+                                                                                          )
 
 
 AMENITIES_TYPE_SCHEMA = {
@@ -290,13 +304,13 @@ class SpotAmenity(BasePropertiesModel):
         'spots.Spot',
         on_delete=models.CASCADE,
         related_name='amenities',
-        verbose_name=_('Spot Amenity'),
+        verbose_name=_('Spot'),
     )
     sport = models.ForeignKey(
         'sports.Sport',
         on_delete=models.CASCADE,
-        related_name='sports_amenities',
-        verbose_name=_('Sport Amenity'),
+        related_name='spot_amenities',
+        verbose_name=_('Sport'),
     )
 
     # Instance Fields
@@ -307,8 +321,8 @@ class SpotAmenity(BasePropertiesModel):
     )
 
     class Meta:
-        verbose_name = _('Spot Amenity')
-        verbose_name_plural = _('Spot Amenities')
+        verbose_name = _('Spot Amenity per Sport')
+        verbose_name_plural = _('Spot Amenities per Sport')
 
     def __str__(self):
         # TODO: Return name of sport, key and value pairs of data
