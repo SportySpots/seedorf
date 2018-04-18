@@ -10,7 +10,7 @@ from rest_framework.schemas import get_schema_view
 from rest_framework_jwt.views import obtain_jwt_token, refresh_jwt_token, verify_jwt_token
 from rest_framework.permissions import AllowAny
 from allauth.account.views import confirm_email as registration_confirm_email
-
+from rest_framework.decorators import permission_classes
 from seedorf.games.viewsets import GameViewSet, RSVPViewset
 from seedorf.sports.viewsets import SportViewSet
 from seedorf.spots.viewsets import SpotViewSet, SpotAmenityViewSet, SpotImageViewSet, SpotOpeningTimeViewSet
@@ -32,15 +32,12 @@ router.register(r'rsvps', RSVPViewset)
 router.register(r'sports', SportViewSet)
 router.register(r'spots', SpotViewSet)
 router.register(r'users', UserViewSet)
-# router.register(r'address', AddressViewSet, base_name='address')
-# router.register(r'reactions', ReactionViewSet)
-
 
 spots_router = routers.NestedDefaultRouter(router, r'spots', lookup='spot')
 spots_router.register(r'address', AddressViewSet, base_name='spot-address')
 spots_router.register(r'images', SpotImageViewSet, base_name='spot-images')
 spots_router.register(r'amenities', SpotAmenityViewSet, base_name='spot-amenities')
-spots_router.register(r'opening-times', SpotOpeningTimeViewSet, base_name='spot-opening-time')
+spots_router.register(r'opening-times', SpotOpeningTimeViewSet, base_name='spot-opening-times')
 
 
 urlpatterns = [
@@ -80,7 +77,8 @@ urlpatterns = [
 
 
     # GraphQL API
-    url(r'^graphql$', GraphQLView.as_view(graphiql=True, schema=schema), name='graphql'),
+    # TODO: remove allowany permission decorator
+    url(r'^graphql$', permission_classes((AllowAny, ))(GraphQLView.as_view(graphiql=True, schema=schema)), name='graphql'),
 
     # Other
     url(r'^schema/$', schema_view),
