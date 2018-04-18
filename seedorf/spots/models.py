@@ -160,7 +160,7 @@ class SpotImage(BasePropertiesModel):
         ordering = ('-created_at',)
 
     def __str__(self):
-        return self.uuid
+        return str(self.uuid)
 
 
 class SpotOpeningTime(BasePropertiesModel):
@@ -216,8 +216,8 @@ class SpotOpeningTime(BasePropertiesModel):
     )
 
     class Meta:
-        verbose_name = _('Spot Image')
-        verbose_name_plural = _('Spot Images')
+        verbose_name = _('Spot Opening Time')
+        verbose_name_plural = _('Spot Opening Times')
 
     def __str__(self):
         # TODO: Test if the day is properly translated in different languages
