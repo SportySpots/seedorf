@@ -15,6 +15,7 @@ from seedorf.games.viewsets import GameViewSet, RSVPViewset
 from seedorf.sports.viewsets import SportViewSet
 from seedorf.spots.viewsets import SpotViewSet, SpotAmenityViewSet, SpotImageViewSet, SpotOpeningTimeViewSet
 from seedorf.users.viewsets import UserViewSet, GroupViewSet
+from seedorf.locations.viewsets import AddressViewSet
 from seedorf.users.views import registration_null_view, registration_complete_view
 
 from rest_framework_nested import routers
@@ -31,10 +32,12 @@ router.register(r'rsvps', RSVPViewset)
 router.register(r'sports', SportViewSet)
 router.register(r'spots', SpotViewSet)
 router.register(r'users', UserViewSet)
+# router.register(r'address', AddressViewSet, base_name='address')
 # router.register(r'reactions', ReactionViewSet)
-# router.register(r'locations', LocationViewSet)
+
 
 spots_router = routers.NestedDefaultRouter(router, r'spots', lookup='spot')
+spots_router.register(r'address', AddressViewSet, base_name='spot-address')
 spots_router.register(r'images', SpotImageViewSet, base_name='spot-images')
 spots_router.register(r'amenities', SpotAmenityViewSet, base_name='spot-amenities')
 spots_router.register(r'opening-times', SpotOpeningTimeViewSet, base_name='spot-opening-time')

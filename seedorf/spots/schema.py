@@ -28,7 +28,6 @@ class Query(object):
     spot = graphene.Field(SpotType, uuid=graphene.UUID())
     spots = graphene.List(SpotType)
 
-
     def resolve_spots(self, info, **kwargs):
         return Spot.objects.all()
 

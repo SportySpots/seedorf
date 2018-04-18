@@ -1,10 +1,12 @@
 from rest_framework import serializers
+from rest_framework_nested.relations import NestedHyperlinkedRelatedField, NestedHyperlinkedIdentityField
+from rest_framework_nested.serializers import NestedHyperlinkedModelSerializer
 
-from .models import Spot, SpotAmenity, SpotImage, SpotOpeningTime
+
+from seedorf.locations.models import Address
 from seedorf.locations.serializers import AddressSerializer
 from seedorf.sports.serializers import SportSerializer
-from seedorf.locations.models import Address
-from seedorf.sports.models import Sport
+from .models import Spot, SpotAmenity, SpotImage, SpotOpeningTime
 
 
 class SpotAmenitySerializer(serializers.ModelSerializer):
@@ -34,25 +36,21 @@ class SpotOpeningTimeSerializer(serializers.ModelSerializer):
         }
 
 
-class SpotSerializer(serializers.ModelSerializer):
+class SpotSerializer(serializers.HyperlinkedModelSerializer):
+    url = serializers.HyperlinkedIdentityField(
+        view_name='spot-detail',
+        lookup_field='uuid'
+    )
     address = AddressSerializer()
-    sports = serializers.SlugRelatedField(many=True,
-                                          queryset=Sport.objects.all(),
-                                          slug_field='uuid')
-    # sports = SportSerializer(read_only=True, many=True)
-    # images = SpotImageSerializer(read_only=True, many=True)
-    # amenities = SpotAmenitySerializer(read_only=True, many=True)
-    # opening_times = SpotOpeningTimeSerializer(read_only=True, many=True)
+
+    sports = SportSerializer(read_only=True, many=True)
 
     class Meta:
         model = Spot
-        fields = ('uuid', 'name', 'slug', 'owner', 'description', 'logo', 'homepage_url',
+        fields = ('url', 'uuid', 'name', 'slug', 'owner', 'description', 'logo', 'homepage_url',
                   'is_verified', 'is_permanently_closed', 'is_public', 'is_temporary', 'establishment_date',
                   'closure_date', 'created_at', 'modified_at', 'sports', 'address', 'images', 'amenities',
                   'opening_times',)
-        extra_kwargs = {
-            'url': {'lookup_field': 'uuid'},
-        }
 
     def create(self, validated_data):
         address_data = validated_data.pop('address')
@@ -76,6 +74,3 @@ class SpotSerializer(serializers.ModelSerializer):
 
         Address.objects.update(**address_data)
         return instance
-
-
-
