@@ -57,6 +57,8 @@ jsonschema = "*"
 cerberus = "*"
 drf-writable-nested = "*"
 drf-nested-routers = "*"
+django-timezone-field = "*"
+django-countries = "*"
 
 
 [dev-packages]
