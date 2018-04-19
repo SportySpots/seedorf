@@ -163,8 +163,8 @@ class SpotImage(BasePropertiesModel):
     )
 
     class Meta:
-        verbose_name = _('Spot Image per Sport')
-        verbose_name_plural = _('Spot Images per Sport')
+        verbose_name = _('Spot Image')
+        verbose_name_plural = _('Spot Images')
         ordering = ('-created_at',)
 
     def __str__(self):
@@ -231,8 +231,8 @@ class SpotOpeningTime(BasePropertiesModel):
     )
 
     class Meta:
-        verbose_name = _('Spot Opening Time per Sport')
-        verbose_name_plural = _('Spot Opening Times per Sport')
+        verbose_name = _('Spot Opening Time')
+        verbose_name_plural = _('Spot Opening Times')
 
     def __str__(self):
         # TODO: Test if the day is properly translated in different languages
@@ -308,7 +308,7 @@ class SpotAmenity(BasePropertiesModel):
     sport = models.ForeignKey(
         'sports.Sport',
         on_delete=models.CASCADE,
-        related_name='spot_amenities',
+        related_name='amenities',
         verbose_name=_('Sport'),
     )
 
@@ -320,8 +320,8 @@ class SpotAmenity(BasePropertiesModel):
     )
 
     class Meta:
-        verbose_name = _('Spot Amenity per Sport')
-        verbose_name_plural = _('Spot Amenities per Sport')
+        verbose_name = _('Spot Amenity')
+        verbose_name_plural = _('Spot Amenities')
 
     def __str__(self):
         # TODO: Return name of sport, key and value pairs of data
