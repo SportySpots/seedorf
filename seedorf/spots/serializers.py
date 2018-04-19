@@ -1,7 +1,6 @@
 from rest_framework import serializers
-from rest_framework_nested.relations import NestedHyperlinkedRelatedField, NestedHyperlinkedIdentityField
+from rest_framework_nested.relations import NestedHyperlinkedIdentityField
 from rest_framework_nested.serializers import NestedHyperlinkedModelSerializer
-
 
 from seedorf.locations.models import Address
 from seedorf.locations.serializers import AddressSerializer

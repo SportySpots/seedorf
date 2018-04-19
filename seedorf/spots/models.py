@@ -9,7 +9,6 @@ from django_extensions.db.models import TimeStampedModel
 
 from seedorf.utils.models import BasePropertiesModel
 from .validators import AllowedKeysValidator
-from cerberus import Validator
 
 
 def get_logo_upload_directory(instance, filename):
