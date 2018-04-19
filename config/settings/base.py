@@ -69,6 +69,8 @@ THIRD_PARTY_APPS = [
     'haystack',  # solr/elastic-search
 
     'storages',  # cloud file storages
+    'django_countries',
+    'timezone_field'
 ]
 
 # Apps specific for this project go here.
