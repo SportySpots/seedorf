@@ -3,15 +3,15 @@ from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin as AuthUserAdmin
 from django.contrib.auth.forms import UserChangeForm, UserCreationForm
 
-from .models import User
+from .models import User, UserProfile
 
 
-class MyUserChangeForm(UserChangeForm):
+class SportySpotsUserChangeForm(UserChangeForm):
     class Meta(UserChangeForm.Meta):
         model = User
 
 
-class MyUserCreationForm(UserCreationForm):
+class SportySpotsUserCreationForm(UserCreationForm):
 
     error_message = UserCreationForm.error_messages.update({
         'duplicate_username': 'This username has already been taken.'
@@ -29,12 +29,17 @@ class MyUserCreationForm(UserCreationForm):
         raise forms.ValidationError(self.error_messages['duplicate_username'])
 
 
+class UserProfileInline(admin.StackedInline):
+    model = UserProfile
+
+
 @admin.register(User)
-class MyUserAdmin(AuthUserAdmin):
-    form = MyUserChangeForm
-    add_form = MyUserCreationForm
+class SportySpotsUserAdmin(AuthUserAdmin):
+    form = SportySpotsUserChangeForm
+    add_form = SportySpotsUserCreationForm
     fieldsets = (
             ('User Profile', {'fields': ('name',)}),
     ) + AuthUserAdmin.fieldsets
     list_display = ('username', 'name', 'is_superuser')
     search_fields = ['name']
+    inlines = [UserProfileInline]

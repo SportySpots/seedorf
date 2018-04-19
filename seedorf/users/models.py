@@ -10,17 +10,6 @@ from seedorf.utils.models import BasePropertiesModel
 from django.conf import settings
 from datetime import date
 
-@python_2_unicode_compatible
-class User(AbstractUser, BasePropertiesModel):
-
-    name = models.CharField(_('Name of User'), blank=True, max_length=255)
-
-    def __str__(self):
-        return self.email
-
-    def get_absolute_url(self):
-        return reverse('users:detail', kwargs={'uuid': self.uuid})
-
 
 def get_avatar_upload_directory(instance, filename):
     # file will be uploaded to MEDIA_ROOT/spots/<uuid>/images/<filename>
@@ -35,6 +24,22 @@ def max_value_year_of_birth(value):
 
 def min_value_year_of_birth(value):
     return MinValueValidator(date.today().year - 100)(value)
+
+
+@python_2_unicode_compatible
+class User(AbstractUser, BasePropertiesModel):
+
+    name = models.CharField(
+        blank=True,
+        max_length=255,
+        verbose_name=_('Name of User')
+    )
+
+    def __str__(self):
+        return self.email
+
+    def get_absolute_url(self):
+        return reverse('users:detail', kwargs={'uuid': self.uuid})
 
 
 class UserProfile(BasePropertiesModel):
@@ -81,7 +86,7 @@ class UserProfile(BasePropertiesModel):
     year_of_birth = models.PositiveSmallIntegerField(
         blank=True,
         verbose_name=_('Year of Birth'),
-        null=False,
+        null=True,
         validators=[min_value_year_of_birth, max_value_year_of_birth]
     )
 
@@ -96,24 +101,27 @@ class UserProfile(BasePropertiesModel):
         choices=settings.LANGUAGES,
         default='en',
         max_length=25,
-        verbose_name=_('Language')
+        verbose_name=_('Languages')
     )
 
     timezone = TimeZoneField(
         blank=False,
         default='Europe/Amsterdam',
         null=False,
+        verbose_name=_('Timezone')
     )
 
     country = CountryField(
         blank=True,
-        null=False
+        null=False,
+        verbose_name=_('Country')
     )
 
     bio = models.TextField(
         blank=True,
         default='',
-        null=False
+        null=False,
+        verbose_name=_('Bio')
     )
 
 
