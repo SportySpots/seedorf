@@ -59,6 +59,7 @@ drf-writable-nested = "*"
 drf-nested-routers = "*"
 django-timezone-field = "*"
 django-countries = "*"
+django-cors-headers = "*"
 
 
 [dev-packages]

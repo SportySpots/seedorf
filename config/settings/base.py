@@ -70,7 +70,8 @@ THIRD_PARTY_APPS = [
 
     'storages',  # cloud file storages
     'django_countries',
-    'timezone_field'
+    'timezone_field',
+    'corsheaders',
 ]
 
 # Apps specific for this project go here.
@@ -89,11 +90,20 @@ LOCAL_APPS = [
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
 
+
+# CSRF CONFIGURATION
+# ------------------------------------------------------------------------------
+CSRF_COOKIE_SECURE = env.bool('DJANGO_CSRF_COOKIE_SECURE', default=True)
+CSRF_TRUSTED_ORIGINS = env.list('DJANGO_CSRF_TRUSTED_ORIGINS', default=[])
+CSRF_COOKIE_DOMAIN = env('DJANGO_CSRF_COOKIE_DOMAIN', default=None)
+
+
 # MIDDLEWARE CONFIGURATION
 # ------------------------------------------------------------------------------
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
