@@ -7,10 +7,11 @@ from django.views import defaults as default_views
 from drf_yasg import openapi
 from drf_yasg.views import get_schema_view
 from graphene_django.views import GraphQLView
+from rest_framework.documentation import include_docs_urls
 from rest_framework.permissions import AllowAny
 from rest_framework_jwt.views import refresh_jwt_token, verify_jwt_token
 from rest_framework_nested import routers
-
+from rest_framework.schemas import get_schema_view as drf_get_schema_view
 from seedorf.games.viewsets import GameViewSet, RSVPViewset
 from seedorf.graphql.schema import schema
 from seedorf.locations.viewsets import AddressViewSet
@@ -19,18 +20,20 @@ from seedorf.spots.viewsets import SpotViewSet, SpotAmenityViewSet, SpotImageVie
 from seedorf.users.views import registration_null_view, registration_complete_view
 from seedorf.users.viewsets import UserViewSet, GroupViewSet
 
+drf_schema_view = drf_get_schema_view(title='SportySpots API')
+
 schema_view = get_schema_view(
-   openapi.Info(
-      title="SportySpots API",
-      default_version='v1',
-      description="SportySpots API description",
-      terms_of_service="https://www.sportyspots.com/policies/terms/",
-      contact=openapi.Contact(email="admin@sportyspots.com"),
-      license=openapi.License(name="MIT License"),
-   ),
-   validators=['flex', 'ssv'],
-   public=True,
-   permission_classes=(AllowAny,),
+    openapi.Info(
+        title="SportySpots API",
+        default_version='v1',
+        description="SportySpots API description",
+        terms_of_service="https://www.sportyspots.com/policies/terms/",
+        contact=openapi.Contact(email="admin@sportyspots.com"),
+        license=openapi.License(name="MIT License"),
+    ),
+    validators=['flex', 'ssv'],
+    public=True,
+    permission_classes=(AllowAny,),
 )
 
 # Routers provide an easy way of automatically determining the URL conf.
@@ -99,6 +102,12 @@ urlpatterns = [
                       GraphQLView.as_view(graphiql=True, schema=schema),
                       name='graphql'),
 
+                  # TODO: Choose one of the api documentation tools below
+                  # DRF schema
+                  url(r'^schema/$', drf_schema_view),
+                  url(r'^docs/', include_docs_urls(title='SportySpots API Docs', permission_classes=(AllowAny,))),
+
+                  # Swagger
                   url(r'^swagger(?P<format>\.json|\.yaml)$',
                       schema_view.without_ui(cache_timeout=None),
                       name='schema-json'),
@@ -106,7 +115,6 @@ urlpatterns = [
                   url(r'^redoc/$', schema_view.with_ui('redoc', cache_timeout=None), name='schema-redoc'),
 
               ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-
 
 if settings.DEBUG:
     # This allows the error pages to be debugged during development, just visit
