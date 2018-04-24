@@ -25,7 +25,7 @@ class Query(object):
         uuid = kwargs.get('uuid')
 
         if uuid is not None:
-            return Game.objects.filter(uuid=uuid).first()
+            return Game.objects.get(uuid=uuid).first()
 
         return None
 
@@ -36,7 +36,7 @@ class Query(object):
         uuid = kwargs.get('uuid')
 
         if uuid is not None:
-            return RSVPStatus.objects.filter(uuid=uuid)
+            return RSVPStatus.objects.filter(uuid=uuid).first()
 
         return None
 

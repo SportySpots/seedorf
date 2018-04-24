@@ -35,7 +35,7 @@ class Query(object):
         uuid = kwargs.get('uuid')
 
         if uuid is not None:
-            return UserProfile.objects.filter(uuid=uuid)
+            return UserProfile.objects.filter(uuid=uuid).first()
 
         return None
 
