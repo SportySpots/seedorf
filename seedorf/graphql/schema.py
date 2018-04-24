@@ -14,7 +14,7 @@ class Query(LocationsQuery,
             GamesQuery,
             UsersQuery,
             graphene.ObjectType):
-    debug = graphene.Field(DjangoDebug, name='__debug')
+    debug = graphene.Field(DjangoDebug, name='debug')
 
 
 schema = graphene.Schema(query=Query)

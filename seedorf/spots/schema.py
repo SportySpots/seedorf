@@ -3,7 +3,6 @@ from graphene_django.types import DjangoObjectType
 
 from .models import Spot, SpotAmenity, SpotImage, SpotOpeningTime
 
-
 class SpotType(DjangoObjectType):
     class Meta:
         model = Spot
@@ -35,7 +34,7 @@ class Query(object):
         uuid = kwargs.get('uuid')
 
         if uuid is not None:
-            return Spot.objects.filter(uuid=uuid)
+            return Spot.objects.filter(uuid=uuid).first()
 
         return None
 

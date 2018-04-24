@@ -186,7 +186,7 @@ class Game(BasePropertiesModel):
         ordering = ('-start_time',)
 
     def __str__(self):
-        return self.uuid
+        return str(self.uuid)
 
 
 class RSVPStatus(BasePropertiesModel):
