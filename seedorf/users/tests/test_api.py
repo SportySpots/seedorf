@@ -5,7 +5,7 @@ from .factories import UserFactory
 
 
 class UserRegistrationAPIViewTest(APITestCase):
-    url = reverse('rest_auth_registration:rest_register')
+    url = reverse('rest-auth-registration:rest_register')
 
     def test_user_creation(self):
         """
@@ -22,12 +22,13 @@ class UserRegistrationAPIViewTest(APITestCase):
         response = self.client.post(self.url, user_data)
         self.assertEqual(201, response.status_code)
         self.assertTrue("token" in response.data)
+        print(response.data)
 
     def test_duplicate_user_creation(self):
         """
         Test to verify that duplicate user creation is forbidden
         """
-        user1 = UserFactory(username='test', email='test@example.com')
+        duplicate_user = UserFactory(username='test', email='test@example.com')
 
         user_data = {
             "username": "test",

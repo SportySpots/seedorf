@@ -72,6 +72,7 @@ THIRD_PARTY_APPS = [
     'django_countries',
     'timezone_field',
     'corsheaders',
+    'drf_yasg',
 ]
 
 # Apps specific for this project go here.
@@ -256,6 +257,51 @@ ROOT_URLCONF = 'config.urls'
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#wsgi-application
 WSGI_APPLICATION = 'config.wsgi.application'
 
+# SLUGLIFIER
+# ------------------------------------------------------------------------------
+AUTOSLUG_SLUGIFY_FUNCTION = 'slugify.slugify'
+
+# CELERY
+# ------------------------------------------------------------------------------
+INSTALLED_APPS += ['seedorf.taskapp.celery.CeleryConfig']
+CELERY_BROKER_URL = env('CELERY_BROKER_URL', default='django://')
+if CELERY_BROKER_URL == 'django://':
+    CELERY_RESULT_BACKEND = 'redis://'
+else:
+    CELERY_RESULT_BACKEND = CELERY_BROKER_URL
+
+# django-compressor
+# ------------------------------------------------------------------------------
+INSTALLED_APPS += ['compressor']
+STATICFILES_FINDERS += ['compressor.finders.CompressorFinder']
+
+# i18n nece settings
+# REF: https://github.com/tatterdemalion/django-nece
+# ------------------------------------------------------------------------------
+TRANSLATIONS_DEFAULT = 'en_us'
+TRANSLATIONS_MAP = {
+    "en": "en_us",
+    "nl": "nl_nl",
+}
+
+# Haystack - Elasticsearch / Solr Integration
+# ------------------------------------------------------------------------------
+HAYSTACK_CONNECTIONS = {
+    'default': {
+        'ENGINE': 'haystack.backends.simple_backend.SimpleEngine',
+    },
+}
+
+
+# AUTHENTICATION/ AUTHORIZATION Settings -------------------------------------------------------------------------------
+
+# Location of root django.contrib.admin URL, use {% url 'admin:index' %}
+ADMIN_URL = r'^admin/'
+LOGIN_URL = 'rest-auth:rest_login'
+
+# Custom User Model
+AUTH_USER_MODEL = 'users.User'
+
 # PASSWORD STORAGE SETTINGS
 # ------------------------------------------------------------------------------
 # See https://docs.djangoproject.com/en/dev/topics/auth/passwords/#using-argon2-with-django
@@ -270,7 +316,6 @@ PASSWORD_HASHERS = [
 # PASSWORD VALIDATION
 # https://docs.djangoproject.com/en/dev/ref/settings/#auth-password-validators
 # ------------------------------------------------------------------------------
-
 AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
@@ -296,10 +341,71 @@ AUTHENTICATION_BACKENDS = [
     'allauth.account.auth_backends.AuthenticationBackend',
 ]
 
-# Custom user app defaults
-# Select the correct user model
-AUTH_USER_MODEL = 'users.User'
-LOGIN_URL = 'account_login'
+# Django Rest Framework
+# REF: http://www.django-rest-framework.org/api-guide/settings/
+# ------------------------------------------------------------------------------
+REST_FRAMEWORK = {
+    # Use Django's standard `django.contrib.auth` permissions,
+    # or allow read-only access for unauthenticated users.
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.BasicAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+        'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
+    ),
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticatedOrReadOnly'
+    ],
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
+    'PAGE_SIZE': 20,
+}
+
+# JWT Authentication
+# REF: http://getblimp.github.io/django-rest-framework-jwt/
+# ------------------------------------------------------------------------------
+JWT_AUTH = {
+    'JWT_ALGORITHM': 'HS256',
+    'JWT_ALLOW_REFRESH': False,
+    'JWT_AUDIENCE': None,
+    'JWT_AUTH_COOKIE': None,
+    'JWT_AUTH_HEADER_PREFIX': 'JWT',
+    'JWT_DECODE_HANDLER': 'rest_framework_jwt.utils.jwt_decode_handler',
+    'JWT_ENCODE_HANDLER': 'rest_framework_jwt.utils.jwt_encode_handler',
+    'JWT_EXPIRATION_DELTA': datetime.timedelta(seconds=300),
+    'JWT_GET_USER_SECRET_KEY': None,
+    'JWT_ISSUER': None,
+    'JWT_LEEWAY': 0,
+    'JWT_PAYLOAD_GET_USER_ID_HANDLER': 'rest_framework_jwt.utils.jwt_get_user_id_from_payload_handler',
+    'JWT_PAYLOAD_HANDLER': 'rest_framework_jwt.utils.jwt_payload_handler',
+    'JWT_PRIVATE_KEY': None,
+    'JWT_PUBLIC_KEY': None,
+    'JWT_REFRESH_EXPIRATION_DELTA': datetime.timedelta(days=7),
+    'JWT_RESPONSE_PAYLOAD_HANDLER': 'rest_framework_jwt.utils.jwt_response_payload_handler',
+    'JWT_SECRET_KEY': env('DJANGO_SECRET_KEY'),
+    'JWT_VERIFY': True,
+    'JWT_VERIFY_EXPIRATION': True,
+}
+
+# Django Rest Auth
+# REF: https://django-rest-auth.readthedocs.io/en/latest/configuration.html
+# ------------------------------------------------------------------------------
+REST_AUTH_SERIALIZERS = {
+    'LOGIN_SERIALIZER': 'rest_auth.serializers.LoginSerializer',
+    'TOKEN_SERIALIZER': 'rest_auth.serializers.TokenSerializer',
+    'JWT_SERIALIZER': 'rest_auth.serializers.JWTSerializer',
+    'USER_DETAILS_SERIALIZER': 'seedorf.users.serializers.UserDetailsSerializer',
+    'PASSWORD_RESET_SERIALIZER': 'rest_auth.serializers.PasswordResetSerializer',
+    'PASSWORD_RESET_CONFIRM_SERIALIZER': 'rest_auth.serializers.PasswordResetConfirmSerializer',
+    'PASSWORD_CHANGE_SERIALIZER': 'rest_auth.serializers.PasswordChangeSerializer'
+}
+REST_AUTH_REGISTER_SERIALIZERS = {
+  'REGISTER_SERIALIZER': 'rest_auth.registration.serializers.RegisterSerializer'
+}
+REST_AUTH_TOKEN_MODEL = 'rest_framework.authtoken.models'
+REST_AUTH_TOKEN_CREATOR = 'rest_auth.utils.default_create_token'
+REST_SESSION_LOGIN = True
+REST_USE_JWT = True
+OLD_PASSWORD_FIELD_ENABLED = False
+LOGOUT_ON_PASSWORD_CHANGE = True
 
 
 # Allauth settings
@@ -363,106 +469,3 @@ SOCIALACCOUNT_STORE_TOKENS = True
 ACCOUNT_ALLOW_REGISTRATION = env.bool('DJANGO_ACCOUNT_ALLOW_REGISTRATION', True)
 # ACCOUNT_ADAPTER = 'seedorf.users.adapters.AccountAdapter'
 # SOCIALACCOUNT_ADAPTER = 'seedorf.users.adapters.SocialAccountAdapter'
-
-# SLUGLIFIER
-# ------------------------------------------------------------------------------
-AUTOSLUG_SLUGIFY_FUNCTION = 'slugify.slugify'
-
-# CELERY
-# ------------------------------------------------------------------------------
-INSTALLED_APPS += ['seedorf.taskapp.celery.CeleryConfig']
-CELERY_BROKER_URL = env('CELERY_BROKER_URL', default='django://')
-if CELERY_BROKER_URL == 'django://':
-    CELERY_RESULT_BACKEND = 'redis://'
-else:
-    CELERY_RESULT_BACKEND = CELERY_BROKER_URL
-
-# django-compressor
-# ------------------------------------------------------------------------------
-INSTALLED_APPS += ['compressor']
-STATICFILES_FINDERS += ['compressor.finders.CompressorFinder']
-
-# Location of root django.contrib.admin URL, use {% url 'admin:index' %}
-ADMIN_URL = r'^admin/'
-
-# Your common stuff: Below this line define 3rd party library settings
-# ------------------------------------------------------------------------------
-REST_FRAMEWORK = {
-    # Use Django's standard `django.contrib.auth` permissions,
-    # or allow read-only access for unauthenticated users.
-    'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework.authentication.BasicAuthentication',
-        'rest_framework.authentication.SessionAuthentication',
-        'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
-    ),
-    'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
-    ],
-    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
-    'PAGE_SIZE': 10,
-}
-
-# JWT Authentication
-# REF: http://getblimp.github.io/django-rest-framework-jwt/
-# ------------------------------------------------------------------------------
-JWT_AUTH = {
-    'JWT_ALGORITHM': 'HS256',
-    'JWT_ALLOW_REFRESH': False,
-    'JWT_AUDIENCE': None,
-    'JWT_AUTH_COOKIE': None,
-    'JWT_AUTH_HEADER_PREFIX': 'JWT',
-    'JWT_DECODE_HANDLER': 'rest_framework_jwt.utils.jwt_decode_handler',
-    'JWT_ENCODE_HANDLER': 'rest_framework_jwt.utils.jwt_encode_handler',
-    'JWT_EXPIRATION_DELTA': datetime.timedelta(seconds=300),
-    'JWT_GET_USER_SECRET_KEY': None,
-    'JWT_ISSUER': None,
-    'JWT_LEEWAY': 0,
-    'JWT_PAYLOAD_GET_USER_ID_HANDLER': 'rest_framework_jwt.utils.jwt_get_user_id_from_payload_handler',
-    'JWT_PAYLOAD_HANDLER': 'rest_framework_jwt.utils.jwt_payload_handler',
-    'JWT_PRIVATE_KEY': None,
-    'JWT_PUBLIC_KEY': None,
-    'JWT_REFRESH_EXPIRATION_DELTA': datetime.timedelta(days=7),
-    'JWT_RESPONSE_PAYLOAD_HANDLER': 'rest_framework_jwt.utils.jwt_response_payload_handler',
-    'JWT_SECRET_KEY': env('DJANGO_SECRET_KEY'),
-    'JWT_VERIFY': True,
-    'JWT_VERIFY_EXPIRATION': True,
-}
-
-# i18n nece settings
-# REF: https://github.com/tatterdemalion/django-nece
-# ------------------------------------------------------------------------------
-TRANSLATIONS_DEFAULT = 'en_us'
-TRANSLATIONS_MAP = {
-    "en": "en_us",
-    "nl": "nl_nl",
-}
-
-# Haystack - Elasticsearch / Solr Integration
-# ------------------------------------------------------------------------------
-HAYSTACK_CONNECTIONS = {
-    'default': {
-        'ENGINE': 'haystack.backends.simple_backend.SimpleEngine',
-    },
-}
-
-# Django Rest Auth
-# REF: https://django-rest-auth.readthedocs.io/en/latest/configuration.html
-# ------------------------------------------------------------------------------
-REST_AUTH_SERIALIZERS = {
-    'LOGIN_SERIALIZER': 'rest_auth.serializers.LoginSerializer',
-    'TOKEN_SERIALIZER': 'rest_auth.serializers.TokenSerializer',
-    'JWT_SERIALIZER': 'rest_auth.serializers.JWTSerializer',
-    'USER_DETAILS_SERIALIZER': 'rest_auth.serializers.UserDetailsSerializer',
-    'PASSWORD_RESET_SERIALIZER': 'rest_auth.serializers.PasswordResetSerializer',
-    'PASSWORD_RESET_CONFIRM_SERIALIZER': 'rest_auth.serializers.PasswordResetConfirmSerializer',
-    'PASSWORD_CHANGE_SERIALIZER': 'rest_auth.serializers.PasswordChangeSerializer'
-}
-REST_AUTH_REGISTER_SERIALIZERS = {
-  'REGISTER_SERIALIZER': 'rest_auth.registration.serializers.RegisterSerializer'
-}
-REST_AUTH_TOKEN_MODEL = 'rest_framework.authtoken.models'
-REST_AUTH_TOKEN_CREATOR = 'rest_auth.utils.default_create_token'
-REST_SESSION_LOGIN = True
-REST_USE_JWT = True
-OLD_PASSWORD_FIELD_ENABLED = False
-LOGOUT_ON_PASSWORD_CHANGE = True
