@@ -17,7 +17,7 @@ class Query(object):
         uuid = kwargs.get('uuid')
 
         if uuid is not None:
-            return Address.objects.filter(uuid=uuid)
+            return Address.objects.filter(uuid=uuid).first()
 
         return None
 

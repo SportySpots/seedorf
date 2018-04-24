@@ -24,7 +24,7 @@ class Query(object):
         uuid = kwargs.get('uuid')
 
         if uuid is not None:
-            return User.objects.filter(uuid=uuid)
+            return User.objects.filter(uuid=uuid).first()
 
         return None
 
