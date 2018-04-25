@@ -15,16 +15,20 @@ class UserProfileType(DjangoObjectType):
 
 
 class Query(object):
-    user = graphene.Field(UserType, uuid=graphene.UUID())
+    user = graphene.Field(UserType, uuid=graphene.UUID(), id=graphene.ID())
     users = graphene.List(UserType)
     user_profile = graphene.Field(UserProfileType, uuid=graphene.UUID())
     user_profiles = graphene.List(UserProfileType)
 
     def resolve_user(self, args, **kwargs):
         uuid = kwargs.get('uuid')
+        user_id = kwargs.get('id')
 
         if uuid is not None:
             return User.objects.filter(uuid=uuid).first()
+
+        if user_id is not None:
+            return User.objects.filter(id=user_id).first()
 
         return None
 
