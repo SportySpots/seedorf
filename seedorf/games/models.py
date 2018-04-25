@@ -186,7 +186,7 @@ class Game(BasePropertiesModel):
         ordering = ('-start_time',)
 
     def __str__(self):
-        return str(self.uuid)
+        return self.uuid.hex[0:8]
 
 
 class RSVPStatus(BasePropertiesModel):
@@ -195,6 +195,7 @@ class RSVPStatus(BasePropertiesModel):
     Define State Machine to handle RSVP Status Transitions
     """
     # Predefined Values
+    UNKNOWN = 'unknown'
     ACCEPTED = 'accepted'  # When the game is approval based
     ATTENDING = 'attending'
     CHECKED_IN = 'checked_in'
@@ -203,6 +204,7 @@ class RSVPStatus(BasePropertiesModel):
     INVITED = 'invited'
 
     STATUS = (
+        (UNKNOWN, _('Unknown')),
         (ACCEPTED, _('Accepted')),
         (ATTENDING, _('Attending')),
         (CHECKED_IN, _('Checked In')),
@@ -214,20 +216,25 @@ class RSVPStatus(BasePropertiesModel):
     # Foreign Keys
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL,
+        blank=False,
+        null=False,
         on_delete=models.CASCADE,
         related_name='rsvp_statuses',
         verbose_name=_('Player'),
     )
     game = models.ForeignKey(
         'games.Game',
+        blank=False,
+        null=False,
         on_delete=models.CASCADE,
         related_name='attendees',
-        verbose_name=_('Game')
+        verbose_name=_('Game'),
     )
     # Instance Fields
     status = models.CharField(
+        blank=False,
         choices=STATUS,
-        default=None,
+        default=UNKNOWN,
         max_length=25,
         null=True,
         verbose_name=_('Status'),
@@ -239,4 +246,4 @@ class RSVPStatus(BasePropertiesModel):
         ordering = ('-created_at',)
 
     def __str__(self):
-        return self.uuid
+        return self.uuid.hex[0:8]

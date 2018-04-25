@@ -12,3 +12,4 @@ class SportSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Sport
         fields = ('url', 'uuid', 'category', 'name', 'description', 'created_at', 'modified_at')
+        read_only_fields = ('uuid', 'category',)

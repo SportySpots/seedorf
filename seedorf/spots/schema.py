@@ -3,6 +3,7 @@ from graphene_django.types import DjangoObjectType
 
 from .models import Spot, SpotAmenity, SpotImage, SpotOpeningTime
 
+
 class SpotType(DjangoObjectType):
     class Meta:
         model = Spot

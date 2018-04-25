@@ -7,6 +7,10 @@ from seedorf.utils.models import BasePropertiesModel
 
 
 class Sport(BasePropertiesModel, TranslationModel):
+
+    # TODO: Enable users to create their own games ?
+    # TODO: Set is a flag is_staff_created to distinguish between staff created and user created sports
+
     # Predefined Values
     BASKETBALL = 'basketball'
     BEACH_VOLLEYBALL = 'beach_volleyball'
@@ -35,8 +39,10 @@ class Sport(BasePropertiesModel, TranslationModel):
         blank=False,
         choices=SPORTS,
         default=OTHERS,
+        help_text=_('Name of the main category of the sport (e.g. Soccer).'),
         max_length=50,
         null=False,
+        verbose_name=_('Sport Category')
     )
     name = models.CharField(
         blank=False,
@@ -69,4 +75,4 @@ class Sport(BasePropertiesModel, TranslationModel):
         translatable_fields = ('name', 'description')
 
     def __str__(self):
-        return self.name
+        return self.uuid.hex[0:8]

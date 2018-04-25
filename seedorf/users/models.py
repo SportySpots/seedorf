@@ -31,12 +31,14 @@ class User(AbstractUser, BasePropertiesModel):
 
     name = models.CharField(
         blank=True,
+        default='',
         max_length=255,
+        null=False,
         verbose_name=_('Name of User')
     )
 
     def __str__(self):
-        return self.email
+        return self.uuid.hex[0:8]
 
     def get_absolute_url(self):
         return reverse('users:detail', kwargs={'uuid': self.uuid})
@@ -58,8 +60,10 @@ class UserProfile(BasePropertiesModel):
 
     user = models.OneToOneField(
         'users.User',
+        blank=False,
+        null=False,
         related_name='profile',
-        verbose_name=_('Profile')
+        verbose_name=_('Profile'),
     )
 
     sports = models.ManyToManyField(
@@ -98,10 +102,12 @@ class UserProfile(BasePropertiesModel):
     )
 
     language = models.CharField(
+        blank=False,
         choices=settings.LANGUAGES,
         default='en',
         max_length=25,
-        verbose_name=_('Languages')
+        null=False,
+        verbose_name=_('Languages'),
     )
 
     timezone = TimeZoneField(
@@ -124,6 +130,8 @@ class UserProfile(BasePropertiesModel):
         verbose_name=_('Bio')
     )
 
+    def __str__(self):
+        return self.uuid.hex[0:8]
 
 #     # is_under_age
 #     # company

@@ -7,4 +7,4 @@ class SportFactory(factory.django.DjangoModelFactory):
     name = factory.SelfAttribute('category')
 
     class Meta:
-        model = 'sports.Sport'
+        model = Sport

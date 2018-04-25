@@ -92,4 +92,4 @@ class Address(BasePropertiesModel):
         verbose_name_plural = _('Addresses')
 
     def __str__(self):
-        return self.raw_address
+        return self.uuid.hex[0:8]

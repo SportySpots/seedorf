@@ -30,13 +30,16 @@ class Spot(BasePropertiesModel):
     # TODO: Validation there can be only one non-permanently closed spot at an address
     address = models.OneToOneField(
         'locations.Address',
+        blank=False,
+        null=False,
         related_name='spot',
-        verbose_name=_('Address')
+        verbose_name=_('Address'),
     )
     sports = models.ManyToManyField(
         'sports.Sport',
+        blank=False,
         related_name='spots',
-        verbose_name=_('Sports')
+        verbose_name=_('Sports'),
     )
 
     # Instance Fields
@@ -128,19 +131,23 @@ class Spot(BasePropertiesModel):
         ordering = ('-created_at',)
 
     def __str__(self):
-        return self.name
+        return self.uuid.hex[0:8]
 
 
 class SpotImage(BasePropertiesModel):
     # Foreign Keys
     spot = models.ForeignKey(
         'spots.Spot',
+        blank=False,
+        null=False,
         on_delete=models.CASCADE,
         related_name='images',
-        verbose_name=_('Spot')
+        verbose_name=_('Spot'),
     )
     sport = models.ForeignKey(
         'sports.Sport',
+        blank=False,
+        null=False,
         on_delete=models.CASCADE,
         related_name='images',
         verbose_name=_('Sport'),
@@ -148,12 +155,13 @@ class SpotImage(BasePropertiesModel):
 
     # Instance Fields
     image = models.ImageField(
-        blank=True,
+        blank=False,
         null=False,
         upload_to=get_images_upload_directory,
     )
     is_flagged = models.BooleanField(
         default=False,
+        editable=False,
         help_text=_('Is this image marked as offensive/ non-relevant ?'),
     )
     is_user_submitted = models.BooleanField(
@@ -168,7 +176,7 @@ class SpotImage(BasePropertiesModel):
         ordering = ('-created_at',)
 
     def __str__(self):
-        return str(self.uuid)
+        return self.uuid.hex[0:8]
 
 
 class SpotOpeningTime(BasePropertiesModel):
@@ -201,12 +209,16 @@ class SpotOpeningTime(BasePropertiesModel):
 
     spot = models.ForeignKey(
         'spots.Spot',
+        blank=False,
+        null=False,
         on_delete=models.CASCADE,
         related_name='opening_times',
-        verbose_name=_('Spot')
+        verbose_name=_('Spot'),
     )
     sport = models.ForeignKey(
         'sports.Sport',
+        blank=False,
+        null=False,
         on_delete=models.CASCADE,
         related_name='opening_times',
         verbose_name=_('Sport'),
@@ -235,12 +247,7 @@ class SpotOpeningTime(BasePropertiesModel):
         verbose_name_plural = _('Spot Opening Times')
 
     def __str__(self):
-        # TODO: Test if the day is properly translated in different languages
-        return 'Day: {day} Open: {is_closed} From: {start_time} Until: {end_time}'.format(day=self.get_day_display(),
-                                                                                          is_closed=self.is_closed,
-                                                                                          start_time=self.start_time,
-                                                                                          end_time=self.end_time
-                                                                                          )
+        return self.uuid.hex[0:8]
 
 
 AMENITIES_TYPE_SCHEMA = {
@@ -301,12 +308,16 @@ class SpotAmenity(BasePropertiesModel):
     # Foreign Keys
     spot = models.ForeignKey(
         'spots.Spot',
+        blank=False,
+        null=False,
         on_delete=models.CASCADE,
         related_name='amenities',
         verbose_name=_('Spot'),
     )
     sport = models.ForeignKey(
         'sports.Sport',
+        blank=False,
+        null=False,
         on_delete=models.CASCADE,
         related_name='amenities',
         verbose_name=_('Sport'),
@@ -324,5 +335,4 @@ class SpotAmenity(BasePropertiesModel):
         verbose_name_plural = _('Spot Amenities')
 
     def __str__(self):
-        # TODO: Return name of sport, key and value pairs of data
-        return '{}'.format(self.data)
+        return self.uuid.hex[0:8]
