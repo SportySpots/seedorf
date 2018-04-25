@@ -38,7 +38,7 @@ class User(AbstractUser, BasePropertiesModel):
     )
 
     def __str__(self):
-        return self.uuid.hex[0:8]
+        return self.email
 
     def get_absolute_url(self):
         return reverse('users:detail', kwargs={'uuid': self.uuid})
@@ -131,7 +131,7 @@ class UserProfile(BasePropertiesModel):
     )
 
     def __str__(self):
-        return self.uuid.hex[0:8]
+        return self.user.email
 
 #     # is_under_age
 #     # company

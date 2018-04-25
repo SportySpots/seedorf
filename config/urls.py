@@ -52,6 +52,14 @@ spots_router.register(r'images', SpotImageViewSet, base_name='spot-images')
 spots_router.register(r'amenities', SpotAmenityViewSet, base_name='spot-amenities')
 spots_router.register(r'opening-times', SpotOpeningTimeViewSet, base_name='spot-opening-times')
 
+games_router = routers.NestedDefaultRouter(router, r'games', lookup='game')
+games_router.register(r'sport', SportViewSet, base_name='game-sport')
+games_router.register(r'spot', SpotViewSet, base_name='game-spot')
+games_router.register(r'organizer', UserViewSet, base_name='game-organizer')
+games_router.register(r'rsvps', RSVPViewset, base_name='game-rsvps')
+
+
+
 urlpatterns = [
                   # Django Admin, use {% url 'admin:index' %}
                   url(settings.ADMIN_URL, admin.site.urls),
@@ -94,8 +102,10 @@ urlpatterns = [
                   # url(r'^api/api-token-auth/', obtain_jwt_token),
 
                   # REST API
-                  url(r'^api/', include(router.urls), name='api'),
-                  url(r'^api/', include(spots_router.urls)),
+                  url(r'^api/', include(router.urls), name='api-core'),
+                  url(r'^api/', include(spots_router.urls), name='api-spots'),
+                  url(r'^api/', include(games_router.urls), name='api-games'),
+
 
                   # GraphQL API
                   url(r'^graphql$',

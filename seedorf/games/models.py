@@ -90,8 +90,8 @@ class Game(BasePropertiesModel):
     )
     # TODO: Validate that the rsvp open time is before the start time and the rsvp close time
     rsvp_open_time = models.DateTimeField(
-        blank=True,
-        help_text=_('UTC time that RSVPs will no longer be accepted, though organizers may close RSVPs earlier'),
+        blank=False,
+        help_text=_('UTC time before that RSVPs will no longer be accepted, though organizers may close RSVPs earlier'),
         null=False,
         verbose_name=_('RSVP Open Time (UTC)'),
     )
@@ -99,14 +99,14 @@ class Game(BasePropertiesModel):
     # TODO: Set the RSVP close time to the start time automatically
     rsvp_close_time = models.DateTimeField(
         blank=False,
-        help_text=_('UTC time that RSVPs will no longer be accepted, though organizers may close RSVPs earlier'),
+        help_text=_('UTC time after that RSVPs will no longer be accepted, though organizers may close RSVPs earlier'),
         null=False,
         verbose_name=_('RSVP Close Time (UTC)'),
     )
     rsvp_closed = models.BooleanField(
         blank=False,
         default=False,
-        help_text=_('Boolean value indicating whether or not RSVPing was explicitly closed for the game.'),
+        help_text=_('Is RSVPing explicitly closed for the game.'),
         null=False,
         verbose_name=_('RSVP Closed'),
     )
@@ -186,7 +186,7 @@ class Game(BasePropertiesModel):
         ordering = ('-start_time',)
 
     def __str__(self):
-        return self.uuid.hex[0:8]
+        return self.name
 
 
 class RSVPStatus(BasePropertiesModel):
@@ -244,6 +244,9 @@ class RSVPStatus(BasePropertiesModel):
         verbose_name = _('RSVP Status')
         verbose_name_plural = _('RSVP Statuses')
         ordering = ('-created_at',)
+        # TODO: should we track the whole RSVP historic/audit log changes per user in the same table or
+        # in a different table
+        unique_together = (('user', 'game'),)
 
     def __str__(self):
-        return self.uuid.hex[0:8]
+        return '{} : {}'.format(self.game.name, self.user.name)

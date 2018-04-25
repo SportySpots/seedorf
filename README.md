@@ -143,7 +143,13 @@ $ docker-compose -f docker_compose_local.yml down
 Create superuser 
 
 ```bash
-$ docker-compose -f docker_compose_local.yml run django python manage.py createsuperuser --username admin --email admin@sportyspots.com
+$ docker-compose -f docker_compose_local.yml run --rm django python manage.py createsuperuser --username admin --email admin@sportyspots.com
+```
+
+Create Sports Fixtures
+
+```bash
+$  docker-compose --file docker_compose_local.yml run --rm django ./manage.py loaddata seedorf/sports/fixtures/sports.json
 ```
 Find AWS ECR repository Uri
 

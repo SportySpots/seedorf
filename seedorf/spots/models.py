@@ -131,7 +131,7 @@ class Spot(BasePropertiesModel):
         ordering = ('-created_at',)
 
     def __str__(self):
-        return self.uuid.hex[0:8]
+        return self.name
 
 
 class SpotImage(BasePropertiesModel):
@@ -176,7 +176,7 @@ class SpotImage(BasePropertiesModel):
         ordering = ('-created_at',)
 
     def __str__(self):
-        return self.uuid.hex[0:8]
+        return '{} : {}'.format(self.spot.name, self.sport.name)
 
 
 class SpotOpeningTime(BasePropertiesModel):
@@ -247,7 +247,7 @@ class SpotOpeningTime(BasePropertiesModel):
         verbose_name_plural = _('Spot Opening Times')
 
     def __str__(self):
-        return self.uuid.hex[0:8]
+        return '{} : {}'.format(self.spot.name, self.sport.name)
 
 
 AMENITIES_TYPE_SCHEMA = {
@@ -335,4 +335,4 @@ class SpotAmenity(BasePropertiesModel):
         verbose_name_plural = _('Spot Amenities')
 
     def __str__(self):
-        return self.uuid.hex[0:8]
+        return '{} : {}'.format(self.spot.name, self.sport.name)
