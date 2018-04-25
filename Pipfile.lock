@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "af50d8b9a423e5efd18a3fdd88a1cf40b9f8e7a21f87f6ccc151e3138ea47928"
+            "sha256": "b0a8d2d6706ece39a12ebfca2f2e65e1cf385b9931e20d5a5df91b3dcf9a7921"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -227,7 +227,6 @@
                 "sha256:4d398c7b02761e234bbde490aea13ea94cb539ceeb72805b72303f348682f2eb"
             ],
             "index": "pypi",
-            "markers": "python_version <= '2.7'",
             "version": "==1.11.12"
         },
         "django-allauth": {
@@ -827,10 +826,10 @@
         },
         "pytest": {
             "hashes": [
-                "sha256:6266f87ab64692112e5477eba395cfedda53b1933ccd29478e671e73b420c19c",
-                "sha256:fae491d1874f199537fd5872b5e1f0e74a009b979df9d53d1553fd03da1703e1"
+                "sha256:54713b26c97538db6ff0703a12b19aeaeb60b5e599de542e7fca0ec83b9038e8",
+                "sha256:829230122facf05a5f81a6d4dfe6454a04978ea3746853b2b84567ecf8e5c526"
             ],
-            "version": "==3.5.0"
+            "version": "==3.5.1"
         },
         "pytest-runner": {
             "hashes": [
@@ -1178,11 +1177,11 @@
         },
         "awscli": {
             "hashes": [
-                "sha256:58c3d21036b2f5fe924a4a8427c7163442bec8c752136085b8f2125e79c845e9",
-                "sha256:b0a9f5667714ad15a6800226e77b53b7d7ba3c6f21492c8a48e15f3b1c0902d6"
+                "sha256:5d57f93c686b6a97e845264130a530b26932553f45ad6197c81f60dca9a7fe23",
+                "sha256:fbcc2d4171f23470979f2e68ea1be68865f24e8ec2e70379df94c645323da0bf"
             ],
             "index": "pypi",
-            "version": "==1.15.6"
+            "version": "==1.15.8"
         },
         "awsebcli": {
             "hashes": [
@@ -1331,7 +1330,6 @@
                 "sha256:4d398c7b02761e234bbde490aea13ea94cb539ceeb72805b72303f348682f2eb"
             ],
             "index": "pypi",
-            "markers": "python_version <= '2.7'",
             "version": "==1.11.12"
         },
         "django-coverage-plugin": {
@@ -1618,10 +1616,10 @@
         },
         "pytest": {
             "hashes": [
-                "sha256:6266f87ab64692112e5477eba395cfedda53b1933ccd29478e671e73b420c19c",
-                "sha256:fae491d1874f199537fd5872b5e1f0e74a009b979df9d53d1553fd03da1703e1"
+                "sha256:54713b26c97538db6ff0703a12b19aeaeb60b5e599de542e7fca0ec83b9038e8",
+                "sha256:829230122facf05a5f81a6d4dfe6454a04978ea3746853b2b84567ecf8e5c526"
             ],
-            "version": "==3.5.0"
+            "version": "==3.5.1"
         },
         "pytest-django": {
             "hashes": [

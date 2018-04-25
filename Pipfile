@@ -53,13 +53,13 @@ wheel = { version = "==0.30.0" }
 whitenoise = { version = "==4.0.b4" }
 zappa = { version = "==0.45.1" }
 apistar = { version = "==0.4.0" }
-jsonschema = "*"
-cerberus = "*"
-drf-writable-nested = "*"
-drf-nested-routers = "*"
-django-timezone-field = "*"
-django-countries = "*"
-django-cors-headers = "*"
+jsonschema = { version = "==2.6.0" }
+cerberus = { version = "==1.2" }
+drf-writable-nested = { version = "==0.4.2" }
+drf-nested-routers = { version = "==0.90.2" }
+django-timezone-field = { version = "==2.1" }
+django-countries = { version = "==5.3" }
+django-cors-headers = { version = "==2.2.0" }
 drf-yasg = {extras = ["validation"]}
 
 
