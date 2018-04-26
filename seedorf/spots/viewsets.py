@@ -55,4 +55,3 @@ class SpotAmenityViewSet(viewsets.ModelViewSet):
 
     def get_queryset(self):
         return SpotAmenity.objects.filter(spot__uuid=self.kwargs['spot_uuid'])
-

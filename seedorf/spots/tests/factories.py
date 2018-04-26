@@ -1,9 +1,10 @@
+import random
+
 import factory
+
+from seedorf.locations.tests.factories import AddressFactory
 from seedorf.sports.tests.factories import SportFactory
 from seedorf.spots.models import Spot, SpotAmenity, SpotImage, SpotOpeningTime
-from seedorf.locations.tests.factories import AddressFactory
-import random
-import faker
 
 
 class SpotFactory(factory.django.DjangoModelFactory):

@@ -58,6 +58,3 @@ class Reaction(BasePropertiesModel):
     content_object = GenericForeignKey()
 
     objects = ReactionsManager()
-
-
-

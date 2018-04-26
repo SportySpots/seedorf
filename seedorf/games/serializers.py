@@ -3,10 +3,7 @@ from rest_framework import serializers
 from .models import Game, RSVPStatus
 from seedorf.users.serializers import UserSerializer
 from seedorf.sports.serializers import SportSerializer
-from seedorf.spots.serializers import SpotSerializer, GameSpotNestedSerializer
-from rest_framework_nested.serializers import NestedHyperlinkedModelSerializer
-from rest_framework_nested.relations import NestedHyperlinkedIdentityField
-from rest_framework_nested.relations import NestedHyperlinkedRelatedField
+from seedorf.spots.serializers import SpotSerializer
 
 
 class RSVPStatusSerializer(serializers.ModelSerializer):

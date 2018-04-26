@@ -38,5 +38,3 @@ class Query(object):
             return Spot.objects.filter(uuid=uuid).first()
 
         return None
-
-

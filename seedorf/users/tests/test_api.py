@@ -28,7 +28,7 @@ class UserRegistrationAPIViewTest(APITestCase):
         """
         Test to verify that duplicate user creation is forbidden
         """
-        duplicate_user = UserFactory(username='test', email='test@example.com')
+        UserFactory(username='test', email='test@example.com')
 
         user_data = {
             "username": "test",

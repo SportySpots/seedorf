@@ -5,7 +5,6 @@ from django.contrib.postgres.fields import JSONField
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from django_extensions.db.fields import AutoSlugField
-from django_extensions.db.models import TimeStampedModel
 
 from seedorf.utils.models import BasePropertiesModel
 from .validators import AllowedKeysValidator
