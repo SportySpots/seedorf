@@ -3,15 +3,12 @@ from rest_framework_nested.serializers import NestedHyperlinkedModelSerializer
 
 from seedorf.locations.models import Address
 from seedorf.locations.serializers import AddressNestedSerializer
+from seedorf.sports.models import Sport
 from seedorf.sports.serializers import SportSerializer
 from .models import Spot, SpotAmenity, SpotImage, SpotOpeningTime
-from seedorf.sports.models import Sport
 
 
 class SpotAmenityNestedSerializer(NestedHyperlinkedModelSerializer):
-    parent_lookup_kwargs = {
-        'spot_uuid': 'spot__uuid',
-    }
     sport = SportSerializer(read_only=True, many=False)
 
     class Meta:
@@ -21,9 +18,6 @@ class SpotAmenityNestedSerializer(NestedHyperlinkedModelSerializer):
 
 
 class SpotOpeningTimeNestedSerializer(NestedHyperlinkedModelSerializer):
-    parent_lookup_kwargs = {
-        'spot_uuid': 'spot__uuid',
-    }
     sport = SportSerializer(read_only=True, many=False)
 
     class Meta:
@@ -33,9 +27,6 @@ class SpotOpeningTimeNestedSerializer(NestedHyperlinkedModelSerializer):
 
 
 class SpotImageNestedSerializer(NestedHyperlinkedModelSerializer):
-    parent_lookup_kwargs = {
-        'spot_uuid': 'spot__uuid',
-    }
     sport = SportSerializer(read_only=True, many=False)
 
     class Meta:
