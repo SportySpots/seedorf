@@ -3,7 +3,7 @@ from rest_framework_nested.relations import NestedHyperlinkedIdentityField
 from rest_framework_nested.serializers import NestedHyperlinkedModelSerializer
 
 from seedorf.locations.models import Address
-from seedorf.locations.serializers import AddressSerializer
+from seedorf.locations.serializers import AddressNestedSerializer
 from seedorf.sports.serializers import SportSerializer
 from .models import Spot, SpotAmenity, SpotImage, SpotOpeningTime
 
@@ -109,30 +109,6 @@ class SpotImageNestedSerializer(NestedHyperlinkedModelSerializer):
         read_only_fields = ('uuid',)
 
 
-class GameSpotNestedSerializer(NestedHyperlinkedModelSerializer):
-    parent_lookup_kwargs = {
-        'game_uuid': 'spot_games__uuid',
-    }
-    url = NestedHyperlinkedIdentityField(
-        many=False,
-        read_only=True,
-        view_name='game-spot-detail',
-        lookup_field='uuid',
-        parent_lookup_kwargs={
-            'game_uuid': 'spot_games__uuid'
-        }
-    )
-
-    class Meta:
-        model = Spot
-        fields = ('url', 'uuid', 'name', 'slug', 'owner', 'description', 'logo', 'homepage_url',
-                  'is_verified', 'is_permanently_closed', 'is_public', 'is_temporary', 'establishment_date',
-                  'closure_date', 'created_at', 'modified_at', 'address', 'sports', 'images', 'amenities',
-                  'opening_times',
-                  )
-        read_only_fields = ('uuid',)
-
-
 class SpotSerializer(serializers.HyperlinkedModelSerializer):
 
     # TODO: is_verified can only be set by staff, currently its is covered by IsAdminOrReadOnly permission
@@ -142,11 +118,11 @@ class SpotSerializer(serializers.HyperlinkedModelSerializer):
         view_name='spot-detail',
         lookup_field='uuid'
     )
-    address = AddressSerializer(read_only=False, many=False)
-    sports = SportSerializer(read_only=False, many=True)
-    images = SpotImageNestedSerializer(read_only=False, many=True)
-    amenities = SpotAmenityNestedSerializer(read_only=False, many=True)
-    opening_times = SpotOpeningTimeNestedSerializer(read_only=False, many=True)
+    address = AddressNestedSerializer(read_only=True, many=False)
+    sports = SportSerializer(read_only=True, many=True)
+    images = SpotImageNestedSerializer(read_only=True, many=True)
+    amenities = SpotAmenityNestedSerializer(read_only=True, many=True)
+    opening_times = SpotOpeningTimeNestedSerializer(read_only=True, many=True)
 
     class Meta:
         model = Spot

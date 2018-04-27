@@ -4,7 +4,7 @@ from rest_framework_nested.serializers import NestedHyperlinkedModelSerializer
 from .models import Address
 
 
-class AddressSerializer(NestedHyperlinkedModelSerializer):
+class AddressNestedSerializer(NestedHyperlinkedModelSerializer):
     parent_lookup_kwargs = {
         'spot_uuid': 'spot__uuid'
     }

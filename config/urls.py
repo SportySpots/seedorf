@@ -47,6 +47,7 @@ router.register(r'spots', SpotViewSet)
 router.register(r'users', UserViewSet)
 
 spots_router = routers.NestedDefaultRouter(router, r'spots', lookup='spot')
+spots_router.register(r'sports', SportViewSet, base_name='spot-sports')
 spots_router.register(r'address', AddressViewSet, base_name='spot-address')
 spots_router.register(r'images', SpotImageViewSet, base_name='spot-images')
 spots_router.register(r'amenities', SpotAmenityViewSet, base_name='spot-amenities')
@@ -57,7 +58,6 @@ games_router.register(r'sport', SportViewSet, base_name='game-sport')
 games_router.register(r'spot', SpotViewSet, base_name='game-spot')
 games_router.register(r'organizer', UserViewSet, base_name='game-organizer')
 games_router.register(r'rsvps', RSVPViewset, base_name='game-rsvps')
-
 
 
 urlpatterns = [

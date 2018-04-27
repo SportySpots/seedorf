@@ -335,3 +335,8 @@ class SpotAmenity(BasePropertiesModel):
 
     def __str__(self):
         return '{} : {}'.format(self.spot.name, self.sport.name)
+
+
+# ----------------------------------------------------------------------------------------------------------------------
+# Validations List
+#
