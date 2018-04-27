@@ -21,3 +21,5 @@ class RSVPViewset(viewsets.ModelViewSet):
     """
     queryset = RSVPStatus.objects.all()
     serializer_class = RSVPStatusSerializer
+    lookup_field = 'uuid'
+    lookup_value_regex = REGEX_UUID

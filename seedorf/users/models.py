@@ -1,14 +1,16 @@
+from datetime import date
+
+from django.conf import settings
 from django.contrib.auth.models import AbstractUser
 from django.core.urlresolvers import reverse
+from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db import models
 from django.utils.encoding import python_2_unicode_compatible
 from django.utils.translation import ugettext_lazy as _
-from timezone_field import TimeZoneField
 from django_countries.fields import CountryField
-from django.core.validators import MinValueValidator, MaxValueValidator
+from timezone_field import TimeZoneField
+
 from seedorf.utils.models import BasePropertiesModel
-from django.conf import settings
-from datetime import date
 
 
 def get_avatar_upload_directory(instance, filename):

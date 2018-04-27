@@ -9,14 +9,15 @@ from drf_yasg.views import get_schema_view
 from graphene_django.views import GraphQLView
 from rest_framework.documentation import include_docs_urls
 from rest_framework.permissions import AllowAny
+from rest_framework.schemas import get_schema_view as drf_get_schema_view
 from rest_framework_jwt.views import refresh_jwt_token, verify_jwt_token
 from rest_framework_nested import routers
-from rest_framework.schemas import get_schema_view as drf_get_schema_view
+
 from seedorf.games.viewsets import GameViewSet, RSVPViewset
 from seedorf.graphql.schema import schema
-from seedorf.locations.viewsets import AddressViewSet
 from seedorf.sports.viewsets import SportViewSet
-from seedorf.spots.viewsets import SpotViewSet, SpotAmenityViewSet, SpotImageViewSet, SpotOpeningTimeViewSet
+from seedorf.spots.viewsets import SpotViewSet, SpotAmenityViewSet, SpotImageViewSet, SpotOpeningTimeViewSet, \
+    SpotSportViewSet, SpotAddressViewSet
 from seedorf.users.views import registration_null_view, registration_complete_view
 from seedorf.users.viewsets import UserViewSet, GroupViewSet
 
@@ -47,17 +48,17 @@ router.register(r'spots', SpotViewSet)
 router.register(r'users', UserViewSet)
 
 spots_router = routers.NestedDefaultRouter(router, r'spots', lookup='spot')
-spots_router.register(r'sports', SportViewSet, base_name='spot-sports')
-spots_router.register(r'address', AddressViewSet, base_name='spot-address')
-spots_router.register(r'images', SpotImageViewSet, base_name='spot-images')
+spots_router.register(r'address', SpotAddressViewSet, base_name='spot-address')
 spots_router.register(r'amenities', SpotAmenityViewSet, base_name='spot-amenities')
+spots_router.register(r'images', SpotImageViewSet, base_name='spot-images')
 spots_router.register(r'opening-times', SpotOpeningTimeViewSet, base_name='spot-opening-times')
+spots_router.register(r'sports', SpotSportViewSet, base_name='spot-sports')
 
 games_router = routers.NestedDefaultRouter(router, r'games', lookup='game')
-games_router.register(r'sport', SportViewSet, base_name='game-sport')
-games_router.register(r'spot', SpotViewSet, base_name='game-spot')
 games_router.register(r'organizer', UserViewSet, base_name='game-organizer')
 games_router.register(r'rsvps', RSVPViewset, base_name='game-rsvps')
+games_router.register(r'sport', SportViewSet, base_name='game-sport')
+games_router.register(r'spot', SpotViewSet, base_name='game-spot')
 
 
 urlpatterns = [

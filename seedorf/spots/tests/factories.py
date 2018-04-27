@@ -54,7 +54,7 @@ class SpotImageFactory(factory.django.DjangoModelFactory):
         model = SpotImage
 
 
-class SpotOpeningTime(factory.django.DjangoModelFactory):
+class SpotOpeningTimeFactory(factory.django.DjangoModelFactory):
     spot = factory.SubFactory(SpotFactory)
     sport = factory.LazyAttribute(lambda o: random.choice(o.spot.sports.all()))
     day = factory.Iterator(SpotOpeningTime.DAYS, getter=lambda d: d[0])

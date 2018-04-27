@@ -1,9 +1,9 @@
 from rest_framework import viewsets
 
+from seedorf.utils.permissions import IsAdminOrReadOnly
 from seedorf.utils.regex import UUID as REGEX_UUID
 from .models import Sport
 from .serializers import SportSerializer
-from seedorf.utils.permissions import IsAdminOrReadOnly
 
 
 class SportViewSet(viewsets.ModelViewSet):

@@ -1,10 +1,10 @@
 import copy
 
 from django.core.exceptions import ValidationError
+from django.core.validators import BaseValidator
 from django.utils.deconstruct import deconstructible
 from django.utils.translation import ugettext_lazy as _
 from jsonschema import validate
-from django.core.validators import BaseValidator
 
 
 @deconstructible

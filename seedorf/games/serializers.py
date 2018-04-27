@@ -13,32 +13,26 @@ class RSVPStatusSerializer(serializers.ModelSerializer):
         extra_kwargs = {
             'url': {'lookup_field': 'uuid'}
         }
-        read_only_fields = ('uuid',)
+        read_only_fields = ('uuid', 'created_at', 'modified_at',)
 
 
-class GameSerializer(serializers.HyperlinkedModelSerializer):
-
-    url = serializers.HyperlinkedIdentityField(
-        view_name='game-detail',
-        lookup_field='uuid'
-    )
-
+class GameSerializer(serializers.ModelSerializer):
     organizer = UserSerializer(read_only=False, many=False)
     sport = SportSerializer(read_only=False, many=False)
     spot = SpotSerializer(read_only=False, many=False)
-    # rsvps = RSVPStatusSerializer(read_only=False, many=True)
+    rsvps = RSVPStatusSerializer(read_only=False, many=True)
 
     class Meta:
         model = Game
-        fields = ('url', 'uuid', 'name', 'start_time', 'start_timezone', 'end_time', 'end_timezone', 'rsvp_open_time',
+        fields = ('uuid', 'name', 'start_time', 'start_timezone', 'end_time', 'end_timezone', 'rsvp_open_time',
                   'rsvp_close_time', 'rsvp_closed', 'invite_mode', 'status', 'capacity', 'show_remaining', 'is_listed',
                   'is_shareable', 'is_featured', 'created_at', 'modified_at',
                   'organizer',
                   'sport',
                   'spot',
-                  # 'rsvps',
+                  'rsvps',
                   )
         extra_kwargs = {
             'url': {'lookup_field': 'uuid'}
         }
-        read_only_fields = ('uuid',)
+        read_only_fields = ('uuid', 'created_at', 'modified_at',)

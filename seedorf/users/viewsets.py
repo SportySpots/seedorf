@@ -22,3 +22,5 @@ class GroupViewSet(viewsets.ModelViewSet):
     """
     queryset = Group.objects.all()
     serializer_class = GroupSerializer
+    lookup_field = 'uuid'
+    lookup_value_regex = REGEX_UUID
