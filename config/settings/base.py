@@ -375,7 +375,7 @@ JWT_AUTH = {
     'JWT_ISSUER': None,
     'JWT_LEEWAY': 0,
     'JWT_PAYLOAD_GET_USER_ID_HANDLER': 'rest_framework_jwt.utils.jwt_get_user_id_from_payload_handler',
-    'JWT_PAYLOAD_HANDLER': 'rest_framework_jwt.utils.jwt_payload_handler',
+    'JWT_PAYLOAD_HANDLER': 'seedorf.utils.auth.jwt_payload_handler',
     'JWT_PRIVATE_KEY': None,
     'JWT_PUBLIC_KEY': None,
     'JWT_REFRESH_EXPIRATION_DELTA': datetime.timedelta(days=365),
