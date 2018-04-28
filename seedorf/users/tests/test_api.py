@@ -1,5 +1,8 @@
 from django.core.urlresolvers import reverse
 from rest_framework.test import APITestCase
+import jwt
+from django.conf import settings
+from seedorf.users.models import User
 
 from .factories import UserFactory
 
@@ -22,7 +25,15 @@ class UserRegistrationAPIViewTest(APITestCase):
         response = self.client.post(self.url, user_data)
         self.assertEqual(201, response.status_code)
         self.assertTrue("token" in response.data)
-        print(response.data)
+
+        user = User.objects.get(email=user_data['email'])
+        decoded_token = jwt.decode(response.data['token'], settings.SECRET_KEY, algorithms=['HS256'])
+
+        # Token contains the defined keys
+        self.assertTrue({'user_id', 'uuid', 'email', 'username', 'exp'}.issubset(decoded_token))
+
+        # Token has a the user with the right uuid
+        self.assertEqual(decoded_token['uuid'], str(user.uuid))
 
     def test_duplicate_user_creation(self):
         """

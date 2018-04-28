@@ -9,12 +9,12 @@ from ..models import Sport
 class TestSport(TestCase):
 
     def setUp(self):
-        self.sport_soccer = factories.SportFactory(category=Sport.SOCCER)
+        self.sport_soccer = factories.SportFactory(name='soccer', category=Sport.SOCCER)
 
     def test__str__(self):
         self.assertEqual(
             self.sport_soccer.__str__(),
-            'soccer'
+            'soccer : soccer'
         )
 
 
