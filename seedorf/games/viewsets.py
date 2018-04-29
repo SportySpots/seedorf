@@ -21,7 +21,7 @@ class RsvpStatusViewset(viewsets.ModelViewSet):
     """
     API endpoint that allows game RSVPs to be viewed or edited.
     """
-    queryset = RsvpStatus.objects.all()
+    queryset = RsvpStatus.objects.filter(deleted_at=None)
     serializer_class = RsvpStatusSerializer
     lookup_field = 'uuid'
     lookup_value_regex = REGEX_UUID
@@ -32,8 +32,10 @@ class RsvpStatusNestedViewset(viewsets.ModelViewSet):
     """
     API endpoint that allows game RSVPs to be viewed or edited.
     """
-    queryset = RsvpStatus.objects.all()
     serializer_class = RsvpStatusNestedSerializer
     lookup_field = 'uuid'
     lookup_value_regex = REGEX_UUID
     permission_classes = (IsAuthenticatedOrReadOnly,)
+
+    def get_queryset(self):
+        return RsvpStatus.objects.filter(game__uuid=self.kwargs['game_uuid'])

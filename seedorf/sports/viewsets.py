@@ -18,8 +18,13 @@ class SportViewSet(viewsets.ModelViewSet):
 
 
 class SportNestedViewSet(viewsets.ModelViewSet):
-    queryset = Sport.objects.filter(deleted_at=None)
     serializer_class = SportNestedSerializer
     lookup_field = 'uuid'
     lookup_value_regex = REGEX_UUID
     permission_classes = (IsAdminOrReadOnly,)
+
+    def get_queryset(self):
+        if self.basename == 'spot-sports':
+            return Sport.objects.filter(spots__uuid__in=[self.kwargs['spot_uuid']])
+        elif self.basename == 'game-sport':
+            return Sport.objects.filter(sport_games__uuid=self.kwargs['game_uuid'])
