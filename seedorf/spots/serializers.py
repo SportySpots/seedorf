@@ -40,7 +40,7 @@ class SpotSportNestedSerializer(NestedHyperlinkedModelSerializer):
     class Meta:
         model = Sport
         fields = ('uuid', 'category', 'name', 'description', 'created_at', 'modified_at')
-        read_only_fields = ('uuid', 'category', 'created_at', 'modified_at',)
+        read_only_fields = ('uuid', 'category', 'name', 'description', 'created_at', 'modified_at',)
 
 
 class SpotSerializer(serializers.ModelSerializer):
@@ -55,46 +55,17 @@ class SpotSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Spot
-        fields = ('uuid', 'name', 'slug', 'owner', 'description', 'logo', 'homepage_url',
-                  'is_verified', 'is_permanently_closed', 'is_public', 'is_temporary', 'establishment_date',
-                  'closure_date', 'created_at', 'modified_at', 'address', 'sports', 'images', 'amenities',
-                  'opening_times',
-                  )
+        exclude = ('id',)
         read_only_fields = ('uuid', 'created_at', 'modified_at',)
 
     def create(self, validated_data):
-        address_data = validated_data.pop('address')
-        sports_data = validated_data.pop('sports')
-        images_data = validated_data.pop('images')
-        amenities_data = validated_data.pop('amenities')
-        opening_times_data = validated_data.pop('opening_times')
-
-        address = Address.objects.create(**address_data)
-        spot = Spot.objects.create(address=address, **validated_data)
-        spot.sports.add(*sports_data)
-
-        # Created nested references
-        for image_data in images_data:
-            SpotImage.objects.create(spot=spot, **image_data)
-
-        for amenity_data in amenities_data:
-            SpotAmenity.objects.create(spot=spot, **amenity_data)
-
-        for opening_time_data in opening_times_data:
-            SpotOpeningTime.objects.create(spot=spot, **opening_time_data)
+        spot = Spot.objects.create(**validated_data)
 
         return spot
 
     def update(self, instance, validated_data):
-        address_data = validated_data.pop('address')
-        sports_data = validated_data.pop('sports')
-
         for k, v in validated_data.items():
             setattr(instance, k, v)
-
         instance.save()
-        instance.sports.clear()
-        instance.sports.add(*sports_data)
 
-        Address.objects.update(**address_data)
         return instance
