@@ -25,7 +25,7 @@ class Query(object):
         uuid = kwargs.get('uuid')
 
         if uuid is not None:
-            return Game.objects.get(uuid=uuid).first()
+            return Game.objects.get(uuid=uuid)
 
         return None
 
