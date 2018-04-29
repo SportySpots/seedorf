@@ -29,8 +29,8 @@ class Spot(BasePropertiesModel):
     # TODO: Validation there can be only one non-permanently closed spot at an address
     address = models.OneToOneField(
         'locations.Address',
-        blank=False,
-        null=False,
+        blank=True,
+        null=True,
         related_name='spot',
         verbose_name=_('Address'),
     )
