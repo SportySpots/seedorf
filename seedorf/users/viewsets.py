@@ -3,7 +3,7 @@ from rest_framework import viewsets
 
 from seedorf.utils.regex import UUID as REGEX_UUID
 from .models import User
-from .serializers import UserSerializer, GroupSerializer
+from .serializers import UserSerializer, GroupSerializer, UserNestedSerializer
 
 
 class UserViewSet(viewsets.ModelViewSet):
@@ -12,6 +12,16 @@ class UserViewSet(viewsets.ModelViewSet):
     """
     queryset = User.objects.all().order_by('-date_joined')
     serializer_class = UserSerializer
+    lookup_field = 'uuid'
+    lookup_value_regex = REGEX_UUID
+
+
+class UserNestedViewSet(viewsets.ModelViewSet):
+    """
+    API endpoint that allows nested users to be viewed or edited.
+    """
+    queryset = User.objects.all().order_by('-date_joined')
+    serializer_class = UserNestedSerializer
     lookup_field = 'uuid'
     lookup_value_regex = REGEX_UUID
 

@@ -13,13 +13,13 @@ from rest_framework.schemas import get_schema_view as drf_get_schema_view
 from rest_framework_jwt.views import refresh_jwt_token, verify_jwt_token
 from rest_framework_nested import routers
 
-from seedorf.games.viewsets import GameViewSet, RSVPViewset
+from seedorf.games.viewsets import GameViewSet, RsvpStatusNestedViewset
 from seedorf.graphql.schema import schema
-from seedorf.sports.viewsets import SportViewSet
-from seedorf.spots.viewsets import SpotViewSet, SpotAmenityViewSet, SpotImageViewSet, SpotOpeningTimeViewSet, \
-    SpotSportViewSet, SpotAddressViewSet
+from seedorf.sports.viewsets import SportViewSet, SportNestedViewSet
+from seedorf.spots.viewsets import SpotViewSet, SpotAmenityNestedViewSet, SpotImageNestedViewSet, \
+    SpotOpeningTimeNestedViewSet, SpotNestedViewSet, SpotAddressNestedViewSet
 from seedorf.users.views import registration_null_view, registration_complete_view
-from seedorf.users.viewsets import UserViewSet, GroupViewSet
+from seedorf.users.viewsets import UserViewSet, UserNestedViewSet
 
 drf_schema_view = drf_get_schema_view(title='SportySpots API')
 
@@ -41,24 +41,23 @@ schema_view = get_schema_view(
 router = routers.DefaultRouter()
 
 router.register(r'games', GameViewSet)
-router.register(r'groups', GroupViewSet)
-router.register(r'rsvps', RSVPViewset)
 router.register(r'sports', SportViewSet)
 router.register(r'spots', SpotViewSet)
 router.register(r'users', UserViewSet)
 
+
 spots_router = routers.NestedDefaultRouter(router, r'spots', lookup='spot')
-spots_router.register(r'address', SpotAddressViewSet, base_name='spot-address')
-spots_router.register(r'amenities', SpotAmenityViewSet, base_name='spot-amenities')
-spots_router.register(r'images', SpotImageViewSet, base_name='spot-images')
-spots_router.register(r'opening-times', SpotOpeningTimeViewSet, base_name='spot-opening-times')
-spots_router.register(r'sports', SpotSportViewSet, base_name='spot-sports')
+spots_router.register(r'address', SpotAddressNestedViewSet, base_name='spot-address')
+spots_router.register(r'amenities', SpotAmenityNestedViewSet, base_name='spot-amenities')
+spots_router.register(r'images', SpotImageNestedViewSet, base_name='spot-images')
+spots_router.register(r'opening-times', SpotOpeningTimeNestedViewSet, base_name='spot-opening-times')
+spots_router.register(r'sports', SportNestedViewSet, base_name='spot-sports')
 
 games_router = routers.NestedDefaultRouter(router, r'games', lookup='game')
-games_router.register(r'organizer', UserViewSet, base_name='game-organizer')
-games_router.register(r'rsvps', RSVPViewset, base_name='game-rsvps')
-games_router.register(r'sport', SportViewSet, base_name='game-sport')
-games_router.register(r'spot', SpotViewSet, base_name='game-spot')
+games_router.register(r'organizer', UserNestedViewSet, base_name='game-organizer')
+games_router.register(r'rsvps', RsvpStatusNestedViewset, base_name='game-rsvps')
+games_router.register(r'sport', SportNestedViewSet, base_name='game-sport')
+games_router.register(r'spot', SpotNestedViewSet, base_name='game-spot')
 
 
 urlpatterns = [

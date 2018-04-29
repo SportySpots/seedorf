@@ -2,12 +2,11 @@ from rest_framework import viewsets
 
 from seedorf.locations.models import Address
 from seedorf.locations.serializers import AddressNestedSerializer
-from seedorf.sports.models import Sport
 from seedorf.utils.permissions import IsAdminOrReadOnly
 from seedorf.utils.regex import UUID as REGEX_UUID
 from .models import Spot, SpotOpeningTime, SpotAmenity, SpotImage
 from .serializers import SpotSerializer, SpotOpeningTimeNestedSerializer, SpotImageNestedSerializer, \
-    SpotAmenityNestedSerializer, SpotSportNestedSerializer
+    SpotAmenityNestedSerializer, SpotNestedSerializer
 
 
 class SpotViewSet(viewsets.ModelViewSet):
@@ -22,9 +21,21 @@ class SpotViewSet(viewsets.ModelViewSet):
     permission_classes = (IsAdminOrReadOnly,)
 
 
-class SpotAddressViewSet(viewsets.ModelViewSet):
+class SpotNestedViewSet(viewsets.ModelViewSet):
     """
-    API endpoint that allows spots to be viewed or edited.
+    API endpoint that allows nested spots to be viewed or edited.
+    """
+    queryset = Spot.objects.filter(deleted_at=None)
+    serializer_class = SpotNestedSerializer
+    lookup_field = 'uuid'
+    lookup_value_regex = REGEX_UUID
+    # TODO: In the future, every user can create an adhoc spot
+    permission_classes = (IsAdminOrReadOnly,)
+
+
+class SpotAddressNestedViewSet(viewsets.ModelViewSet):
+    """
+    API endpoint that allows spot address to be viewed or edited.
     """
     queryset = Address.objects.filter(deleted_at=None)
     serializer_class = AddressNestedSerializer
@@ -34,7 +45,7 @@ class SpotAddressViewSet(viewsets.ModelViewSet):
     permission_classes = (IsAdminOrReadOnly,)
 
 
-class SpotOpeningTimeViewSet(viewsets.ModelViewSet):
+class SpotOpeningTimeNestedViewSet(viewsets.ModelViewSet):
     """
     API endpoint that allows spot opening times to be viewed or edited
     """
@@ -45,7 +56,7 @@ class SpotOpeningTimeViewSet(viewsets.ModelViewSet):
     permission_classes = (IsAdminOrReadOnly,)
 
 
-class SpotImageViewSet(viewsets.ModelViewSet):
+class SpotImageNestedViewSet(viewsets.ModelViewSet):
     """
     API endpoint that allows spot images to be viewed or edited
     """
@@ -56,23 +67,12 @@ class SpotImageViewSet(viewsets.ModelViewSet):
     permission_classes = (IsAdminOrReadOnly,)
 
 
-class SpotAmenityViewSet(viewsets.ModelViewSet):
+class SpotAmenityNestedViewSet(viewsets.ModelViewSet):
     """
     API endpoint that allows spot amenities to be viewed or edited
     """
     queryset = SpotAmenity.objects.filter(deleted_at=None)
     serializer_class = SpotAmenityNestedSerializer
-    lookup_field = 'uuid'
-    lookup_value_regex = REGEX_UUID
-    permission_classes = (IsAdminOrReadOnly,)
-
-
-class SpotSportViewSet(viewsets.ModelViewSet):
-    """
-    API endpoint that allows sports to be viewed.
-    """
-    queryset = Sport.objects.filter(deleted_at=None)
-    serializer_class = SpotSportNestedSerializer
     lookup_field = 'uuid'
     lookup_value_regex = REGEX_UUID
     permission_classes = (IsAdminOrReadOnly,)

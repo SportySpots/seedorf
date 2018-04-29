@@ -1,12 +1,12 @@
-import factory
-
-from seedorf.users.tests.factories import UserFactory
-from seedorf.spots.tests.factories import SpotFactory
-
-from ..models import Game, RSVPStatus
 import random
-from django.utils import timezone
 from datetime import timedelta
+
+import factory
+from django.utils import timezone
+
+from seedorf.spots.tests.factories import SpotFactory
+from seedorf.users.tests.factories import UserFactory
+from ..models import Game, RSVPStatus
 
 
 class GameFactory(factory.django.DjangoModelFactory):
@@ -42,6 +42,18 @@ class GameFactory(factory.django.DjangoModelFactory):
             start_time=factory.LazyAttribute(lambda o: o.now - timedelta(days=2, hours=4)),
             end_time=factory.LazyAttribute(lambda o: o.now - timedelta(days=2, hours=2)),
         )
+
+
+class GameListedFactory(GameFactory):
+    is_listed = True
+
+
+class GameShareableFactory(GameFactory):
+    is_shareable = True
+
+
+class GameFeaturedFactory(GameFactory):
+    is_featured = True
 
 
 class RsvpStatusFactory(factory.django.DjangoModelFactory):

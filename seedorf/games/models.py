@@ -58,12 +58,14 @@ class Game(BasePropertiesModel):
         on_delete=models.CASCADE,
         related_name='sport_games',
         verbose_name=_('Sport'),
+        null=True
     )
     spot = models.ForeignKey(
         'spots.Spot',
         on_delete=models.CASCADE,
         related_name='spot_games',
         verbose_name=_('Spot'),
+        null=True
     )
 
     # Instance Fields
