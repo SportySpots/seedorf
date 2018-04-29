@@ -11,6 +11,7 @@ class UserFactory(factory.django.DjangoModelFactory):
     username = factory.LazyAttribute(lambda o: '{}.{}'.format(o.first_name.lower(), o.last_name.lower()))
     email = factory.LazyAttribute(lambda o: '{}.{}@example.com'.format(o.first_name.lower(), o.last_name.lower()))
     password = factory.PostGenerationMethodCall('set_password', 'password')
+    is_staff = False
 
     @factory.post_generation
     def groups(self, create, extracted, **kwargs):
@@ -30,6 +31,14 @@ class UserFactory(factory.django.DjangoModelFactory):
     class Meta:
         model = User
         django_get_or_create = ('email', )
+
+
+class StaffUserFactory(UserFactory):
+    is_staff = True
+
+
+class SuperUserFactory(UserFactory):
+    is_superuser = True
 
 
 class UserProfileFactory(factory.django.DjangoModelFactory):
