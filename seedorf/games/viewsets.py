@@ -2,7 +2,7 @@ from rest_framework import viewsets
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
 
 from seedorf.utils.regex import UUID as REGEX_UUID
-from .models import Game, RSVPStatus
+from .models import Game, RsvpStatus
 from .serializers import GameSerializer, RsvpStatusNestedSerializer, RsvpStatusSerializer
 
 
@@ -21,7 +21,7 @@ class RsvpStatusViewset(viewsets.ModelViewSet):
     """
     API endpoint that allows game RSVPs to be viewed or edited.
     """
-    queryset = RSVPStatus.objects.all()
+    queryset = RsvpStatus.objects.all()
     serializer_class = RsvpStatusSerializer
     lookup_field = 'uuid'
     lookup_value_regex = REGEX_UUID
@@ -32,7 +32,7 @@ class RsvpStatusNestedViewset(viewsets.ModelViewSet):
     """
     API endpoint that allows game RSVPs to be viewed or edited.
     """
-    queryset = RSVPStatus.objects.all()
+    queryset = RsvpStatus.objects.all()
     serializer_class = RsvpStatusNestedSerializer
     lookup_field = 'uuid'
     lookup_value_regex = REGEX_UUID

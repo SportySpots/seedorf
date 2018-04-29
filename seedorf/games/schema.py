@@ -1,7 +1,7 @@
 import graphene
 from graphene_django.types import DjangoObjectType
 
-from .models import Game, RSVPStatus
+from .models import Game, RsvpStatus
 
 
 class GameType(DjangoObjectType):
@@ -9,17 +9,17 @@ class GameType(DjangoObjectType):
         model = Game
 
 
-class RSVPStatusType(DjangoObjectType):
+class RsvpStatusType(DjangoObjectType):
     class Meta:
-        model = RSVPStatus
+        model = RsvpStatus
 
 
 class Query(object):
     game = graphene.Field(GameType, uuid=graphene.UUID())
     games = graphene.List(GameType)
 
-    rsvp_status = graphene.Field(RSVPStatusType, uuid=graphene.UUID())
-    rsvp_statuses = graphene.List(RSVPStatusType)
+    rsvp_status = graphene.Field(RsvpStatusType, uuid=graphene.UUID())
+    rsvp_statuses = graphene.List(RsvpStatusType)
 
     def resolve_game(self, args, **kwargs):
         uuid = kwargs.get('uuid')
@@ -36,9 +36,9 @@ class Query(object):
         uuid = kwargs.get('uuid')
 
         if uuid is not None:
-            return RSVPStatus.objects.filter(uuid=uuid).first()
+            return RsvpStatus.objects.filter(uuid=uuid).first()
 
         return None
 
     def resolve_rsvp_statuses(self, args, **kwargs):
-        return RSVPStatus.objects.all()
+        return RsvpStatus.objects.all()

@@ -6,7 +6,7 @@ from django.utils import timezone
 
 from seedorf.spots.tests.factories import SpotFactory
 from seedorf.users.tests.factories import UserFactory
-from ..models import Game, RSVPStatus
+from ..models import Game, RsvpStatus
 
 
 class GameFactory(factory.django.DjangoModelFactory):
@@ -61,4 +61,4 @@ class RsvpStatusFactory(factory.django.DjangoModelFactory):
     game = factory.SubFactory(GameFactory)
 
     class Meta:
-        model = RSVPStatus
+        model = RsvpStatus

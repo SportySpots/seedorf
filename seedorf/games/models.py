@@ -191,7 +191,7 @@ class Game(BasePropertiesModel):
         return self.name
 
 
-class RSVPStatus(BasePropertiesModel):
+class RsvpStatus(BasePropertiesModel):
     """
     TODO:
     Define State Machine to handle RSVP Status Transitions

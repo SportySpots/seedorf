@@ -4,14 +4,14 @@ from rest_framework_nested.serializers import NestedHyperlinkedModelSerializer
 from seedorf.sports.serializers import SportNestedSerializer
 from seedorf.spots.serializers import SpotNestedSerializer
 from seedorf.users.serializers import UserNestedSerializer, UserSerializer
-from .models import Game, RSVPStatus
+from .models import Game, RsvpStatus
 
 
 class RsvpStatusSerializer(serializers.ModelSerializer):
     user = UserSerializer(read_only=True, many=False)
 
     class Meta:
-        model = RSVPStatus
+        model = RsvpStatus
         fields = ('uuid', 'status', 'created_at', 'modified_at', 'user',)
         read_only_fields = ('uuid', 'created_at', 'modified_at',)
 
@@ -20,7 +20,7 @@ class RsvpStatusNestedSerializer(NestedHyperlinkedModelSerializer):
     user = UserSerializer(read_only=True, many=False)
 
     class Meta:
-        model = RSVPStatus
+        model = RsvpStatus
         fields = ('uuid', 'status', 'created_at', 'modified_at', 'user',)
         read_only_fields = ('uuid', 'created_at', 'modified_at',)
 
