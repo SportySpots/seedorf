@@ -1,4 +1,5 @@
 from rest_framework import viewsets
+from rest_framework.permissions import IsAuthenticatedOrReadOnly
 
 from seedorf.utils.permissions import IsAdminOrReadOnly
 from seedorf.utils.regex import UUID as REGEX_UUID
@@ -21,7 +22,8 @@ class SportNestedViewSet(viewsets.ModelViewSet):
     serializer_class = SportNestedSerializer
     lookup_field = 'uuid'
     lookup_value_regex = REGEX_UUID
-    permission_classes = (IsAdminOrReadOnly,)
+    permission_classes = (IsAuthenticatedOrReadOnly,)
+    http_method_names = ('options', 'head', 'get', 'post')
 
     def get_queryset(self):
         if self.basename == 'spot-sports':

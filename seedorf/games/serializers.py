@@ -9,7 +9,6 @@ from .models import Game, RsvpStatus
 
 class RsvpStatusSerializer(serializers.ModelSerializer):
 
-
     class Meta:
         model = RsvpStatus
         fields = ('uuid', 'status', 'created_at', 'modified_at',)

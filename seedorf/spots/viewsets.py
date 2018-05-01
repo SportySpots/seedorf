@@ -1,4 +1,5 @@
 from rest_framework import viewsets
+from rest_framework.permissions import IsAuthenticatedOrReadOnly
 
 from seedorf.locations.models import Address
 from seedorf.locations.serializers import AddressNestedSerializer
@@ -30,7 +31,7 @@ class SpotNestedViewSet(viewsets.ModelViewSet):
     lookup_field = 'uuid'
     lookup_value_regex = REGEX_UUID
     # TODO: In the future, every user can create an adhoc spot
-    permission_classes = (IsAdminOrReadOnly,)
+    permission_classes = (IsAuthenticatedOrReadOnly,)
 
 
 class SpotAddressNestedViewSet(viewsets.ModelViewSet):

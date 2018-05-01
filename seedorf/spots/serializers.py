@@ -1,7 +1,10 @@
+from django.utils.translation import ugettext_lazy as _
 from rest_framework import serializers
 from rest_framework_nested.serializers import NestedHyperlinkedModelSerializer
 
+from seedorf.games.models import Game
 from seedorf.locations.serializers import AddressNestedSerializer
+from seedorf.sports.models import Sport
 from seedorf.sports.serializers import SportNestedSerializer
 from seedorf.sports.serializers import SportSerializer
 from .models import Spot, SpotAmenity, SpotImage, SpotOpeningTime
@@ -88,9 +91,34 @@ class SpotSerializer(serializers.ModelSerializer):
 
 
 class SpotNestedSerializer(NestedHyperlinkedModelSerializer):
+    uuid = serializers.UUIDField(required=True)
 
     class Meta:
         model = Spot
         fields = ('uuid', 'created_at', 'modified_at')
-        read_only_fields = ('uuid', 'created_at', 'modified_at',)
+        read_only_fields = ('created_at', 'modified_at',)
 
+    def create(self, validated_data):
+        if self.context['view'].basename == 'game-spot':
+            game_uuid = self.context['view'].kwargs['game_uuid']
+            game = Game.objects.get(uuid=game_uuid)
+
+            spot_uuid = validated_data['uuid']
+            try:
+                spot = Spot.objects.get(uuid=str(spot_uuid))
+            except Spot.DoesNotExist:
+                raise serializers.ValidationError(_('Spot not found'))
+
+            # if the game already has a spot assigned, then check if the sport being assinged belongs to the spot
+            if game.sport:
+                sport = Sport.objects.filter(spots__uuid=spot_uuid).first()
+                if not sport or game.sport.uuid != sport.uuid:
+                    raise serializers.ValidationError(_('Invalid Spot. Spot being assigned doesnt have the already '
+                                                        'associated sport'))
+
+            game.spot = spot
+            game.save()
+
+            return spot
+
+        return {}
