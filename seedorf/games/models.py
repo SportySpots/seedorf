@@ -78,31 +78,31 @@ class Game(BasePropertiesModel):
     # TODO: Evaluate if start_time / end_time could be replaced by DateTimeRangeField
     # REF: https://docs.djangoproject.com/en/1.11/ref/contrib/postgres/fields/#datetimerangefield
     start_time = models.DateTimeField(
-        blank=False,
+        blank=True,
         help_text=_('Start time of the game in UTC.'),
-        null=False,
+        null=True,
         verbose_name=_('Start Time (UTC)')
     )
     # TODO: Validate that the end time is max X hours from the start time
     end_time = models.DateTimeField(
-        blank=False,
+        blank=True,
         help_text=_('End time of the game in UTC.'),
-        null=False,
+        null=True,
         verbose_name=_('End Time (UTC)'),
     )
     # TODO: Validate that the rsvp open time is before the start time and the rsvp close time
     rsvp_open_time = models.DateTimeField(
-        blank=False,
+        blank=True,
         help_text=_('UTC time before that RSVPs will no longer be accepted, though organizers may close RSVPs earlier'),
-        null=False,
+        null=True,
         verbose_name=_('RSVP Open Time (UTC)'),
     )
     # TODO: Validate that the rsvp close time is before the start time
     # TODO: Set the RSVP close time to the start time automatically
     rsvp_close_time = models.DateTimeField(
-        blank=False,
+        blank=True,
         help_text=_('UTC time after that RSVPs will no longer be accepted, though organizers may close RSVPs earlier'),
-        null=False,
+        null=True,
         verbose_name=_('RSVP Close Time (UTC)'),
     )
     rsvp_closed = models.BooleanField(
