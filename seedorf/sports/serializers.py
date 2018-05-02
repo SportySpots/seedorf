@@ -46,13 +46,19 @@ class SportNestedSerializer(NestedHyperlinkedModelSerializer):
 
             return sport
 
+        elif self.context['view'].basename == 'spot-sports':
+            spot_uuid = self.context['view'].kwargs['spot_uuid']
+            spot = Spot.objects.get(uuid=spot_uuid)
+
+            sport_uuid = validated_data['uuid']
+            try:
+                sport = Sport.objects.get(uuid=sport_uuid)
+            except Sport.DoesNotExist:
+                raise serializers.ValidationError(_('Sport not found'))
+
+            spot.sports.clear()
+            spot.sports.add(sport)
+            return sport
+
         return {}
-
-        # elif self.context['view']['basename'] == 'spot-sport':
-        #     spot_uuid = self.context['view']['kwargs']['spot_uuid']
-        #     spot = Spot.objects.get(uuid=spot_uuid)
-        #     spot.sports.clear()
-        #     spot.sports.add(sport)
-        #     return sports
-
 

@@ -4,6 +4,7 @@ from rest_framework.test import APITestCase
 from seedorf.locations.tests.factories import AddressFactory
 from seedorf.spots.tests.factories import SpotFactory
 from seedorf.users.tests.factories import SuperUserFactory
+from seedorf.sports.tests.factories import SportFactory
 
 
 class SpotAPIViewTest(APITestCase):
@@ -53,6 +54,17 @@ class SpotAPIViewTest(APITestCase):
         response = self.client.put(url, data, format='json')
         self.assertEqual(200, response.status_code)
         self.assertTrue(response.data['raw_address'], '4321 Amsterdam')
+
+    def test_sport_create(self):
+        spot = SpotFactory(sports=None)
+        sport = SportFactory()
+        url = reverse('spot-sports-list', kwargs={'spot_uuid': str(spot.uuid)})
+        data = {
+            'uuid': str(sport.uuid)
+        }
+        response = self.client.post(url, data, format='json')
+        self.assertEqual(201, response.status_code)
+
 
 
 
