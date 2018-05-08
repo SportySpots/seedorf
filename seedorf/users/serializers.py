@@ -8,7 +8,7 @@ from .models import User
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ('uuid', 'name', 'username', 'email', 'is_staff', 'is_active', 'date_joined',
+        fields = ('uuid', 'first_name', 'last_name', 'username', 'email', 'is_staff', 'is_active', 'date_joined',
                   'created_at', 'modified_at', 'groups',)
         read_only_fields = ('uuid', 'created_at', 'modified_at',)
 
@@ -17,7 +17,7 @@ class UserNestedSerializer(NestedHyperlinkedModelSerializer):
 
     class Meta:
         model = User
-        fields = ('uuid', 'name', 'username', 'email', 'is_staff', 'is_active', 'date_joined',
+        fields = ('uuid', 'first_name', 'last_name', 'username', 'email', 'is_staff', 'is_active', 'date_joined',
                   'created_at', 'modified_at', 'groups',)
         read_only_fields = ('uuid', 'created_at', 'modified_at',)
 
@@ -28,7 +28,7 @@ class UserDetailsSerializer(serializers.ModelSerializer):
     """
     class Meta:
         model = User
-        fields = ('uuid', 'name', 'username', 'email', 'is_staff', 'is_active', 'date_joined',
+        fields = ('uuid', 'first_name', 'last_name', 'username', 'email', 'is_staff', 'is_active', 'date_joined',
                   'created_at', 'modified_at',)
         read_only_fields = ('uuid', 'created_at', 'modified_at',)
 

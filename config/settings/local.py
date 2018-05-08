@@ -27,6 +27,7 @@ ALLOWED_HOSTS = [
     "localhost",
     "0.0.0.0",
     "127.0.0.1",
+    "10.0.3.2"
 ]
 
 # Mail settings
