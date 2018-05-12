@@ -16,9 +16,9 @@ REDIS_URL=redis://redis:6379
 MEMCACHED_URL=None
 
 # AWS Settings
-DJANGO_AWS_ACCESS_KEY_ID=None
-DJANGO_AWS_SECRET_ACCESS_KEY=None
-DJANGO_AWS_STORAGE_BUCKET_NAME=None
+DJANGO_AWS_ACCESS_KEY_ID={{ deploy.django_aws_access_key_id }}
+DJANGO_AWS_SECRET_ACCESS_KEY={{ deploy.django_aws_secret_access_key }}
+DJANGO_AWS_STORAGE_BUCKET_NAME={{ deploy.django_aws_storage_bucket_name }}
 
 # Used with email
 DJANGO_MAILGUN_API_KEY=None

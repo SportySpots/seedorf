@@ -68,7 +68,6 @@ THIRD_PARTY_APPS = [
     'graphene_django',  # graphql
     'haystack',  # solr/elastic-search
 
-    'storages',  # cloud file storages
     'django_countries',
     'timezone_field',
     'corsheaders',
