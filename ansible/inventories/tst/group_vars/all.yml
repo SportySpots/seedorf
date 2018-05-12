@@ -1,0 +1,15 @@
+---
+# inventory group_vars/all
+hostname: tst
+deploy:
+  domain: trials.sportyspots.com
+  celery_workers: 1
+  gunicorn_workers: 1
+  loglevel: info
+  type: tst
+instances:
+  - name: tst
+    cache_url: redis:///var/run/redis/redis.sock?db=0
+    celery_broker_url: redis+socket:///var/run/redis/redis.sock?virtual_host=1
+    once_url: redis://localhost:6379/0
+...

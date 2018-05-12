@@ -77,6 +77,7 @@ ipdb = { version = "*" }
 sphinx = { version = "==1.7.1" }
 awsebcli = "*"
 awscli = "*"
+ansible = "*"
 # NOTE: Disable pytest-sugar till the following issues are fixed
 # REF: https://github.com/pydanny/cookiecutter-django/pull/1472
 # REF: https://github.com/pytest-dev/pytest/issues/3170

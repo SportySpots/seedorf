@@ -1,0 +1,15 @@
+---
+- include: dev_tools.yml
+
+- include: users.yml
+
+- include: known_hosts.yml
+
+- name: Deploy instances
+  include: deploy_project.yml
+  become_user: deploy
+  with_items: "{{ instances }}"
+  loop_control:
+    loop_var: instance
+  tags: deploy_project
+...

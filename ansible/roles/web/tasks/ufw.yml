@@ -1,0 +1,16 @@
+---
+- name: Allow http / https traffic
+  ufw:
+    rule: "{{ item.rule }}"
+    port: "{{ item.port }}"
+    proto: "{{ item.proto }}"
+  with_items:
+    - rule: "allow"
+      port: "80"
+      proto: "tcp"
+    - rule: "allow"
+      port: "443"
+      proto: "tcp"
+  notify:
+    - restart_ufw
+...

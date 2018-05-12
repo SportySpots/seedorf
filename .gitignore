@@ -381,3 +381,7 @@ deploy.sh
 
 # pytest
 .pytest_cache/
+
+# ansible
+*.retry
+.ansible

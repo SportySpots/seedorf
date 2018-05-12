@@ -1,0 +1,14 @@
+---
+- name: Add deploy authorized keys
+  authorized_key:
+    user: deploy
+    key: "{{ item }}"
+  with_file: "{{ deploy_user_public_keys }}"
+
+- name: Install ssh key private key
+  copy:
+    content: "{{ vault.deploy_user_private_key }}"
+    dest: /home/deploy/.ssh/id_rsa
+    mode: 0600
+    owner: deploy
+    group: deploy

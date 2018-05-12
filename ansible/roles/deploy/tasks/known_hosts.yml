@@ -1,0 +1,8 @@
+---
+- name: Ensure ssh host keys are in known hosts
+  known_hosts:
+    path: "/home/ubuntu/.ssh/known_hosts"
+    name: "{{ item.key }}"
+    key: "{{ item.value }}"
+  with_dict: "{{ ssh_known_hosts }}"
+  become_user: ubuntu

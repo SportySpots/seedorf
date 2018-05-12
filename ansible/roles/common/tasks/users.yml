@@ -1,0 +1,26 @@
+---
+- name: Create dev teams users
+  user:
+    name: "{{ item.name }}"
+    groups:
+      - ssh-users
+      - sudo
+    append: yes
+    shell: /bin/bash
+  loop: "{{ ssh_users }}"
+
+- name: Set authorized keys for dev team users
+  authorized_key:
+    user: "{{ item.name }}"
+    state: present
+    key: "{{ lookup('file', 'public-keys/' + item.name + '.pub') }}"
+  loop: "{{ ssh_users }}"
+
+- name: Set password less sudo for users in sudo group
+  lineinfile:
+    path: /etc/sudoers
+    state: present
+    regexp: '^%sudo'
+    line: '%sudo ALL=(ALL) NOPASSWD: ALL'
+    validate: 'visudo -cf %s'
+...
