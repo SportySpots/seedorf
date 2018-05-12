@@ -1,3 +1,0 @@
-#!/bin/sh
-
-/usr/bin/xvfb-run /usr/bin/original-wkhtmltopdf "$@"

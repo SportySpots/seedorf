@@ -1,4 +1,0 @@
-#!/usr/bin/env bash
-
-# Delete mail attachments older then 3 months
-find /srv/{{ instance.name }}/media/mail-queue/attachments/*.pdf -mtime +100 -exec rm {} \;
