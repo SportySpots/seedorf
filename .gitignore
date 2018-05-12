@@ -385,3 +385,6 @@ deploy.sh
 # ansible
 *.retry
 .ansible
+
+# celery
+beat.db
