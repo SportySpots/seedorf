@@ -1,0 +1,68 @@
+#DJANGO_SETTINGS_MODULE=mijnstroom.settings.{{ deploy.type }}
+#INSTANCE={{ instance.name }}
+#HOSTNAME={{ instance.name }}.{{ deploy.domain }}
+#BASE_URL={% if deploy.ssl %}https{% else %}http{% endif %}://{{ instance.name }}.{{ deploy.domain }}
+## Connect through unix sockets
+#DATABASE_URL=psql:///{{ instance.name }}
+#CACHE_URL={{ instance.cache_url }}
+#CELERY_BROKER_URL={{ instance.celery_broker_url }}
+#ONCE_REDIS_URL={{ instance.once_url }}  # doesn't support unix sockets yet
+#SECRET_KEY={{ deploy.secret_key }}
+#POSTMARK_API_KEY={{ deploy.postmark_api_key|default() }}
+#SLACK_TOKEN={{ deploy.slack_token|default() }}
+#MESSAGEBIRD_AUTH_TOKEN={{ deploy.messagebird_auth_token|default() }}
+#ENDEX_PASSWORD={{ deploy.endex_password|default() }}
+
+# Environment Dev
+ENV={{ deploy.type }}
+
+# Database
+DATABASE_URL=postgis://localhost/seedorf
+
+# PostgreSQL
+# POSTGRES_HOST=postgres
+# POSTGRES_DATABASE=postgres
+# POSTGRES_USER=postgres
+# POSTGRES_PASSWORD=mysecretpass
+
+# Domain name, used by caddy
+DOMAIN_NAME={{ deploy.domain }}
+
+# General settings
+DJANGO_READ_DOT_ENV_FILE=False
+DJANGO_DEBUG=False
+DJANGO_ADMIN_URL=r'^admin/'
+DJANGO_SETTINGS_MODULE=config.settings.{{ deploy.type }}
+DJANGO_SECRET_KEY={{ }}
+DJANGO_ALLOWED_HOSTS=127.0.0.1
+
+DJANGO_CSRF_COOKIE_SECURE=False
+DJANGO_CSRF_USE_SESSIONS=False
+DJANGO_CSRF_COOKIE_DOMAIN=127.0.0.1
+# NOTE: To set value as a list use a command separated string e.g. '127, 123'
+DJANGO_CSRF_TRUSTED_ORIGINS=''
+
+CELERY_BROKER_URL=None
+REDIS_URL=redis://redis:6379
+MEMCACHED_URL=None
+
+# AWS Settings
+DJANGO_AWS_ACCESS_KEY_ID=None
+DJANGO_AWS_SECRET_ACCESS_KEY=None
+DJANGO_AWS_STORAGE_BUCKET_NAME=None
+
+# Used with email
+DJANGO_MAILGUN_API_KEY=None
+DJANGO_SERVER_EMAIL=None
+MAILGUN_SENDER_DOMAIN=None
+
+# Security! Better to use DNS for this task, but you can use redirect
+DJANGO_SECURE_SSL_REDIRECT=False
+
+# django-allauth
+DJANGO_ACCOUNT_ALLOW_REGISTRATION=True
+
+# Sentry
+DJANGO_SENTRY_DSN=https://94ff09e7946d47c78666fd75a0c6fb98:5ed3b608648f4170b2296b44b303cb70@sentry.io/303584
+
+COMPRESS_ENABLED=False
