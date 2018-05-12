@@ -5,12 +5,12 @@ from django.core.urlresolvers import reverse
 from django.utils import timezone
 from rest_framework.test import APITestCase
 
-from seedorf.games.models import Game
+from seedorf.games.models import Game, RsvpStatus
 from seedorf.sports.tests.factories import SportFactory
 from seedorf.spots.models import Spot
 from seedorf.spots.tests.factories import SpotFactory
 from seedorf.sports.models import Sport
-from .factories import GameFactory
+from .factories import GameFactory, RsvpStatusFactory
 from seedorf.users.tests.factories import UserFactory
 
 
@@ -39,7 +39,7 @@ class GameAPIViewTest(APITestCase):
         self.assertTrue(self.user.email, response.data['organizer']['email'])
         self.assertIsNone(response.data['sport'])
         self.assertIsNone(response.data['spot'])
-        self.assertListEqual(response.data['attendees'], [])
+        self.assertListEqual(response.data['rsvps'], [])
         self.assertEqual(response.data['status'], 'planned')
 
     def test_empty_sport_assign(self):
@@ -108,7 +108,7 @@ class GameAPIViewTest(APITestCase):
         response = self.client.post(url, data, format='json')
         self.assertEqual(400, response.status_code)
 
-    def test_spot_valid_assign(self):
+    def test_valid_spot_assign(self):
         game = GameFactory()
         spot = Spot.objects.filter(sports__uuid=game.sport.uuid).first()
         data = {
@@ -121,3 +121,32 @@ class GameAPIViewTest(APITestCase):
 
         updated_game = Game.objects.get(uuid=game.uuid)
         self.assertEqual(spot.uuid, updated_game.spot.uuid)
+
+    def test_user_rsvp_initial(self):
+        game = GameFactory()
+        data = {
+            'status': RsvpStatus.ACCEPTED
+        }
+        url = reverse('game-rsvps-list', kwargs={'game_uuid': str(game.uuid)})
+        response = self.client.post(url, data, format='json')
+        self.assertEqual(201, response.status_code)
+
+    def test_user_rsvp_update(self):
+        rsvp = RsvpStatusFactory(user=self.user)
+        data = {
+            'status': RsvpStatus.ATTENDING
+        }
+
+        url = reverse('game-rsvps-detail', kwargs={'game_uuid': str(rsvp.game.uuid), 'uuid': str(rsvp.uuid)})
+        response = self.client.put(url, data, format='json')
+        self.assertEqual(200, response.status_code)
+
+    def test_user_rsvp_error(self):
+        rsvp = RsvpStatusFactory()
+        data = {
+            'status': RsvpStatus.ATTENDING
+        }
+
+        url = reverse('game-rsvps-detail', kwargs={'game_uuid': str(rsvp.game.uuid), 'uuid': str(rsvp.uuid)})
+        response = self.client.put(url, data, format='json')
+        self.assertEqual(400, response.status_code)

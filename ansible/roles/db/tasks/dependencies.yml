@@ -1,0 +1,20 @@
+---
+- name: Install dependencies
+  apt:
+    name:
+    - libpq-dev
+    - python3-psycopg2
+    state: present
+    update_cache: yes
+
+- name: Ensure the PostgreSQL service is running
+  service:
+    name: postgresql
+    state: started
+    enabled: yes
+
+- name: Ensure that postgres user can be sudoed to for maintencance work
+  user:
+    name: postgres
+    shell: /bin/bash
+...

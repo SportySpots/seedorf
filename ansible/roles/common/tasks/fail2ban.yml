@@ -1,0 +1,12 @@
+---
+- name: Install fail2ban
+  apt:
+    package: fail2ban
+    state: present
+
+- name: Ensure fail2ban is started
+  service:
+    name: ssh
+    state: started
+    enabled: yes
+...

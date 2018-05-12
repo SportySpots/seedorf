@@ -1,0 +1,5 @@
+[appservers]
+trials.sportyspots.com
+
+[dbservers]
+trials.sportyspots.com

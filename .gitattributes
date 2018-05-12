@@ -1,10 +1,19 @@
 * text=auto
-*.key filter=git-crypt diff=git-crypt
+
+# terraform
 *.tf filter=git-crypt diff=git-crypt
 *.tfstate filter=git-crypt diff=git-crypt
 *.tfstate.backup filter=git-crypt diff=git-crypt
 
+# elasticbeanstalk variables
 Dockerrun.aws.json filter=git-crypt diff=git-crypt
+
+# public and private keys for ansible, terraform etc
+*.key filter=git-crypt diff=git-crypt
+*.pub filter=git-crypt diff=git-crypt
+
+# ansible
+vault.yml filter=git-crypt diff=git-crypt
 
 # secretfile filter=git-crypt diff=git-crypt
 # *.password filter=git-crypt diff=git-crypt

@@ -1,0 +1,8 @@
+---
+- name: Generate locales
+  locale_gen:
+    name: "{{ item }}"
+    state: present
+  with_items:
+      - "en_US.UTF-8"
+...

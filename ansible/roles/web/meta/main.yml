@@ -1,0 +1,5 @@
+---
+#dependencies:
+#  - role: dev-sec.nginx-hardening
+#    nginx_limit_conn: "default 15"
+...

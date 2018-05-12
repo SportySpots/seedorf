@@ -107,7 +107,7 @@ class SpotNestedSerializer(NestedHyperlinkedModelSerializer):
             try:
                 spot = Spot.objects.get(uuid=str(spot_uuid))
             except Spot.DoesNotExist:
-                raise serializers.ValidationError(_('Spot not found'))
+                raise serializers.ValidationError(_('Spot not found.'))
 
             # if the game already has a spot assigned, then check if the sport being assinged belongs to the spot
             if game.sport:

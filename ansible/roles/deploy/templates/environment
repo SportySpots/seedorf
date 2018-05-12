@@ -1,0 +1,14 @@
+DJANGO_SETTINGS_MODULE=mijnstroom.settings.{{ deploy.type }}
+INSTANCE={{ instance.name }}
+HOSTNAME={{ instance.name }}.{{ deploy.domain }}
+BASE_URL={% if deploy.ssl %}https{% else %}http{% endif %}://{{ instance.name }}.{{ deploy.domain }}
+# Connect through unix sockets
+DATABASE_URL=psql:///{{ instance.name }}
+CACHE_URL={{ instance.cache_url }}
+CELERY_BROKER_URL={{ instance.celery_broker_url }}
+ONCE_REDIS_URL={{ instance.once_url }}  # doesn't support unix sockets yet
+SECRET_KEY={{ deploy.secret_key }}
+POSTMARK_API_KEY={{ deploy.postmark_api_key|default() }}
+SLACK_TOKEN={{ deploy.slack_token|default() }}
+MESSAGEBIRD_AUTH_TOKEN={{ deploy.messagebird_auth_token|default() }}
+ENDEX_PASSWORD={{ deploy.endex_password|default() }}

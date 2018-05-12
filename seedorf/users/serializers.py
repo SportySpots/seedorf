@@ -8,9 +8,9 @@ from .models import User
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ('uuid', 'first_name', 'last_name', 'username', 'email', 'is_staff', 'is_active', 'date_joined',
+        fields = ('uuid', 'first_name', 'last_name', 'email', 'is_staff', 'is_active', 'date_joined',
                   'created_at', 'modified_at', 'groups',)
-        read_only_fields = ('uuid', 'created_at', 'modified_at',)
+        read_only_fields = ('uuid', 'is_staff', 'is_active', 'date_joined', 'created_at', 'modified_at', 'groups')
 
 
 class UserNestedSerializer(NestedHyperlinkedModelSerializer):

@@ -1,0 +1,6 @@
+---
+- name: Create ssh-users group
+  group:
+    name: ssh-users
+    state: present
+...

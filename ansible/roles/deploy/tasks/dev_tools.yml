@@ -1,0 +1,65 @@
+---
+- name: Ensure required development tools are installed
+  apt:
+    name:
+    - git
+    - npm
+    - supervisor
+    - redis-server
+    - libjpeg-dev
+    - zlib1g-dev
+    - acl
+    - python-redis
+    - vim
+    state: present
+
+- name: Ensure redis listens on unix socket
+  lineinfile:
+    dest: /etc/redis/redis.conf
+    regexp: '^# unixsocket /var/run/redis/redis.sock'
+    line: 'unixsocket /var/run/redis/redis.sock'
+    backrefs: yes
+  notify: restart_redis
+
+- name: Ensure proper permissions for redis unix socket
+  lineinfile:
+    dest: /etc/redis/redis.conf
+    regexp: '^# unixsocketperm 700'
+    line: 'unixsocketperm 777'
+    backrefs: yes
+  notify: restart_redis
+
+- name: Ensure the Redis service is running
+  service:
+    name: redis-server
+    state: started
+    enabled: yes
+
+- name: Ensure the supervisor service is running
+  service:
+    name: supervisor
+    state: started
+    enabled: yes
+
+- name: Ensure /var/log/mijnstroom exists
+  file:
+    path: /var/log/mijnstroom
+    state: directory
+    recurse: yes
+    owner: syslog
+    group: adm
+
+- name: Ensure logrotation for project
+  template:
+    src: logrotate.conf
+    dest: /etc/logrotate.d/mijnstroom.conf
+
+- name: Ensure deploy user can restart services
+  blockinfile:
+    dest: /etc/sudoers
+    block: |
+      Cmnd_Alias    SUPERVISOR = /usr/bin/supervisorctl start *, /usr/bin/supervisorctl stop *, /usr/bin/supervisorctl restart *
+      Cmnd_Alias    NGINX = /usr/bin/service nginx reload
+
+      deploy ALL=NOPASSWD: SUPERVISOR, NGINX
+    validate: 'visudo -cf %s'
