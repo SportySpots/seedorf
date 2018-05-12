@@ -41,7 +41,7 @@
         ssl_ciphers         HIGH:!aNULL:!MD5;
         # path for static files
         location /static/ {
-            alias /home/ubuntu/sportyspots/{{ deploy.type }}/static/;
+            alias /home/ubuntu/sportyspots/{{ deploy.type }}/staticfiles/;
         }
         location /media/ {
             alias /home/ubuntu/sportysptos/{{ deploy.type }}/media/;
