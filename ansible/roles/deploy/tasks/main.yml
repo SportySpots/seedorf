@@ -72,7 +72,7 @@
 
 - name: Test secure connection to SSL domain.
   uri:
-    url: "https://{{ deploy.domain }}/"
+    url: "https://{{ deploy.domain }}/api/"
     status_code: 200
   delegate_to: localhost
   become: False
