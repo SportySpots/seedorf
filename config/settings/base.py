@@ -95,9 +95,13 @@ INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
 # CSRF CONFIGURATION
 # ------------------------------------------------------------------------------
 CSRF_COOKIE_SECURE = env.bool('DJANGO_CSRF_COOKIE_SECURE', default=True)
-CSRF_TRUSTED_ORIGINS = env.list('DJANGO_CSRF_TRUSTED_ORIGINS', default=[])
-CSRF_COOKIE_DOMAIN = env.str('DJANGO_CSRF_COOKIE_DOMAIN', default=None)
+CSRF_TRUSTED_ORIGINS = env.list('DJANGO_CSRF_TRUSTED_ORIGINS', default=['.sportyspots.com'])
+CSRF_COOKIE_DOMAIN = env.str('DJANGO_CSRF_COOKIE_DOMAIN', default='sportyspots.com')
 CSRF_USE_SESSIONS = env.bool('DJANGO_CSRF_USE_SESSIONS', default=False)
+
+# HEADERS CONFIGURATION
+# ------------------------------------------------------------------------------
+USE_X_FORWARDED_HOST = env.bool('DJANGO_USE_X_FORWARDED_HOST', default=False)
 
 # MIDDLEWARE CONFIGURATION
 # ------------------------------------------------------------------------------

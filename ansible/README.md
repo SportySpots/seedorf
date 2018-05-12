@@ -36,3 +36,8 @@ Run playbook
 ```bash
 $ ansible-playbook -i inventories/dev playbook_site.yml
 ```
+
+Encrypt String
+```bash
+$ ansible-vault encrypt_string 'string_to_encrypt' --name 'django_sentry_dsn'
+```

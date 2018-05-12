@@ -1,114 +1,57 @@
 ---
-- name: Ensure project directories exist for {{ instance.name }}
-  become_user: root
+- name: Ensure project directories exist for {{ deploy.type }}
+  become: True
   file:
-    path: "{{ item }}"
+    path: "/home/ubuntu/sportyspots/{{ deploy.type }}"
     state: directory
     recurse: yes
-    owner: deploy
-    group: deploy
-  with_items:
-    - "/srv/{{ instance.name }}"
+    owner: ubuntu
+    group: ubuntu
 
-- name: Ensure project repository for {{ instance.name }} exists
-  become_user: deploy
+- name: Ensure project repository exists
+  become_user: ubuntu
   git:
-    repo: ssh://git@github.com/zonnepanelendelen/mijnstroom.git
-    dest: "/srv/{{ instance.name }}"
+    repo: ssh://git@github.com/sportyspots/seedorf.git
+    dest: "/home/ubuntu/sportyspots/{{ deploy.type }}"
     update: yes
-    key_file: "/home/deploy/.ssh/id_rsa"
-  loop_control:
-    label: "{{ instance.name }}"
+    key_file: "/home/ubuntu/.ssh/id_rsa"
   notify: project_changed
 
-- name: Install dependencies for {{ instance.name }}
-  become_user: deploy
-  pip:
-    requirements: "/srv/{{ instance.name }}/requirements/{{ deploy.type }}.txt"
-    virtualenv: "/srv/{{ instance.name }}/virtualenv/"
-    virtualenv_python: python2.7
+- name: Install dependencies for {{ deploy.type }}
+  become_user: ubuntu
+  command: pipenv install --three --ignore-pipfile
+  args:
+    chdir: "/home/ubuntu/sportyspots/{{ deploy.type }}/"
   notify: restart_supervisor
 
-- name: Install js dependencies for {{ instance.name }}
-  become_user: deploy
-  bower:
-    path:  "/srv/{{ instance.name }}/"
-
-- name: Generate deploy config for {{ instance.name }}
-  become_user: deploy
+- name: Generate deploy config for {{ deploy.type }}
+  become_user: ubuntu
   template:
     src: "{{ item.src }}"
     dest: "{{ item.dest }}"
   with_items:
-    - { src: environment, dest: "/srv/{{ instance.name }}/.env" }
+    - { src: env, dest: "/home/ubuntu/sportyspots/{{ deploy.type }}/.env" }
 
-- name: Run migrations for {{ instance.name }}
-  become_user: deploy
-  django_manage:
-    command: migrate
-    app_path: "/srv/{{ instance.name }}"
-    settings: "mijnstroom.settings.{{ deploy.type }}"
-    virtualenv: "/srv/{{ instance.name }}/virtualenv/"
+- name: Run migrations for {{ deploy.type }}
+  become_user: ubuntu
+  command: pipenv run ./manage.py migrate
+  args:
+    chdir: "/home/ubuntu/sportyspots/{{ deploy.type }}"
 
-- name: Run collectstatic for {{ instance.name }}
-  become_user: deploy
-  django_manage:
-    command: collectstatic
-    app_path: "/srv/{{ instance.name }}"
-    settings: "mijnstroom.settings.{{ deploy.type }}"
-    virtualenv: "/srv/{{ instance.name }}/virtualenv/"
+- name: Run collectstatic for {{ deploy.type }}
+  become_user: ubuntu
+  command: pipenv run ./manage.py collectstatic
+  args:
+    chdir: "/home/ubuntu/sportyspots/{{ deploy.type }}"
   notify: flush_redis
 
-- name: Generate nginx config for {{ instance.name }}
-  become_user: root
-  template:
-    src: "{{ item.src }}"
-    dest: "{{ item.dest }}"
-  with_items:
-    - name: mijnstroom
-      src: nginx.conf
-      dest: "/etc/nginx/sites-available/{{ instance.name }}.conf"
-    #- name: mijnstroom-dashboard
-      #src: nginx.conf
-      #dest: "/etc/nginx/sites-available/{{ instance.name }}-dashboard.conf"
-      #subdomain: dashboard
-      #path: dashboard/
-  notify:
-    - restart_nginx
-
-- name: Generate supervisor config for {{ instance.name }}
-  become_user: root
+- name: Generate supervisor config for {{ deploy.type }}
+  become: true
   template:
     src: supervisor.conf
-    dest: "/etc/supervisor/conf.d/{{ instance.name }}.conf"
+    dest: "/etc/supervisor/conf.d/{{ deploy.type }}.conf"
   notify:
     - restart_supervisor
 
-- name: Ensure site enabled on nginx for {{ instance.name }}
-  become_user: root
-  file:
-    src: "{{ item.src }}"
-    dest: "{{ item.dest }}"
-    state: link
-  with_items:
-    - name: mijnstroom
-      src: "/etc/nginx/sites-available/{{ instance.name }}.conf"
-      dest: "/etc/nginx/sites-enabled/{{ instance.name }}.conf"
-    #- name: mijnstroom-dashboard
-      #src: "/etc/nginx/sites-available/{{ instance.name }}-dashboard.conf"
-      #dest: "/etc/nginx/sites-enabled/{{ instance.name }}-dashboard.conf"
-  notify:
-    - restart_nginx
-
-- name: Ensure logging redirected for {{ instance.name }}
-  become_user: root
-  template:
-    src: rsyslog.conf
-    dest: /etc/rsyslog.d/40-{{ instance.name }}.conf
-  notify:
-    - restart_rsyslog
-
-- name: Ensure project maintenance cron
-  template:
-    src: project-maintenance.cron
-    dest: "/etc/cron.daily/maintenance-{{ instance.name }}"
+- name: Flush handlers in case any configs have changed.
+  meta: flush_handlers

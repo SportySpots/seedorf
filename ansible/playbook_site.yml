@@ -13,7 +13,7 @@
       - output.stdout != ""
     - name: Ensure python3 installed
       become: True
-      raw: bash -c "test -e /usr/bin/python3.6 || (apt-get install -qqy software-properties-common && add-apt-repository --update --yes ppa:deadsnakes/ppa && apt -qqy update && apt install -qqy python3.6 && curl --silent https://bootstrap.pypa.io/get-pip.py | sudo python3.6 && ln -s -f /usr/bin/python3.6 /usr/local/bin/python3 && ln -s -f /usr/local/bin/pip /usr/local/bin/pip3)"
+      raw: bash -c "test -e /usr/bin/python3.6 || (apt-get install -qqy software-properties-common && add-apt-repository --update --yes ppa:deadsnakes/ppa && apt -qqy update && apt install -qqy python3.6-dev && curl --silent https://bootstrap.pypa.io/get-pip.py | sudo python3.6 && ln -s -f /usr/bin/python3.6 /usr/local/bin/python3 && ln -s -f /usr/local/bin/pip /usr/local/bin/pip3)"
       register: output
       changed_when:
       - output.stdout != ""
@@ -44,7 +44,7 @@
 
   roles:
     - web
-#    - deploy
+    - deploy
 
   handlers:
     - include: handlers.yml

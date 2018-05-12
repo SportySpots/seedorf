@@ -8,7 +8,7 @@ deploy:
   loglevel: info
   type: dev
 instances:
-  - name: stg
+  - name: dev
     cache_url: redis:///var/run/redis/redis.sock?db=0
     celery_broker_url: redis+socket:///var/run/redis/redis.sock?virtual_host=1
     once_url: redis://localhost:6379/0

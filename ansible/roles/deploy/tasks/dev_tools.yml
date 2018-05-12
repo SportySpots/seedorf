@@ -1,4 +1,10 @@
 ---
+- name: Add external ppa repositories
+  apt_repository:
+    repo: "{{ item }}"
+  with_items:
+    - ppa:chris-lea/redis-server
+
 - name: Ensure required development tools are installed
   apt:
     name:
@@ -6,28 +12,30 @@
     - npm
     - supervisor
     - redis-server
-    - libjpeg-dev
-    - zlib1g-dev
-    - acl
-    - python-redis
+    - python3-redis
     - vim
     state: present
 
-- name: Ensure redis listens on unix socket
-  lineinfile:
-    dest: /etc/redis/redis.conf
-    regexp: '^# unixsocket /var/run/redis/redis.sock'
-    line: 'unixsocket /var/run/redis/redis.sock'
-    backrefs: yes
-  notify: restart_redis
+- name: Install Pipenv
+  pip:
+    name: pipenv
+    executable: pip3
 
-- name: Ensure proper permissions for redis unix socket
-  lineinfile:
-    dest: /etc/redis/redis.conf
-    regexp: '^# unixsocketperm 700'
-    line: 'unixsocketperm 777'
-    backrefs: yes
-  notify: restart_redis
+#- name: Ensure redis listens on unix socket
+#  lineinfile:
+#    dest: /etc/redis/redis.conf
+#    regexp: '^# unixsocket /var/run/redis/redis.sock'
+#    line: 'unixsocket /var/run/redis/redis.sock'
+#    backrefs: yes
+#  notify: restart_redis
+#
+#- name: Ensure proper permissions for redis unix socket
+#  lineinfile:
+#    dest: /etc/redis/redis.conf
+#    regexp: '^# unixsocketperm 700'
+#    line: 'unixsocketperm 777'
+#    backrefs: yes
+#  notify: restart_redis
 
 - name: Ensure the Redis service is running
   service:
@@ -41,25 +49,20 @@
     state: started
     enabled: yes
 
-- name: Ensure /var/log/mijnstroom exists
+- name: Ensure /var/log/sportyspots exists
   file:
-    path: /var/log/mijnstroom
+    path: /var/log/sportyspots
     state: directory
     recurse: yes
-    owner: syslog
-    group: adm
+    owner: ubuntu
+    group: ubuntu
 
-- name: Ensure logrotation for project
-  template:
-    src: logrotate.conf
-    dest: /etc/logrotate.d/mijnstroom.conf
-
-- name: Ensure deploy user can restart services
+- name: Ensure ubuntu user can restart services
   blockinfile:
     dest: /etc/sudoers
     block: |
       Cmnd_Alias    SUPERVISOR = /usr/bin/supervisorctl start *, /usr/bin/supervisorctl stop *, /usr/bin/supervisorctl restart *
       Cmnd_Alias    NGINX = /usr/bin/service nginx reload
 
-      deploy ALL=NOPASSWD: SUPERVISOR, NGINX
+      ubuntu ALL=NOPASSWD: SUPERVISOR, NGINX
     validate: 'visudo -cf %s'

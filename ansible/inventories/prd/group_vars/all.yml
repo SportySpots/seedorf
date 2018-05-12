@@ -2,7 +2,7 @@
 # inventory group_vars/all
 hostname: prd
 deploy:
-  domain: manager.sportyspots.com
+  domain: game.sportyspots.com
   celery_workers: 6
   gunicorn_workers: 6
   loglevel: info
