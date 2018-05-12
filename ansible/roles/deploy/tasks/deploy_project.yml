@@ -15,14 +15,16 @@
     dest: "/home/ubuntu/sportyspots/{{ deploy.type }}"
     update: yes
     key_file: "/home/ubuntu/.ssh/id_rsa"
-  notify: project_changed
+  notify:
+    - project_changed
 
 - name: Install dependencies for {{ deploy.type }}
   become_user: ubuntu
   command: pipenv install --three --ignore-pipfile
   args:
     chdir: "/home/ubuntu/sportyspots/{{ deploy.type }}/"
-  notify: restart_supervisor
+  notify:
+    - restart_supervisor
 
 - name: Generate deploy config for {{ deploy.type }}
   become_user: ubuntu
@@ -40,16 +42,17 @@
 
 - name: Run collectstatic for {{ deploy.type }}
   become_user: ubuntu
-  command: pipenv run ./manage.py collectstatic
+  command: pipenv run ./manage.py collectstatic --noinput
   args:
     chdir: "/home/ubuntu/sportyspots/{{ deploy.type }}"
-  notify: flush_redis
+  notify:
+    - flush_redis
 
 - name: Generate supervisor config for {{ deploy.type }}
-  become: true
+  become_user: root
   template:
     src: supervisor.conf
-    dest: "/etc/supervisor/conf.d/{{ deploy.type }}.conf"
+    dest: "/etc/supervisor/conf.d/sportyspots-{{ deploy.type }}.conf"
   notify:
     - restart_supervisor
 
