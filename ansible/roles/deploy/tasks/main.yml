@@ -70,12 +70,12 @@
   handlers:
     - include: ../../handlers.yml
 
-#- name: Test secure connection to SSL domain.
-#  uri:
-#    url: "https://{{ deploy.domain }}/"
-#    status_code: 200
-#  delegate_to: localhost
-#  become: no
+- name: Test secure connection to SSL domain.
+  uri:
+    url: "https://{{ deploy.domain }}/"
+    status_code: 200
+  delegate_to: localhost
+  become: False
 
 - name: Deploy instances
   include: deploy_project.yml
