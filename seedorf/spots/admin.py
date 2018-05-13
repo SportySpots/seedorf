@@ -16,7 +16,7 @@ class SpotAmenityAdmin(admin.StackedInline):
 
 
 class SpotAdmin(admin.ModelAdmin):
-    list_display = ('name', 'owner',)
+    list_display = ('name', 'address', 'owner',)
     inlines = [SpotImageAdmin, SpotOpeningTimeAdmin, SpotAmenityAdmin]
 
 
