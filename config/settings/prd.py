@@ -9,11 +9,14 @@ Production Configurations
 
 """
 
-
 import logging
+import os
+
+import raven
 import requests
-from requests.exceptions import ConnectionError
 from django.core.exceptions import ImproperlyConfigured
+from requests.exceptions import ConnectionError
+from structlog import configure, processors, stdlib, threadlocal
 
 from .base import *  # noqa
 
@@ -64,23 +67,6 @@ X_FRAME_OPTIONS = 'DENY'
 # See https://docs.djangoproject.com/en/dev/ref/settings/#allowed-hosts
 # ------------------------------------------------------------------------------
 ALLOWED_HOSTS = env.list('DJANGO_ALLOWED_HOSTS', default=['.sportyspots.com', ])
-
-INSTALLED_APPS += ['gunicorn', ]
-
-
-# STORAGE CONFIGURATION
-# Uploaded Media Files
-# ------------------------
-# See: http://django-storages.readthedocs.io/en/latest/index.html
-# ------------------------------------------------------------------------------
-INSTALLED_APPS += ['storages', ]
-
-AWS_ACCESS_KEY_ID = env('DJANGO_AWS_ACCESS_KEY_ID')
-AWS_SECRET_ACCESS_KEY = env('DJANGO_AWS_SECRET_ACCESS_KEY')
-AWS_STORAGE_BUCKET_NAME = env('DJANGO_AWS_STORAGE_BUCKET_NAME')
-AWS_AUTO_CREATE_BUCKET = True
-AWS_QUERYSTRING_AUTH = False
-
 # AWS DYNAMIC ALLOWED HOSTS FOR ECS/ ELASTIC BEANSTALK
 if env('CLOUD_PROVIDER', default=None) == 'AWS':
     url = "http://169.254.169.254/latest/meta-data/local-ipv4"
@@ -92,6 +78,14 @@ if env('CLOUD_PROVIDER', default=None) == 'AWS':
         error_msg = "You can only run production settings on an AWS EC2 instance"
         raise ImproperlyConfigured(error_msg)
 
+
+INSTALLED_APPS += ['gunicorn', 'storages']
+
+AWS_ACCESS_KEY_ID = env('DJANGO_AWS_ACCESS_KEY_ID')
+AWS_SECRET_ACCESS_KEY = env('DJANGO_AWS_SECRET_ACCESS_KEY')
+AWS_STORAGE_BUCKET_NAME = env('DJANGO_AWS_STORAGE_BUCKET_NAME')
+AWS_AUTO_CREATE_BUCKET = True
+AWS_QUERYSTRING_AUTH = False
 
 # AWS cache settings, don't change unless you know what you're doing:
 AWS_EXPIRY = 60 * 60 * 24 * 7
@@ -147,8 +141,6 @@ TEMPLATES[0]['OPTIONS']['loaders'] = [
 
 # DATABASE CONFIGURATION
 # ------------------------------------------------------------------------------
-
-# Use the Heroku-style specification
 # Raises ImproperlyConfigured exception if DATABASE_URL not in os.environ
 DATABASES['default'] = env.db('DATABASE_URL')
 
@@ -173,6 +165,15 @@ CACHES = {
 # ------------------------------------------------------------------------------
 SENTRY_DSN = env('DJANGO_SENTRY_DSN')
 SENTRY_CLIENT = env('DJANGO_SENTRY_CLIENT', default='raven.contrib.django.raven_compat.DjangoClient')
+SENTRY_CELERY_LOGLEVEL = env.int('DJANGO_SENTRY_LOG_LEVEL', logging.INFO)
+RAVEN_CONFIG = {
+    'CELERY_LOGLEVEL': env.int('DJANGO_SENTRY_LOG_LEVEL', logging.INFO),
+    'DSN': SENTRY_DSN,
+    'RELEASE': raven.fetch_git_sha(os.path.abspath(os.pardir)),
+}
+
+# Logging Configuration
+# ------------------------------------------------------------------------------
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': True,
@@ -182,11 +183,19 @@ LOGGING = {
     },
     'formatters': {
         'verbose': {
-            'format': '%(levelname)s %(asctime)s %(module)s '
-                      '%(process)d %(thread)d %(message)s'
+            'format': '%(levelname)s %(asctime)s %(module)s %(process)d %(thread)d %(message)s'
+        },
+        'json': {
+            'format': '%(levelname)s %(asctime)s %(module)s %(process)d %(thread)d %(message)s',
+            'class': 'pythonjsonlogger.jsonlogger.JsonFormatter'
         },
     },
     'handlers': {
+        'json': {
+            'level': 'INFO',
+            'class': 'logging.StreamHandler',
+            'formatter': 'json'
+        },
         'sentry': {
             'level': 'ERROR',
             'class': 'raven.contrib.django.raven_compat.handlers.SentryHandler',
@@ -200,31 +209,40 @@ LOGGING = {
     'loggers': {
         'django.db.backends': {
             'level': 'ERROR',
-            'handlers': ['console', ],
+            'handlers': ['json', ],
             'propagate': False,
         },
         'raven': {
             'level': 'DEBUG',
-            'handlers': ['console', ],
+            'handlers': ['json', ],
             'propagate': False,
         },
         'sentry.errors': {
             'level': 'DEBUG',
-            'handlers': ['console', ],
+            'handlers': ['json', ],
             'propagate': False,
         },
         'django.security.DisallowedHost': {
             'level': 'ERROR',
-            'handlers': ['console', 'sentry', ],
+            'handlers': ['json', 'sentry', ],
             'propagate': False,
         },
     },
 }
-SENTRY_CELERY_LOGLEVEL = env.int('DJANGO_SENTRY_LOG_LEVEL', logging.INFO)
-RAVEN_CONFIG = {
-    'CELERY_LOGLEVEL': env.int('DJANGO_SENTRY_LOG_LEVEL', logging.INFO),
-    'DSN': SENTRY_DSN
-}
 
-# Your production stuff: Below this line define 3rd party library settings
-# ------------------------------------------------------------------------------
+# REF: https://blog.sneawo.com/blog/2017/07/28/json-logging-in-python/
+configure(
+    context_class=threadlocal.wrap_dict(dict),
+    logger_factory=stdlib.LoggerFactory(),
+    wrapper_class=stdlib.BoundLogger,
+    processors=[
+        stdlib.filter_by_level,
+        stdlib.add_logger_name,
+        stdlib.add_log_level,
+        stdlib.PositionalArgumentsFormatter(),
+        processors.TimeStamper(fmt="iso"),
+        processors.StackInfoRenderer(),
+        processors.format_exc_info,
+        processors.UnicodeDecoder(),
+        stdlib.render_to_log_kwargs]
+)
