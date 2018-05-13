@@ -6,12 +6,12 @@ from django.utils import timezone
 from rest_framework.test import APITestCase
 
 from seedorf.games.models import Game, RsvpStatus
+from seedorf.sports.models import Sport
 from seedorf.sports.tests.factories import SportFactory
 from seedorf.spots.models import Spot
 from seedorf.spots.tests.factories import SpotFactory
-from seedorf.sports.models import Sport
-from .factories import GameFactory, RsvpStatusFactory
 from seedorf.users.tests.factories import UserFactory
+from .factories import GameFactory, RsvpStatusFactory
 
 
 class GameAPIViewTest(APITestCase):

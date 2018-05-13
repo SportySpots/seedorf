@@ -5,63 +5,90 @@ from rest_framework_nested.serializers import NestedHyperlinkedModelSerializer
 from seedorf.games.models import Game
 from seedorf.locations.serializers import AddressNestedSerializer
 from seedorf.sports.models import Sport
-from seedorf.sports.serializers import SportNestedSerializer
-from seedorf.sports.serializers import SportSerializer
 from .models import Spot, SpotAmenity, SpotImage, SpotOpeningTime
 
 
-class SpotAmenitySerializer(serializers.ModelSerializer):
-    sport = SportSerializer(read_only=True, many=False)
-
+class AmenitySerializer(serializers.ModelSerializer):
     class Meta:
         model = SpotAmenity
-        fields = ('uuid', 'data', 'created_at', 'modified_at', 'sport',)
+        fields = ('uuid', 'data', 'created_at', 'modified_at',)
         read_only_fields = ('uuid', 'created_at', 'modified_at',)
 
+    def create(self, validated_data):
+        spot_uuid = self.context['view'].kwargs['spot_uuid']
+        sport_uuid = self.context['view'].kwargs['sport_uuid']
 
-class SpotAmenityNestedSerializer(NestedHyperlinkedModelSerializer):
-    sport = SportSerializer(read_only=True, many=False)
+        spot = Spot.objects.get(uuid=spot_uuid)
+        sport = Sport.objects.get(uuid=sport_uuid)
 
-    class Meta:
-        model = SpotAmenity
-        fields = ('uuid', 'data', 'created_at', 'modified_at', 'sport',)
-        read_only_fields = ('uuid', 'created_at', 'modified_at',)
+        amenity = SpotAmenity.objects.create(spot=spot, sport=sport, **validated_data)
 
-
-class SpotOpeningTimeSerializer(serializers.ModelSerializer):
-    sport = SportSerializer(read_only=True, many=False)
-
-    class Meta:
-        model = SpotOpeningTime
-        fields = ('uuid', 'day', 'start_time', 'end_time', 'is_closed', 'created_at', 'modified_at', 'sport',)
-        read_only_fields = ('uuid', 'created_at', 'modified_at',)
+        return amenity
 
 
-class SpotOpeningTimeNestedSerializer(NestedHyperlinkedModelSerializer):
-    sport = SportSerializer(read_only=True, many=False)
-
+class OpeningTimeSerializer(serializers.ModelSerializer):
     class Meta:
         model = SpotOpeningTime
-        fields = ('uuid', 'day', 'start_time', 'end_time', 'is_closed', 'created_at', 'modified_at', 'sport',)
+        fields = ('uuid', 'day', 'start_time', 'end_time', 'is_closed', 'created_at', 'modified_at',)
         read_only_fields = ('uuid', 'created_at', 'modified_at',)
 
+    def create(self, validated_data):
+        spot_uuid = self.context['view'].kwargs['spot_uuid']
+        sport_uuid = self.context['view'].kwargs['sport_uuid']
 
-class SpotImageSerializer(serializers.ModelSerializer):
-    sport = SportSerializer(read_only=True, many=False)
+        spot = Spot.objects.get(uuid=spot_uuid)
+        sport = Sport.objects.get(uuid=sport_uuid)
 
+        opening_time = SpotOpeningTime.objects.create(spot=spot, sport=sport, **validated_data)
+
+        return opening_time
+
+
+class ImageSerializer(serializers.ModelSerializer):
     class Meta:
         model = SpotImage
-        fields = ('uuid', 'image', 'is_flagged', 'is_user_submitted', 'created_at', 'modified_at', 'sport',)
+        fields = ('uuid', 'image', 'is_flagged', 'is_user_submitted', 'created_at', 'modified_at',)
         read_only_fields = ('uuid', 'created_at', 'modified_at',)
 
+    def create(self, validated_data):
+        spot_uuid = self.context['view'].kwargs['spot_uuid']
+        sport_uuid = self.context['view'].kwargs['sport_uuid']
 
-class SpotImageNestedSerializer(NestedHyperlinkedModelSerializer):
-    sport = SportSerializer(read_only=True, many=False)
+        spot = Spot.objects.get(uuid=spot_uuid)
+        sport = Sport.objects.get(uuid=sport_uuid)
+
+        image = SpotImage.objects.create(spot=spot, sport=sport, **validated_data)
+
+        return image
+
+
+class SpotSportNestedSerializer(NestedHyperlinkedModelSerializer):
+    uuid = serializers.UUIDField(required=True)
+
+    amenities = AmenitySerializer(read_only=True, many=True)
+    opening_times = OpeningTimeSerializer(read_only=True, many=True)
+    images = ImageSerializer(read_only=True, many=True)
 
     class Meta:
-        model = SpotImage
-        fields = ('uuid', 'image', 'is_flagged', 'is_user_submitted', 'created_at', 'modified_at', 'sport',)
-        read_only_fields = ('uuid', 'created_at', 'modified_at',)
+        model = Sport
+        fields = ('uuid', 'category', 'name', 'description', 'amenities', 'opening_times', 'images',
+                  'created_at', 'modified_at')
+        read_only_fields = ('category', 'name', 'description', 'amenities', 'opening_times', 'images' 
+                            'created_at', 'modified_at',)
+
+    def create(self, validated_data):
+        spot_uuid = self.context['view'].kwargs['spot_uuid']
+        spot = Spot.objects.get(uuid=spot_uuid)
+
+        sport_uuid = validated_data['uuid']
+        try:
+            sport = Sport.objects.get(uuid=sport_uuid)
+        except Sport.DoesNotExist:
+            raise serializers.ValidationError(_('Sport not found'))
+
+        spot.sports.clear()
+        spot.sports.add(sport)
+        return sport
 
 
 class SpotSerializer(serializers.ModelSerializer):
@@ -69,10 +96,7 @@ class SpotSerializer(serializers.ModelSerializer):
     # TODO: is_verified can only be set by staff, currently its is covered by IsAdminOrReadOnly permission
     # TODO: is_permanently_closed can only be set by staff, currently is covered by IsAdminOrReadOnly permission
     address = AddressNestedSerializer(read_only=True, many=False)
-    sports = SportNestedSerializer(read_only=True, many=True)
-    images = SpotImageNestedSerializer(read_only=True, many=True)
-    amenities = SpotAmenityNestedSerializer(read_only=True, many=True)
-    opening_times = SpotOpeningTimeNestedSerializer(read_only=True, many=True)
+    sports = SpotSportNestedSerializer(read_only=True, many=True)
 
     class Meta:
         model = Spot

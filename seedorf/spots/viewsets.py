@@ -6,8 +6,7 @@ from seedorf.locations.serializers import AddressNestedSerializer
 from seedorf.utils.permissions import IsAdminOrReadOnly
 from seedorf.utils.regex import UUID as REGEX_UUID
 from .models import Spot, SpotOpeningTime, SpotAmenity, SpotImage
-from .serializers import SpotSerializer, SpotOpeningTimeNestedSerializer, SpotImageNestedSerializer, \
-    SpotAmenityNestedSerializer, SpotNestedSerializer
+from .serializers import SpotSerializer, SpotNestedSerializer, ImageSerializer, AmenitySerializer, OpeningTimeSerializer
 
 
 class SpotViewSet(viewsets.ModelViewSet):
@@ -46,34 +45,46 @@ class SpotAddressNestedViewSet(viewsets.ModelViewSet):
     permission_classes = (IsAdminOrReadOnly,)
 
 
-class SpotOpeningTimeNestedViewSet(viewsets.ModelViewSet):
+class SpotSportOpeningTimesNestedViewSet(viewsets.ModelViewSet):
     """
     API endpoint that allows spot opening times to be viewed or edited
     """
-    queryset = SpotOpeningTime.objects.filter(deleted_at=None)
-    serializer_class = SpotOpeningTimeNestedSerializer
+    serializer_class = OpeningTimeSerializer
     lookup_field = 'uuid'
     lookup_value_regex = REGEX_UUID
     permission_classes = (IsAdminOrReadOnly,)
 
-
-class SpotImageNestedViewSet(viewsets.ModelViewSet):
-    """
-    API endpoint that allows spot images to be viewed or edited
-    """
-    queryset = SpotImage.objects.filter(deleted_at=None)
-    serializer_class = SpotImageNestedSerializer
-    lookup_field = 'uuid'
-    lookup_value_regex = REGEX_UUID
-    permission_classes = (IsAdminOrReadOnly,)
+    def get_queryset(self):
+        spot_uuid = self.kwargs['spot_uuid']
+        sport_uuid = self.kwargs['sport_uuid']
+        return SpotOpeningTime.objects.filter(spot__uuid=spot_uuid, sport__uuid=sport_uuid)
 
 
-class SpotAmenityNestedViewSet(viewsets.ModelViewSet):
+class SpotSportAmenitesNestedViewSet(viewsets.ModelViewSet):
     """
     API endpoint that allows spot amenities to be viewed or edited
     """
-    queryset = SpotAmenity.objects.filter(deleted_at=None)
-    serializer_class = SpotAmenityNestedSerializer
+    serializer_class = AmenitySerializer
     lookup_field = 'uuid'
     lookup_value_regex = REGEX_UUID
     permission_classes = (IsAdminOrReadOnly,)
+
+    def get_queryset(self):
+        spot_uuid = self.kwargs['spot_uuid']
+        sport_uuid = self.kwargs['sport_uuid']
+        return SpotAmenity.objects.filter(spot__uuid=spot_uuid, sport__uuid=sport_uuid)
+
+
+class SpotSportImagesNestedViewSet(viewsets.ModelViewSet):
+    """
+    API endpoint that allows images of a sport on a spot to be viewed or edited
+    """
+    serializer_class = ImageSerializer
+    lookup_field = 'uuid'
+    lookup_value_regex = REGEX_UUID
+    permission_classes = (IsAdminOrReadOnly,)
+
+    def get_queryset(self):
+        spot_uuid = self.kwargs['spot_uuid']
+        sport_uuid = self.kwargs['sport_uuid']
+        return SpotImage.objects.filter(spot__uuid=spot_uuid, sport__uuid=sport_uuid)

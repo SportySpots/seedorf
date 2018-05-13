@@ -15,9 +15,9 @@ from rest_framework_nested import routers
 
 from seedorf.games.viewsets import GameViewSet, RsvpStatusNestedViewset
 from seedorf.graphql.schema import schema
-from seedorf.sports.viewsets import SportViewSet, SportNestedViewSet
-from seedorf.spots.viewsets import SpotViewSet, SpotAmenityNestedViewSet, SpotImageNestedViewSet, \
-    SpotOpeningTimeNestedViewSet, SpotNestedViewSet, SpotAddressNestedViewSet
+from seedorf.sports.viewsets import SportViewSet, SpotSportNestedViewSet, GameSportNestedViewSet
+from seedorf.spots.viewsets import SpotViewSet, SpotNestedViewSet, SpotAddressNestedViewSet, \
+    SpotSportImagesNestedViewSet, SpotSportAmenitesNestedViewSet, SpotSportOpeningTimesNestedViewSet
 from seedorf.users.views import registration_null_view, registration_complete_view
 from seedorf.users.viewsets import UserViewSet, UserNestedViewSet
 
@@ -40,23 +40,32 @@ schema_view = get_schema_view(
 # Routers provide an easy way of automatically determining the URL conf.
 router = routers.DefaultRouter()
 
+# Top level urls
 router.register(r'games', GameViewSet)
-router.register(r'sports', SportViewSet)
 router.register(r'spots', SpotViewSet)
+router.register(r'sports', SportViewSet)
 router.register(r'users', UserViewSet)
 
-
+# Spots urls
 spots_router = routers.NestedDefaultRouter(router, r'spots', lookup='spot')
 spots_router.register(r'address', SpotAddressNestedViewSet, base_name='spot-address')
-spots_router.register(r'amenities', SpotAmenityNestedViewSet, base_name='spot-amenities')
-spots_router.register(r'images', SpotImageNestedViewSet, base_name='spot-images')
-spots_router.register(r'opening-times', SpotOpeningTimeNestedViewSet, base_name='spot-opening-times')
-spots_router.register(r'sports', SportNestedViewSet, base_name='spot-sports')
+spots_router.register(r'sports', SpotSportNestedViewSet, base_name='spot-sports')
 
+spot_sports_images_router = routers.NestedDefaultRouter(spots_router, r'sports', lookup='sport')
+spot_sports_images_router.register(r'images', SpotSportImagesNestedViewSet, base_name='spot-sport-images')
+
+spot_sports_amenities_router = routers.NestedDefaultRouter(spots_router, r'sports', lookup='sport')
+spot_sports_amenities_router.register(r'images', SpotSportAmenitesNestedViewSet, base_name='spot-sport-amenities')
+
+spot_sports_opening_times_router = routers.NestedDefaultRouter(spots_router, r'sports', lookup='sport')
+spot_sports_opening_times_router.register(r'images', SpotSportOpeningTimesNestedViewSet,
+                                          base_name='spot-sport-opening-times')
+
+# Game urls
 games_router = routers.NestedDefaultRouter(router, r'games', lookup='game')
 games_router.register(r'organizer', UserNestedViewSet, base_name='game-organizer')
 games_router.register(r'rsvps', RsvpStatusNestedViewset, base_name='game-rsvps')
-games_router.register(r'sport', SportNestedViewSet, base_name='game-sport')
+games_router.register(r'sport', GameSportNestedViewSet, base_name='game-sport')
 games_router.register(r'spot', SpotNestedViewSet, base_name='game-spot')
 
 
@@ -105,6 +114,9 @@ urlpatterns = [
                   url(r'^api/', include(router.urls), name='api-core'),
                   url(r'^api/', include(spots_router.urls), name='api-spots'),
                   url(r'^api/', include(games_router.urls), name='api-games'),
+                  url(r'^api/', include(spot_sports_images_router.urls), name='api-spot-sports-images'),
+                  url(r'^api/', include(spot_sports_amenities_router.urls), name='api-spot-sports-amenities'),
+                  url(r'^api/', include(spot_sports_opening_times_router.urls), name='api-spot-sports-opening-times'),
 
 
                   # GraphQL API

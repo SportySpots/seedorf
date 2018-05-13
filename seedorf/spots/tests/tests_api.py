@@ -1,10 +1,14 @@
+import os
+import tempfile
+
+from PIL import Image
 from django.core.urlresolvers import reverse
 from rest_framework.test import APITestCase
 
 from seedorf.locations.tests.factories import AddressFactory
-from seedorf.spots.tests.factories import SpotFactory
-from seedorf.users.tests.factories import SuperUserFactory
 from seedorf.sports.tests.factories import SportFactory
+from seedorf.spots.tests.factories import SpotFactory, SpotImageFactory
+from seedorf.users.tests.factories import SuperUserFactory
 
 
 class SpotAPIViewTest(APITestCase):
@@ -55,7 +59,7 @@ class SpotAPIViewTest(APITestCase):
         self.assertEqual(200, response.status_code)
         self.assertTrue(response.data['raw_address'], '4321 Amsterdam')
 
-    def test_sport_create(self):
+    def test_sport_assign(self):
         spot = SpotFactory(sports=None)
         sport = SportFactory()
         url = reverse('spot-sports-list', kwargs={'spot_uuid': str(spot.uuid)})
@@ -65,6 +69,50 @@ class SpotAPIViewTest(APITestCase):
         response = self.client.post(url, data, format='json')
         self.assertEqual(201, response.status_code)
 
+    def test_image_create(self):
+        spot = SpotFactory()
 
+        with tempfile.NamedTemporaryFile(suffix='.jpg', delete=False) as tmp_file:
+            image = Image.new('RGB', (100, 100), "#ddd")
+            image.save(tmp_file, format="JPEG")
+            tmp_file.close()
+
+        url = reverse('spot-sport-images-list', kwargs={
+            'sport_uuid': str(str(spot.sports.all()[0].uuid)),
+            'spot_uuid': str(spot.uuid)
+        })
+
+        with open(tmp_file.name, 'rb') as photo:
+            data = {
+                'image': photo
+            }
+            response = self.client.post(url, data, format='multipart')
+            self.assertEqual(201, response.status_code)
+
+        os.remove(tmp_file.name)
+
+    def test_image_update(self):
+        spot = SpotFactory()
+        spot_image = SpotImageFactory(spot=spot, sport=spot.sports.all()[0])
+
+        with tempfile.NamedTemporaryFile(suffix='.jpg', delete=False) as tmp_file:
+            image = Image.new('RGB', (100, 100), "#ddd")
+            image.save(tmp_file, format="JPEG")
+            tmp_file.close()
+
+        url = reverse('spot-sport-images-detail', kwargs={
+            'sport_uuid': str(str(spot.sports.all()[0].uuid)),
+            'spot_uuid': str(spot.uuid),
+            'uuid': str(spot_image.uuid)
+        })
+
+        with open(tmp_file.name, 'rb') as photo:
+            data = {
+                'image': photo
+            }
+            response = self.client.put(url, data, format='multipart')
+            self.assertEqual(200, response.status_code)
+
+        os.remove(tmp_file.name)
 
 
