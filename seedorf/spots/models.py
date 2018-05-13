@@ -44,13 +44,14 @@ class Spot(BasePropertiesModel):
     # Instance Fields
     name = models.CharField(
         blank=False,
-        max_length=255,
+        max_length=512,
         null=False,
         verbose_name=_('Name'),
     )
     slug = AutoSlugField(
         blank=True,
         editable=True,
+        max_length=512,
         populate_from='name',
         unique=True,
         verbose_name=_('Slug'),
@@ -58,7 +59,7 @@ class Spot(BasePropertiesModel):
     owner = models.CharField(
         blank=True,
         default='',
-        max_length=255,
+        max_length=512,
         null=False,
         verbose_name=_('Owner'),
     )
@@ -71,7 +72,7 @@ class Spot(BasePropertiesModel):
     )
     logo = models.ImageField(
         blank=True,
-        max_length=255,
+        max_length=512,
         null=False,
         upload_to=get_logo_upload_directory,
         verbose_name=_('Logo'),
@@ -79,7 +80,7 @@ class Spot(BasePropertiesModel):
     homepage_url = models.URLField(
         blank=True,
         help_text=_('Where can we find out more about this spot ?'),
-        max_length=500,
+        max_length=512,
         null=False,
         verbose_name=_('Homepage URL'),
     )
