@@ -156,6 +156,7 @@ class SpotImage(BasePropertiesModel):
     # Instance Fields
     image = models.ImageField(
         blank=False,
+        max_length=512,
         null=False,
         upload_to=get_images_upload_directory,
     )
