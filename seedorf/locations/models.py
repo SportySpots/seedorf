@@ -91,4 +91,4 @@ class Address(BasePropertiesModel):
         verbose_name_plural = _('Addresses')
 
     def __str__(self):
-        return 'Lat:{}, Lng:{}'.format(self.lat, self.lng)
+        return self.formatted_address

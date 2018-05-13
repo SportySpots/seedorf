@@ -10,6 +10,6 @@ class AddressNestedSerializer(NestedHyperlinkedModelSerializer):
 
     class Meta:
         model = Address
-        fields = ('uuid', 'raw_address', 'formatted_address', 'lat', 'lng', 'plus_global_code',
-                  'plus_local_code', 'created_at', 'modified_at',)
-        read_only_fields = ('formatted_address', 'plus_global_code', 'plus_local_code', 'created_at', 'modified_at')
+        fields = ('uuid', 'lat', 'lng', 'raw_address', 'formatted_address', 'geocoder_service', 'raw_geocoder_response',
+                  'created_at', 'modified_at',)
+        read_only_fields = ('created_at', 'modified_at')
