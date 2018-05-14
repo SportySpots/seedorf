@@ -25,10 +25,9 @@
         },
         "apistar": {
             "hashes": [
-                "sha256:da2a33c5ecc996f47ffa2d53393dd764be5dc4ee85f1b06f201044dd01b2dff1"
+                "sha256:3e6f8df1dbba531f07b0edff71c09a08f9becad5347393461c5712e191d7849c"
             ],
-            "index": "pypi",
-            "version": "==0.4.0"
+            "version": "==0.5.18"
         },
         "argcomplete": {
             "hashes": [
