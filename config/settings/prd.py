@@ -169,7 +169,7 @@ SENTRY_CELERY_LOGLEVEL = env.int('DJANGO_SENTRY_LOG_LEVEL', logging.INFO)
 RAVEN_CONFIG = {
     'CELERY_LOGLEVEL': env.int('DJANGO_SENTRY_LOG_LEVEL', logging.INFO),
     'DSN': SENTRY_DSN,
-    'RELEASE': raven.fetch_git_sha(os.path.abspath(os.pardir)),
+    'RELEASE': raven.fetch_git_sha(os.path.abspath(os.curdir)),
 }
 
 # Logging Configuration
