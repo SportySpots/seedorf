@@ -20,33 +20,46 @@ class SpotAPIViewTest(APITestCase):
     def test_spot_creation(self):
         url = reverse('spot-list')
         data = {
-            'name': 'spot-1',
-            'address': {
-                'lat': '52.370216',
-                'lng': '4.895168'
-            }
+            'name': 'spot 1',
+            'description': 'test description'
         }
         response = self.client.post(url, data, format='json')
         self.assertEqual(201, response.status_code)
+        self.assertEqual(response.data['address'], None)
+        self.assertEqual(response.data['sports'], [])
+        self.assertEqual(response.data['name'], 'spot 1')
+        self.assertEqual(response.data['slug'], 'spot-1')
+        self.assertEqual(response.data['description'], 'test description')
 
     def test_spot_update(self):
         spot = SpotFactory(name='spot-1')
         url = reverse('spot-detail', kwargs={'uuid': str(spot.uuid)})
         data = {
-            'name': 'spot-2'
+            'name': 'spot-2',
+            'owner': 'test owner',
+            'description': 'test description'
         }
         response = self.client.put(url, data, format='json')
         self.assertEqual(200, response.status_code)
         self.assertEqual(response.data['name'], 'spot-2')
+        # Make sure that the slug is not updated
+        self.assertEqual(response.data['slug'], 'spot-1')
+        self.assertEqual(response.data['owner'], 'test owner')
+        self.assertEqual(response.data['description'], 'test description')
 
     def test_address_create(self):
         spot = SpotFactory()
         url = reverse('spot-address-list', kwargs={'spot_uuid': str(spot.uuid)})
         data = {
-            'raw_address': '1234 Amsterdam'
+            'lat': 52.0,
+            'lng': 24.7,
+            'raw_address': '1234 Amsterdam',
         }
         response = self.client.post(url, data, format='json')
         self.assertEqual(201, response.status_code)
+        self.assertEqual(response.data['lat'], '52.000000000000000')
+        self.assertEqual(response.data['lng'], '24.700000000000000')
+        self.assertEqual(response.data['raw_address'], '1234 Amsterdam')
 
     def test_address_update(self):
         address = AddressFactory(raw_address='1234 Amsterdam')

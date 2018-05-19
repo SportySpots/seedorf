@@ -2,11 +2,12 @@ from rest_framework import viewsets
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
 
 from seedorf.locations.models import Address
-from seedorf.locations.serializers import AddressNestedSerializer
+from seedorf.locations.serializers import AddressSerializer
 from seedorf.utils.permissions import IsAdminOrReadOnly
 from seedorf.utils.regex import UUID as REGEX_UUID
 from .models import Spot, SpotOpeningTime, SpotAmenity, SpotImage
 from .serializers import SpotSerializer, SpotNestedSerializer, ImageSerializer, AmenitySerializer, OpeningTimeSerializer
+from django.db.models import Q
 
 
 class SpotViewSet(viewsets.ModelViewSet):
@@ -37,12 +38,15 @@ class SpotAddressNestedViewSet(viewsets.ModelViewSet):
     """
     API endpoint that allows spot address to be viewed or edited.
     """
-    queryset = Address.objects.filter(deleted_at=None)
-    serializer_class = AddressNestedSerializer
+    serializer_class = AddressSerializer
     lookup_field = 'uuid'
     lookup_value_regex = REGEX_UUID
     # TODO: In the future, every user can create an adhoc spot
     permission_classes = (IsAdminOrReadOnly,)
+
+    def get_queryset(self):
+        spot_uuid = self.kwargs['spot_uuid']
+        return Address.objects.filter(spot__uuid=spot_uuid)
 
 
 class SpotSportOpeningTimesNestedViewSet(viewsets.ModelViewSet):
@@ -62,7 +66,7 @@ class SpotSportOpeningTimesNestedViewSet(viewsets.ModelViewSet):
 
 class SpotSportAmenitesNestedViewSet(viewsets.ModelViewSet):
     """
-    API endpoint that allows spot amenities to be viewed or edited
+    API endpoint that allows spot amenities belonging to a sport to be viewed or edited
     """
     serializer_class = AmenitySerializer
     lookup_field = 'uuid'
@@ -87,4 +91,6 @@ class SpotSportImagesNestedViewSet(viewsets.ModelViewSet):
     def get_queryset(self):
         spot_uuid = self.kwargs['spot_uuid']
         sport_uuid = self.kwargs['sport_uuid']
-        return SpotImage.objects.filter(spot__uuid=spot_uuid, sport__uuid=sport_uuid)
+        spot = Q(spot__uuid=spot_uuid)
+        sport = Q(sport__uuid=sport_uuid)
+        return SpotImage.objects.filter(sport & spot)

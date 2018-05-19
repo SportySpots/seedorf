@@ -1,6 +1,6 @@
 import graphene
 from graphene_django.types import DjangoObjectType
-
+from django.conf import settings
 from .models import Spot, SpotAmenity, SpotImage, SpotOpeningTime
 
 
@@ -13,6 +13,12 @@ class SpotImageType(DjangoObjectType):
     class Meta:
         model = SpotImage
 
+    def resolve_image(self, info, **kwargs):
+        if self.image:
+            return '{}{}'.format(settings.MEDIA_URL, self.image)
+        else:
+            return ""
+
 
 class SpotAmenityType(DjangoObjectType):
     class Meta:
@@ -24,12 +30,9 @@ class SpotOpeningTimeType(DjangoObjectType):
         model = SpotOpeningTime
 
 
-class Query(object):
+class Query(graphene.ObjectType):
     spot = graphene.Field(SpotType, uuid=graphene.UUID())
     spots = graphene.List(SpotType)
-
-    def resolve_spots(self, info, **kwargs):
-        return Spot.objects.all()
 
     def resolve_spot(self, info, **kwargs):
         uuid = kwargs.get('uuid')
@@ -38,3 +41,6 @@ class Query(object):
             return Spot.objects.filter(uuid=uuid).first()
 
         return None
+
+    def resolve_spots(self, info, **kwargs):
+        return Spot.objects.all()
