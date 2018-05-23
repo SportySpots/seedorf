@@ -76,10 +76,11 @@ class Game(BasePropertiesModel):
         null=False,
     )
 
-    description = models.CharField(
+    description = models.TextField(
         blank=True,
-        max_length=255,
-        null=True,
+        help_text=_('Description of the game.'),
+        null=False,
+        verbose_name=_('Description')
     )
 
     # TODO: Evaluate if start_time / end_time could be replaced by DateTimeRangeField
