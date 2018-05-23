@@ -99,7 +99,7 @@ class GameSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Game
-        fields = ('uuid', 'name', 'start_time', 'start_timezone', 'end_time', 'end_timezone', 'rsvp_open_time',
+        fields = ('uuid', 'name', 'description', 'start_time', 'start_timezone', 'end_time', 'end_timezone', 'rsvp_open_time',
                   'rsvp_close_time', 'rsvp_closed', 'invite_mode', 'status', 'capacity', 'show_remaining', 'is_listed',
                   'is_shareable', 'is_featured', 'created_at', 'modified_at', 'organizer', 'sport', 'spot', 'rsvps',)
         read_only_fields = ('uuid', 'created_at', 'modified_at',)

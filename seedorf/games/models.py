@@ -75,6 +75,13 @@ class Game(BasePropertiesModel):
         max_length=255,
         null=False,
     )
+
+    description = models.CharField(
+        blank=True,
+        max_length=255,
+        null=True,
+    )
+
     # TODO: Evaluate if start_time / end_time could be replaced by DateTimeRangeField
     # REF: https://docs.djangoproject.com/en/1.11/ref/contrib/postgres/fields/#datetimerangefield
     start_time = models.DateTimeField(
