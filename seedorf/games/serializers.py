@@ -47,7 +47,7 @@ class RsvpStatusNestedSerializer(NestedHyperlinkedModelSerializer):
             status = validated_data['status']
 
             try:
-                rsvp = RsvpStatus.objects.get(game__uuid=game_uuid)
+                rsvp = RsvpStatus.objects.get(game__uuid=game_uuid, user__uuid=user.uuid)
             except RsvpStatus.DoesNotExist:
                 raise serializers.ValidationError(_('Invalid game.'))
 
