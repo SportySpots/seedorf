@@ -401,7 +401,7 @@ REST_AUTH_SERIALIZERS = {
     'PASSWORD_CHANGE_SERIALIZER': 'rest_auth.serializers.PasswordChangeSerializer'
 }
 REST_AUTH_REGISTER_SERIALIZERS = {
-  'REGISTER_SERIALIZER': 'rest_auth.registration.serializers.RegisterSerializer'
+  'REGISTER_SERIALIZER': 'seedorf.users.serializers.RegisterSerializer'
 }
 REST_AUTH_TOKEN_MODEL = 'rest_framework.authtoken.models'
 REST_AUTH_TOKEN_CREATOR = 'rest_auth.utils.default_create_token'

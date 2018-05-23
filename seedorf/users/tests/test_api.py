@@ -16,10 +16,12 @@ class UserRegistrationAPIViewTest(APITestCase):
         """
 
         user_data = {
-            "username": "test",
-            "email": "test@example.com",
+            "first_name": "test create first name",
+            "last_name": "test create last name",
+            "username": "test_create@example.com",
+            "email": "test_create@example.com",
             "password1": "super_$secure_passw0rd",
-            "password2": "super_$secure_passw0rd"
+            "password2": "super_$secure_passw0rd",
         }
 
         response = self.client.post(self.url, user_data)
