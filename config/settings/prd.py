@@ -115,7 +115,7 @@ COMPRESS_ENABLED = env.bool('COMPRESS_ENABLED', default=True)
 
 # EMAIL
 # ------------------------------------------------------------------------------
-DEFAULT_FROM_EMAIL = env('DJANGO_DEFAULT_FROM_EMAIL', default='SportySpots <noreply@sportyspots.com>')
+DEFAULT_FROM_EMAIL = env('DJANGO_DEFAULT_FROM_EMAIL', default='SportySpots <hello@sportyspots.com>')
 EMAIL_SUBJECT_PREFIX = env('DJANGO_EMAIL_SUBJECT_PREFIX', default='[SportySpots]')
 SERVER_EMAIL = env('DJANGO_SERVER_EMAIL', default=DEFAULT_FROM_EMAIL)
 
@@ -123,10 +123,9 @@ SERVER_EMAIL = env('DJANGO_SERVER_EMAIL', default=DEFAULT_FROM_EMAIL)
 # ------------------------------------------------------------------------------
 INSTALLED_APPS += ['anymail', ]
 ANYMAIL = {
-    'MAILGUN_API_KEY': env('DJANGO_MAILGUN_API_KEY'),
-    'MAILGUN_SENDER_DOMAIN': env('DJANGO_MAILGUN_SENDER_DOMAIN')
+    'POSTMARK_SERVER_TOKEN': env('DJANGO_POSTMARK_API_KEY'),
 }
-EMAIL_BACKEND = 'anymail.backends.mailgun.EmailBackend'
+EMAIL_BACKEND = 'anymail.backends.postmark.EmailBackend'
 
 # TEMPLATE CONFIGURATION
 # See:

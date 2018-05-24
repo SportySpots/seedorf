@@ -21,9 +21,7 @@ DJANGO_AWS_SECRET_ACCESS_KEY={{ deploy.django_aws_secret_access_key }}
 DJANGO_AWS_STORAGE_BUCKET_NAME={{ deploy.django_aws_storage_bucket_name }}
 
 # Used with email
-DJANGO_MAILGUN_API_KEY=None
-DJANGO_SERVER_EMAIL=None
-DJANGO_MAILGUN_SENDER_DOMAIN=None
+DJANGO_POSTMARK_API_KEY={{ deploy.django_postmark_api_key }}
 
 # Sentry
 DJANGO_SENTRY_DSN={{ deploy.django_sentry_dsn }}

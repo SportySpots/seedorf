@@ -73,6 +73,8 @@ urlpatterns = [
                   # Django Admin, use {% url 'admin:index' %}
                   url(settings.ADMIN_URL, admin.site.urls),
 
+                  url(r'^anymail/', include('anymail.urls')),
+
                   # Your stuff: custom urls includes go here
 
                   # Authentication / Registration
