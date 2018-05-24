@@ -13,7 +13,7 @@ file = """{
 }"""
 
 
-def appleAppSiteAssociation(request):
+def apple_app_site_association(request):
     response = HttpResponse(file, content_type='application/json')
     response['Content-Disposition'] = 'attachment; filename="apple-app-site-association"'
     return response

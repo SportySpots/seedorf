@@ -20,7 +20,7 @@ from seedorf.spots.viewsets import SpotViewSet, SpotNestedViewSet, SpotAddressNe
     SpotSportImagesNestedViewSet, SpotSportAmenitesNestedViewSet, SpotSportOpeningTimesNestedViewSet
 from seedorf.users.views import registration_null_view, registration_complete_view
 from seedorf.users.viewsets import UserViewSet, UserNestedViewSet
-from seedorf.linking.views import appleAppSiteAssociation
+from seedorf.apple.views import apple_app_site_association
 
 drf_schema_view = drf_get_schema_view(title='SportySpots API')
 
@@ -138,7 +138,9 @@ urlpatterns = [
                       name='schema-json'),
                   url(r'^swagger/$', schema_view.with_ui('swagger', cache_timeout=None), name='schema-swagger-ui'),
                   url(r'^redoc/$', schema_view.with_ui('redoc', cache_timeout=None), name='schema-redoc'),
-                  url(r'^apple-app-site-association/?$', appleAppSiteAssociation, name='apple-app-site-association'),
+
+                  # Apple ios deeplinking - app site association
+                  url(r'^apple-app-site-association/?$', apple_app_site_association, name='apple-app-site-association'),
 
               ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
