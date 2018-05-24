@@ -58,3 +58,6 @@ class Reaction(BasePropertiesModel):
     content_object = GenericForeignKey()
 
     objects = ReactionsManager()
+
+    class Meta:
+        ordering = ('-created_at',)

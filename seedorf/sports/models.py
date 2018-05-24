@@ -71,7 +71,7 @@ class Sport(BasePropertiesModel, TranslationModel):
     class Meta:
         verbose_name = _('Sport')
         verbose_name_plural = _('Sports')
-        ordering = ('category', 'name')
+        ordering = ('-created_at',)
         translatable_fields = ('name', 'description')
 
     def __str__(self):

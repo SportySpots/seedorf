@@ -25,6 +25,9 @@ class Organization(BasePropertiesModel):
         through_fields=('organization', settings.AUTH_USER_MODEL),
     )
 
+    class Meta:
+        ordering = ('-created_at',)
+
 
 class Membership(models.Model):
     ROLE_OWNER = 'owner'

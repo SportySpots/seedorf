@@ -45,6 +45,9 @@ class User(AbstractUser, BasePropertiesModel):
     def get_absolute_url(self):
         return reverse('users:detail', kwargs={'uuid': self.uuid})
 
+    class Meta:
+        ordering = ('-created_at',)
+
 
 class UserProfile(BasePropertiesModel):
 
@@ -131,6 +134,9 @@ class UserProfile(BasePropertiesModel):
         null=False,
         verbose_name=_('Bio')
     )
+
+    class Meta:
+        ordering = ('-created_at',)
 
     def __str__(self):
         return self.user.email

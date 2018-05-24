@@ -193,7 +193,7 @@ class Game(BasePropertiesModel):
     class Meta:
         verbose_name = _('Game')
         verbose_name_plural = _('Games')
-        ordering = ('-start_time',)
+        ordering = ('-created_at',)
 
     def __str__(self):
         return self.name

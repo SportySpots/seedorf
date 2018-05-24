@@ -246,6 +246,7 @@ class SpotOpeningTime(BasePropertiesModel):
     class Meta:
         verbose_name = _('Spot Opening Time')
         verbose_name_plural = _('Spot Opening Times')
+        ordering = ('-created_at',)
 
     def __str__(self):
         return '{} : {}'.format(self.spot.name, self.sport.name)
@@ -334,6 +335,7 @@ class SpotAmenity(BasePropertiesModel):
     class Meta:
         verbose_name = _('Spot Amenity')
         verbose_name_plural = _('Spot Amenities')
+        ordering = ('-created_at',)
 
     def __str__(self):
         return '{} : {}'.format(self.spot.name, self.sport.name)
