@@ -472,3 +472,14 @@ SOCIALACCOUNT_STORE_TOKENS = True
 ACCOUNT_ALLOW_REGISTRATION = env.bool('DJANGO_ACCOUNT_ALLOW_REGISTRATION', True)
 # ACCOUNT_ADAPTER = 'seedorf.users.adapters.AccountAdapter'
 # SOCIALACCOUNT_ADAPTER = 'seedorf.users.adapters.SocialAccountAdapter'
+
+# graphene djang extra settings
+# REF: https://github.com/eamigo86/graphene-django-extras
+# ------------------------------------------------------------------------------
+GRAPHENE_DJANGO_EXTRAS = {
+        'DEFAULT_PAGINATION_CLASS': 'graphene_django_extras.paginations.LimitOffsetGraphqlPagination',
+        'DEFAULT_PAGE_SIZE': 20,
+        'MAX_PAGE_SIZE': 50,
+        'CACHE_ACTIVE': False,
+        'CACHE_TIMEOUT': 300    # seconds
+}

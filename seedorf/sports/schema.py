@@ -1,5 +1,5 @@
 import graphene
-from graphene_django.types import DjangoObjectType
+from graphene_django_extras import DjangoObjectType
 
 from .models import Sport
 

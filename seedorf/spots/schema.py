@@ -1,12 +1,24 @@
 import graphene
-from graphene_django.types import DjangoObjectType
 from django.conf import settings
+from django.utils.translation import ugettext_lazy as _
+from graphene_django_extras import (DjangoObjectType, DjangoFilterPaginateListField, LimitOffsetGraphqlPagination)
+
+from seedorf.sports.schema import SportType
 from .models import Spot, SpotAmenity, SpotImage, SpotOpeningTime
 
 
 class SpotType(DjangoObjectType):
+    sports = graphene.List(SportType)
+
     class Meta:
+        description = _('Type definition for a single spot')
         model = Spot
+        filter_fields = {
+            'uuid': ['exact', ],
+        }
+
+    def resolve_sports(self, info, **kwargs):
+        return self.sports.all()
 
 
 class SpotImageType(DjangoObjectType):
@@ -32,7 +44,7 @@ class SpotOpeningTimeType(DjangoObjectType):
 
 class Query(graphene.ObjectType):
     spot = graphene.Field(SpotType, uuid=graphene.UUID())
-    spots = graphene.List(SpotType)
+    spots = DjangoFilterPaginateListField(SpotType, pagination=LimitOffsetGraphqlPagination())
 
     def resolve_spot(self, info, **kwargs):
         uuid = kwargs.get('uuid')
@@ -41,6 +53,3 @@ class Query(graphene.ObjectType):
             return Spot.objects.filter(uuid=uuid).first()
 
         return None
-
-    def resolve_spots(self, info, **kwargs):
-        return Spot.objects.all()
