@@ -8,6 +8,21 @@ from seedorf.utils.regex import UUID as REGEX_UUID
 from .models import Spot, SpotOpeningTime, SpotAmenity, SpotImage
 from .serializers import SpotSerializer, SpotNestedSerializer, ImageSerializer, AmenitySerializer, OpeningTimeSerializer
 from django.db.models import Q
+from django_filters import rest_framework as filters
+
+
+class SpotFilter(filters.FilterSet):
+    class Meta:
+        model = Spot
+        fields = {
+            'sports__category': ['exact', ],  # TODO: Fix the M2M Filter
+            'name': ['exact', 'icontains', ],
+            'owner': ['exact', 'icontains', ],
+            'is_verified': ['exact', ],
+            'is_permanently_closed': ['exact', ],
+            'is_public': ['exact', ],
+            'is_temporary': ['exact', ],
+        }
 
 
 class SpotViewSet(viewsets.ModelViewSet):
@@ -20,6 +35,8 @@ class SpotViewSet(viewsets.ModelViewSet):
     lookup_value_regex = REGEX_UUID
     # TODO: In the future, every user can create an adhoc spot
     permission_classes = (IsAdminOrReadOnly,)
+    filter_backends = (filters.DjangoFilterBackend,)
+    filter_class = SpotFilter
 
 
 class SpotNestedViewSet(viewsets.ModelViewSet):

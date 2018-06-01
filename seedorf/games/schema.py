@@ -1,12 +1,21 @@
 import graphene
-from graphene_django.types import DjangoObjectType
+from graphene_django_extras import (DjangoObjectType, DjangoFilterPaginateListField, LimitOffsetGraphqlPagination)
 
 from .models import Game, RsvpStatus
+from .viewsets import GameFilter
 
 
 class GameType(DjangoObjectType):
+    # NOTE: To break game <-> spot circular dependency
+    # REF: https://github.com/graphql-python/graphene/issues/522#issuecomment-324066522
+    spot = graphene.Field('seedorf.spots.schema.SpotType')
+
     class Meta:
         model = Game
+
+    @property
+    def spots_class(self):
+        return self._meta.fields['spots'].type
 
 
 class RsvpStatusType(DjangoObjectType):
@@ -16,10 +25,12 @@ class RsvpStatusType(DjangoObjectType):
 
 class Query(object):
     game = graphene.Field(GameType, uuid=graphene.UUID())
-    games = graphene.List(GameType)
+    games = DjangoFilterPaginateListField(GameType,
+                                          pagination=LimitOffsetGraphqlPagination(),
+                                          filterset_class=GameFilter)
 
     rsvp_status = graphene.Field(RsvpStatusType, uuid=graphene.UUID())
-    rsvp_statuses = graphene.List(RsvpStatusType)
+    rsvp_statuses = DjangoFilterPaginateListField(RsvpStatusType, pagination=LimitOffsetGraphqlPagination())
 
     def resolve_game(self, args, **kwargs):
         uuid = kwargs.get('uuid')

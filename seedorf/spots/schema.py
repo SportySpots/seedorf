@@ -4,21 +4,29 @@ from django.utils.translation import ugettext_lazy as _
 from graphene_django_extras import (DjangoObjectType, DjangoFilterPaginateListField, LimitOffsetGraphqlPagination)
 
 from seedorf.sports.schema import SportType
+from seedorf.games.schema import GameType
 from .models import Spot, SpotAmenity, SpotImage, SpotOpeningTime
+from .viewsets import SpotFilter
 
 
 class SpotType(DjangoObjectType):
     sports = graphene.List(SportType)
+    games = graphene.List(GameType)
 
     class Meta:
         description = _('Type definition for a single spot')
         model = Spot
         filter_fields = {
             'uuid': ['exact', ],
+            'name': ['contains', ],
+            'owner': ['contains', ],
         }
 
     def resolve_sports(self, info, **kwargs):
         return self.sports.all()
+
+    def resolve_games(self, info, **kwargs):
+        return self.spot_games.all()
 
 
 class SpotImageType(DjangoObjectType):
@@ -44,7 +52,9 @@ class SpotOpeningTimeType(DjangoObjectType):
 
 class Query(graphene.ObjectType):
     spot = graphene.Field(SpotType, uuid=graphene.UUID())
-    spots = DjangoFilterPaginateListField(SpotType, pagination=LimitOffsetGraphqlPagination())
+    spots = DjangoFilterPaginateListField(SpotType,
+                                          filterset_class=SpotFilter,
+                                          pagination=LimitOffsetGraphqlPagination())
 
     def resolve_spot(self, info, **kwargs):
         uuid = kwargs.get('uuid')
