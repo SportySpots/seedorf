@@ -5,6 +5,7 @@ from graphene_django_extras import (DjangoObjectType, DjangoFilterPaginateListFi
 
 from seedorf.sports.schema import SportType
 from seedorf.games.schema import GameType
+from seedorf.locations.schema import AddressType
 from .models import Spot, SpotAmenity, SpotImage, SpotOpeningTime
 from .viewsets import SpotFilter
 
@@ -12,10 +13,12 @@ from .viewsets import SpotFilter
 class SpotType(DjangoObjectType):
     sports = graphene.List(SportType)
     games = graphene.List(GameType)
+    address = graphene.Field(AddressType)
 
     class Meta:
         description = _('Type definition for a single spot')
         model = Spot
+        exclude_fields = ('spot_games', )
         filter_fields = {
             'uuid': ['exact', ],
             'name': ['contains', ],
