@@ -22,20 +22,18 @@
   vars:
     nginx_vhosts:
     - listen: "80"
-      server_name: "{{ deploy.sub_domain }}.{{ domain }}"
+      server_name: "{{ deploy.sub_domain }}.{{ domain }} {{ deploy.type }}.{{ domain }}"
       filename: "{{ deploy.sub_domain }}.{{ domain }}.80.conf"
       state: "present"
       access_log: "/var/log/nginx/sportyspots-{{ deploy.type }}-access.log"
       error_log: "/var/log/nginx/sportyspots-{{ deploy.type }}-error.log"
       return: "301 https://{{ deploy.sub_domain }}.{{ domain }}$request_uri"
     - listen: "443 ssl http2"
-      server_name: "{{ deploy.sub_domain }}.{{ domain }}"
+      server_name: "{{ deploy.sub_domain }}.{{ domain }} {{ deploy.type }}.{{ domain }}"
       state: "present"
       filename: "{{ deploy.sub_domain }}.{{ domain }}.443.conf"
       access_log: "/var/log/nginx/sportyspots-{{ deploy.type }}-access.log"
       error_log: "/var/log/nginx/sportyspots-{{ deploy.type }}-error.log"
-      # root: "/var/www/html"
-      # index: "index.nginx-debian.html index.php index.html index.htm"
       extra_parameters: |
         ssl_certificate     /etc/letsencrypt/live/{{ deploy.sub_domain }}.{{ domain }}/fullchain.pem;
         ssl_certificate_key /etc/letsencrypt/live/{{ deploy.sub_domain }}.{{ domain }}/privkey.pem;
@@ -70,15 +68,15 @@
   handlers:
     - include: ../../handlers.yml
 
+- name: Deploy instances
+  include: deploy_project.yml
+  become_user: ubuntu
+  tags: deploy_project
+
 - name: Test secure connection to SSL domain.
   uri:
     url: "https://{{ deploy.sub_domain }}.{{ domain }}/api/"
     status_code: 200
   delegate_to: localhost
   become: False
-
-- name: Deploy instances
-  include: deploy_project.yml
-  become_user: ubuntu
-  tags: deploy_project
 ...

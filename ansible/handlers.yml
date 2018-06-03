@@ -38,9 +38,7 @@
   listen: restart_redis
 
 - name: Flush redis
-  redis:
-    command: flush
-    flush_mode: all
+  command: redis-cli flushall
   listen:
     - flush_redis
     - project_changed

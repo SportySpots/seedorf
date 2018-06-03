@@ -2,9 +2,15 @@
 # inventory group_vars/all
 hostname: stg
 deploy:
+  cache_url: redis:///var/run/redis/redis.sock?db=0
+  celery_broker_url: redis+socket:///var/run/redis/redis.sock?virtual_host=1
+  celery_workers: 1
+  django_aws_storage_bucket_name: sportyspots-stg
+  gunicorn_workers: 1
+  loglevel: info
+  once_url: redis://localhost:6379/0
   sub_domain: training
   type: stg
-  django_aws_storage_bucket_name: sportyspots-stg
   django_secret_key: !vault |
           $ANSIBLE_VAULT;1.1;AES256
           61613761636464353936383336303834633933333761373134363833623734643634626463363633
@@ -47,10 +53,4 @@ deploy:
             6634623333663532310a343831306431313930643432636665313835346238313938383962646561
             62363831613262383732313839346563656664663634326135383135386431373331663136386434
             3531393430653733353162363861343631363035613331353130
-  celery_workers: 1
-  gunicorn_workers: 1
-  loglevel: info
-  cache_url: redis:///var/run/redis/redis.sock?db=0
-  celery_broker_url: redis+socket:///var/run/redis/redis.sock?virtual_host=1
-  once_url: redis://localhost:6379/0
 ...
