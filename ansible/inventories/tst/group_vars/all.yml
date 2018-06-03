@@ -2,7 +2,7 @@
 # inventory group_vars/all
 hostname: tst
 deploy:
-  domain: trials.sportyspots.com
+  domain: tst.sportyspots.com
   celery_workers: 1
   gunicorn_workers: 1
   loglevel: info

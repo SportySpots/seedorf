@@ -1,5 +1,5 @@
 [appservers]
-training.sportyspots.com
+stg.sportyspots.com
 
 [dbservers]
-training.sportyspots.com
+stg.sportyspots.com
