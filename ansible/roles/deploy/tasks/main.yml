@@ -14,7 +14,7 @@
     certbot_create_standalone_stop_services: []
     certbot_certs:
       - domains:
-          - "{{ deploy.domain }}"
+          - "{{ deploy.sub_domain }}.{{ domain }}"
 
 - name: Setup Nginx
   include_role:
@@ -22,23 +22,23 @@
   vars:
     nginx_vhosts:
     - listen: "80"
-      server_name: "{{ deploy.domain }}"
-      filename: "{{ deploy.domain }}.80.conf"
+      server_name: "{{ deploy.sub_domain }}.{{ domain }}"
+      filename: "{{ deploy.sub_domain }}.{{ domain }}.80.conf"
       state: "present"
       access_log: "/var/log/nginx/sportyspots-{{ deploy.type }}-access.log"
       error_log: "/var/log/nginx/sportyspots-{{ deploy.type }}-error.log"
-      return: "301 https://{{ deploy.domain }}$request_uri"
+      return: "301 https://{{ deploy.sub_domain }}.{{ domain }}$request_uri"
     - listen: "443 ssl http2"
-      server_name: "{{ deploy.domain }}"
+      server_name: "{{ deploy.sub_domain }}.{{ domain }}"
       state: "present"
-      filename: "{{ deploy.domain }}.443.conf"
+      filename: "{{ deploy.sub_domain }}.{{ domain }}.443.conf"
       access_log: "/var/log/nginx/sportyspots-{{ deploy.type }}-access.log"
       error_log: "/var/log/nginx/sportyspots-{{ deploy.type }}-error.log"
       # root: "/var/www/html"
       # index: "index.nginx-debian.html index.php index.html index.htm"
       extra_parameters: |
-        ssl_certificate     /etc/letsencrypt/live/{{ deploy.domain }}/fullchain.pem;
-        ssl_certificate_key /etc/letsencrypt/live/{{ deploy.domain }}/privkey.pem;
+        ssl_certificate     /etc/letsencrypt/live/{{ deploy.sub_domain }}.{{ domain }}/fullchain.pem;
+        ssl_certificate_key /etc/letsencrypt/live/{{ deploy.sub_domain }}.{{ domain }}/privkey.pem;
         ssl_protocols       TLSv1.1 TLSv1.2;
         ssl_ciphers         HIGH:!aNULL:!MD5;
         # path for static files
@@ -72,7 +72,7 @@
 
 - name: Test secure connection to SSL domain.
   uri:
-    url: "https://{{ deploy.domain }}/api/"
+    url: "https://{{ deploy.sub_domain }}.{{ domain }}/api/"
     status_code: 200
   delegate_to: localhost
   become: False

@@ -5,7 +5,7 @@ ENV={{ deploy.type }}
 DATABASE_URL=postgis://localhost/seedorf
 
 # Domain name, used by caddy
-DOMAIN_NAME={{ deploy.domain }}
+DOMAIN_NAME={{ deploy.sub_domain }}.{{ domain }}
 
 # General settings
 DJANGO_SETTINGS_MODULE=config.settings.{{ deploy.type }}

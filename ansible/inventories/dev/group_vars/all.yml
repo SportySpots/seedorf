@@ -3,7 +3,7 @@
 hostname: dev
 deploy:
   celery_workers: 1
-  domain: dev.sportyspots.com
+  sub_domain: selection
   gunicorn_workers: 1
   loglevel: info
   type: dev

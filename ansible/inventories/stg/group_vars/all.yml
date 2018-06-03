@@ -2,7 +2,7 @@
 # inventory group_vars/all
 hostname: stg
 deploy:
-  domain: training.sportyspots.com
+  sub_domain: training
   type: stg
   django_aws_storage_bucket_name: sportyspots-stg
   django_secret_key: !vault |
