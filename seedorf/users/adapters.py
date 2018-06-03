@@ -6,9 +6,6 @@ from django.core.mail import EmailMessage
 
 class AccountAdapter(DefaultAccountAdapter):
 
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
-
     def is_open_for_signup(self, request):
         return getattr(settings, 'ACCOUNT_ALLOW_REGISTRATION', True)
 
@@ -44,9 +41,6 @@ class AccountAdapter(DefaultAccountAdapter):
 
 
 class SocialAccountAdapter(DefaultSocialAccountAdapter):
-
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
 
     def is_open_for_signup(self, request, sociallogin):
         return getattr(settings, 'ACCOUNT_ALLOW_REGISTRATION', True)
