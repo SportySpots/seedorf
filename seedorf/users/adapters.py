@@ -13,7 +13,6 @@ class AccountAdapter(DefaultAccountAdapter):
         activate_url = self.get_email_confirmation_url(request, emailconfirmation)
 
         ctx = {
-            "user": emailconfirmation.email_address.user,
             "product_name": "SportySpots",
             "first_name": emailconfirmation.email_address.user.first_name,
             "product_url": "https://www.sportyspots.com",
