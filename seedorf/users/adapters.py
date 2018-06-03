@@ -24,7 +24,9 @@ class AccountAdapter(DefaultAccountAdapter):
             "key": emailconfirmation.key,
         }
 
-        message = EmailMessage(subject=None, to=[emailconfirmation.email_address.email])
+        message = EmailMessage(subject=None,
+                               body=None,
+                               to=[emailconfirmation.email_address.email])
 
         if signup:
             # TODO: Define template ids in settings
