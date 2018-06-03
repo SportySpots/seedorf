@@ -30,9 +30,12 @@ class UserRegistrationAPIViewTest(APITestCase):
 
         user = User.objects.get(email=user_data['email'])
         decoded_token = jwt.decode(response.data['token'], settings.SECRET_KEY, algorithms=['HS256'])
+        response_user = response.data['user']
 
         # Token contains the defined keys
         self.assertTrue({'user_id', 'uuid', 'email', 'username', 'exp'}.issubset(decoded_token))
+        self.assertEqual(response_user['first_name'], user_data['first_name'])
+        self.assertEqual(response_user['last_name'], user_data['last_name'])
 
         # Token has a the user with the right uuid
         self.assertEqual(decoded_token['uuid'], str(user.uuid))
