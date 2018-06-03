@@ -414,7 +414,7 @@ LOGOUT_ON_PASSWORD_CHANGE = True
 # Allauth settings
 # REF: https://django-allauth.readthedocs.io/en/latest/configuration.html
 # ------------------------------------------------------------------------------
-ACCOUNT_ADAPTER = 'allauth.account.adapter.DefaultAccountAdapter'
+ACCOUNT_ADAPTER = 'seedorf.users.adapter.DefaultAccountAdapter'
 ACCOUNT_AUTHENTICATED_LOGIN_REDIRECTS = False
 ACCOUNT_AUTHENTICATION_METHOD = 'username_email'
 ACCOUNT_CONFIRM_EMAIL_ON_GET = True
