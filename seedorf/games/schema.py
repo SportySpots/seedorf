@@ -1,6 +1,6 @@
 import graphene
 from graphene_django_extras import (DjangoObjectType, DjangoFilterPaginateListField, LimitOffsetGraphqlPagination)
-
+from seedorf.users.schema import UserType
 from .models import Game, RsvpStatus
 from .viewsets import GameFilter
 
@@ -9,6 +9,7 @@ class GameType(DjangoObjectType):
     # NOTE: To break game <-> spot circular dependency
     # REF: https://github.com/graphql-python/graphene/issues/522#issuecomment-324066522
     spot = graphene.Field('seedorf.spots.schema.SpotType')
+    organizer = graphene.Field(UserType)
 
     class Meta:
         model = Game
@@ -19,6 +20,8 @@ class GameType(DjangoObjectType):
 
 
 class RsvpStatusType(DjangoObjectType):
+    user = graphene.Field(UserType)
+
     class Meta:
         model = RsvpStatus
 

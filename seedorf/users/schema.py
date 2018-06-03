@@ -7,6 +7,7 @@ from .models import User, UserProfile
 class UserType(DjangoObjectType):
     class Meta:
         model = User
+        exclude_fields = ('password', )
 
 
 class UserProfileType(DjangoObjectType):
