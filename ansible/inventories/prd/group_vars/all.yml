@@ -9,7 +9,7 @@ deploy:
   gunicorn_workers: 6
   loglevel: info
   once_url: redis://localhost:6379/0
-  sub_domain: game
+  sub_domain: api
   type: prd
   django_secret_key: !vault |
           $ANSIBLE_VAULT;1.1;AES256

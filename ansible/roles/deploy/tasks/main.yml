@@ -5,17 +5,6 @@
 
 - include: known_hosts.yml
 
-- name: Install Letsencrypt Certbot
-  include_role:
-    name: geerlingguy.certbot
-  vars:
-    certbot_admin_email: admin@sportyspots.com
-    certbot_create_if_missing: yes
-    certbot_create_standalone_stop_services: []
-    certbot_certs:
-      - domains:
-          - "{{ deploy.sub_domain }}.{{ domain }}"
-
 - name: Setup Nginx
   include_role:
     name: geerlingguy.nginx
@@ -67,6 +56,20 @@
   notify: restart_nginx
   handlers:
     - include: ../../handlers.yml
+
+- name: Install Letsencrypt Certbot
+  include_role:
+    name: geerlingguy.certbot
+  vars:
+    certbot_admin_email: admin@sportyspots.com
+    certbot_create_if_missing: yes
+    certbot_create_standalone_stop_services: []
+    certbot_create_standalone_stop_services:
+      - nginx
+    certbot_certs:
+      - domains:
+          - "{{ deploy.sub_domain }}.{{ domain }}"
+          - "{{ deploy.type }}.{{ domain }}"
 
 - name: Deploy instances
   include: deploy_project.yml
