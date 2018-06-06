@@ -16,7 +16,7 @@ class UserProfileType(DjangoObjectType):
 
 
 class Query(object):
-    user = graphene.Field(UserType, uuid=graphene.UUID(), id=graphene.ID())
+    user = graphene.Field(UserType, email=graphene.String(), uuid=graphene.UUID(), id=graphene.ID())
     users = graphene.List(UserType)
     user_profile = graphene.Field(UserProfileType, uuid=graphene.UUID())
     user_profiles = graphene.List(UserProfileType)
@@ -24,12 +24,16 @@ class Query(object):
     def resolve_user(self, args, **kwargs):
         uuid = kwargs.get('uuid')
         user_id = kwargs.get('id')
+        email = kwargs.get('email')
 
         if uuid is not None:
             return User.objects.filter(uuid=uuid).first()
 
         if user_id is not None:
             return User.objects.filter(id=user_id).first()
+
+        if email is not None:
+            return User.objects.filter(email=email).first()
 
         return None
 
