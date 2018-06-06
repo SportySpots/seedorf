@@ -3,6 +3,7 @@ from django.conf import settings
 from django.conf.urls import include, url
 from django.conf.urls.static import static
 from django.contrib import admin
+from django.views.decorators.csrf import csrf_exempt
 from django.views import defaults as default_views
 from drf_yasg import openapi
 from drf_yasg.views import get_schema_view
@@ -124,7 +125,7 @@ urlpatterns = [
 
                   # GraphQL API
                   url(r'^graphql$',
-                      GraphQLView.as_view(graphiql=True, schema=schema),
+                      csrf_exempt(GraphQLView.as_view(graphiql=True, schema=schema)),
                       name='graphql'),
 
                   # TODO: Choose one of the api documentation tools below
