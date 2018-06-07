@@ -61,7 +61,10 @@ drf-yasg = {extras = ["validation"]}
 structlog = "*"
 colorama = "*"
 python-json-logger = "*"
-graphene-django-extras = "*"
+# REF: https://github.com/eamigo86/graphene-django-extras/pull/42
+# REF: https://github.com/eamigo86/graphene-django-extras/issues/43
+graphene-django-extras = {git = "https://github.com/eamigo86/graphene-django-extras.git", editable=true}
+
 
 [dev-packages]
 coreapi-cli = "*"
