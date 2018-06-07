@@ -1,3 +1,5 @@
+from django.db.models import Q
+from django_filters import rest_framework as filters
 from rest_framework import viewsets
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
 
@@ -7,15 +9,15 @@ from seedorf.utils.permissions import IsAdminOrReadOnly
 from seedorf.utils.regex import UUID as REGEX_UUID
 from .models import Spot, SpotOpeningTime, SpotAmenity, SpotImage
 from .serializers import SpotSerializer, SpotNestedSerializer, ImageSerializer, AmenitySerializer, OpeningTimeSerializer
-from django.db.models import Q
-from django_filters import rest_framework as filters
 
 
 class SpotFilter(filters.FilterSet):
+
     class Meta:
         model = Spot
         fields = {
-            'sports__category': ['exact', ],  # TODO: Fix the M2M Filter
+            'sports__category': ['exact', ],
+            'sports__uuid': ['exact', ],
             'name': ['exact', 'icontains', ],
             'owner': ['exact', 'icontains', ],
             'is_verified': ['exact', ],

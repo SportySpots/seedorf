@@ -1,11 +1,13 @@
 import graphene
 from django.conf import settings
 from django.utils.translation import ugettext_lazy as _
-from graphene_django_extras import (DjangoObjectType, DjangoFilterPaginateListField, LimitOffsetGraphqlPagination)
+from graphene_django.types import DjangoObjectType
+from graphene_django_extras import (DjangoFilterPaginateListField, )
+from graphene_django_extras.paginations import LimitOffsetGraphqlPagination
 
-from seedorf.sports.schema import SportType
 from seedorf.games.schema import GameType
 from seedorf.locations.schema import AddressType
+from seedorf.sports.schema import SportType
 from .models import Spot, SpotAmenity, SpotImage, SpotOpeningTime
 from .viewsets import SpotFilter
 
@@ -19,11 +21,6 @@ class SpotType(DjangoObjectType):
         description = _('Type definition for a single spot')
         model = Spot
         exclude_fields = ('spot_games', )
-        filter_fields = {
-            'uuid': ['exact', ],
-            'name': ['contains', ],
-            'owner': ['contains', ],
-        }
 
     def resolve_sports(self, info, **kwargs):
         return self.sports.all()

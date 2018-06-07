@@ -5,6 +5,7 @@ from .models import Sport
 
 
 class SportType(DjangoObjectType):
+
     class Meta:
         model = Sport
 
