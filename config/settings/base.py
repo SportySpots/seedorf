@@ -116,6 +116,7 @@ MIDDLEWARE = [
 ]
 
 CORS_ORIGIN_WHITELIST = [
+    'www.sportyspots.com',
     'sportyspots.com',
     'api.sportyspots.com',
 ]
