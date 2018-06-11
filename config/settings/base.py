@@ -67,7 +67,7 @@ THIRD_PARTY_APPS = [
     'crispy_forms',  # Form layouts
     'graphene_django',  # graphql
     'haystack',  # solr/elastic-search
-
+    'django_filters',
     'django_countries',
     'timezone_field',
     'corsheaders',
@@ -364,7 +364,7 @@ REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.IsAuthenticatedOrReadOnly'
     ],
-    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.CursorPagination',
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
     'PAGE_SIZE': 20,
 }
 

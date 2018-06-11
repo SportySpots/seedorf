@@ -8,16 +8,27 @@ from seedorf.locations.serializers import AddressSerializer
 from seedorf.utils.permissions import IsAdminOrReadOnly
 from seedorf.utils.regex import UUID as REGEX_UUID
 from .models import Spot, SpotOpeningTime, SpotAmenity, SpotImage
+from seedorf.sports.models import Sport
 from .serializers import SpotSerializer, SpotNestedSerializer, ImageSerializer, AmenitySerializer, OpeningTimeSerializer
 
 
 class SpotFilter(filters.FilterSet):
+    sports__ids = filters.ModelMultipleChoiceFilter(
+        field_name="sports",
+        queryset=Sport.objects.all(),
+    )
+
+    # def filter_m2m(self, qs, name, value):
+    #     for instance in value:
+    #         qs = qs.filter(**{name: instance.id})
+    #     return qs
 
     class Meta:
         model = Spot
+        strict = True
         fields = {
             'sports__category': ['exact', ],
-            'sports__uuid': ['exact', ],
+            # 'sports__uuid': ['exact', ],
             'name': ['exact', 'icontains', ],
             'owner': ['exact', 'icontains', ],
             'is_verified': ['exact', ],
