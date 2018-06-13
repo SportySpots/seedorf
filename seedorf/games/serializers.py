@@ -135,7 +135,7 @@ class GameSerializer(serializers.ModelSerializer):
         }
 
         message = EmailMessage(subject=None,
-                               body='',
+                               body=None,
                                to=[game.organizer.email])
 
         message.template_id = 6931861  # use this Postmark template

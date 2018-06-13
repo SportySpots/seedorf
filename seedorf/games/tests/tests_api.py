@@ -109,6 +109,15 @@ class GameAPIViewTest(APITestCase):
         response = self.client.post(url, data, format='json')
         self.assertEqual(400, response.status_code)
 
+    def test_set_status_planned(self):
+        game = GameFactory()
+        data = {
+            'status': 'planned'
+        }
+        url = reverse('game-detail', kwargs={'uuid': str(game.uuid)})
+        response = self.client.patch(url, data, format='json')
+        self.assertEqual(200, response.status_code)
+
     def test_valid_spot_assign(self):
         game = GameFactory()
         spot = Spot.objects.filter(sports__uuid=game.sport.uuid).first()
