@@ -37,6 +37,8 @@ class RsvpStatusNestedSerializer(NestedHyperlinkedModelSerializer):
             status = validated_data['status']
 
             rsvp = RsvpStatus.objects.create(game=game, user=user, status=status)
+
+            self.send_confirmation_mail(game, user, status)
             return rsvp
 
         return {}
@@ -44,6 +46,7 @@ class RsvpStatusNestedSerializer(NestedHyperlinkedModelSerializer):
     def update(self, instance, validated_data):
         if self.context['view'].basename == 'game-rsvps':
             game_uuid = self.context['view'].kwargs['game_uuid']
+            game = Game.objects.get(uuid=game_uuid)
             user = self.context['request'].user
             status = validated_data['status']
 
@@ -58,7 +61,37 @@ class RsvpStatusNestedSerializer(NestedHyperlinkedModelSerializer):
             rsvp.status = status
             rsvp.save()
 
+            self.send_confirmation_mail(game, user, status)
             return rsvp
+
+    @staticmethod
+    def send_confirmation_mail(game, user, status):
+        # TODO: Send the game details e.g. time, name, type of sport
+        # TODO: Create ICS file for calendar
+        ctx = {
+            "organizer_first_name": game.organizer.first_name,
+            "first_name": user.first_name,
+            # TODO: Fix game url hardcoding
+            "game_url": "https://www.sportyspots.com/games/{}".format(game.uuid),
+        }
+
+        message = EmailMessage(subject=None,
+                               body=None,
+                               to=[user.email])
+
+        if status == RsvpStatus.ATTENDING:
+            # REF: https://account.postmarkapp.com/servers/3930160/templates/6789246/edit
+            message.template_id = 6789246  # use this Postmark template
+        elif status == RsvpStatus.DECLINED:
+            # REF: https://account.postmarkapp.com/servers/3930160/templates/6934047/edit
+            message.template_id = 6934047  # use this Postmark template
+        else:
+            # Do nothing if rsvp status is not set.
+            return
+
+        message.merge_global_data = ctx
+
+        message.send()
 
 
 class GameSportNestedSerializer(NestedHyperlinkedModelSerializer):
@@ -127,7 +160,6 @@ class GameSerializer(serializers.ModelSerializer):
 
     @staticmethod
     def send_confirmation_mail(game):
-        game_url = game.get_absolute_url()
 
         ctx = {
             "first_name": game.organizer.first_name,
@@ -139,7 +171,8 @@ class GameSerializer(serializers.ModelSerializer):
                                body=None,
                                to=[game.organizer.email])
 
-        message.template_id = 6931861  # use this Postmark template
+        # REF: https://account.postmarkapp.com/servers/3930160/templates/6934046/edit
+        message.template_id = 6934046  # use this Postmark template
 
         message.merge_global_data = ctx
 
