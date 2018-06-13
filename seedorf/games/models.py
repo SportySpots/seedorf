@@ -19,14 +19,16 @@ class Game(BasePropertiesModel):
     # Predefined Values
     STATUS_CANCELED = 'canceled'  # When the organizer cancels the event
     STATUS_COMPLETED = 'completed'  # When the organizer confirms the game took place
+    STATUS_DRAFT = 'draft'  # When the game is in the planning phase / draft
     STATUS_ENDED = 'ended'  # When the system sets the state automatically based on end time
-    STATUS_LIVE = 'live'  # When the organizer confirms the game is live
-    STATUS_PLANNED = 'planned'  # When the game is in planning phase
+    STATUS_LIVE = 'live'  # When the organizer confirms manually the game is live
+    STATUS_PLANNED = 'planned'  # When the game is planned
     STATUS_STARTED = 'started'  # When the system sets the state automatically based on start time
 
     STATUSES = (
         (STATUS_CANCELED, _('Canceled')),
         (STATUS_COMPLETED, _('Completed')),
+        (STATUS_DRAFT, _('Draft')),
         (STATUS_ENDED, _('Ended')),
         (STATUS_LIVE, _('Live')),
         (STATUS_PLANNED, _('Planned')),
@@ -150,7 +152,7 @@ class Game(BasePropertiesModel):
     status = models.CharField(
         blank=False,
         choices=STATUSES,
-        default=STATUS_PLANNED,
+        default=STATUS_DRAFT,
         max_length=25,
         null=False,
         verbose_name=_('Status'),
