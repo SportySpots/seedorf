@@ -25,7 +25,7 @@ class AccountAdapter(DefaultAccountAdapter):
         }
 
         message = EmailMessage(subject=None,
-                               body=None,
+                               body='',
                                to=[emailconfirmation.email_address.email])
 
         if signup:

@@ -32,7 +32,8 @@ class GameAPIViewTest(APITestCase):
             'rsvp_open_time': rsvp_open_time,
             'rsvp_close_time': rsvp_close_time,
             'start_time': start_time,
-            'end_time': end_time
+            'end_time': end_time,
+            'status': 'planned'
         }
         response = self.client.post(url, data, format='json')
         self.assertEqual(201, response.status_code)
