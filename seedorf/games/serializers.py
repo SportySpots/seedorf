@@ -1,3 +1,4 @@
+from django.core.mail import EmailMessage
 from django.utils.translation import ugettext_lazy as _
 from rest_framework import serializers
 from rest_framework_nested.serializers import NestedHyperlinkedModelSerializer
@@ -110,8 +111,35 @@ class GameSerializer(serializers.ModelSerializer):
         return game
 
     def update(self, instance, validated_data):
+
         for k, v in validated_data.items():
             setattr(instance, k, v)
+
         instance.save()
 
+        # Send confirmation email to organizer if the status of the game is set to planned
+        status = validated_data.get('status', None)
+
+        if status == instance.STATUS_PLANNED:
+            self.send_confirmation_mail(instance)
+
         return instance
+
+    @staticmethod
+    def send_confirmation_mail(game):
+        game_url = game.get_absolute_url()
+
+        ctx = {
+            "first_name": game.organizer.first_name,
+            "game_url": game_url,
+        }
+
+        message = EmailMessage(subject=None,
+                               body='',
+                               to=[game.organizer.email])
+
+        message.template_id = 6931861  # use this Postmark template
+
+        message.merge_global_data = ctx
+
+        message.send()
