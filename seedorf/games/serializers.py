@@ -131,7 +131,8 @@ class GameSerializer(serializers.ModelSerializer):
 
         ctx = {
             "first_name": game.organizer.first_name,
-            "game_url": game_url,
+            # TODO: Fix game url hardcoding
+            "game_url": "https://www.sportyspots.com/games/{}".format(game.uuid),
         }
 
         message = EmailMessage(subject=None,
