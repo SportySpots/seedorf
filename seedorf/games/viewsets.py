@@ -32,6 +32,16 @@ class GameFilter(filters.FilterSet):
         }
 
 
+class RsvpStatusFilter(filters.FilterSet):
+    class Meta:
+        model = RsvpStatus
+        fields = {
+            'game__uuid': ['exact', ],
+            'user__uuid': ['exact', ],
+            'status': ['exact', ]
+        }
+
+
 class GameViewSet(viewsets.ModelViewSet):
     """
     API endpoint that allows games to be viewed or edited.
@@ -54,6 +64,8 @@ class RsvpStatusViewset(viewsets.ModelViewSet):
     lookup_field = 'uuid'
     lookup_value_regex = REGEX_UUID
     permission_classes = (IsAuthenticatedOrReadOnly,)
+    filter_backends = (filters.DjangoFilterBackend,)
+    filter_class = RsvpStatusFilter
 
 
 class RsvpStatusNestedViewset(viewsets.ModelViewSet):
