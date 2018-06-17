@@ -1,7 +1,27 @@
+import json
+
 import graphene
+from django.contrib.gis.db import models
+from graphene_django.converter import convert_django_field
 from graphene_django.types import DjangoObjectType
 
 from .models import Address
+
+
+# REF: https://github.com/graphql-python/graphene-django/issues/390
+class GeoJSON(graphene.Scalar):
+
+    @classmethod
+    def serialize(cls, value):
+        return json.loads(value.geojson)
+
+
+@convert_django_field.register(models.PointField)
+def convert_field_to_geojson(field, registry=None):
+    return graphene.Field(
+        GeoJSON,
+        description=field.help_text,
+        required=not field.null)
 
 
 class AddressType(DjangoObjectType):

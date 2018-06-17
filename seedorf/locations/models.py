@@ -1,5 +1,6 @@
 from django.contrib.postgres.fields import JSONField
-from django.db import models
+from django.contrib.gis.db import models
+
 from django.utils.translation import ugettext_lazy as _
 
 from seedorf.utils.models import BasePropertiesModel
@@ -64,6 +65,12 @@ class Address(BasePropertiesModel):
         null=True,
         verbose_name=_('Longtiude')
     )
+    point = models.PointField(
+        spatial_index=True,
+        help_text=_('Lat/Lng Point'),
+        null=True,
+        verbose_name=_('Location')
+    )
     # TODO: https://plus.codes/
     plus_global_code = models.CharField(
         blank=True,
@@ -93,3 +100,9 @@ class Address(BasePropertiesModel):
 
     def __str__(self):
         return self.formatted_address
+
+    def save(self, *args, **kwargs):
+        self.location.x = float(self.lng)
+        self.location.y = float(self.lat)
+
+        super().save(*args, **kwargs)

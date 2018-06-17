@@ -10,13 +10,16 @@ from seedorf.utils.regex import UUID as REGEX_UUID
 from .models import Spot, SpotOpeningTime, SpotAmenity, SpotImage
 from seedorf.sports.models import Sport
 from .serializers import SpotSerializer, SpotNestedSerializer, ImageSerializer, AmenitySerializer, OpeningTimeSerializer
-
+from rest_framework_gis.filters import DistanceToPointFilter
+from django.contrib.gis.geos import GEOSGeometry
+from django.contrib.gis.measure import D
 
 class SpotFilter(filters.FilterSet):
     sports__ids = filters.ModelMultipleChoiceFilter(
         field_name="sports",
         queryset=Sport.objects.all(),
     )
+    distance = filters.CharFilter(field_name='address__point', method='filter_by_distance')
 
     # def filter_m2m(self, qs, name, value):
     #     for instance in value:
@@ -37,6 +40,16 @@ class SpotFilter(filters.FilterSet):
             'is_temporary': ['exact', ],
         }
 
+    # REF: https://django-filter.readthedocs.io/en/master/ref/filters.html#method
+    def filter_by_distance(self, queryset, name, value):
+        # TODO: Validate distance is integer, and the lat and lng values are valid
+        distance, lat, lng = value.split(':')
+
+        # REF: https://docs.djangoproject.com/en/2.0/ref/contrib/gis/db-api/#distance-lookups
+        pnt = GEOSGeometry('POINT({lng} {lat})'.format(lng=lng, lat=lat), srid=4326)
+        lookup = '__'.join([name, 'distance_lte'])
+        return queryset.filter(**{lookup: (pnt, D(m=int(distance)))})
+
 
 class SpotViewSet(viewsets.ModelViewSet):
     """
@@ -48,7 +61,9 @@ class SpotViewSet(viewsets.ModelViewSet):
     lookup_value_regex = REGEX_UUID
     # TODO: In the future, every user can create an adhoc spot
     permission_classes = (IsAdminOrReadOnly,)
-    filter_backends = (filters.DjangoFilterBackend,)
+    distance_filter_field = 'address__point'
+    distance_filter_convert_meters = True
+    filter_backends = (filters.DjangoFilterBackend, DistanceToPointFilter,)
     filter_class = SpotFilter
 
 
