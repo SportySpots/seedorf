@@ -34,7 +34,6 @@ djangorestframework-jwt = { version = "==1.11.0" }
 drf-extensions = { version = "==0.3.1" }
 elasticsearch-dsl = { version = "==5.3.0" }
 gevent = { version = "==1.2.2" }
-django-graphql-geojson = { version = "==0.1.2" }
 gunicorn = { version = "==19.7.1" }
 hashids = { version = "==1.2.0" }
 markdown = { version = "==2.6.11" }
@@ -64,7 +63,7 @@ python-json-logger = "*"
 # REF: https://github.com/eamigo86/graphene-django-extras/pull/42
 # REF: https://github.com/eamigo86/graphene-django-extras/issues/43
 graphene-django-extras = {git = "https://github.com/eamigo86/graphene-django-extras.git", editable=true}
-
+djangorestframework-gis = "*"
 
 [dev-packages]
 coreapi-cli = "*"

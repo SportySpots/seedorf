@@ -53,6 +53,7 @@ DJANGO_APPS = [
 
 THIRD_PARTY_APPS = [
     'rest_framework',  # rest framework
+    'rest_framework_gis',  # rest framework gis
     'rest_framework.authtoken',  # http://www.django-rest-framework.org/api-guide/authentication/#tokenauthentication
 
     'rest_auth',  # django-rest-auth
