@@ -13,9 +13,9 @@ class SportySpotsUserChangeForm(UserChangeForm):
 
 class SportySpotsUserCreationForm(UserCreationForm):
 
-    error_message = UserCreationForm.error_messages.update({
-        'duplicate_username': 'This username has already been taken.'
-    })
+    error_message = UserCreationForm.error_messages.update(
+        {"duplicate_username": "This username has already been taken."}
+    )
 
     class Meta(UserCreationForm.Meta):
         model = User
@@ -26,7 +26,7 @@ class SportySpotsUserCreationForm(UserCreationForm):
             User.objects.get(username=username)
         except User.DoesNotExist:
             return username
-        raise forms.ValidationError(self.error_messages['duplicate_username'])
+        raise forms.ValidationError(self.error_messages["duplicate_username"])
 
 
 class UserProfileInline(admin.StackedInline):
@@ -37,9 +37,7 @@ class UserProfileInline(admin.StackedInline):
 class SportySpotsUserAdmin(AuthUserAdmin):
     form = SportySpotsUserChangeForm
     add_form = SportySpotsUserCreationForm
-    fieldsets = (
-            ('User Profile', {'fields': ('name',)}),
-    ) + AuthUserAdmin.fieldsets
-    list_display = ('username', 'name', 'is_superuser')
-    search_fields = ['name']
+    fieldsets = (("User Profile", {"fields": ("name",)}),) + AuthUserAdmin.fieldsets
+    list_display = ("username", "name", "is_superuser")
+    search_fields = ["name"]
     inlines = [UserProfileInline]

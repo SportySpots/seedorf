@@ -1,30 +1,53 @@
 import graphene
 from graphene_django.types import DjangoObjectType
+from seedorf.sports.schema import SportType
+from seedorf.spots.schema import SpotType
 
 from .models import User, UserProfile
 
 
-class UserType(DjangoObjectType):
-    class Meta:
-        model = User
-        exclude_fields = ('password', )
-
-
 class UserProfileType(DjangoObjectType):
+    sports = graphene.List(SportType)
+    spots = graphene.List(SpotType)
+
     class Meta:
         model = UserProfile
+        exclude_fields = ("user",)
+
+    def resolve_sports(self, info, **kwargs):
+        return self.sports.all()
+
+    def resolve_spots(self, info, **kwargs):
+        return self.spots.all()
+
+
+class UserType(DjangoObjectType):
+    profile = graphene.Field(UserProfileType)
+    sports = graphene.List(SportType)
+    spots = graphene.List(SpotType)
+
+    class Meta:
+        model = User
+        exclude_fields = ("password",)
+
+    def resolve_profile(self, info, **kwargs):
+        return self.profile
+
+    def resolve_sports(self, info, **kwargs):
+        return self.profile.sports.all()
+
+    def resolver_spots(self, info, **kwargs):
+        return self.profile.spots.all()
 
 
 class Query(object):
     user = graphene.Field(UserType, email=graphene.String(), uuid=graphene.UUID(), id=graphene.ID())
     users = graphene.List(UserType)
-    user_profile = graphene.Field(UserProfileType, uuid=graphene.UUID())
-    user_profiles = graphene.List(UserProfileType)
 
     def resolve_user(self, args, **kwargs):
-        uuid = kwargs.get('uuid')
-        user_id = kwargs.get('id')
-        email = kwargs.get('email')
+        uuid = kwargs.get("uuid")
+        user_id = kwargs.get("id")
+        email = kwargs.get("email")
 
         if uuid is not None:
             return User.objects.filter(uuid=uuid).first()
@@ -39,14 +62,3 @@ class Query(object):
 
     def resolve_users(self, args, **kwargs):
         return User.objects.all()
-
-    def resolve_user_profile(self, args, **kwargs):
-        uuid = kwargs.get('uuid')
-
-        if uuid is not None:
-            return UserProfile.objects.filter(uuid=uuid).first()
-
-        return None
-
-    def resolve_user_profiles(self, args, **kwargs):
-        return UserProfile.objects.all()

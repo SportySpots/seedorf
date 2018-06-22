@@ -7,13 +7,11 @@ from django.db import migrations
 
 class Migration(migrations.Migration):
 
-    dependencies = [
-        ('locations', '0001_initial'),
-    ]
+    dependencies = [("locations", "0001_initial")]
 
     operations = [
         migrations.AlterModelOptions(
-            name='address',
-            options={'ordering': ('-created_at',), 'verbose_name': 'Address', 'verbose_name_plural': 'Addresses'},
-        ),
+            name="address",
+            options={"ordering": ("-created_at",), "verbose_name": "Address", "verbose_name_plural": "Addresses"},
+        )
     ]

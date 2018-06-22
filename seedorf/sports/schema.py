@@ -5,7 +5,6 @@ from .models import Sport
 
 
 class SportType(DjangoObjectType):
-
     class Meta:
         model = Sport
 
@@ -15,7 +14,7 @@ class Query(object):
     sports = graphene.List(SportType)
 
     def resolve_sport(self, args, **kwargs):
-        uuid = kwargs.get('uuid')
+        uuid = kwargs.get("uuid")
 
         if uuid is not None:
             return Sport.objects.filter(uuid=uuid).first()

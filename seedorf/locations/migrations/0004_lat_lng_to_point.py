@@ -8,7 +8,7 @@ from django.contrib.gis.geos import Point
 
 
 def set_points(apps, schema_editor):
-    Address = apps.get_model('locations', 'Address')
+    Address = apps.get_model("locations", "Address")
     for address in Address.objects.all():
         if address.lat and address.lng:
             address.point = Point(x=float(address.lng), y=float(address.lat), srid=4326)
@@ -17,10 +17,6 @@ def set_points(apps, schema_editor):
 
 class Migration(migrations.Migration):
 
-    dependencies = [
-        ('locations', '0003_address_point'),
-    ]
+    dependencies = [("locations", "0003_address_point")]
 
-    operations = [
-        migrations.RunPython(set_points)
-    ]
+    operations = [migrations.RunPython(set_points)]

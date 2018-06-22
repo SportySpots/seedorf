@@ -11,9 +11,7 @@ from jsonschema import validate
 class AllowedKeysValidator(object):
     """A validator designed for HStore to restrict keys."""
 
-    messages = {
-        'invalid_keys': _('Some keys were invalid: %(keys)s'),
-    }
+    messages = {"invalid_keys": _("Some keys were invalid: %(keys)s")}
     strict = False
 
     def __init__(self, keys, messages=None):
@@ -27,17 +25,15 @@ class AllowedKeysValidator(object):
         disallowed_keys = keys - self.keys
         if disallowed_keys:
             raise ValidationError(
-                self.messages['invalid_keys'],
-                code='invalid_keys',
-                params={'keys': ', '.join(disallowed_keys)},
+                self.messages["invalid_keys"], code="invalid_keys", params={"keys": ", ".join(disallowed_keys)}
             )
 
     def __eq__(self, other):
         return (
-            isinstance(other, self.__class__) and
-            self.keys == other.keys and
-            self.messages == other.messages and
-            self.strict == other.strict
+            isinstance(other, self.__class__)
+            and self.keys == other.keys
+            and self.messages == other.messages
+            and self.strict == other.strict
         )
 
     def __ne__(self, other):

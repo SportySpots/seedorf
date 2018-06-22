@@ -16,9 +16,9 @@ class SpotAmenityAdmin(admin.StackedInline):
 
 
 class SpotAdmin(admin.ModelAdmin):
-    search_fields = ['name']
-    list_display = ('name', 'owner', 'modified_at')
-    list_filter = ('sports__category', 'is_verified', 'is_public',)
+    search_fields = ["name"]
+    list_display = ("name", "owner", "modified_at")
+    list_filter = ("sports__category", "is_verified", "is_public")
     inlines = [SpotImageAdmin, SpotOpeningTimeAdmin, SpotAmenityAdmin]
 
 

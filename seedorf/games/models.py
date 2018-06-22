@@ -18,32 +18,32 @@ class Game(BasePropertiesModel):
     """
 
     # Predefined Values
-    STATUS_CANCELED = 'canceled'  # When the organizer cancels the event
-    STATUS_COMPLETED = 'completed'  # When the organizer confirms the game took place
-    STATUS_DRAFT = 'draft'  # When the game is in the planning phase / draft
-    STATUS_ENDED = 'ended'  # When the system sets the state automatically based on end time
-    STATUS_LIVE = 'live'  # When the organizer confirms manually the game is live
-    STATUS_PLANNED = 'planned'  # When the game is planned
-    STATUS_STARTED = 'started'  # When the system sets the state automatically based on start time
+    STATUS_CANCELED = "canceled"  # When the organizer cancels the event
+    STATUS_COMPLETED = "completed"  # When the organizer confirms the game took place
+    STATUS_DRAFT = "draft"  # When the game is in the planning phase / draft
+    STATUS_ENDED = "ended"  # When the system sets the state automatically based on end time
+    STATUS_LIVE = "live"  # When the organizer confirms manually the game is live
+    STATUS_PLANNED = "planned"  # When the game is planned
+    STATUS_STARTED = "started"  # When the system sets the state automatically based on start time
 
     STATUSES = (
-        (STATUS_CANCELED, _('Canceled')),
-        (STATUS_COMPLETED, _('Completed')),
-        (STATUS_DRAFT, _('Draft')),
-        (STATUS_ENDED, _('Ended')),
-        (STATUS_LIVE, _('Live')),
-        (STATUS_PLANNED, _('Planned')),
-        (STATUS_STARTED, _('Started')),
+        (STATUS_CANCELED, _("Canceled")),
+        (STATUS_COMPLETED, _("Completed")),
+        (STATUS_DRAFT, _("Draft")),
+        (STATUS_ENDED, _("Ended")),
+        (STATUS_LIVE, _("Live")),
+        (STATUS_PLANNED, _("Planned")),
+        (STATUS_STARTED, _("Started")),
     )
 
-    INVITE_MODE_APPROVAL = 'approval'
-    INVITE_MODE_INVITE_ONLY = 'invite_only'
-    INVITE_MODE_OPEN = 'open'
+    INVITE_MODE_APPROVAL = "approval"
+    INVITE_MODE_INVITE_ONLY = "invite_only"
+    INVITE_MODE_OPEN = "open"
 
     INVITE_MODES = (
-        (INVITE_MODE_APPROVAL, _('Approval')),
-        (INVITE_MODE_INVITE_ONLY, _('Invite Only')),
-        (INVITE_MODE_OPEN, _('Open')),
+        (INVITE_MODE_APPROVAL, _("Approval")),
+        (INVITE_MODE_INVITE_ONLY, _("Invite Only")),
+        (INVITE_MODE_OPEN, _("Open")),
     )
 
     # TODO: Translations of the timezones
@@ -51,158 +51,122 @@ class Game(BasePropertiesModel):
 
     # Foreign Keys
     organizer = models.ForeignKey(
-        settings.AUTH_USER_MODEL,
-        on_delete=models.CASCADE,
-        related_name='game_organizers',
-        verbose_name=_('Organizer'),
+        settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="game_organizers", verbose_name=_("Organizer")
     )
     sport = models.ForeignKey(
-        'sports.Sport',
-        on_delete=models.CASCADE,
-        related_name='sport_games',
-        verbose_name=_('Sport'),
-        null=True
+        "sports.Sport", on_delete=models.CASCADE, related_name="sport_games", verbose_name=_("Sport"), null=True
     )
     spot = models.ForeignKey(
-        'spots.Spot',
-        on_delete=models.CASCADE,
-        related_name='spot_games',
-        verbose_name=_('Spot'),
-        null=True
+        "spots.Spot", on_delete=models.CASCADE, related_name="spot_games", verbose_name=_("Spot"), null=True
     )
 
     # Instance Fields
     # TODO: Maybe auto generate the game name based on the organizer, e.g. Soccer with Sam at Oosterpark
-    name = models.CharField(
-        blank=True,
-        max_length=255,
-        null=False,
-    )
+    name = models.CharField(blank=True, max_length=255, null=False)
 
     description = models.TextField(
-        blank=True,
-        help_text=_('Description of the game.'),
-        null=False,
-        verbose_name=_('Description')
+        blank=True, help_text=_("Description of the game."), null=False, verbose_name=_("Description")
     )
 
     # TODO: Evaluate if start_time / end_time could be replaced by DateTimeRangeField
     # REF: https://docs.djangoproject.com/en/1.11/ref/contrib/postgres/fields/#datetimerangefield
     start_time = models.DateTimeField(
-        blank=True,
-        help_text=_('Start time of the game in UTC.'),
-        null=True,
-        verbose_name=_('Start Time (UTC)')
+        blank=True, help_text=_("Start time of the game in UTC."), null=True, verbose_name=_("Start Time (UTC)")
     )
     # TODO: Validate that the end time is max X hours from the start time
     end_time = models.DateTimeField(
-        blank=True,
-        help_text=_('End time of the game in UTC.'),
-        null=True,
-        verbose_name=_('End Time (UTC)'),
+        blank=True, help_text=_("End time of the game in UTC."), null=True, verbose_name=_("End Time (UTC)")
     )
     # TODO: Validate that the rsvp open time is before the start time and the rsvp close time
     rsvp_open_time = models.DateTimeField(
         blank=True,
-        help_text=_('UTC time before that RSVPs will no longer be accepted, though organizers may close RSVPs earlier'),
+        help_text=_("UTC time before that RSVPs will no longer be accepted, though organizers may close RSVPs earlier"),
         null=True,
-        verbose_name=_('RSVP Open Time (UTC)'),
+        verbose_name=_("RSVP Open Time (UTC)"),
     )
     # TODO: Validate that the rsvp close time is before the start time
     # TODO: Set the RSVP close time to the start time automatically
     rsvp_close_time = models.DateTimeField(
         blank=True,
-        help_text=_('UTC time after that RSVPs will no longer be accepted, though organizers may close RSVPs earlier'),
+        help_text=_("UTC time after that RSVPs will no longer be accepted, though organizers may close RSVPs earlier"),
         null=True,
-        verbose_name=_('RSVP Close Time (UTC)'),
+        verbose_name=_("RSVP Close Time (UTC)"),
     )
     rsvp_closed = models.BooleanField(
         blank=False,
         default=False,
-        help_text=_('Is RSVPing explicitly closed for the game.'),
+        help_text=_("Is RSVPing explicitly closed for the game."),
         null=False,
-        verbose_name=_('RSVP Closed'),
+        verbose_name=_("RSVP Closed"),
     )
     start_timezone = models.CharField(
         blank=False,
         choices=TIMEZONES,
         default=pytz.UTC.zone,
-        help_text=_('Timezone of the start time of the game.'),
+        help_text=_("Timezone of the start time of the game."),
         max_length=50,
         null=False,
-        verbose_name=_('Start Time Timezone'),
+        verbose_name=_("Start Time Timezone"),
     )
     end_timezone = models.CharField(
         blank=False,
         choices=TIMEZONES,
         default=pytz.UTC.zone,
-        help_text=_('Timezone of the end time of the game.'),
+        help_text=_("Timezone of the end time of the game."),
         max_length=50,
         null=False,
-        verbose_name=_('End Time Timezone'),
+        verbose_name=_("End Time Timezone"),
     )
     invite_mode = models.CharField(
         blank=False,
         choices=INVITE_MODES,
         default=INVITE_MODE_OPEN,
-        help_text=_('If the game is open for everyone to join or based on organizers approval or is invite only.'),
+        help_text=_("If the game is open for everyone to join or based on organizers approval or is invite only."),
         max_length=25,
         null=False,
-        verbose_name=_('Invite Mode'),
+        verbose_name=_("Invite Mode"),
     )
     status = models.CharField(
-        blank=False,
-        choices=STATUSES,
-        default=STATUS_DRAFT,
-        max_length=25,
-        null=False,
-        verbose_name=_('Status'),
+        blank=False, choices=STATUSES, default=STATUS_DRAFT, max_length=25, null=False, verbose_name=_("Status")
     )
     capacity = models.PositiveSmallIntegerField(
-        blank=True,
-        null=True,
-        validators=[MinValueValidator(limit_value=2)],
-        verbose_name=_('Capacity'),
+        blank=True, null=True, validators=[MinValueValidator(limit_value=2)], verbose_name=_("Capacity")
     )
     show_remaining = models.BooleanField(
         blank=False,
         default=True,
-        help_text=_('If the game page should show the number of open player spots left.'),
+        help_text=_("If the game page should show the number of open player spots left."),
         null=False,
-        verbose_name=_('Show Remaining Player Required Spots'),
+        verbose_name=_("Show Remaining Player Required Spots"),
     )
     is_listed = models.BooleanField(
         blank=False,
         default=True,
-        help_text=_('If this game is publicly searchable on SportySpots.'),
+        help_text=_("If this game is publicly searchable on SportySpots."),
         null=False,
-        verbose_name=_('Is Listed?'),
+        verbose_name=_("Is Listed?"),
     )
     is_shareable = models.BooleanField(
         blank=False,
         default=True,
-        help_text=_('If this game shows social sharing buttons.'),
+        help_text=_("If this game shows social sharing buttons."),
         null=False,
-        verbose_name=_('Is Shareable?'),
+        verbose_name=_("Is Shareable?"),
     )
     is_featured = models.BooleanField(
-        blank=False,
-        default=False,
-        help_text=_('If this game is featured.'),
-        null=False,
-        verbose_name=_('Is Featured?'),
+        blank=False, default=False, help_text=_("If this game is featured."), null=False, verbose_name=_("Is Featured?")
     )
 
     class Meta:
-        verbose_name = _('Game')
-        verbose_name_plural = _('Games')
-        ordering = ('-created_at',)
+        verbose_name = _("Game")
+        verbose_name_plural = _("Games")
+        ordering = ("-created_at",)
 
     def __str__(self):
         return self.name
 
     def get_absolute_url(self):
-        return reverse('game-detail', args=[str(self.uuid)])
+        return reverse("game-detail", args=[str(self.uuid)])
 
 
 class RsvpStatus(BasePropertiesModel):
@@ -210,23 +174,24 @@ class RsvpStatus(BasePropertiesModel):
     TODO:
     Define State Machine to handle RSVP Status Transitions
     """
+
     # Predefined Values
-    UNKNOWN = 'unknown'
-    ACCEPTED = 'accepted'  # When the game is approval based
-    ATTENDING = 'attending'
-    CHECKED_IN = 'checked_in'
-    DECLINED = 'declined'
-    INTERESTED = 'interested'
-    INVITED = 'invited'
+    UNKNOWN = "unknown"
+    ACCEPTED = "accepted"  # When the game is approval based
+    ATTENDING = "attending"
+    CHECKED_IN = "checked_in"
+    DECLINED = "declined"
+    INTERESTED = "interested"
+    INVITED = "invited"
 
     STATUS = (
-        (UNKNOWN, _('Unknown')),
-        (ACCEPTED, _('Accepted')),
-        (ATTENDING, _('Attending')),
-        (CHECKED_IN, _('Checked In')),
-        (DECLINED, _('Declined')),
-        (INTERESTED, _('Interested')),
-        (INVITED, _('Invited')),
+        (UNKNOWN, _("Unknown")),
+        (ACCEPTED, _("Accepted")),
+        (ATTENDING, _("Attending")),
+        (CHECKED_IN, _("Checked In")),
+        (DECLINED, _("Declined")),
+        (INTERESTED, _("Interested")),
+        (INVITED, _("Invited")),
     )
 
     # Foreign Keys
@@ -235,34 +200,29 @@ class RsvpStatus(BasePropertiesModel):
         blank=False,
         null=False,
         on_delete=models.CASCADE,
-        related_name='rsvp_statuses',
-        verbose_name=_('Player'),
+        related_name="rsvp_statuses",
+        verbose_name=_("Player"),
     )
     game = models.ForeignKey(
-        'games.Game',
+        "games.Game",
         blank=False,
         null=False,
         on_delete=models.CASCADE,
-        related_name='attendees',
-        verbose_name=_('Game'),
+        related_name="attendees",
+        verbose_name=_("Game"),
     )
     # Instance Fields
     status = models.CharField(
-        blank=False,
-        choices=STATUS,
-        default=UNKNOWN,
-        max_length=25,
-        null=True,
-        verbose_name=_('Status'),
+        blank=False, choices=STATUS, default=UNKNOWN, max_length=25, null=True, verbose_name=_("Status")
     )
 
     class Meta:
-        verbose_name = _('RSVP Status')
-        verbose_name_plural = _('RSVP Statuses')
-        ordering = ('-created_at',)
+        verbose_name = _("RSVP Status")
+        verbose_name_plural = _("RSVP Statuses")
+        ordering = ("-created_at",)
         # TODO: should we track the whole RSVP historic/audit log changes per user in the same table or
         # in a different table
-        unique_together = (('user', 'game'),)
+        unique_together = (("user", "game"),)
 
     def __str__(self):
-        return '{} : {}'.format(self.game.name, self.user.name)
+        return "{} : {}".format(self.game.name, self.user.name)

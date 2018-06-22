@@ -5,9 +5,8 @@ from django.core.mail import EmailMessage
 
 
 class AccountAdapter(DefaultAccountAdapter):
-
     def is_open_for_signup(self, request):
-        return getattr(settings, 'ACCOUNT_ALLOW_REGISTRATION', True)
+        return getattr(settings, "ACCOUNT_ALLOW_REGISTRATION", True)
 
     def send_confirmation_mail(self, request, emailconfirmation, signup):
         activate_url = self.get_email_confirmation_url(request, emailconfirmation)
@@ -24,9 +23,7 @@ class AccountAdapter(DefaultAccountAdapter):
             "key": emailconfirmation.key,
         }
 
-        message = EmailMessage(subject=None,
-                               body=None,
-                               to=[emailconfirmation.email_address.email])
+        message = EmailMessage(subject=None, body=None, to=[emailconfirmation.email_address.email])
 
         if signup:
             # TODO: Define template ids in settings
@@ -42,6 +39,5 @@ class AccountAdapter(DefaultAccountAdapter):
 
 
 class SocialAccountAdapter(DefaultSocialAccountAdapter):
-
     def is_open_for_signup(self, request, sociallogin):
-        return getattr(settings, 'ACCOUNT_ALLOW_REGISTRATION', True)
+        return getattr(settings, "ACCOUNT_ALLOW_REGISTRATION", True)

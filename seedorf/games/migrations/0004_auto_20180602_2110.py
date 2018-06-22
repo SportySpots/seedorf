@@ -7,13 +7,10 @@ from django.db import migrations
 
 class Migration(migrations.Migration):
 
-    dependencies = [
-        ('games', '0003_game_description'),
-    ]
+    dependencies = [("games", "0003_game_description")]
 
     operations = [
         migrations.AlterModelOptions(
-            name='game',
-            options={'ordering': ('-created_at',), 'verbose_name': 'Game', 'verbose_name_plural': 'Games'},
-        ),
+            name="game", options={"ordering": ("-created_at",), "verbose_name": "Game", "verbose_name_plural": "Games"}
+        )
     ]

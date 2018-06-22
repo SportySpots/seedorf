@@ -12,26 +12,26 @@ class Sport(BasePropertiesModel, TranslationModel):
     # TODO: Set is a flag is_staff_created to distinguish between staff created and user created sports
 
     # Predefined Values
-    BASKETBALL = 'basketball'
-    BEACH_VOLLEYBALL = 'beach_volleyball'
-    BOOTCAMP = 'bootcamp'
-    BOULES = 'boules'
-    FITNESS = 'fitness'
-    OTHERS = 'others'
-    SKATING = 'skating'
-    SOCCER = 'soccer'
-    TENNIS = 'tennis'
+    BASKETBALL = "basketball"
+    BEACH_VOLLEYBALL = "beach_volleyball"
+    BOOTCAMP = "bootcamp"
+    BOULES = "boules"
+    FITNESS = "fitness"
+    OTHERS = "others"
+    SKATING = "skating"
+    SOCCER = "soccer"
+    TENNIS = "tennis"
 
     SPORTS = (
-        (BASKETBALL, _('Basketball')),
-        (BEACH_VOLLEYBALL, _('Beach Volleyball')),
-        (BOOTCAMP, _('Bootcamp')),
-        (BOULES, _('Boules')),
-        (FITNESS, _('Fitness')),
-        (OTHERS, _('Others')),
-        (SKATING, _('Skating')),
-        (SOCCER, _('Soccer')),
-        (TENNIS, _('Tennis')),
+        (BASKETBALL, _("Basketball")),
+        (BEACH_VOLLEYBALL, _("Beach Volleyball")),
+        (BOOTCAMP, _("Bootcamp")),
+        (BOULES, _("Boules")),
+        (FITNESS, _("Fitness")),
+        (OTHERS, _("Others")),
+        (SKATING, _("Skating")),
+        (SOCCER, _("Soccer")),
+        (TENNIS, _("Tennis")),
     )
 
     # Instance Fields
@@ -39,40 +39,31 @@ class Sport(BasePropertiesModel, TranslationModel):
         blank=False,
         choices=SPORTS,
         default=OTHERS,
-        help_text=_('Name of the main category of the sport (e.g. Soccer).'),
+        help_text=_("Name of the main category of the sport (e.g. Soccer)."),
         max_length=50,
         null=False,
-        verbose_name=_('Sport Category')
+        verbose_name=_("Sport Category"),
     )
     name = models.CharField(
         blank=False,
-        help_text=_('Name of the sub category of the sport (e.g. Soccer 5x5).'),
+        help_text=_("Name of the sub category of the sport (e.g. Soccer 5x5)."),
         max_length=255,
         null=False,
         unique=True,
-        verbose_name=_('Sport Name')
+        verbose_name=_("Sport Name"),
     )
     description = models.TextField(
-        blank=True,
-        default='',
-        max_length=4096,
-        null=False,
-        verbose_name=_('Sport Description'),
+        blank=True, default="", max_length=4096, null=False, verbose_name=_("Sport Description")
     )
 
     # Generic Relations
-    reaction = GenericRelation(
-        'reactions.Reaction',
-        blank=True,
-        null=True,
-        related_query_name='sport_reactions',
-    )
+    reaction = GenericRelation("reactions.Reaction", blank=True, null=True, related_query_name="sport_reactions")
 
     class Meta:
-        verbose_name = _('Sport')
-        verbose_name_plural = _('Sports')
-        ordering = ('-created_at',)
-        translatable_fields = ('name', 'description')
+        verbose_name = _("Sport")
+        verbose_name_plural = _("Sports")
+        ordering = ("-created_at",)
+        translatable_fields = ("name", "description")
 
     def __str__(self):
-        return '{} : {}'.format(self.category, self.name)
+        return "{} : {}".format(self.category, self.name)

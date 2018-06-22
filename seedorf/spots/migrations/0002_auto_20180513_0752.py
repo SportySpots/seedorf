@@ -9,34 +9,42 @@ import seedorf.spots.models
 
 class Migration(migrations.Migration):
 
-    dependencies = [
-        ('spots', '0001_initial'),
-    ]
+    dependencies = [("spots", "0001_initial")]
 
     operations = [
         migrations.AlterField(
-            model_name='spot',
-            name='homepage_url',
-            field=models.URLField(blank=True, help_text='Where can we find out more about this spot ?', max_length=512, verbose_name='Homepage URL'),
+            model_name="spot",
+            name="homepage_url",
+            field=models.URLField(
+                blank=True,
+                help_text="Where can we find out more about this spot ?",
+                max_length=512,
+                verbose_name="Homepage URL",
+            ),
         ),
         migrations.AlterField(
-            model_name='spot',
-            name='logo',
-            field=models.ImageField(blank=True, max_length=512, upload_to=seedorf.spots.models.get_logo_upload_directory, verbose_name='Logo'),
+            model_name="spot",
+            name="logo",
+            field=models.ImageField(
+                blank=True,
+                max_length=512,
+                upload_to=seedorf.spots.models.get_logo_upload_directory,
+                verbose_name="Logo",
+            ),
         ),
         migrations.AlterField(
-            model_name='spot',
-            name='name',
-            field=models.CharField(max_length=512, verbose_name='Name'),
+            model_name="spot", name="name", field=models.CharField(max_length=512, verbose_name="Name")
         ),
         migrations.AlterField(
-            model_name='spot',
-            name='owner',
-            field=models.CharField(blank=True, default='', max_length=512, verbose_name='Owner'),
+            model_name="spot",
+            name="owner",
+            field=models.CharField(blank=True, default="", max_length=512, verbose_name="Owner"),
         ),
         migrations.AlterField(
-            model_name='spot',
-            name='slug',
-            field=django_extensions.db.fields.AutoSlugField(blank=True, editable=False, max_length=512, populate_from='name', unique=True, verbose_name='Slug'),
+            model_name="spot",
+            name="slug",
+            field=django_extensions.db.fields.AutoSlugField(
+                blank=True, editable=False, max_length=512, populate_from="name", unique=True, verbose_name="Slug"
+            ),
         ),
     ]

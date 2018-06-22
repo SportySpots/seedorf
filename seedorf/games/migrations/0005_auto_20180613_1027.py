@@ -7,14 +7,25 @@ from django.db import migrations, models
 
 class Migration(migrations.Migration):
 
-    dependencies = [
-        ('games', '0004_auto_20180602_2110'),
-    ]
+    dependencies = [("games", "0004_auto_20180602_2110")]
 
     operations = [
         migrations.AlterField(
-            model_name='game',
-            name='status',
-            field=models.CharField(choices=[('canceled', 'Canceled'), ('completed', 'Completed'), ('draft', 'Draft'), ('ended', 'Ended'), ('live', 'Live'), ('planned', 'Planned'), ('started', 'Started')], default='draft', max_length=25, verbose_name='Status'),
-        ),
+            model_name="game",
+            name="status",
+            field=models.CharField(
+                choices=[
+                    ("canceled", "Canceled"),
+                    ("completed", "Completed"),
+                    ("draft", "Draft"),
+                    ("ended", "Ended"),
+                    ("live", "Live"),
+                    ("planned", "Planned"),
+                    ("started", "Started"),
+                ],
+                default="draft",
+                max_length=25,
+                verbose_name="Status",
+            ),
+        )
     ]

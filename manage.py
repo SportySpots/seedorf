@@ -2,8 +2,8 @@
 import os
 import sys
 
-if __name__ == '__main__':
-    os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'config.settings.dev')
+if __name__ == "__main__":
+    os.environ.setdefault("DJANGO_SETTINGS_MODULE", "config.settings.dev")
 
     try:
         from django.core.management import execute_from_command_line
@@ -24,6 +24,6 @@ if __name__ == '__main__':
     # This allows easy placement of apps within the interior
     # seedorf directory.
     current_path = os.path.dirname(os.path.abspath(__file__))
-    sys.path.append(os.path.join(current_path, 'seedorf'))
+    sys.path.append(os.path.join(current_path, "seedorf"))
 
     execute_from_command_line(sys.argv)

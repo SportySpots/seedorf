@@ -8,14 +8,12 @@ import seedorf.spots.models
 
 class Migration(migrations.Migration):
 
-    dependencies = [
-        ('spots', '0002_auto_20180513_0752'),
-    ]
+    dependencies = [("spots", "0002_auto_20180513_0752")]
 
     operations = [
         migrations.AlterField(
-            model_name='spotimage',
-            name='image',
+            model_name="spotimage",
+            name="image",
             field=models.ImageField(max_length=512, upload_to=seedorf.spots.models.get_images_upload_directory),
-        ),
+        )
     ]

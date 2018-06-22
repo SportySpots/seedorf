@@ -9,21 +9,17 @@ from seedorf.spots.models import Spot, SpotAmenity, SpotImage, SpotOpeningTime
 
 class SpotFactory(factory.django.DjangoModelFactory):
     address = factory.SubFactory(AddressFactory)
-    name = factory.Faker('name')
-    owner = factory.Faker('name')
-    description = factory.Faker('text')
+    name = factory.Faker("name")
+    owner = factory.Faker("name")
+    description = factory.Faker("text")
     logo = factory.django.ImageField()
-    homepage_url = factory.Faker('url')
+    homepage_url = factory.Faker("url")
 
     establishment_date = factory.Maybe(
-        'is_permanently_closed',
-        yes_declaration=factory.Faker('past_date', start_date='-60d'),
-        no_declaration=None
+        "is_permanently_closed", yes_declaration=factory.Faker("past_date", start_date="-60d"), no_declaration=None
     )
     closure_date = factory.Maybe(
-        'is_permanently_closed',
-        yes_declaration=factory.Faker('past_date', start_date='-30d'),
-        no_declaration=None
+        "is_permanently_closed", yes_declaration=factory.Faker("past_date", start_date="-30d"), no_declaration=None
     )
 
     @factory.post_generation
@@ -66,10 +62,7 @@ class SpotOpeningTimeFactory(factory.django.DjangoModelFactory):
 class SpotAmenityFactory(factory.Factory):
     spot = factory.SubFactory(SpotFactory)
     sport = factory.LazyAttribute(lambda o: random.choice(o.spot.sports.all()))
-    data = factory.Dict({
-        'SURFACE': 'hard',
-        'FENCE': True
-    })
+    data = factory.Dict({"SURFACE": "hard", "FENCE": True})
 
     class Meta:
         model = SpotAmenity

@@ -2,8 +2,8 @@ from django.apps import AppConfig
 
 
 class UsersConfig(AppConfig):
-    name = 'seedorf.users'
-    verbose_name = 'Users'
+    name = "seedorf.users"
+    verbose_name = "Users"
 
     def ready(self):
         """Override this to put in:

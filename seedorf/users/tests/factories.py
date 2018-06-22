@@ -5,12 +5,12 @@ from seedorf.spots.tests.factories import SpotFactory
 
 
 class UserFactory(factory.django.DjangoModelFactory):
-    first_name = factory.Faker('first_name')
-    last_name = factory.Faker('last_name')
-    name = factory.LazyAttribute(lambda o: '{} {}'.format(o.first_name.lower(), o.last_name.lower()))
-    username = factory.LazyAttribute(lambda o: '{}.{}'.format(o.first_name.lower(), o.last_name.lower()))
-    email = factory.LazyAttribute(lambda o: '{}.{}@example.com'.format(o.first_name.lower(), o.last_name.lower()))
-    password = factory.PostGenerationMethodCall('set_password', 'password')
+    first_name = factory.Faker("first_name")
+    last_name = factory.Faker("last_name")
+    name = factory.LazyAttribute(lambda o: "{} {}".format(o.first_name.lower(), o.last_name.lower()))
+    username = factory.LazyAttribute(lambda o: "{}.{}".format(o.first_name.lower(), o.last_name.lower()))
+    email = factory.LazyAttribute(lambda o: "{}.{}@example.com".format(o.first_name.lower(), o.last_name.lower()))
+    password = factory.PostGenerationMethodCall("set_password", "password")
     is_staff = False
 
     @factory.post_generation
@@ -30,7 +30,7 @@ class UserFactory(factory.django.DjangoModelFactory):
 
     class Meta:
         model = User
-        django_get_or_create = ('email', )
+        django_get_or_create = ("email",)
 
 
 class StaffUserFactory(UserFactory):
@@ -46,8 +46,8 @@ class UserProfileFactory(factory.django.DjangoModelFactory):
     gender = factory.Iterator(UserProfile.GENDERS, getter=lambda g: g[0])
     year_of_birth = 1980
     avatar = factory.django.ImageField()
-    country = 'NL'
-    bio = factory.Faker('text')
+    country = "NL"
+    bio = factory.Faker("text")
 
     class Meta:
         model = UserProfile

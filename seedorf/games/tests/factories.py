@@ -13,14 +13,14 @@ class GameFactory(factory.django.DjangoModelFactory):
     organizer = factory.SubFactory(UserFactory)
     spot = factory.SubFactory(SpotFactory)
     sport = factory.LazyAttribute(lambda o: o.spot.sports.all()[0])
-    name = factory.Faker('word')
+    name = factory.Faker("word")
     invite_mode = factory.Iterator(Game.INVITE_MODES, getter=lambda d: d[0])
     status = factory.Iterator(Game.STATUSES, getter=lambda d: d[0])
     capacity = random.randint(2, 10)
-    show_remaining = factory.Faker('pybool')
-    is_listed = factory.Faker('pybool')
-    is_shareable = factory.Faker('pybool')
-    is_featured = factory.Faker('pybool')
+    show_remaining = factory.Faker("pybool")
+    is_listed = factory.Faker("pybool")
+    is_shareable = factory.Faker("pybool")
+    is_featured = factory.Faker("pybool")
 
     # params to generate items in the past or in the future
     now = timezone.now()
@@ -33,7 +33,7 @@ class GameFactory(factory.django.DjangoModelFactory):
 
     class Meta:
         model = Game
-        exclude = ('now',)
+        exclude = ("now",)
 
     class Params:
         past = factory.Trait(

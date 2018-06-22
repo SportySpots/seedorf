@@ -7,14 +7,12 @@ from django.db import migrations, models
 
 class Migration(migrations.Migration):
 
-    dependencies = [
-        ('games', '0002_auto_20180502_0816'),
-    ]
+    dependencies = [("games", "0002_auto_20180502_0816")]
 
     operations = [
         migrations.AddField(
-            model_name='game',
-            name='description',
-            field=models.TextField(blank=True, help_text='Description of the game.', verbose_name='Description'),
-        ),
+            model_name="game",
+            name="description",
+            field=models.TextField(blank=True, help_text="Description of the game.", verbose_name="Description"),
+        )
     ]

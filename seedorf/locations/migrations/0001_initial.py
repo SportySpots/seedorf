@@ -12,30 +12,82 @@ class Migration(migrations.Migration):
 
     initial = True
 
-    dependencies = [
-    ]
+    dependencies = []
 
     operations = [
         migrations.CreateModel(
-            name='Address',
+            name="Address",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('uuid', models.UUIDField(default=uuid.uuid4, editable=False, verbose_name='Unique Identifier')),
-                ('created_at', models.DateTimeField(default=django.utils.timezone.now, editable=False, verbose_name='Created At')),
-                ('modified_at', models.DateTimeField(auto_now=True, verbose_name='Modified At')),
-                ('deleted_at', models.DateTimeField(blank=True, editable=False, null=True, verbose_name='Deleted At')),
-                ('raw_address', models.CharField(blank=True, default='', help_text='Complete address', max_length=1024, verbose_name='Address')),
-                ('raw_geocoder_response', django.contrib.postgres.fields.jsonb.JSONField(blank=True, help_text='Raw api response from the geocoder service. e.g. google maps', null=True, verbose_name='Raw Geocoder Response')),
-                ('geocoder_service', models.CharField(choices=[('google', 'Google'), ('bing', 'Bing'), ('open_street_maps', 'Open Street Maps'), ('here', 'Here Maps'), ('manual', 'Manual')], default='manual', help_text='Geocoder used to convert raw address into latlong coordinates.', max_length=25, null=True, verbose_name='Geocoder')),
-                ('formatted_address', models.CharField(blank=True, help_text='Formatted address returned by the geocoding service', max_length=1024, verbose_name='Formatted Address')),
-                ('lat', models.DecimalField(blank=True, decimal_places=15, max_digits=18, null=True, verbose_name='Latitude')),
-                ('lng', models.DecimalField(blank=True, decimal_places=15, max_digits=18, null=True, verbose_name='Longtiude')),
-                ('plus_global_code', models.CharField(blank=True, max_length=255, null=True, verbose_name='Google Plus Global Code')),
-                ('plus_local_code', models.CharField(blank=True, max_length=255, null=True, verbose_name='Google Plus Local Code')),
+                ("id", models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name="ID")),
+                ("uuid", models.UUIDField(default=uuid.uuid4, editable=False, verbose_name="Unique Identifier")),
+                (
+                    "created_at",
+                    models.DateTimeField(default=django.utils.timezone.now, editable=False, verbose_name="Created At"),
+                ),
+                ("modified_at", models.DateTimeField(auto_now=True, verbose_name="Modified At")),
+                ("deleted_at", models.DateTimeField(blank=True, editable=False, null=True, verbose_name="Deleted At")),
+                (
+                    "raw_address",
+                    models.CharField(
+                        blank=True, default="", help_text="Complete address", max_length=1024, verbose_name="Address"
+                    ),
+                ),
+                (
+                    "raw_geocoder_response",
+                    django.contrib.postgres.fields.jsonb.JSONField(
+                        blank=True,
+                        help_text="Raw api response from the geocoder service. e.g. google maps",
+                        null=True,
+                        verbose_name="Raw Geocoder Response",
+                    ),
+                ),
+                (
+                    "geocoder_service",
+                    models.CharField(
+                        choices=[
+                            ("google", "Google"),
+                            ("bing", "Bing"),
+                            ("open_street_maps", "Open Street Maps"),
+                            ("here", "Here Maps"),
+                            ("manual", "Manual"),
+                        ],
+                        default="manual",
+                        help_text="Geocoder used to convert raw address into latlong coordinates.",
+                        max_length=25,
+                        null=True,
+                        verbose_name="Geocoder",
+                    ),
+                ),
+                (
+                    "formatted_address",
+                    models.CharField(
+                        blank=True,
+                        help_text="Formatted address returned by the geocoding service",
+                        max_length=1024,
+                        verbose_name="Formatted Address",
+                    ),
+                ),
+                (
+                    "lat",
+                    models.DecimalField(
+                        blank=True, decimal_places=15, max_digits=18, null=True, verbose_name="Latitude"
+                    ),
+                ),
+                (
+                    "lng",
+                    models.DecimalField(
+                        blank=True, decimal_places=15, max_digits=18, null=True, verbose_name="Longtiude"
+                    ),
+                ),
+                (
+                    "plus_global_code",
+                    models.CharField(blank=True, max_length=255, null=True, verbose_name="Google Plus Global Code"),
+                ),
+                (
+                    "plus_local_code",
+                    models.CharField(blank=True, max_length=255, null=True, verbose_name="Google Plus Local Code"),
+                ),
             ],
-            options={
-                'verbose_name': 'Address',
-                'verbose_name_plural': 'Addresses',
-            },
-        ),
+            options={"verbose_name": "Address", "verbose_name_plural": "Addresses"},
+        )
     ]

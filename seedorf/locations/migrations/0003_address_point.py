@@ -8,14 +8,14 @@ from django.db import migrations
 
 class Migration(migrations.Migration):
 
-    dependencies = [
-        ('locations', '0002_auto_20180602_2110'),
-    ]
+    dependencies = [("locations", "0002_auto_20180602_2110")]
 
     operations = [
         migrations.AddField(
-            model_name='address',
-            name='point',
-            field=django.contrib.gis.db.models.fields.PointField(help_text='Lat/Lng Point', null=True, srid=4326, verbose_name='Location'),
-        ),
+            model_name="address",
+            name="point",
+            field=django.contrib.gis.db.models.fields.PointField(
+                help_text="Lat/Lng Point", null=True, srid=4326, verbose_name="Location"
+            ),
+        )
     ]

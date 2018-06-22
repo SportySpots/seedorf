@@ -7,17 +7,23 @@ from django.db import migrations
 
 class Migration(migrations.Migration):
 
-    dependencies = [
-        ('spots', '0003_auto_20180513_0820'),
-    ]
+    dependencies = [("spots", "0003_auto_20180513_0820")]
 
     operations = [
         migrations.AlterModelOptions(
-            name='spotamenity',
-            options={'ordering': ('-created_at',), 'verbose_name': 'Spot Amenity', 'verbose_name_plural': 'Spot Amenities'},
+            name="spotamenity",
+            options={
+                "ordering": ("-created_at",),
+                "verbose_name": "Spot Amenity",
+                "verbose_name_plural": "Spot Amenities",
+            },
         ),
         migrations.AlterModelOptions(
-            name='spotopeningtime',
-            options={'ordering': ('-created_at',), 'verbose_name': 'Spot Opening Time', 'verbose_name_plural': 'Spot Opening Times'},
+            name="spotopeningtime",
+            options={
+                "ordering": ("-created_at",),
+                "verbose_name": "Spot Opening Time",
+                "verbose_name_plural": "Spot Opening Times",
+            },
         ),
     ]

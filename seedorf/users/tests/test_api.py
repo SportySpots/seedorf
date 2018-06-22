@@ -1,14 +1,16 @@
-from django.core.urlresolvers import reverse
-from rest_framework.test import APITestCase
 import jwt
 from django.conf import settings
-from seedorf.users.models import User
+from django.core.urlresolvers import reverse
+from rest_framework.test import APITestCase
+from unittest.mock import patch
 
+from seedorf.users.adapters import AccountAdapter
+from seedorf.users.models import User
 from .factories import UserFactory
 
 
 class UserRegistrationAPIViewTest(APITestCase):
-    url = reverse('rest-auth-registration:rest_register')
+    url = reverse("rest-auth-registration:rest_register")
 
     def test_user_creation(self):
         """
@@ -24,37 +26,52 @@ class UserRegistrationAPIViewTest(APITestCase):
             "password2": "super_$secure_passw0rd",
         }
 
-        response = self.client.post(self.url, user_data)
-        self.assertEqual(201, response.status_code)
-        self.assertTrue("token" in response.data)
+        with patch.object(AccountAdapter, "send_confirmation_mail", return_value=None):
+            response = self.client.post(self.url, user_data)
+            self.assertEqual(201, response.status_code)
+            self.assertTrue("token" in response.data)
 
-        user = User.objects.get(email=user_data['email'])
-        decoded_token = jwt.decode(response.data['token'], settings.SECRET_KEY, algorithms=['HS256'])
-        response_user = response.data['user']
+            user = User.objects.get(email=user_data["email"])
+            decoded_token = jwt.decode(response.data["token"], settings.SECRET_KEY, algorithms=["HS256"])
+            response_user = response.data["user"]
 
-        # Token contains the defined keys
-        self.assertTrue({'user_id', 'uuid', 'email', 'username', 'exp'}.issubset(decoded_token))
-        self.assertEqual(response_user['first_name'], user_data['first_name'])
-        self.assertEqual(response_user['last_name'], user_data['last_name'])
+            # Token contains the defined keys
+            self.assertTrue({"user_id", "uuid", "email", "username", "exp"}.issubset(decoded_token))
+            self.assertEqual(response_user["first_name"], user_data["first_name"])
+            self.assertEqual(response_user["last_name"], user_data["last_name"])
 
-        # Token has a the user with the right uuid
-        self.assertEqual(decoded_token['uuid'], str(user.uuid))
+            # Token has a the user with the right uuid
+            self.assertEqual(decoded_token["uuid"], str(user.uuid))
 
     def test_duplicate_user_creation(self):
         """
         Test to verify that duplicate user creation is forbidden
         """
-        UserFactory(username='test', email='test@example.com')
+        UserFactory(username="test", email="test@example.com")
 
         user_data = {
             "username": "test",
             "email": "test@example.com",
             "password1": "super_$secure_passw0rd",
-            "password2": "super_$secure_passw0rd"
+            "password2": "super_$secure_passw0rd",
         }
 
         response = self.client.post(self.url, user_data)
         self.assertEqual(400, response.status_code)
+
+
+class UserProfileAPIViewTest(APITestCase):
+    def test_user_profile_creation(self):
+        user = UserFactory(username="test", email="test@example.com")
+        self.client.force_authenticate(user=user)
+
+        url = reverse("user-profile-list", kwargs={"user_uuid": str(user.uuid)})
+
+        user_profile_data = {"year_of_birth": 1980}
+
+        response = self.client.post(url, user_profile_data)
+        self.assertEqual(200, response.status_code)
+
 
 # Create Token Manually
 # from rest_framework_jwt.settings import api_settings

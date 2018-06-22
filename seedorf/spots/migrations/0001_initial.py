@@ -17,96 +17,229 @@ class Migration(migrations.Migration):
 
     initial = True
 
-    dependencies = [
-        ('sports', '0001_initial'),
-        ('locations', '0001_initial'),
-    ]
+    dependencies = [("sports", "0001_initial"), ("locations", "0001_initial")]
 
     operations = [
         migrations.CreateModel(
-            name='Spot',
+            name="Spot",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('uuid', models.UUIDField(default=uuid.uuid4, editable=False, verbose_name='Unique Identifier')),
-                ('created_at', models.DateTimeField(default=django.utils.timezone.now, editable=False, verbose_name='Created At')),
-                ('modified_at', models.DateTimeField(auto_now=True, verbose_name='Modified At')),
-                ('deleted_at', models.DateTimeField(blank=True, editable=False, null=True, verbose_name='Deleted At')),
-                ('name', models.CharField(max_length=255, verbose_name='Name')),
-                ('slug', django_extensions.db.fields.AutoSlugField(blank=True, editable=False, populate_from='name', unique=True, verbose_name='Slug')),
-                ('owner', models.CharField(blank=True, default='', max_length=255, verbose_name='Owner')),
-                ('description', models.TextField(blank=True, default='', max_length=4096, verbose_name='Description')),
-                ('logo', models.ImageField(blank=True, max_length=255, upload_to=seedorf.spots.models.get_logo_upload_directory, verbose_name='Logo')),
-                ('homepage_url', models.URLField(blank=True, help_text='Where can we find out more about this spot ?', max_length=500, verbose_name='Homepage URL')),
-                ('is_verified', models.BooleanField(default=False, help_text='Is this Spot verfified by the SportySpots team ?')),
-                ('is_permanently_closed', models.BooleanField(default=False, help_text='Is this Spot permanently closed ?')),
-                ('is_public', models.BooleanField(default=True, help_text='Is this Spot a public spot ?')),
-                ('is_temporary', models.BooleanField(default=False, help_text='Is this spot temporary (e.g. for a special event) ?')),
-                ('establishment_date', models.DateField(blank=True, null=True)),
-                ('closure_date', models.DateField(blank=True, null=True)),
-                ('address', models.OneToOneField(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, related_name='spot', to='locations.Address', verbose_name='Address')),
-                ('sports', models.ManyToManyField(related_name='spots', to='sports.Sport', verbose_name='Sports')),
+                ("id", models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name="ID")),
+                ("uuid", models.UUIDField(default=uuid.uuid4, editable=False, verbose_name="Unique Identifier")),
+                (
+                    "created_at",
+                    models.DateTimeField(default=django.utils.timezone.now, editable=False, verbose_name="Created At"),
+                ),
+                ("modified_at", models.DateTimeField(auto_now=True, verbose_name="Modified At")),
+                ("deleted_at", models.DateTimeField(blank=True, editable=False, null=True, verbose_name="Deleted At")),
+                ("name", models.CharField(max_length=255, verbose_name="Name")),
+                (
+                    "slug",
+                    django_extensions.db.fields.AutoSlugField(
+                        blank=True, editable=False, populate_from="name", unique=True, verbose_name="Slug"
+                    ),
+                ),
+                ("owner", models.CharField(blank=True, default="", max_length=255, verbose_name="Owner")),
+                ("description", models.TextField(blank=True, default="", max_length=4096, verbose_name="Description")),
+                (
+                    "logo",
+                    models.ImageField(
+                        blank=True,
+                        max_length=255,
+                        upload_to=seedorf.spots.models.get_logo_upload_directory,
+                        verbose_name="Logo",
+                    ),
+                ),
+                (
+                    "homepage_url",
+                    models.URLField(
+                        blank=True,
+                        help_text="Where can we find out more about this spot ?",
+                        max_length=500,
+                        verbose_name="Homepage URL",
+                    ),
+                ),
+                (
+                    "is_verified",
+                    models.BooleanField(default=False, help_text="Is this Spot verfified by the SportySpots team ?"),
+                ),
+                (
+                    "is_permanently_closed",
+                    models.BooleanField(default=False, help_text="Is this Spot permanently closed ?"),
+                ),
+                ("is_public", models.BooleanField(default=True, help_text="Is this Spot a public spot ?")),
+                (
+                    "is_temporary",
+                    models.BooleanField(default=False, help_text="Is this spot temporary (e.g. for a special event) ?"),
+                ),
+                ("establishment_date", models.DateField(blank=True, null=True)),
+                ("closure_date", models.DateField(blank=True, null=True)),
+                (
+                    "address",
+                    models.OneToOneField(
+                        blank=True,
+                        null=True,
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="spot",
+                        to="locations.Address",
+                        verbose_name="Address",
+                    ),
+                ),
+                ("sports", models.ManyToManyField(related_name="spots", to="sports.Sport", verbose_name="Sports")),
             ],
-            options={
-                'verbose_name': 'Spot',
-                'verbose_name_plural': 'Spots',
-                'ordering': ('-created_at',),
-            },
+            options={"verbose_name": "Spot", "verbose_name_plural": "Spots", "ordering": ("-created_at",)},
         ),
         migrations.CreateModel(
-            name='SpotAmenity',
+            name="SpotAmenity",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('uuid', models.UUIDField(default=uuid.uuid4, editable=False, verbose_name='Unique Identifier')),
-                ('created_at', models.DateTimeField(default=django.utils.timezone.now, editable=False, verbose_name='Created At')),
-                ('modified_at', models.DateTimeField(auto_now=True, verbose_name='Modified At')),
-                ('deleted_at', models.DateTimeField(blank=True, editable=False, null=True, verbose_name='Deleted At')),
-                ('data', django.contrib.postgres.fields.jsonb.JSONField(validators=[seedorf.spots.validators.AllowedKeysValidator(['INDOOR', 'OUTDOOR', 'WIDTH', 'BREADTH', 'SIZE', 'HAS_FLOODLIGHTS', 'SURFACE', 'LOCATION', 'FENCE', 'FIELD_MARKINGS', 'SOCCER_GOALS_ONE_SIDED', 'SOCCER_GOALS_BOTH_SIDED', 'SOCCER_GOALS_SIZE', 'BASKETBALL_POLE_ONE_SIDED', 'BASKETBALL_POLE_BOTH_SIDED', 'MULTISPORT_FIELD'])])),
-                ('sport', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='amenities', to='sports.Sport', verbose_name='Sport')),
-                ('spot', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='amenities', to='spots.Spot', verbose_name='Spot')),
+                ("id", models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name="ID")),
+                ("uuid", models.UUIDField(default=uuid.uuid4, editable=False, verbose_name="Unique Identifier")),
+                (
+                    "created_at",
+                    models.DateTimeField(default=django.utils.timezone.now, editable=False, verbose_name="Created At"),
+                ),
+                ("modified_at", models.DateTimeField(auto_now=True, verbose_name="Modified At")),
+                ("deleted_at", models.DateTimeField(blank=True, editable=False, null=True, verbose_name="Deleted At")),
+                (
+                    "data",
+                    django.contrib.postgres.fields.jsonb.JSONField(
+                        validators=[
+                            seedorf.spots.validators.AllowedKeysValidator(
+                                [
+                                    "INDOOR",
+                                    "OUTDOOR",
+                                    "WIDTH",
+                                    "BREADTH",
+                                    "SIZE",
+                                    "HAS_FLOODLIGHTS",
+                                    "SURFACE",
+                                    "LOCATION",
+                                    "FENCE",
+                                    "FIELD_MARKINGS",
+                                    "SOCCER_GOALS_ONE_SIDED",
+                                    "SOCCER_GOALS_BOTH_SIDED",
+                                    "SOCCER_GOALS_SIZE",
+                                    "BASKETBALL_POLE_ONE_SIDED",
+                                    "BASKETBALL_POLE_BOTH_SIDED",
+                                    "MULTISPORT_FIELD",
+                                ]
+                            )
+                        ]
+                    ),
+                ),
+                (
+                    "sport",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="amenities",
+                        to="sports.Sport",
+                        verbose_name="Sport",
+                    ),
+                ),
+                (
+                    "spot",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="amenities",
+                        to="spots.Spot",
+                        verbose_name="Spot",
+                    ),
+                ),
             ],
-            options={
-                'verbose_name': 'Spot Amenity',
-                'verbose_name_plural': 'Spot Amenities',
-            },
+            options={"verbose_name": "Spot Amenity", "verbose_name_plural": "Spot Amenities"},
         ),
         migrations.CreateModel(
-            name='SpotImage',
+            name="SpotImage",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('uuid', models.UUIDField(default=uuid.uuid4, editable=False, verbose_name='Unique Identifier')),
-                ('created_at', models.DateTimeField(default=django.utils.timezone.now, editable=False, verbose_name='Created At')),
-                ('modified_at', models.DateTimeField(auto_now=True, verbose_name='Modified At')),
-                ('deleted_at', models.DateTimeField(blank=True, editable=False, null=True, verbose_name='Deleted At')),
-                ('image', models.ImageField(upload_to=seedorf.spots.models.get_images_upload_directory)),
-                ('is_flagged', models.BooleanField(default=False, editable=False, help_text='Is this image marked as offensive/ non-relevant ?')),
-                ('is_user_submitted', models.BooleanField(default=True, editable=False, help_text='Is this image submitted by the user ?')),
-                ('sport', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='images', to='sports.Sport', verbose_name='Sport')),
-                ('spot', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='images', to='spots.Spot', verbose_name='Spot')),
+                ("id", models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name="ID")),
+                ("uuid", models.UUIDField(default=uuid.uuid4, editable=False, verbose_name="Unique Identifier")),
+                (
+                    "created_at",
+                    models.DateTimeField(default=django.utils.timezone.now, editable=False, verbose_name="Created At"),
+                ),
+                ("modified_at", models.DateTimeField(auto_now=True, verbose_name="Modified At")),
+                ("deleted_at", models.DateTimeField(blank=True, editable=False, null=True, verbose_name="Deleted At")),
+                ("image", models.ImageField(upload_to=seedorf.spots.models.get_images_upload_directory)),
+                (
+                    "is_flagged",
+                    models.BooleanField(
+                        default=False, editable=False, help_text="Is this image marked as offensive/ non-relevant ?"
+                    ),
+                ),
+                (
+                    "is_user_submitted",
+                    models.BooleanField(
+                        default=True, editable=False, help_text="Is this image submitted by the user ?"
+                    ),
+                ),
+                (
+                    "sport",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="images",
+                        to="sports.Sport",
+                        verbose_name="Sport",
+                    ),
+                ),
+                (
+                    "spot",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="images",
+                        to="spots.Spot",
+                        verbose_name="Spot",
+                    ),
+                ),
             ],
-            options={
-                'verbose_name': 'Spot Image',
-                'verbose_name_plural': 'Spot Images',
-                'ordering': ('-created_at',),
-            },
+            options={"verbose_name": "Spot Image", "verbose_name_plural": "Spot Images", "ordering": ("-created_at",)},
         ),
         migrations.CreateModel(
-            name='SpotOpeningTime',
+            name="SpotOpeningTime",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('uuid', models.UUIDField(default=uuid.uuid4, editable=False, verbose_name='Unique Identifier')),
-                ('created_at', models.DateTimeField(default=django.utils.timezone.now, editable=False, verbose_name='Created At')),
-                ('modified_at', models.DateTimeField(auto_now=True, verbose_name='Modified At')),
-                ('deleted_at', models.DateTimeField(blank=True, editable=False, null=True, verbose_name='Deleted At')),
-                ('day', models.CharField(choices=[('MONDAY', 'Monday'), ('TUESDAY', 'Tuesday'), ('WEDNESDAY', 'Wednesday'), ('THURSDAY', 'Thursday'), ('FRIDAY', 'Friday'), ('SATURDAY', 'Saturday'), ('SUNDAY', 'Sunday')], max_length=25)),
-                ('start_time', models.TimeField(default=datetime.time(0, 0))),
-                ('end_time', models.TimeField(default=datetime.time(23, 59, 59, 999999))),
-                ('is_closed', models.BooleanField(default=False)),
-                ('sport', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='opening_times', to='sports.Sport', verbose_name='Sport')),
-                ('spot', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='opening_times', to='spots.Spot', verbose_name='Spot')),
+                ("id", models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name="ID")),
+                ("uuid", models.UUIDField(default=uuid.uuid4, editable=False, verbose_name="Unique Identifier")),
+                (
+                    "created_at",
+                    models.DateTimeField(default=django.utils.timezone.now, editable=False, verbose_name="Created At"),
+                ),
+                ("modified_at", models.DateTimeField(auto_now=True, verbose_name="Modified At")),
+                ("deleted_at", models.DateTimeField(blank=True, editable=False, null=True, verbose_name="Deleted At")),
+                (
+                    "day",
+                    models.CharField(
+                        choices=[
+                            ("MONDAY", "Monday"),
+                            ("TUESDAY", "Tuesday"),
+                            ("WEDNESDAY", "Wednesday"),
+                            ("THURSDAY", "Thursday"),
+                            ("FRIDAY", "Friday"),
+                            ("SATURDAY", "Saturday"),
+                            ("SUNDAY", "Sunday"),
+                        ],
+                        max_length=25,
+                    ),
+                ),
+                ("start_time", models.TimeField(default=datetime.time(0, 0))),
+                ("end_time", models.TimeField(default=datetime.time(23, 59, 59, 999999))),
+                ("is_closed", models.BooleanField(default=False)),
+                (
+                    "sport",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="opening_times",
+                        to="sports.Sport",
+                        verbose_name="Sport",
+                    ),
+                ),
+                (
+                    "spot",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="opening_times",
+                        to="spots.Spot",
+                        verbose_name="Spot",
+                    ),
+                ),
             ],
-            options={
-                'verbose_name': 'Spot Opening Time',
-                'verbose_name_plural': 'Spot Opening Times',
-            },
+            options={"verbose_name": "Spot Opening Time", "verbose_name_plural": "Spot Opening Times"},
         ),
     ]

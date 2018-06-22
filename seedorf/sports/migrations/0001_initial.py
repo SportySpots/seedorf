@@ -13,28 +13,56 @@ class Migration(migrations.Migration):
 
     initial = True
 
-    dependencies = [
-    ]
+    dependencies = []
 
     operations = [
         migrations.CreateModel(
-            name='Sport',
+            name="Sport",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('uuid', models.UUIDField(default=uuid.uuid4, editable=False, verbose_name='Unique Identifier')),
-                ('created_at', models.DateTimeField(default=django.utils.timezone.now, editable=False, verbose_name='Created At')),
-                ('modified_at', models.DateTimeField(auto_now=True, verbose_name='Modified At')),
-                ('deleted_at', models.DateTimeField(blank=True, editable=False, null=True, verbose_name='Deleted At')),
-                ('translations', django.contrib.postgres.fields.jsonb.JSONField(blank=True, null=True)),
-                ('category', models.CharField(choices=[('basketball', 'Basketball'), ('beach_volleyball', 'Beach Volleyball'), ('bootcamp', 'Bootcamp'), ('boules', 'Boules'), ('fitness', 'Fitness'), ('others', 'Others'), ('skating', 'Skating'), ('soccer', 'Soccer'), ('tennis', 'Tennis')], default='others', help_text='Name of the main category of the sport (e.g. Soccer).', max_length=50, verbose_name='Sport Category')),
-                ('name', models.CharField(help_text='Name of the sub category of the sport (e.g. Soccer 5x5).', max_length=255, unique=True, verbose_name='Sport Name')),
-                ('description', models.TextField(blank=True, default='', max_length=4096, verbose_name='Sport Description')),
+                ("id", models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name="ID")),
+                ("uuid", models.UUIDField(default=uuid.uuid4, editable=False, verbose_name="Unique Identifier")),
+                (
+                    "created_at",
+                    models.DateTimeField(default=django.utils.timezone.now, editable=False, verbose_name="Created At"),
+                ),
+                ("modified_at", models.DateTimeField(auto_now=True, verbose_name="Modified At")),
+                ("deleted_at", models.DateTimeField(blank=True, editable=False, null=True, verbose_name="Deleted At")),
+                ("translations", django.contrib.postgres.fields.jsonb.JSONField(blank=True, null=True)),
+                (
+                    "category",
+                    models.CharField(
+                        choices=[
+                            ("basketball", "Basketball"),
+                            ("beach_volleyball", "Beach Volleyball"),
+                            ("bootcamp", "Bootcamp"),
+                            ("boules", "Boules"),
+                            ("fitness", "Fitness"),
+                            ("others", "Others"),
+                            ("skating", "Skating"),
+                            ("soccer", "Soccer"),
+                            ("tennis", "Tennis"),
+                        ],
+                        default="others",
+                        help_text="Name of the main category of the sport (e.g. Soccer).",
+                        max_length=50,
+                        verbose_name="Sport Category",
+                    ),
+                ),
+                (
+                    "name",
+                    models.CharField(
+                        help_text="Name of the sub category of the sport (e.g. Soccer 5x5).",
+                        max_length=255,
+                        unique=True,
+                        verbose_name="Sport Name",
+                    ),
+                ),
+                (
+                    "description",
+                    models.TextField(blank=True, default="", max_length=4096, verbose_name="Sport Description"),
+                ),
             ],
-            options={
-                'verbose_name': 'Sport',
-                'verbose_name_plural': 'Sports',
-                'ordering': ('category', 'name'),
-            },
+            options={"verbose_name": "Sport", "verbose_name_plural": "Sports", "ordering": ("category", "name")},
             bases=(models.Model, nece.managers.TranslationMixin),
-        ),
+        )
     ]
