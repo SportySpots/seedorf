@@ -114,10 +114,10 @@
         },
         "botocore": {
             "hashes": [
-                "sha256:158012844c7a385ef49a93354124878bee7f400e3597dea57202ea87faeefa90",
-                "sha256:fa84972784e55ae5f89c2d33b1b10b6ba028cb3733b350df7ed1461e0680ab40"
+                "sha256:58b469e347865277e9713326709949f427f312eb9f64e5703de7128a6a90a5ad",
+                "sha256:7a3759d346bf297d33091a4c154d3c50f0c3dc7b428badb6c950f87ea390e5b1"
             ],
-            "version": "==1.9.23"
+            "version": "==1.10.70"
         },
         "celery": {
             "hashes": [
@@ -1342,10 +1342,10 @@
         },
         "botocore": {
             "hashes": [
-                "sha256:158012844c7a385ef49a93354124878bee7f400e3597dea57202ea87faeefa90",
-                "sha256:fa84972784e55ae5f89c2d33b1b10b6ba028cb3733b350df7ed1461e0680ab40"
+                "sha256:58b469e347865277e9713326709949f427f312eb9f64e5703de7128a6a90a5ad",
+                "sha256:7a3759d346bf297d33091a4c154d3c50f0c3dc7b428badb6c950f87ea390e5b1"
             ],
-            "version": "==1.9.23"
+            "version": "==1.10.70"
         },
         "cached-property": {
             "hashes": [
