@@ -50,17 +50,17 @@ class GameSportNestedViewSet(viewsets.ModelViewSet):
     def get_queryset(self):
         return Sport.objects.filter(sport_games__uuid=self.kwargs["game_uuid"])
 
-
-class UserSportNestedViewSet(viewsets.ModelViewSet):
-    """
-    API endpoint that shows sports followed by a user.
-    """
-
-    serializer_class = UserSportNestedSerializer
-    lookup_field = "uuid"
-    lookup_value_regex = REGEX_UUID
-    permission_classes = (IsAuthenticatedOrReadOnly,)
-    http_method_names = ("options", "head", "get", "post")
-
-    def get_queryset(self):
-        return Sport.objects.filter(followers__user__uuid__exact=self.kwargs["user_uuid"])
+#
+# class UserSportNestedViewSet(viewsets.ModelViewSet):
+#     """
+#     API endpoint that shows sports followed by a user.
+#     """
+#
+#     serializer_class = UserSportNestedSerializer
+#     lookup_field = "uuid"
+#     lookup_value_regex = REGEX_UUID
+#     permission_classes = (IsAuthenticatedOrReadOnly,)
+#     http_method_names = ("options", "head", "get", "post")
+#
+#     def get_queryset(self):
+#         return Sport.objects.filter(followers__user__uuid__exact=self.kwargs["user_uuid"])

@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-${ENV:?"Please set ENV non-empty"}
+#${ENV:?"Please set ENV non-empty"}
 
 set -o errexit
 set -o pipefail

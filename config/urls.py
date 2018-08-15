@@ -1,3 +1,6 @@
+import sys
+
+import os
 from allauth.account.views import confirm_email as registration_confirm_email
 from django.conf import settings
 from django.conf.urls import include, url
@@ -142,6 +145,8 @@ urlpatterns = [
     # Apple ios deeplinking - app site association
     url(r"^apple-app-site-association/?$", apple_app_site_association, name="apple-app-site-association"),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+print(os.environ.items())
 
 if settings.DEBUG:
     # This allows the error pages to be debugged during development, just visit

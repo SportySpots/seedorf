@@ -159,7 +159,7 @@ class GameSpotNestedSerializer(NestedHyperlinkedModelSerializer):
 
 
 class GameSerializer(serializers.ModelSerializer):
-    organizer = GameUserNestedSerializer(read_only=True, many=False)
+    # organizer = GameUserNestedSerializer(read_only=True, many=False)
     sport = GameSportNestedSerializer(read_only=True, many=False)
     spot = GameSpotNestedSerializer(read_only=True, many=False)
     rsvps = RsvpStatusNestedSerializer(source="attendees", read_only=True, many=True)

@@ -5,7 +5,7 @@ from graphene_django.types import DjangoObjectType
 from graphene_django_extras import DjangoFilterPaginateListField
 from graphene_django_extras.paginations import LimitOffsetGraphqlPagination
 
-from seedorf.games.schema import GameType
+# from seedorf.games.schema import GameType
 from seedorf.locations.schema import AddressType
 from seedorf.sports.schema import SportType
 from .models import Spot, SpotAmenity, SpotImage, SpotOpeningTime
@@ -14,7 +14,7 @@ from .viewsets import SpotFilter
 
 class SpotType(DjangoObjectType):
     sports = graphene.List(SportType)
-    games = graphene.List(GameType)
+    games = graphene.List('seedorf.games.schema.GameType')
     address = graphene.Field(AddressType)
 
     class Meta:

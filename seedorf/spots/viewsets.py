@@ -14,11 +14,11 @@ from seedorf.utils.regex import UUID as REGEX_UUID
 from .models import Spot, SpotOpeningTime, SpotAmenity, SpotImage
 from .serializers import (
     SpotSerializer,
-    GameSpotNestedSerializer,
     ImageSerializer,
     AmenitySerializer,
     OpeningTimeSerializer,
 )
+from seedorf.games.serializers import GameSpotNestedSerializer
 
 
 class SpotFilter(filters.FilterSet):
