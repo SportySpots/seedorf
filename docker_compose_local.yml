@@ -82,7 +82,7 @@ services:
       context: .
       dockerfile: ./compose/local/postgres/Dockerfile
     volumes:
-      - sportyspots_postgres_data_local:/var/lib/postgresql/data
+      - ./dbdata:/var/lib/postgresql/data
       - sportyspots_postgres_backup_local:/backups
     env_file:
       - ./.env

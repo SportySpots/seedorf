@@ -22,3 +22,4 @@ docker_compose_production.yml
 
 # ignore temp packaged Dockerrun.aws.json
 latest.zip
+dbdata

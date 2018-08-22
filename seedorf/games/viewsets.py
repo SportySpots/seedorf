@@ -42,7 +42,6 @@ class GameViewSet(viewsets.ModelViewSet):
     """
     API endpoint that allows games to be viewed or edited.
     """
-
     queryset = Game.objects.filter(deleted_at=None).order_by("-start_time")
     serializer_class = GameSerializer
     lookup_field = "uuid"
@@ -50,6 +49,15 @@ class GameViewSet(viewsets.ModelViewSet):
     permission_classes = (IsAuthenticatedOrReadOnly,)
     filter_backends = (filters.DjangoFilterBackend,)
     filter_class = GameFilter
+
+    # def create(self, request, *args, **kwargs):
+    #     from rest_framework import status
+    #     from rest_framework.response import Response
+    #     serializer = self.get_serializer(data=dict(request.data, organizer=request.user.id))
+    #     serializer.is_valid(raise_exception=True)
+    #     self.perform_create(serializer)
+    #     headers = self.get_success_headers(serializer.data)
+    #     return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
 
 
 class RsvpStatusViewset(viewsets.ModelViewSet):

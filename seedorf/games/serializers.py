@@ -163,6 +163,7 @@ class GameSerializer(serializers.ModelSerializer):
     sport = GameSportNestedSerializer(read_only=True, many=False)
     spot = GameSpotNestedSerializer(read_only=True, many=False)
     rsvps = RsvpStatusNestedSerializer(source="attendees", read_only=True, many=True)
+    organizer = UserSerializer(many=False, required=False)
 
     class Meta:
         model = Game
@@ -199,7 +200,7 @@ class GameSerializer(serializers.ModelSerializer):
         return game
 
     def update(self, instance, validated_data):
-
+        print("UPDATING")
         for k, v in validated_data.items():
             setattr(instance, k, v)
 

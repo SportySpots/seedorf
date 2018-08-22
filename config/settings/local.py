@@ -32,6 +32,8 @@ ALLOWED_HOSTS = [
     "host.docker.internal"
 ]
 
+EMAIL_BACKEND = env("DJANGO_EMAIL_BACKEND", default="seedorf.utils.LocalPostmarkEmailBackend.LocalPostmarkEmailBackend")
+
 # Mail settings
 # ------------------------------------------------------------------------------
 EMAIL_PORT = 1025

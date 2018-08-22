@@ -11,3 +11,4 @@ class GameAdmin(admin.ModelAdmin):
 
 admin.site.register(Game, GameAdmin)
 admin.site.register(RsvpStatus)
+
