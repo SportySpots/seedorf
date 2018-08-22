@@ -63,7 +63,6 @@
   vars:
     certbot_admin_email: admin@sportyspots.com
     certbot_create_if_missing: yes
-    certbot_create_standalone_stop_services: []
     certbot_create_standalone_stop_services:
       - nginx
     certbot_certs:

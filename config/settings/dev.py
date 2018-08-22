@@ -27,6 +27,7 @@ ALLOWED_HOSTS = ["localhost", "0.0.0.0", "127.0.0.1", "10.0.3.2", "host.docker.i
 
 CORS_ORIGIN_WHITELIST = ["localhost:8000", "localhost:8080", "127.0.0.1:8000" "127.0.0.1:8080"] + CORS_ORIGIN_WHITELIST
 
+EMAIL_BACKEND = env("DJANGO_EMAIL_BACKEND", default="seedorf.utils.LocalPostmarkEmailBackend.LocalPostmarkEmailBackend")
 
 # Mail settings
 # ------------------------------------------------------------------------------
@@ -42,7 +43,7 @@ CACHES = {"default": {"BACKEND": "django.core.cache.backends.locmem.LocMemCache"
 MIDDLEWARE += ["debug_toolbar.middleware.DebugToolbarMiddleware"]
 INSTALLED_APPS += ["debug_toolbar"]
 
-INTERNAL_IPS = ["127.0.0.1", "10.0.2.2"]
+INTERNAL_IPS = ["127.0.0.1", "10.0.2.2", "10.0.3.2"]
 
 # tricks to have debug toolbar when developing with docker
 if os.environ.get("USE_DOCKER") == "yes":
