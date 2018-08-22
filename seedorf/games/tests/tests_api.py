@@ -105,7 +105,7 @@ class GameAPIViewTest(APITestCase):
         data = {"status": "planned"}
         url = reverse("game-detail", kwargs={"uuid": str(game.uuid)})
 
-        with patch.object(GameSerializer, "send_confirmation_mail", return_value=None) as send_confirmation_email:
+        with patch.object(GameSerializer, "send_confirmation_mail", return_value=None):
             response = self.client.patch(url, data, format="json")
             self.assertEqual(200, response.status_code)
 
@@ -134,9 +134,7 @@ class GameAPIViewTest(APITestCase):
 
         url = reverse("game-rsvps-detail", kwargs={"game_uuid": str(rsvp.game.uuid), "uuid": str(rsvp.uuid)})
 
-        with patch.object(
-            RsvpStatusNestedSerializer, "send_confirmation_mail", return_value=None
-        ) as send_confirmation_mail:
+        with patch.object(RsvpStatusNestedSerializer, "send_confirmation_mail", return_value=None):
             response = self.client.put(url, data, format="json")
             self.assertEqual(200, response.status_code)
 

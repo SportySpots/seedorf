@@ -35,7 +35,11 @@ class GameFilter(filters.FilterSet):
 class RsvpStatusFilter(filters.FilterSet):
     class Meta:
         model = RsvpStatus
-        fields = {"game__uuid": ["exact"], "user__uuid": ["exact"], "status": ["exact"]}
+        fields = {
+            "game__uuid": ["exact"],
+            "user__uuid": ["exact"],
+            "status": ["exact"]
+        }
 
 
 class GameViewSet(viewsets.ModelViewSet):

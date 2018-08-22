@@ -6,6 +6,7 @@ from rest_framework import viewsets
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
 from rest_framework_gis.filters import DistanceToPointFilter
 
+from seedorf.games.serializers import GameSpotNestedSerializer
 from seedorf.locations.models import Address
 from seedorf.locations.serializers import AddressSerializer
 from seedorf.sports.models import Sport
@@ -14,7 +15,6 @@ from seedorf.utils.regex import UUID as REGEX_UUID
 from .models import Spot, SpotOpeningTime, SpotAmenity, SpotImage
 from .serializers import (
     SpotSerializer,
-    GameSpotNestedSerializer,
     ImageSerializer,
     AmenitySerializer,
     OpeningTimeSerializer,

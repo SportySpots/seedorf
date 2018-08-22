@@ -29,15 +29,20 @@ class RsvpStatusType(DjangoObjectType):
 class Query(object):
     game = graphene.Field(GameType, uuid=graphene.UUID())
     games = DjangoFilterPaginateListField(
-        GameType, pagination=LimitOffsetGraphqlPagination(), filterset_class=GameFilter
+        GameType,
+        pagination=LimitOffsetGraphqlPagination(),
+        filterset_class=GameFilter
     )
 
     rsvp_status = graphene.Field(RsvpStatusType, uuid=graphene.UUID())
     rsvp_statuses = DjangoFilterPaginateListField(
-        RsvpStatusType, pagination=LimitOffsetGraphqlPagination(), filterset_class=RsvpStatusFilter
+        RsvpStatusType,
+        pagination=LimitOffsetGraphqlPagination(),
+        filterset_class=RsvpStatusFilter
     )
 
-    def resolve_game(self, args, **kwargs):
+    @staticmethod
+    def resolve_game(args, **kwargs):
         uuid = kwargs.get("uuid")
 
         if uuid is not None:
@@ -45,10 +50,12 @@ class Query(object):
 
         return None
 
-    def resolve_games(self, args, **kwargs):
+    @staticmethod
+    def resolve_games(args, **kwargs):
         return Game.objects.all()
 
-    def resolve_rsvp_status(self, args, **kwargs):
+    @staticmethod
+    def resolve_rsvp_status(args, **kwargs):
         uuid = kwargs.get("uuid")
 
         if uuid is not None:
@@ -56,5 +63,6 @@ class Query(object):
 
         return None
 
-    def resolve_rsvp_statuses(self, args, **kwargs):
+    @staticmethod
+    def resolve_rsvp_statuses(args, **kwargs):
         return RsvpStatus.objects.all()

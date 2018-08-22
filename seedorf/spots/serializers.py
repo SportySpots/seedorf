@@ -1,8 +1,6 @@
 from django.utils.translation import ugettext_lazy as _
 from rest_framework import serializers
-from rest_framework_nested.serializers import NestedHyperlinkedModelSerializer
 
-from seedorf.games.models import Game
 from seedorf.locations.serializers import AddressSerializer
 from seedorf.sports.models import Sport
 from .models import Spot, SpotAmenity, SpotImage, SpotOpeningTime
@@ -109,7 +107,7 @@ class SpotSportNestedSerializer(serializers.ModelSerializer):
 
     @staticmethod
     def get_spot_uuid(context):
-        if context["view"].basename == "spot":
+        if context["view"].basename in ["spot", "user"]:
             spot_uuid = context["spot_uuid"]
         elif context["view"].basename == "spot-sports":
             spot_uuid = context["view"].kwargs["spot_uuid"]
@@ -136,7 +134,6 @@ class SpotSerializer(serializers.ModelSerializer):
 
     # TODO: is_verified can only be set by staff, currently its is covered by IsAdminOrReadOnly permission
     # TODO: is_permanently_closed can only be set by staff, currently is covered by IsAdminOrReadOnly permission
-    # address = AddressSerializer(read_only=True, many=False)
     address = serializers.SerializerMethodField()
     sports = serializers.SerializerMethodField()
 

@@ -1,10 +1,10 @@
 from django.core.mail import EmailMessage
 from django.utils.translation import ugettext_lazy as _
 from rest_framework import serializers
-from rest_framework_nested.serializers import NestedHyperlinkedModelSerializer
 
 from seedorf.sports.models import Sport
 from seedorf.spots.models import Spot
+from seedorf.users.models import User
 from seedorf.users.serializers import UserSerializer
 from .models import Game, RsvpStatus
 
@@ -16,7 +16,7 @@ class RsvpStatusSerializer(serializers.ModelSerializer):
         read_only_fields = ("uuid", "created_at", "modified_at")
 
 
-class RsvpStatusNestedSerializer(NestedHyperlinkedModelSerializer):
+class RsvpStatusNestedSerializer(serializers.ModelSerializer):
     # NOTE: User is readonly as it is get/set direct from the request
     # TODO: Only the logged in user can create an rsvp for himself/ herself
     # TODO: Check if the game is invite only and see if the user was invited
@@ -91,7 +91,7 @@ class RsvpStatusNestedSerializer(NestedHyperlinkedModelSerializer):
         message.send()
 
 
-class GameSportNestedSerializer(NestedHyperlinkedModelSerializer):
+class UserSportNestedSerializer(serializers.ModelSerializer):
     uuid = serializers.UUIDField(required=True)
 
     class Meta:
@@ -100,36 +100,93 @@ class GameSportNestedSerializer(NestedHyperlinkedModelSerializer):
         read_only_fields = ("category", "name", "description", "created_at", "modified_at")
 
     def create(self, validated_data):
-        game_uuid = self.context["view"].kwargs["game_uuid"]
-        game = Game.objects.get(uuid=game_uuid)
+        if self.context["view"].basename == "user-sport":
+            user_uuid = self.context["view"].kwargs["user_uuid"]
+            user = User.objects.get(uuid=user_uuid)
 
-        sport_uuid = validated_data["uuid"]
-        try:
-            sport = Sport.objects.get(uuid=str(sport_uuid))
-        except Sport.DoesNotExist:
-            raise serializers.ValidationError(_("Sport not found"))
+            sport_uuid = validated_data["uuid"]
+            try:
+                sport = Sport.objects.get(uuid=str(sport_uuid))
+            except Sport.DoesNotExist:
+                raise serializers.ValidationError(_("Sport not found"))
 
-        # if the game already has a spot assigned, then check if the sport being assinged belongs to the spot
-        if game.spot:
-            spot = Spot.objects.filter(sports__uuid=sport_uuid).first()
-            if not spot or game.spot.uuid != spot.uuid:
-                raise serializers.ValidationError(
-                    _("Invalid Sport. Sport being assigned is not associated with the" " game spot")
-                )
+            user.sports.add(sport)
+            user.save()
 
-        game.sport = sport
-        game.save()
+            return sport
 
-        return sport
+        return {}
 
 
-class GameSpotNestedSerializer(NestedHyperlinkedModelSerializer):
+class GameSportNestedSerializer(serializers.ModelSerializer):
+    uuid = serializers.UUIDField(required=True)
+
+    class Meta:
+        model = Sport
+        fields = ("uuid", "category", "name", "description", "created_at", "modified_at")
+        read_only_fields = ("category", "name", "description", "created_at", "modified_at")
+
+    def create(self, validated_data):
+        if self.context["view"].basename == "game-sport":
+            game_uuid = self.context["view"].kwargs["game_uuid"]
+            game = Game.objects.get(uuid=game_uuid)
+
+            sport_uuid = validated_data["uuid"]
+            try:
+                sport = Sport.objects.get(uuid=str(sport_uuid))
+            except Sport.DoesNotExist:
+                raise serializers.ValidationError(_("Sport not found"))
+
+            # if the game already has a spot assigned, then check if the sport being assigned belongs to the spot
+            if game.spot:
+                spot = Spot.objects.filter(sports__uuid=sport_uuid).first()
+                if not spot or game.spot.uuid != spot.uuid:
+                    raise serializers.ValidationError(
+                        _("Invalid Sport. Sport being assigned is not associated with the game spot")
+                    )
+
+            game.sport = sport
+            game.save()
+
+            return sport
+
+        return {}
+
+
+class GameSpotNestedSerializer(serializers.ModelSerializer):
     uuid = serializers.UUIDField(required=True)
 
     class Meta:
         model = Spot
-        fields = ("uuid", "created_at", "modified_at")
-        read_only_fields = ("created_at", "modified_at")
+        fields = (
+            "uuid",
+            "name",
+            "owner",
+            "logo",
+            "homepage_url",
+            "is_verified",
+            "is_permanently_closed",
+            "is_temporary",
+            "establishment_date",
+            "closure_date",
+            "address",
+            "created_at",
+            "modified_at",
+        )
+        read_only_fields = (
+            "name",
+            "owner",
+            "logo",
+            "homepage_url",
+            "is_verified",
+            "is_permanently_closed",
+            "is_temporary",
+            "establishment_date",
+            "closure_date",
+            "address",
+            "created_at",
+            "modified_at"
+        )
 
     def create(self, validated_data):
         if self.context["view"].basename == "game-spot":
@@ -159,7 +216,7 @@ class GameSpotNestedSerializer(NestedHyperlinkedModelSerializer):
 
 
 class GameSerializer(serializers.ModelSerializer):
-    organizer = GameUserNestedSerializer(read_only=True, many=False)
+    organizer = UserSerializer(read_only=True, many=False)
     sport = GameSportNestedSerializer(read_only=True, many=False)
     spot = GameSpotNestedSerializer(read_only=True, many=False)
     rsvps = RsvpStatusNestedSerializer(source="attendees", read_only=True, many=True)

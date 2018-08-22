@@ -27,7 +27,7 @@ from seedorf.spots.viewsets import (
     SpotSportOpeningTimesNestedViewSet,
 )
 from seedorf.users.views import registration_null_view, registration_complete_view
-from seedorf.users.viewsets import UserViewSet, GameUserNestedViewSet, UserProfileNestedViewSet
+from seedorf.users.viewsets import UserViewSet, GameUserNestedViewSet, UserProfileNestedViewSet, UserProfileSportNestedViewSet, UserProfileSpotNestedViewSet
 
 drf_schema_view = drf_get_schema_view(title="SportySpots API")
 
@@ -58,9 +58,9 @@ router.register(r"sports", SportViewSet)  # /api/sports/
 users_router = routers.NestedDefaultRouter(router, r"users", lookup="user")
 users_router.register(r"profile", UserProfileNestedViewSet, base_name="user-profile")  # /api/users/<uuid>/profile
 
-# users_profile_router = routers.NestedDefaultRouter(users_router, r'profile', lookup='profile')
-# users_profile_router.register(r'sports', UserProfileSportNestedViewset, base_name='user-profile-sports')
-# users_profile_router.register(r'sports', UserProfileSpotNestedViewset, base_name='user-profile-spots')
+users_profile_router = routers.NestedDefaultRouter(users_router, r'profile', lookup='profile')
+users_profile_router.register(r'sports', UserProfileSportNestedViewSet, base_name='user-profile-sports')  # /api/users/<uuid>/profile/<uuid>/sports/
+users_profile_router.register(r'sports', UserProfileSpotNestedViewSet, base_name='user-profile-spots')  # /api/users/<uuid>/profile/<uuid>/spots/
 
 # Spots urls
 spots_router = routers.NestedDefaultRouter(router, r"spots", lookup="spot")

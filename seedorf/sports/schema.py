@@ -1,7 +1,8 @@
 import graphene
-from graphene_django_extras import DjangoObjectType
+from graphene_django_extras import DjangoObjectType, DjangoFilterPaginateListField, LimitOffsetGraphqlPagination
 
 from .models import Sport
+from .viewsets import SportFilter
 
 
 class SportType(DjangoObjectType):
@@ -11,9 +12,14 @@ class SportType(DjangoObjectType):
 
 class Query(object):
     sport = graphene.Field(SportType, uuid=graphene.UUID())
-    sports = graphene.List(SportType)
+    sports = DjangoFilterPaginateListField(
+        SportType,
+        filterset_class=SportFilter,
+        pagination=LimitOffsetGraphqlPagination()
+    )
 
-    def resolve_sport(self, args, **kwargs):
+    @staticmethod
+    def resolve_sport(args, **kwargs):
         uuid = kwargs.get("uuid")
 
         if uuid is not None:
@@ -21,5 +27,6 @@ class Query(object):
 
         return None
 
-    def resolve_sports(self, args, **kwargs):
+    @staticmethod
+    def resolve_sports(args, **kwargs):
         return Sport.objects.all()

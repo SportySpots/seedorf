@@ -1,3 +1,5 @@
+import pytz
+import six
 from allauth.account import app_settings as allauth_settings
 from allauth.account.adapter import get_adapter
 from allauth.account.utils import setup_user_email
@@ -6,56 +8,31 @@ from django.contrib.auth.models import Group
 from django.core.validators import EmailValidator
 from rest_framework import serializers
 from rest_framework.validators import UniqueValidator
-from rest_framework_nested.serializers import NestedHyperlinkedModelSerializer
 from seedorf.sports.serializers import SportSerializer
 from seedorf.spots.serializers import SpotSerializer
-from seedorf.sports.models import Sport
 
 from .models import User, UserProfile
 
 
-class UserSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = User
-        fields = (
-            "uuid",
-            "first_name",
-            "last_name",
-            "email",
-            "is_staff",
-            "is_active",
-            "date_joined",
-            "created_at",
-            "modified_at",
-            "groups",
-        )
-        read_only_fields = ("uuid", "is_staff", "is_active", "date_joined", "created_at", "modified_at", "groups")
+class TimezoneField(serializers.Field):
+    def to_representation(self, obj):
+        return six.text_type(obj)
+
+    def to_internal_value(self, data):
+        try:
+            return pytz.timezone(str(data))
+        except pytz.exceptions.UnknownTimeZoneError:
+            raise serializers.ValidationError(_("Unknown timezone"))
 
 
-class UserProfileNestedSerializer(NestedHyperlinkedModelSerializer):
-    class Meta:
-        model = UserProfile
-        fields = (
-            "uuid",
-            "sports",
-            "spots",
-            "gender",
-            "year_of_birth",
-            "avatar",
-            "language",
-            "timezone",
-            "country",
-            "bio",
-            "created_at",
-            "modified_at",
-        )
-        read_only_fields = ("uuid", "created_at", "modified_at")
-
-
-class UserProfileSerializer(serializers.ModelSerializer):
+class UserProfileNestedSerializer(serializers.ModelSerializer):
 
     sports = SportSerializer(many=True, required=False)
     spots = SpotSerializer(many=True, required=False)
+    timezone = TimezoneField()
+
+    # spots = serializers.SerializerMethodField()
+    # sports = serializers.SerializerMethodField()
 
     class Meta:
         model = UserProfile
@@ -80,6 +57,21 @@ class UserProfileSerializer(serializers.ModelSerializer):
         profile.save()
         return profile
 
+    def update(self, instance, validated_data):
+        for k, v in validated_data.items():
+            setattr(instance, k, v)
+        instance.save()
+        return instance
+
+    # def get_spots(self, obj):
+    #     spots = obj.spots.all()
+    #     self.context["user_uuid"] = obj.uuid
+    #     return UserProfileSpotNestedSerializer(spots, many=True, read_only=True, context=self.context).data
+    #
+    # def get_sports(self, obj):
+    #     sports = obj.sports.all()
+    #     self.context["user_uuid"] = obj.uuid
+    #     return UserProfileSportNestedSerializer(sports, many=True, read_only=True, context=self.context).data
 
 # class UserProfileSportNestedSerializer(NestedHyperlinkedModelSerializer):
 #     uuid = serializers.UUIDField(required=True)
@@ -110,6 +102,28 @@ class UserProfileSerializer(serializers.ModelSerializer):
 #         game.save()
 #
 #         return sport
+
+
+class UserSerializer(serializers.ModelSerializer):
+
+    profile = UserProfileNestedSerializer(many=False, required=False)
+
+    class Meta:
+        model = User
+        fields = (
+            "uuid",
+            "first_name",
+            "last_name",
+            "email",
+            "is_staff",
+            "is_active",
+            "date_joined",
+            "profile",
+            "created_at",
+            "modified_at",
+            "groups",
+        )
+        read_only_fields = ("uuid", "is_staff", "is_active", "date_joined", "created_at", "modified_at", "groups")
 
 
 class UserDetailsSerializer(serializers.ModelSerializer):

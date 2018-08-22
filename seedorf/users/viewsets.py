@@ -35,6 +35,36 @@ class UserProfileNestedViewSet(viewsets.ModelViewSet):
         return UserProfile.objects.filter(user__uuid=user_uuid)
 
 
+class UserProfileSportNestedViewSet(viewsets.ModelViewSet):
+    """
+    API endpoint that allows user profile to be viewed or edited.
+    """
+
+    serializer_class = UserProfileNestedSerializer
+    lookup_field = "uuid"
+    lookup_value_regex = REGEX_UUID
+    permission_classes = (IsOwnerOrReadOnly,)
+
+    def get_queryset(self):
+        user_uuid = self.kwargs["user_uuid"]
+        return UserProfile.objects.filter(user__uuid=user_uuid)
+
+
+class UserProfileSpotNestedViewSet(viewsets.ModelViewSet):
+    """
+    API endpoint that allows user profile to be viewed or edited.
+    """
+
+    serializer_class = UserProfileNestedSerializer
+    lookup_field = "uuid"
+    lookup_value_regex = REGEX_UUID
+    permission_classes = (IsOwnerOrReadOnly,)
+
+    def get_queryset(self):
+        user_uuid = self.kwargs["user_uuid"]
+        return UserProfile.objects.filter(user__uuid=user_uuid)
+
+
 class GameUserNestedViewSet(viewsets.ModelViewSet):
     """
     API endpoint that allows nested users to be viewed or edited.
