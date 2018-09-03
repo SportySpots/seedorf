@@ -344,10 +344,9 @@
         },
         "django-rest-elasticsearch": {
             "hashes": [
-                "sha256:2b1553d98b63526f5f7c71682f513227773d58b330db13eea19335c91ba12198"
+                "sha256:b74e226156f6ec190847df246cbcaeb4a6cb1d5f8dc838556d5354772686b120"
             ],
-            "index": "pypi",
-            "version": "==0.3.2"
+            "version": "==0.4.1"
         },
         "django-rest-swagger": {
             "hashes": [
