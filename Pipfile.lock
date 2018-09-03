@@ -1078,10 +1078,10 @@
         },
         "tqdm": {
             "hashes": [
-                "sha256:ba650e08b8b102923a05896bf9d7e1c9cdc20b484156df0511a4bbf1f6b6f89b",
-                "sha256:fa6d2ea6285f56e75d7efe9259805deadc450f16066a1f82ad0629ea9be2cd0f"
+                "sha256:5ef526702c0d265d5a960a3b27f3971fac13c26cf0fb819294bfa71fc6026c88",
+                "sha256:a3364bd83ce4777320b862e3c8a93d7da91e20a95f06ef79bed7dd71c654cafa"
             ],
-            "version": "==4.19.1"
+            "version": "==4.25.0"
         },
         "troposphere": {
             "hashes": [
