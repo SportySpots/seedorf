@@ -638,9 +638,9 @@
         },
         "lambda-packages": {
             "hashes": [
-                "sha256:cbe35f0642206a4adfb4855f80d55e273bdacc083011eba5f9ed3beedf0879fa"
+                "sha256:b5e3b81ecef5f7c1b0903b5c40813536ba2343a33868a567e4e4ff1e26243406"
             ],
-            "version": "==0.19.0"
+            "version": "==0.20.0"
         },
         "markdown": {
             "hashes": [
