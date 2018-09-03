@@ -357,11 +357,10 @@
         },
         "django-storages": {
             "hashes": [
-                "sha256:ab6be1538cf29511400bce83d0e5ca74d2e935cad82086063bcf5e7edacc1661",
-                "sha256:bc8e4c1f483608c5dd1212072fd41042f3ef2d2a2896ec4fb12dbc62c82996a0"
+                "sha256:9e0f3423cdf8fabe74c174380de6cd65b9343b5c83c08f35ace57213f17fb083",
+                "sha256:e021ae94c0ca39c683260fa0065cae0df041d795dd79fee8f7bf4ba31798640d"
             ],
-            "index": "pypi",
-            "version": "==1.6.5"
+            "version": "==1.7"
         },
         "django-timezone-field": {
             "hashes": [
