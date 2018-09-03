@@ -609,10 +609,10 @@
         },
         "jsonpointer": {
             "hashes": [
-                "sha256:381b613fd1afd65376fb28948c4744f035e47ab049a9fdde0c48cc1c30b68559",
-                "sha256:c681af823545c731b7b38aedd5d4eee4c5eff87bc0f25e0ff25444a4189eac4d"
+                "sha256:ff379fa021d1b81ab539f5ec467c7745beb1a5671463f9dcc2b2d458bd361c1e",
+                "sha256:c192ba86648e05fdae4f08a17ec25180a9aef5008d973407b581798a83975362"
             ],
-            "version": "==1.14"
+            "version": "==2.0"
         },
         "jsonschema": {
             "hashes": [
