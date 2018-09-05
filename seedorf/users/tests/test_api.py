@@ -4,9 +4,11 @@ from django.core.urlresolvers import reverse
 from rest_framework.test import APITestCase
 from unittest.mock import patch
 
+from seedorf.sports.tests.factories import SportFactory
+from seedorf.spots.tests.factories import SpotFactory
 from seedorf.users.adapters import AccountAdapter
-from seedorf.users.models import User
-from .factories import UserFactory
+from seedorf.users.models import User, UserProfile
+from .factories import UserFactory, UserProfileFactory
 
 
 class UserRegistrationAPIViewTest(APITestCase):
@@ -61,6 +63,8 @@ class UserRegistrationAPIViewTest(APITestCase):
 
 
 class UserProfileAPIViewTest(APITestCase):
+    # TODO: Write test to test Avatar creation
+
     def test_user_profile_creation(self):
         user = UserFactory(username="test", email="test@example.com")
         self.client.force_authenticate(user=user)
@@ -70,8 +74,63 @@ class UserProfileAPIViewTest(APITestCase):
         user_profile_data = {"year_of_birth": 1980}
 
         response = self.client.post(url, user_profile_data)
+        self.assertEqual(201, response.status_code)
+        self.assertEqual(response.data['sports'], [])
+        self.assertEqual(response.data['spots'], [])
+        self.assertEqual(response.data['gender'], UserProfile.GENDER_NOT_SPECIFIED)
+        self.assertEqual(response.data['year_of_birth'], 1980)
+        self.assertEqual(response.data['avatar'], None)
+        self.assertEqual(response.data['language'], 'en')
+        self.assertEqual(response.data['timezone'], 'Europe/Amsterdam')
+        self.assertEqual(response.data['country'], '')
+        self.assertEqual(response.data['bio'], '')
+        self.assertCountEqual(['uuid', 'sports', 'spots', 'gender', 'year_of_birth', 'avatar', 'language', 'timezone',
+                               'country', 'bio'], response.data.keys())
+
+    def test_user_profile_edit(self):
+        sport = SportFactory()
+        spot = SpotFactory(sports=[sport])
+
+        user_profile = UserProfileFactory.create(spots=[spot], sports=[sport])
+
+        self.client.force_authenticate(user=user_profile.user)
+
+        url = reverse("user-profile-detail", kwargs={"user_uuid": str(user_profile.user.uuid),
+                                                     "uuid": str(user_profile.uuid)})
+
+        user_profile_data = {"year_of_birth": 1981}
+
+        response = self.client.put(url, user_profile_data)
+        self.assertEqual(200, response.status_code)
+        self.assertEqual(response.data['year_of_birth'], 1981)
+
+    def test_user_profile_sport_retrieve(self):
+        sport = SportFactory()
+        spot = SpotFactory(sports=[sport])
+
+        user_profile = UserProfileFactory.create(spots=[spot], sports=[sport])
+
+        self.client.force_authenticate(user=user_profile.user)
+
+        url = reverse("user-profile-sports-list", kwargs={"user_uuid": str(user_profile.user.uuid),
+                                                          "profile_uuid": str(user_profile.uuid)})
+
+        response = self.client.get(url)
         self.assertEqual(200, response.status_code)
 
+    def test_user_profile_spot_retrieve(self):
+        sport = SportFactory()
+        spot = SpotFactory(sports=[sport])
+
+        user_profile = UserProfileFactory.create(spots=[spot], sports=[sport])
+
+        self.client.force_authenticate(user=user_profile.user)
+
+        url = reverse("user-profile-spots-list", kwargs={"user_uuid": str(user_profile.user.uuid),
+                                                         "profile_uuid": str(user_profile.uuid)})
+
+        response = self.client.get(url)
+        self.assertEqual(200, response.status_code)
 
 # Create Token Manually
 # from rest_framework_jwt.settings import api_settings
