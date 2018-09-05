@@ -27,7 +27,13 @@ from seedorf.spots.viewsets import (
     SpotSportOpeningTimesNestedViewSet,
 )
 from seedorf.users.views import registration_null_view, registration_complete_view
-from seedorf.users.viewsets import UserViewSet, GameUserNestedViewSet, UserProfileNestedViewSet, UserProfileSportNestedViewSet, UserProfileSpotNestedViewSet
+from seedorf.users.viewsets import (
+    UserViewSet,
+    GameUserNestedViewSet,
+    UserProfileNestedViewSet,
+    UserProfileSportNestedViewSet,
+    UserProfileSpotNestedViewSet
+)
 
 drf_schema_view = drf_get_schema_view(title="SportySpots API")
 
@@ -60,7 +66,7 @@ users_router.register(r"profile", UserProfileNestedViewSet, base_name="user-prof
 
 users_profile_router = routers.NestedDefaultRouter(users_router, r'profile', lookup='profile')
 users_profile_router.register(r'sports', UserProfileSportNestedViewSet, base_name='user-profile-sports')  # /api/users/<uuid>/profile/<uuid>/sports/
-users_profile_router.register(r'sports', UserProfileSpotNestedViewSet, base_name='user-profile-spots')  # /api/users/<uuid>/profile/<uuid>/spots/
+users_profile_router.register(r'spots', UserProfileSpotNestedViewSet, base_name='user-profile-spots')  # /api/users/<uuid>/profile/<uuid>/spots/
 
 # Spots urls
 spots_router = routers.NestedDefaultRouter(router, r"spots", lookup="spot")
@@ -70,17 +76,17 @@ spots_router.register(r"sports", SpotSportsNestedViewSet, base_name="spot-sports
 spot_sports_images_router = routers.NestedDefaultRouter(spots_router, r"sports", lookup="sport")
 spot_sports_images_router.register(
     r"images", SpotSportImagesNestedViewSet, base_name="spot-sport-images"
-)  # /api/sports/<uuid>/images
+)  # /api/spots/<uuid>/sports/<uuid>/images
 
 spot_sports_amenities_router = routers.NestedDefaultRouter(spots_router, r"sports", lookup="sport")
 spot_sports_amenities_router.register(
     r"amenities", SpotSportAmenitesNestedViewSet, base_name="spot-sport-amenities"
-)  # /api/sports/<uuid>/amenities
+)  # /api/spots/<uuid>sports/<uuid>/amenities
 
 spot_sports_opening_times_router = routers.NestedDefaultRouter(spots_router, r"sports", lookup="sport")
 spot_sports_opening_times_router.register(
     r"opening-times", SpotSportOpeningTimesNestedViewSet, base_name="spot-sport-opening-times"
-)  # /api/sports/<uuid>/opening-times
+)  # /api/spots/<uuid>/sports/<uuid>/opening-times
 
 # Game urls
 games_router = routers.NestedDefaultRouter(router, r"games", lookup="game")
@@ -93,8 +99,12 @@ games_router.register(r"spot", GameSpotNestedViewSet, base_name="game-spot")  # 
 urlpatterns = [
     # Django Admin, use {% url 'admin:index' %}
     url(settings.ADMIN_URL, admin.site.urls),
+
+    # Anymail
     url(r"^anymail/", include("anymail.urls")),
+
     # Your stuff: custom urls includes go here
+
     # Authentication / Registration
     # REF: https://github.com/blakey22/rest_email_signup
     url(
@@ -121,16 +131,22 @@ urlpatterns = [
     url(r"^api/accounts/", include("allauth.urls", namespace="allauth")),
     # url(r'^api/api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     # url(r'^api/api-token-auth/', obtain_jwt_token),
+
     # REST API
     url(r"^api/", include(router.urls), name="api-core"),
+
     url(r"^api/", include(users_router.urls), name="api-users"),
     url(r"^api/", include(spots_router.urls), name="api-spots"),
     url(r"^api/", include(games_router.urls), name="api-games"),
+
+    url(r"^api/", include(users_profile_router.urls), name="api-user-profile"),
     url(r"^api/", include(spot_sports_images_router.urls), name="api-spot-sports-images"),
     url(r"^api/", include(spot_sports_amenities_router.urls), name="api-spot-sports-amenities"),
     url(r"^api/", include(spot_sports_opening_times_router.urls), name="api-spot-sports-opening-times"),
+
     # GraphQL API
     url(r"^graphql$", csrf_exempt(GraphQLView.as_view(graphiql=True, schema=schema)), name="graphql"),
+
     # TODO: Choose one of the api documentation tools below
     # DRF schema
     url(r"^schema/$", drf_schema_view),
@@ -139,8 +155,10 @@ urlpatterns = [
     url(r"^swagger(?P<format>\.json|\.yaml)$", schema_view.without_ui(cache_timeout=None), name="schema-json"),
     url(r"^swagger/$", schema_view.with_ui("swagger", cache_timeout=None), name="schema-swagger-ui"),
     url(r"^redoc/$", schema_view.with_ui("redoc", cache_timeout=None), name="schema-redoc"),
+
     # Apple ios deeplinking - app site association
     url(r"^apple-app-site-association/?$", apple_app_site_association, name="apple-app-site-association"),
+
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 if settings.DEBUG:
