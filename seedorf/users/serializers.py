@@ -6,11 +6,14 @@ from allauth.account.utils import setup_user_email
 from allauth.utils import email_address_exists
 from django.contrib.auth.models import Group
 from django.core.validators import EmailValidator
+from django.utils.translation import ugettext_lazy as _
 from rest_framework import serializers
 from rest_framework.validators import UniqueValidator
+from django_countries.serializers import CountryFieldMixin
+
+from seedorf.sports.models import Sport
 from seedorf.sports.serializers import SportSerializer
 from seedorf.spots.serializers import SpotSerializer
-
 from .models import User, UserProfile
 
 
@@ -25,11 +28,38 @@ class TimezoneField(serializers.Field):
             raise serializers.ValidationError(_("Unknown timezone"))
 
 
-class UserProfileNestedSerializer(serializers.ModelSerializer):
+class UserSportNestedSerializer(serializers.ModelSerializer):
+    uuid = serializers.UUIDField(required=True)
+
+    class Meta:
+        model = Sport
+        fields = ("uuid", "category", "name", "description", "created_at", "modified_at")
+        read_only_fields = ("uuid", "category", "name", "description", "created_at", "modified_at")
+
+    def create(self, validated_data):
+        if self.context["view"].basename == "user-sport":
+            user_uuid = self.context["view"].kwargs["user_uuid"]
+            user = User.objects.get(uuid=user_uuid)
+
+            sport_uuid = validated_data["uuid"]
+            try:
+                sport = Sport.objects.get(uuid=str(sport_uuid))
+            except Sport.DoesNotExist:
+                raise serializers.ValidationError(_("Sport not found"))
+
+            user.sports.add(sport)
+            user.save()
+
+            return sport
+
+        return {}
+
+
+class UserProfileSerializer(CountryFieldMixin, serializers.ModelSerializer):
 
     sports = SportSerializer(many=True, required=False)
     spots = SpotSerializer(many=True, required=False)
-    timezone = TimezoneField()
+    timezone = TimezoneField(required=False)
 
     # spots = serializers.SerializerMethodField()
     # sports = serializers.SerializerMethodField()
@@ -48,16 +78,27 @@ class UserProfileNestedSerializer(serializers.ModelSerializer):
             "country",
             "bio",
         )
-        read_only_fields = ("uuid", "created_at", "modified_at")
+        read_only_fields = ("uuid", "sports", "spots", "created_at", "modified_at")
 
     def create(self, validated_data):
+        # NOTE: We disallow nested object creation, hence pop out (ignore) related objects
+        validated_data.pop('spots')
+        validated_data.pop('sports')
+
+        # NOTE: Only the user himself can update his profile
         user = self.context["request"].user
+        validated_data['user'] = user
+
         profile = UserProfile.objects.create(**validated_data)
-        profile.user = user
+
         profile.save()
         return profile
 
     def update(self, instance, validated_data):
+        # NOTE: We disallow nested object creation, hence pop out (ignore) related objects
+        validated_data.pop('spots')
+        validated_data.pop('sports')
+
         for k, v in validated_data.items():
             setattr(instance, k, v)
         instance.save()
@@ -106,7 +147,7 @@ class UserProfileNestedSerializer(serializers.ModelSerializer):
 
 class UserSerializer(serializers.ModelSerializer):
 
-    profile = UserProfileNestedSerializer(many=False, required=False)
+    profile = UserProfileSerializer(many=False, required=False)
 
     class Meta:
         model = User
@@ -126,28 +167,6 @@ class UserSerializer(serializers.ModelSerializer):
         read_only_fields = ("uuid", "is_staff", "is_active", "date_joined", "created_at", "modified_at", "groups")
 
 
-class UserDetailsSerializer(serializers.ModelSerializer):
-    """
-    This serializer is used to return the authenticated user in the JWT (JSON Web Token)
-    """
-
-    class Meta:
-        model = User
-        fields = (
-            "uuid",
-            "first_name",
-            "last_name",
-            "username",
-            "email",
-            "is_staff",
-            "is_active",
-            "date_joined",
-            "created_at",
-            "modified_at",
-        )
-        read_only_fields = ("uuid", "created_at", "modified_at")
-
-
 class GroupSerializer(serializers.ModelSerializer):
     class Meta:
         model = Group
@@ -163,14 +182,16 @@ class RegisterSerializer(serializers.Serializer):
     password1 = serializers.CharField(write_only=True)
     password2 = serializers.CharField(write_only=True)
 
-    def validate_email(self, email):
+    @staticmethod
+    def validate_email(email):
         email = get_adapter().clean_email(email)
         if allauth_settings.UNIQUE_EMAIL:
             if email and email_address_exists(email):
                 raise serializers.ValidationError(_("A user is already registered with this e-mail address."))
         return email
 
-    def validate_password1(self, password):
+    @staticmethod
+    def validate_password1(password):
         return get_adapter().clean_password(password)
 
     def validate(self, data):

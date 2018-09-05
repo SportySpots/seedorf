@@ -135,7 +135,7 @@ class SpotSerializer(serializers.ModelSerializer):
     # TODO: is_verified can only be set by staff, currently its is covered by IsAdminOrReadOnly permission
     # TODO: is_permanently_closed can only be set by staff, currently is covered by IsAdminOrReadOnly permission
     address = serializers.SerializerMethodField()
-    sports = serializers.SerializerMethodField()
+    # sports = serializers.SerializerMethodField()
 
     class Meta:
         model = Spot
@@ -152,10 +152,10 @@ class SpotSerializer(serializers.ModelSerializer):
         instance.save()
         return instance
 
-    def get_sports(self, obj):
-        sports = obj.sports.all()
-        self.context["spot_uuid"] = obj.uuid
-        return SpotSportNestedSerializer(sports, many=True, read_only=True, context=self.context).data
+    # def get_sports(self, obj):
+    #     sports = obj.sports.all()
+    #     self.context["spot_uuid"] = obj.uuid
+    #     return SpotSportNestedSerializer(sports, many=True, read_only=True, context=self.context).data
 
     def get_address(self, obj):
         if obj.address is None:

@@ -4,7 +4,6 @@ from rest_framework import serializers
 
 from seedorf.sports.models import Sport
 from seedorf.spots.models import Spot
-from seedorf.users.models import User
 from seedorf.users.serializers import UserSerializer
 from .models import Game, RsvpStatus
 
@@ -89,33 +88,6 @@ class RsvpStatusNestedSerializer(serializers.ModelSerializer):
         message.merge_global_data = ctx
 
         message.send()
-
-
-class UserSportNestedSerializer(serializers.ModelSerializer):
-    uuid = serializers.UUIDField(required=True)
-
-    class Meta:
-        model = Sport
-        fields = ("uuid", "category", "name", "description", "created_at", "modified_at")
-        read_only_fields = ("category", "name", "description", "created_at", "modified_at")
-
-    def create(self, validated_data):
-        if self.context["view"].basename == "user-sport":
-            user_uuid = self.context["view"].kwargs["user_uuid"]
-            user = User.objects.get(uuid=user_uuid)
-
-            sport_uuid = validated_data["uuid"]
-            try:
-                sport = Sport.objects.get(uuid=str(sport_uuid))
-            except Sport.DoesNotExist:
-                raise serializers.ValidationError(_("Sport not found"))
-
-            user.sports.add(sport)
-            user.save()
-
-            return sport
-
-        return {}
 
 
 class GameSportNestedSerializer(serializers.ModelSerializer):
