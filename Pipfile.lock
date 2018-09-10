@@ -281,10 +281,9 @@
         },
         "django-elasticsearch-dsl": {
             "hashes": [
-                "sha256:3c39bee1b5ea9b716519f7376da978cbe4eac4e983bdc34a2d712963c6759d82"
+                "sha256:dffde3cc83b22d458aafdadb9df37288d37204c5c6b1a1d5ace87808615622fc"
             ],
-            "index": "pypi",
-            "version": "==0.4.0"
+            "version": "==0.5.0"
         },
         "django-environ": {
             "hashes": [
