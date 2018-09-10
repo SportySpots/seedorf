@@ -1868,10 +1868,10 @@
         },
         "semantic-version": {
             "hashes": [
-                "sha256:3baad35dcb074a49419539cea6a33b484706b6c2dd03f05b67763eba4c1bb65c",
-                "sha256:75aa594dc3c8000102a35b92e0e21db7b88e083bcb95d0499dea8494b549c3f2"
+                "sha256:2d06ab7372034bcb8b54f2205370f4aa0643c133b7e6dbd129c5200b83ab394b",
+                "sha256:2a4328680073e9b243667b201119772aefc5fc63ae32398d6afafff07c4f54c0"
             ],
-            "version": "==2.5.0"
+            "version": "==2.6.0"
         },
         "simplegeneric": {
             "hashes": [
