@@ -1470,10 +1470,9 @@
         },
         "django-test-plus": {
             "hashes": [
-                "sha256:cdfa439642c660a1c65af5add140a2dcf360e71daa65740d87e9e53cb8509d6b"
+                "sha256:4c3ff61998c2ea9a36c9c6e085b03b68eace71d15c21f4b2fb044441d3f1b7ce"
             ],
-            "index": "pypi",
-            "version": "==1.0.22"
+            "version": "==1.1.1"
         },
         "docker": {
             "hashes": [
