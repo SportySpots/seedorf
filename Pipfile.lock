@@ -500,10 +500,10 @@
         },
         "graphene-django": {
             "hashes": [
-                "sha256:62c1fcfffb84f7e04c5fb46eea2db5a889f4f825fb34613566ab79786994eee2",
-                "sha256:c2054187b200ecc451de40939773ba1cc4cf33b0f3bdd861622768ff41e113a4"
+                "sha256:3afd81d47c8b702650e05cc1179fac1cfceae991d241bb164d51f28bed9ec95c",
+                "sha256:760a18068feb5457e2ec00d2447c09b2fbac2a6b8c32cc8be2abce3752107ad3"
             ],
-            "version": "==2.1rc1"
+            "version": "==2.2.0"
         },
         "graphene-django-extras": {
             "editable": true,
