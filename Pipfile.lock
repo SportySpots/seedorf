@@ -1155,10 +1155,9 @@
         },
         "ansible": {
             "hashes": [
-                "sha256:0765eff7af162e267cb16b43afa290f741e160dd1ea11fcec807ba6f4a466165"
+                "sha256:6fa450c1f789f73cc0d8bdfbb79e30283b9d1a7bbb378d4bb82ebc5605d00931"
             ],
-            "index": "pypi",
-            "version": "==2.6.0rc3"
+            "version": "==2.7.0rc1"
         },
         "appdirs": {
             "hashes": [
