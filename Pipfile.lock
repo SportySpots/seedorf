@@ -1062,9 +1062,9 @@
         },
         "troposphere": {
             "hashes": [
-                "sha256:eb5f469696b55e69fffe32075a75e43a7d0e0f10428f0a4eaa2304031ab53fa8"
+                "sha256:c34b2ecec9ceeaca7c22c53b5440a712c08a260332f23faef436b43946576681"
             ],
-            "version": "==2.3.0"
+            "version": "==2.3.3"
         },
         "typing": {
             "hashes": [
