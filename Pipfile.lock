@@ -350,11 +350,10 @@
         },
         "django-rest-swagger": {
             "hashes": [
-                "sha256:3471e6c21a3e97751fa6f7b81b66e916e40fa645cac36be1594c0efed810d247",
-                "sha256:ff889e2b339a9a57010dba7729d56471e05b77827f6dd36c0bcb983839882598"
+                "sha256:b039b0288bab4665cd45dc5d16f94b13911bc4ad0ed55f74ad3b90aa31c87c17",
+                "sha256:48f6aded9937e90ae7cbe9e6c932b9744b8af80cc4e010088b3278c700e0685b"
             ],
-            "index": "pypi",
-            "version": "==2.1.2"
+            "version": "==2.2.0"
         },
         "django-storages": {
             "hashes": [
