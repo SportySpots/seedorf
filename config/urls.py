@@ -15,7 +15,7 @@ from rest_framework.schemas import get_schema_view as drf_get_schema_view
 from rest_framework_jwt.views import refresh_jwt_token, verify_jwt_token
 from rest_framework_nested import routers
 
-from seedorf.apple.views import apple_app_site_association
+from seedorf.core.views import apple_app_site_association
 from seedorf.games.viewsets import GameViewSet, GameRsvpStatusNestedViewset
 from seedorf.graphql.schema import schema
 from seedorf.sports.viewsets import SportViewSet, SpotSportsNestedViewSet, GameSportNestedViewSet

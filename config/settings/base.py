@@ -72,9 +72,8 @@ THIRD_PARTY_APPS = [
 
 # Apps specific for this project go here.
 LOCAL_APPS = [
-    # custom users app
+    "seedorf.core.apps.CoreConfig",
     "seedorf.users.apps.UsersConfig",
-    # Your stuff: custom apps go here
     "seedorf.games.apps.GamesConfig",
     "seedorf.locations.apps.LocationsConfig",
     "seedorf.sports.apps.SportsConfig",
