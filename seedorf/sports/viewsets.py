@@ -18,7 +18,7 @@ class SportFilter(filters.FilterSet):
         fields = {
             "category": ["exact"],
             "name": ["exact", "icontains"],
-            "description": ["icontains"]
+            "description": ["icontains"],
         }
 
 
@@ -78,4 +78,6 @@ class UserSportNestedViewSet(viewsets.ModelViewSet):
     http_method_names = ("options", "head", "get", "post")
 
     def get_queryset(self):
-        return Sport.objects.filter(followers__user__uuid__exact=self.kwargs["user_uuid"])
+        return Sport.objects.filter(
+            followers__user__uuid__exact=self.kwargs["user_uuid"]
+        )

@@ -14,7 +14,10 @@ class Migration(migrations.Migration):
             model_name="game",
             name="end_time",
             field=models.DateTimeField(
-                blank=True, help_text="End time of the game in UTC.", null=True, verbose_name="End Time (UTC)"
+                blank=True,
+                help_text="End time of the game in UTC.",
+                null=True,
+                verbose_name="End Time (UTC)",
             ),
         ),
         migrations.AlterField(
@@ -41,7 +44,10 @@ class Migration(migrations.Migration):
             model_name="game",
             name="start_time",
             field=models.DateTimeField(
-                blank=True, help_text="Start time of the game in UTC.", null=True, verbose_name="Start Time (UTC)"
+                blank=True,
+                help_text="Start time of the game in UTC.",
+                null=True,
+                verbose_name="Start Time (UTC)",
             ),
         ),
     ]

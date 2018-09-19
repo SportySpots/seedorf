@@ -33,8 +33,22 @@ class UserSportNestedSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Sport
-        fields = ("uuid", "category", "name", "description", "created_at", "modified_at")
-        read_only_fields = ("uuid", "category", "name", "description", "created_at", "modified_at")
+        fields = (
+            "uuid",
+            "category",
+            "name",
+            "description",
+            "created_at",
+            "modified_at",
+        )
+        read_only_fields = (
+            "uuid",
+            "category",
+            "name",
+            "description",
+            "created_at",
+            "modified_at",
+        )
 
     def create(self, validated_data):
         if self.context["view"].basename == "user-sport":
@@ -57,8 +71,8 @@ class UserSportNestedSerializer(serializers.ModelSerializer):
 
 class UserProfileSerializer(CountryFieldMixin, serializers.ModelSerializer):
 
-    sports = SportSerializer(many=True, required=False)
-    spots = SpotSerializer(many=True, required=False)
+    sports = SportSerializer(read_only=True, many=True, required=False)
+    spots = SpotSerializer(read_only=True, many=True, required=False)
     timezone = TimezoneField(required=False)
 
     # spots = serializers.SerializerMethodField()
@@ -81,13 +95,9 @@ class UserProfileSerializer(CountryFieldMixin, serializers.ModelSerializer):
         read_only_fields = ("uuid", "sports", "spots", "created_at", "modified_at")
 
     def create(self, validated_data):
-        # NOTE: We disallow nested object creation, hence pop out (ignore) related objects
-        validated_data.pop('spots')
-        validated_data.pop('sports')
-
         # NOTE: Only the user himself can update his profile
         user = self.context["request"].user
-        validated_data['user'] = user
+        validated_data["user"] = user
 
         profile = UserProfile.objects.create(**validated_data)
 
@@ -96,8 +106,8 @@ class UserProfileSerializer(CountryFieldMixin, serializers.ModelSerializer):
 
     def update(self, instance, validated_data):
         # NOTE: We disallow nested object creation, hence pop out (ignore) related objects
-        validated_data.pop('spots')
-        validated_data.pop('sports')
+        validated_data.pop("spots")
+        validated_data.pop("sports")
 
         for k, v in validated_data.items():
             setattr(instance, k, v)
@@ -113,6 +123,7 @@ class UserProfileSerializer(CountryFieldMixin, serializers.ModelSerializer):
     #     sports = obj.sports.all()
     #     self.context["user_uuid"] = obj.uuid
     #     return UserProfileSportNestedSerializer(sports, many=True, read_only=True, context=self.context).data
+
 
 # class UserProfileSportNestedSerializer(NestedHyperlinkedModelSerializer):
 #     uuid = serializers.UUIDField(required=True)
@@ -164,7 +175,15 @@ class UserSerializer(serializers.ModelSerializer):
             "modified_at",
             "groups",
         )
-        read_only_fields = ("uuid", "is_staff", "is_active", "date_joined", "created_at", "modified_at", "groups")
+        read_only_fields = (
+            "uuid",
+            "is_staff",
+            "is_active",
+            "date_joined",
+            "created_at",
+            "modified_at",
+            "groups",
+        )
 
 
 class GroupSerializer(serializers.ModelSerializer):
@@ -177,7 +196,8 @@ class RegisterSerializer(serializers.Serializer):
     first_name = serializers.CharField(required=True)
     last_name = serializers.CharField(required=True)
     email = serializers.EmailField(
-        required=True, validators=[EmailValidator(), UniqueValidator(queryset=User.objects.all())]
+        required=True,
+        validators=[EmailValidator(), UniqueValidator(queryset=User.objects.all())],
     )
     password1 = serializers.CharField(write_only=True)
     password2 = serializers.CharField(write_only=True)
@@ -187,7 +207,9 @@ class RegisterSerializer(serializers.Serializer):
         email = get_adapter().clean_email(email)
         if allauth_settings.UNIQUE_EMAIL:
             if email and email_address_exists(email):
-                raise serializers.ValidationError(_("A user is already registered with this e-mail address."))
+                raise serializers.ValidationError(
+                    _("A user is already registered with this e-mail address.")
+                )
         return email
 
     @staticmethod
@@ -196,7 +218,9 @@ class RegisterSerializer(serializers.Serializer):
 
     def validate(self, data):
         if data["password1"] != data["password2"]:
-            raise serializers.ValidationError(_("The two password fields didn't match."))
+            raise serializers.ValidationError(
+                _("The two password fields didn't match.")
+            )
         return data
 
     def custom_signup(self, request, user):

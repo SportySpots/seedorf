@@ -10,6 +10,10 @@ class Migration(migrations.Migration):
     dependencies = [("users", "0002_auto_20180429_1927")]
 
     operations = [
-        migrations.AlterModelOptions(name="user", options={"ordering": ("-created_at",)}),
-        migrations.AlterModelOptions(name="userprofile", options={"ordering": ("-created_at",)}),
+        migrations.AlterModelOptions(
+            name="user", options={"ordering": ("-created_at",)}
+        ),
+        migrations.AlterModelOptions(
+            name="userprofile", options={"ordering": ("-created_at",)}
+        ),
     ]

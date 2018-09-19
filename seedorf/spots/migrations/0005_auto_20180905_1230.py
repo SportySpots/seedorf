@@ -7,14 +7,17 @@ from django.db import migrations, models
 
 class Migration(migrations.Migration):
 
-    dependencies = [
-        ('spots', '0004_auto_20180602_2110'),
-    ]
+    dependencies = [("spots", "0004_auto_20180602_2110")]
 
     operations = [
         migrations.AlterField(
-            model_name='spot',
-            name='sports',
-            field=models.ManyToManyField(blank=True, related_name='spots', to='sports.Sport', verbose_name='Sports'),
-        ),
+            model_name="spot",
+            name="sports",
+            field=models.ManyToManyField(
+                blank=True,
+                related_name="spots",
+                to="sports.Sport",
+                verbose_name="Sports",
+            ),
+        )
     ]

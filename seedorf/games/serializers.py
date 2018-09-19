@@ -1,6 +1,11 @@
-from django.core.mail import EmailMessage
+from datetime import datetime, timedelta
+
+import pendulum
+from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
 from rest_framework import serializers
+
+from django_fsm import TransitionNotAllowed
 
 from seedorf.sports.models import Sport
 from seedorf.spots.models import Spot
@@ -8,35 +13,45 @@ from seedorf.users.serializers import UserSerializer
 from .models import Game, RsvpStatus
 
 
-class RsvpStatusSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = RsvpStatus
-        fields = ("uuid", "status", "user", "created_at", "modified_at")
-        read_only_fields = ("uuid", "created_at", "modified_at")
-
-
 class RsvpStatusNestedSerializer(serializers.ModelSerializer):
     # NOTE: User is readonly as it is get/set direct from the request
     # TODO: Only the logged in user can create an rsvp for himself/ herself
     # TODO: Check if the game is invite only and see if the user was invited
     # TODO: Check if the game max users count has been reached.
-    user = UserSerializer(many=False, required=False)
+    user = UserSerializer(read_only=True, many=False, required=False)
 
     class Meta:
         model = RsvpStatus
         fields = ("uuid", "status", "user", "created_at", "modified_at")
         read_only_fields = ("uuid", "user", "created_at", "modified_at")
 
+    def validate_status(self, status: str) -> str:
+        if not self.instance:
+            if status not in [
+                RsvpStatus.STATUS_ACCEPTED,
+                RsvpStatus.STATUS_ATTENDING,
+                RsvpStatus.STATUS_DECLINED,
+                RsvpStatus.STATUS_INTERESTED,
+            ]:
+                raise serializers.ValidationError(
+                    _(
+                        "Only Accepted, Attending, Declined and Interested statuses are allowed while creating RSVP"
+                    )
+                )
+        return status
+
     def create(self, validated_data):
         if self.context["view"].basename == "game-rsvps":
             game_uuid = self.context["view"].kwargs["game_uuid"]
             game = Game.objects.get(uuid=game_uuid)
             user = self.context["request"].user
+
             status = validated_data["status"]
 
-            rsvp = RsvpStatus.objects.create(game=game, user=user, status=status)
+            rsvp = RsvpStatus.objects.create(game=game, user=user)
+            rsvp.transition_status(status)
+            rsvp.save()
 
-            self.send_confirmation_mail(game, user, status)
             return rsvp
 
         return {}
@@ -49,45 +64,23 @@ class RsvpStatusNestedSerializer(serializers.ModelSerializer):
             status = validated_data["status"]
 
             try:
-                rsvp = RsvpStatus.objects.get(game__uuid=game_uuid, user__uuid=user.uuid)
+                rsvp = RsvpStatus.objects.get(
+                    game__uuid=game_uuid, user__uuid=user.uuid
+                )
             except RsvpStatus.DoesNotExist:
                 raise serializers.ValidationError(_("Invalid game."))
 
             if rsvp.user.uuid != user.uuid:
                 raise serializers.ValidationError(_("Invalid user."))
 
-            rsvp.status = status
+            try:
+                rsvp.transition_status(status)
+            except TransitionNotAllowed:
+                raise serializers.ValidationError(_("State transition not allowed"))
+
             rsvp.save()
 
-            self.send_confirmation_mail(game, user, status)
             return rsvp
-
-    @staticmethod
-    def send_confirmation_mail(game, user, status):
-        # TODO: Send the game details e.g. time, name, type of sport
-        # TODO: Create ICS file for calendar
-        ctx = {
-            "organizer_first_name": game.organizer.first_name,
-            "first_name": user.first_name,
-            # TODO: Fix game url hardcoding
-            "game_url": "https://www.sportyspots.com/games/{}".format(game.uuid),
-        }
-
-        message = EmailMessage(subject=None, body=None, to=[user.email])
-
-        if status == RsvpStatus.ATTENDING:
-            # REF: https://account.postmarkapp.com/servers/3930160/templates/6789246/edit
-            message.template_id = 6789246  # use this Postmark template
-        elif status == RsvpStatus.DECLINED:
-            # REF: https://account.postmarkapp.com/servers/3930160/templates/6934047/edit
-            message.template_id = 6934047  # use this Postmark template
-        else:
-            # Do nothing if rsvp status is not set.
-            return
-
-        message.merge_global_data = ctx
-
-        message.send()
 
 
 class GameSportNestedSerializer(serializers.ModelSerializer):
@@ -95,8 +88,21 @@ class GameSportNestedSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Sport
-        fields = ("uuid", "category", "name", "description", "created_at", "modified_at")
-        read_only_fields = ("category", "name", "description", "created_at", "modified_at")
+        fields = (
+            "uuid",
+            "category",
+            "name",
+            "description",
+            "created_at",
+            "modified_at",
+        )
+        read_only_fields = (
+            "category",
+            "name",
+            "description",
+            "created_at",
+            "modified_at",
+        )
 
     def create(self, validated_data):
         if self.context["view"].basename == "game-sport":
@@ -114,7 +120,9 @@ class GameSportNestedSerializer(serializers.ModelSerializer):
                 spot = Spot.objects.filter(sports__uuid=sport_uuid).first()
                 if not spot or game.spot.uuid != spot.uuid:
                     raise serializers.ValidationError(
-                        _("Invalid Sport. Sport being assigned is not associated with the game spot")
+                        _(
+                            "Invalid Sport. Sport being assigned is not associated with the game spot"
+                        )
                     )
 
             game.sport = sport
@@ -157,7 +165,7 @@ class GameSpotNestedSerializer(serializers.ModelSerializer):
             "closure_date",
             "address",
             "created_at",
-            "modified_at"
+            "modified_at",
         )
 
     def create(self, validated_data):
@@ -176,7 +184,10 @@ class GameSpotNestedSerializer(serializers.ModelSerializer):
                 sport = Sport.objects.filter(spots__uuid=spot_uuid).first()
                 if not sport or game.sport.uuid != sport.uuid:
                     raise serializers.ValidationError(
-                        _("Invalid Spot. Spot being assigned doesnt have the already " "associated sport")
+                        _(
+                            "Invalid Spot. Spot being assigned doesnt have the already "
+                            "associated sport"
+                        )
                     )
 
             game.spot = spot
@@ -222,40 +233,166 @@ class GameSerializer(serializers.ModelSerializer):
         )
         read_only_fields = ("uuid", "created_at", "modified_at")
 
-    def create(self, validated_data):
+    @staticmethod
+    def validate_start_time(start_time: datetime) -> datetime:
+        now = timezone.now()
+
+        if start_time < now:
+            raise serializers.ValidationError(_("Start time cannot be in the past"))
+
+        if start_time > now + timedelta(minutes=15):
+            raise serializers.ValidationError(
+                _("Start time should be atleast 15 minutes from now")
+            )
+
+        return start_time
+
+    @staticmethod
+    def validate_end_time(end_time: datetime) -> datetime:
+        now = timezone.now()
+
+        if end_time < now:
+            raise serializers.ValidationError(_("End time cannot be in the past"))
+
+        return end_time
+
+    @staticmethod
+    def validate_rsvp_open_time(rsvp_open_time: datetime) -> datetime:
+        now = timezone.now()
+
+        if rsvp_open_time < now:
+            raise serializers.ValidationError(_("RSVP open time cannot be in the past"))
+
+        return rsvp_open_time
+
+    @staticmethod
+    def validate_rsvp_close_time(rsvp_close_time: datetime) -> datetime:
+        now = timezone.now()
+
+        if rsvp_close_time < now:
+            raise serializers.ValidationError(
+                _("RSVP close time cannot be in the past")
+            )
+
+        return rsvp_close_time
+
+    def validate_rsvp_closed(self, rsvp_closed: datetime) -> datetime:
+        # Validation conditions while creating a game
+        if not self.instance:
+            if rsvp_closed:
+                raise serializers.ValidationError(
+                    _("RSVP closed cannot be set while creating a game")
+                )
+
+        return rsvp_closed
+
+    def validate_status(self, status: str) -> str:
+        # Validation conditions while creating a game
+        if not self.instance:
+            if status != Game.STATUS_DRAFT:
+                raise serializers.ValidationError(
+                    _("Game can only be created in DRAFT status")
+                )
+        else:
+            if status in [Game.STATUS_STARTED, Game.STATUS_ENDED]:
+                raise serializers.ValidationError(
+                    _(
+                        "Status Started and Status Ended are set automatically by the system and cannot be set manually"
+                    )
+                )
+
+        return status
+
+    def validate(self, data):
+
+        if not self.instance:
+            start_time = data.get("start_time", False) and pendulum.instance(
+                data["start_time"]
+            )
+            end_time = data.get("end_time", False) and pendulum.instance(
+                data["end_time"]
+            )
+            rsvp_open_time = data.get("rsvp_open_time", False) and pendulum.instance(
+                data["rsvp_open_time"]
+            )
+            rsvp_close_time = data.get("rsvp_close_time", False) and pendulum.instance(
+                data["rsvp_close_time"]
+            )
+        else:
+            start_time = data.get("start_time", False) or self.instance.start_time
+            end_time = data.get("end_time", False) or self.instance.end_time
+
+            start_time = pendulum.instance(start_time)
+            end_time = pendulum.instance(end_time)
+
+            rsvp_open_time = (
+                data.get("rsvp_open_time", False) or self.instance.rsvp_open_time
+            )
+            rsvp_close_time = (
+                data.get("rsvp_close_time", False) or self.instance.rsvp_close_time
+            )
+
+            rsvp_open_time = rsvp_open_time and pendulum.instance(rsvp_open_time)
+            rsvp_close_time = rsvp_close_time and pendulum.instance(rsvp_close_time)
+
+        if start_time and end_time and end_time < start_time:
+            raise serializers.ValidationError(
+                {"end_time": [_("End time cannot be before start time")]}
+            )
+
+        if start_time and end_time and end_time.diff(start_time).in_hours() > 12:
+            raise serializers.ValidationError(
+                {"end_time": [_("Game cannot be greater than 12 hours long")]}
+            )
+
+        if rsvp_open_time and rsvp_open_time > start_time:
+            raise serializers.ValidationError(
+                {"rsvp_open_time": [_("RSVP open time cannot be before start time")]}
+            )
+
+        if rsvp_close_time and rsvp_close_time > start_time:
+            raise serializers.ValidationError(
+                {"rsvp_close_time": [_("RSVP close time cannot be after start time")]}
+            )
+
+        if rsvp_open_time and rsvp_close_time and rsvp_close_time < rsvp_open_time:
+            raise serializers.ValidationError(
+                {
+                    "rsvp_close_time": [
+                        _("RSVP close time cannot be before RSVP open time")
+                    ]
+                }
+            )
+
+        return data
+
+    def create(self, validated_data) -> Game:
         user = self.context["request"].user
+
+        if not validated_data.get("rsvp_open_time", False):
+            validated_data["rsvp_open_time"] = timezone.now()
+
+        if not validated_data.get("rsvp_close_time", False):
+            validated_data["rsvp_close_time"] = validated_data[
+                "start_time"
+            ] + timedelta(minutes=-15)
+
         game = Game.objects.create(organizer=user, **validated_data)
+
         return game
 
-    def update(self, instance, validated_data):
+    def update(self, instance: Game, validated_data) -> Game:
+
+        status = validated_data.pop("status", None)
 
         for k, v in validated_data.items():
             setattr(instance, k, v)
 
+        if status and status != instance.status:
+            try:
+                instance.transition_status(status)
+            except TransitionNotAllowed:
+                raise serializers.ValidationError(_("State transition not allowed"))
+
         instance.save()
-
-        # Send confirmation email to organizer if the status of the game is set to planned
-        status = validated_data.get("status", None)
-
-        if status == instance.STATUS_PLANNED:
-            self.send_confirmation_mail(instance)
-
         return instance
-
-    @staticmethod
-    def send_confirmation_mail(game):
-
-        ctx = {
-            "first_name": game.organizer.first_name,
-            # TODO: Fix game url hardcoding
-            "game_url": "https://www.sportyspots.com/games/{}".format(game.uuid),
-        }
-
-        message = EmailMessage(subject=None, body=None, to=[game.organizer.email])
-
-        # REF: https://account.postmarkapp.com/servers/3930160/templates/6934046/edit
-        message.template_id = 6934046  # use this Postmark template
-
-        message.merge_global_data = ctx
-
-        message.send()

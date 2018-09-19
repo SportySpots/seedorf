@@ -23,10 +23,18 @@ class ReactionsManager(models.Manager):
         return self.get_queryset().filter(reaction=Reaction.DISLIKE).count()
 
     def spots(self):
-        return self.get_queryset().filter(content_type__model="spots").order_by("-spot_reactions__created_at")
+        return (
+            self.get_queryset()
+            .filter(content_type__model="spots")
+            .order_by("-spot_reactions__created_at")
+        )
 
     def sports(self):
-        return self.get_queryset().filter(content_type__model="sports").order_by("-sport_reactions__created_at")
+        return (
+            self.get_queryset()
+            .filter(content_type__model="sports")
+            .order_by("-sport_reactions__created_at")
+        )
 
 
 class Reaction(BasePropertiesModel):
@@ -35,8 +43,16 @@ class Reaction(BasePropertiesModel):
 
     REACTIONS = ((DISLIKE, _("Dislike")), (LIKE, _("Like")))
 
-    reaction = models.CharField(blank=False, choices=REACTIONS, null=False, max_length=50, verbose_name=_("Reaction"))
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, verbose_name=_("User"))
+    reaction = models.CharField(
+        blank=False,
+        choices=REACTIONS,
+        null=False,
+        max_length=50,
+        verbose_name=_("Reaction"),
+    )
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL, on_delete=models.CASCADE, verbose_name=_("User")
+    )
     content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
     object_id = models.PositiveIntegerField()
     content_object = GenericForeignKey()

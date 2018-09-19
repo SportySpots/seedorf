@@ -34,11 +34,15 @@ class UserRegistrationAPIViewTest(APITestCase):
             self.assertTrue("token" in response.data)
 
             user = User.objects.get(email=user_data["email"])
-            decoded_token = jwt.decode(response.data["token"], settings.SECRET_KEY, algorithms=["HS256"])
+            decoded_token = jwt.decode(
+                response.data["token"], settings.SECRET_KEY, algorithms=["HS256"]
+            )
             response_user = response.data["user"]
 
             # Token contains the defined keys
-            self.assertTrue({"user_id", "uuid", "email", "username", "exp"}.issubset(decoded_token))
+            self.assertTrue(
+                {"user_id", "uuid", "email", "username", "exp"}.issubset(decoded_token)
+            )
             self.assertEqual(response_user["first_name"], user_data["first_name"])
             self.assertEqual(response_user["last_name"], user_data["last_name"])
 
@@ -75,17 +79,30 @@ class UserProfileAPIViewTest(APITestCase):
 
         response = self.client.post(url, user_profile_data)
         self.assertEqual(201, response.status_code)
-        self.assertEqual(response.data['sports'], [])
-        self.assertEqual(response.data['spots'], [])
-        self.assertEqual(response.data['gender'], UserProfile.GENDER_NOT_SPECIFIED)
-        self.assertEqual(response.data['year_of_birth'], 1980)
-        self.assertEqual(response.data['avatar'], None)
-        self.assertEqual(response.data['language'], 'en')
-        self.assertEqual(response.data['timezone'], 'Europe/Amsterdam')
-        self.assertEqual(response.data['country'], '')
-        self.assertEqual(response.data['bio'], '')
-        self.assertCountEqual(['uuid', 'sports', 'spots', 'gender', 'year_of_birth', 'avatar', 'language', 'timezone',
-                               'country', 'bio'], response.data.keys())
+        self.assertEqual(response.data["sports"], [])
+        self.assertEqual(response.data["spots"], [])
+        self.assertEqual(response.data["gender"], UserProfile.GENDER_NOT_SPECIFIED)
+        self.assertEqual(response.data["year_of_birth"], 1980)
+        self.assertEqual(response.data["avatar"], None)
+        self.assertEqual(response.data["language"], "en")
+        self.assertEqual(response.data["timezone"], "Europe/Amsterdam")
+        self.assertEqual(response.data["country"], "")
+        self.assertEqual(response.data["bio"], "")
+        self.assertCountEqual(
+            [
+                "uuid",
+                "sports",
+                "spots",
+                "gender",
+                "year_of_birth",
+                "avatar",
+                "language",
+                "timezone",
+                "country",
+                "bio",
+            ],
+            response.data.keys(),
+        )
 
     def test_user_profile_edit(self):
         sport = SportFactory()
@@ -95,14 +112,19 @@ class UserProfileAPIViewTest(APITestCase):
 
         self.client.force_authenticate(user=user_profile.user)
 
-        url = reverse("user-profile-detail", kwargs={"user_uuid": str(user_profile.user.uuid),
-                                                     "uuid": str(user_profile.uuid)})
+        url = reverse(
+            "user-profile-detail",
+            kwargs={
+                "user_uuid": str(user_profile.user.uuid),
+                "uuid": str(user_profile.uuid),
+            },
+        )
 
         user_profile_data = {"year_of_birth": 1981}
 
         response = self.client.put(url, user_profile_data)
         self.assertEqual(200, response.status_code)
-        self.assertEqual(response.data['year_of_birth'], 1981)
+        self.assertEqual(response.data["year_of_birth"], 1981)
 
     def test_user_profile_sport_retrieve(self):
         sport = SportFactory()
@@ -112,8 +134,13 @@ class UserProfileAPIViewTest(APITestCase):
 
         self.client.force_authenticate(user=user_profile.user)
 
-        url = reverse("user-profile-sports-list", kwargs={"user_uuid": str(user_profile.user.uuid),
-                                                          "profile_uuid": str(user_profile.uuid)})
+        url = reverse(
+            "user-profile-sports-list",
+            kwargs={
+                "user_uuid": str(user_profile.user.uuid),
+                "profile_uuid": str(user_profile.uuid),
+            },
+        )
 
         response = self.client.get(url)
         self.assertEqual(200, response.status_code)
@@ -126,11 +153,17 @@ class UserProfileAPIViewTest(APITestCase):
 
         self.client.force_authenticate(user=user_profile.user)
 
-        url = reverse("user-profile-spots-list", kwargs={"user_uuid": str(user_profile.user.uuid),
-                                                         "profile_uuid": str(user_profile.uuid)})
+        url = reverse(
+            "user-profile-spots-list",
+            kwargs={
+                "user_uuid": str(user_profile.user.uuid),
+                "profile_uuid": str(user_profile.uuid),
+            },
+        )
 
         response = self.client.get(url)
         self.assertEqual(200, response.status_code)
+
 
 # Create Token Manually
 # from rest_framework_jwt.settings import api_settings

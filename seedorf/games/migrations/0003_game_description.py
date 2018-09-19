@@ -13,6 +13,10 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name="game",
             name="description",
-            field=models.TextField(blank=True, help_text="Description of the game.", verbose_name="Description"),
+            field=models.TextField(
+                blank=True,
+                help_text="Description of the game.",
+                verbose_name="Description",
+            ),
         )
     ]

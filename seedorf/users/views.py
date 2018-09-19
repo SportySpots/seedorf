@@ -1,5 +1,5 @@
-from rest_framework import permissions
-from rest_framework import status
+from django.utils.translation import ugettext_lazy as _
+from rest_framework import permissions, status
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
 
@@ -12,4 +12,4 @@ def registration_null_view(request):
 @api_view()
 @permission_classes((permissions.AllowAny,))
 def registration_complete_view(request):
-    return Response("Email account is activated")
+    return Response(_("Email account is activated"))

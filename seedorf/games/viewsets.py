@@ -1,45 +1,11 @@
+from django_filters import rest_framework as filters
 from rest_framework import viewsets
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
 
 from seedorf.utils.regex import UUID as REGEX_UUID
+from .filters import RsvpStatusFilter, GameFilter
 from .models import Game, RsvpStatus
-from .serializers import GameSerializer, RsvpStatusNestedSerializer, RsvpStatusSerializer
-from django_filters import rest_framework as filters
-
-
-class GameFilter(filters.FilterSet):
-    class Meta:
-        model = Game
-        fields = {
-            "organizer__uuid": ["exact"],
-            "sport__uuid": ["exact"],
-            "sport__category": ["exact"],
-            "spot__uuid": ["exact"],
-            "spot__name": ["exact", "icontains"],
-            "name": ["exact", "icontains"],
-            "start_time": ["lte", "gte"],
-            "end_time": ["lte", "gte"],
-            "rsvp_open_time": ["lte", "gte"],
-            "rsvp_close_time": ["lte", "gte"],
-            "rsvp_closed": ["exact"],
-            "status": ["exact"],
-            "invite_mode": ["exact"],
-            "capacity": ["lte", "gte"],
-            "show_remaining": ["exact"],
-            "is_listed": ["exact"],
-            "is_shareable": ["exact"],
-            "is_featured": ["exact"],
-        }
-
-
-class RsvpStatusFilter(filters.FilterSet):
-    class Meta:
-        model = RsvpStatus
-        fields = {
-            "game__uuid": ["exact"],
-            "user__uuid": ["exact"],
-            "status": ["exact"]
-        }
+from .serializers import GameSerializer, RsvpStatusNestedSerializer
 
 
 class GameViewSet(viewsets.ModelViewSet):
@@ -56,20 +22,6 @@ class GameViewSet(viewsets.ModelViewSet):
     filter_class = GameFilter
 
 
-class RsvpStatusViewset(viewsets.ModelViewSet):
-    """
-    API endpoint that allows game RSVPs to be viewed or edited.
-    """
-
-    queryset = RsvpStatus.objects.filter(deleted_at=None)
-    serializer_class = RsvpStatusSerializer
-    lookup_field = "uuid"
-    lookup_value_regex = REGEX_UUID
-    permission_classes = (IsAuthenticatedOrReadOnly,)
-    filter_backends = (filters.DjangoFilterBackend,)
-    filter_class = RsvpStatusFilter
-
-
 class GameRsvpStatusNestedViewset(viewsets.ModelViewSet):
     """
     API endpoint that allows game RSVPs to be viewed or edited.
@@ -79,6 +31,8 @@ class GameRsvpStatusNestedViewset(viewsets.ModelViewSet):
     lookup_field = "uuid"
     lookup_value_regex = REGEX_UUID
     permission_classes = (IsAuthenticatedOrReadOnly,)
+    filter_backends = (filters.DjangoFilterBackend,)
+    filter_class = RsvpStatusFilter
 
     def get_queryset(self):
         return RsvpStatus.objects.filter(game__uuid=self.kwargs["game_uuid"])

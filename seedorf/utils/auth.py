@@ -13,7 +13,11 @@ def jwt_payload_handler(user):
     username_field = get_username_field()
     username = get_username(user)
 
-    warnings.warn("The following fields will be removed in the future: " "`email` and `user_id`. ", DeprecationWarning)
+    warnings.warn(
+        "The following fields will be removed in the future: "
+        "`email` and `user_id`. ",
+        DeprecationWarning,
+    )
 
     payload = {
         "user_id": user.pk,

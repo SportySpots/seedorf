@@ -22,7 +22,12 @@ class Address(BasePropertiesModel):
     )
 
     raw_address = models.CharField(
-        blank=True, default="", help_text=_("Complete address"), max_length=1024, null=False, verbose_name=_("Address")
+        blank=True,
+        default="",
+        help_text=_("Complete address"),
+        max_length=1024,
+        null=False,
+        verbose_name=_("Address"),
     )
     raw_geocoder_response = JSONField(
         blank=True,
@@ -46,14 +51,33 @@ class Address(BasePropertiesModel):
         null=False,
         verbose_name=_("Formatted Address"),
     )
-    lat = models.DecimalField(blank=True, decimal_places=15, max_digits=18, null=True, verbose_name=_("Latitude"))
-    lng = models.DecimalField(blank=True, decimal_places=15, max_digits=18, null=True, verbose_name=_("Longtiude"))
-    point = models.PointField(spatial_index=True, help_text=_("Lat/Lng Point"), null=True, verbose_name=_("Location"))
+    lat = models.DecimalField(
+        blank=True,
+        decimal_places=15,
+        max_digits=18,
+        null=True,
+        verbose_name=_("Latitude"),
+    )
+    lng = models.DecimalField(
+        blank=True,
+        decimal_places=15,
+        max_digits=18,
+        null=True,
+        verbose_name=_("Longtiude"),
+    )
+    point = models.PointField(
+        spatial_index=True,
+        help_text=_("Lat/Lng Point"),
+        null=True,
+        verbose_name=_("Location"),
+    )
     # TODO: https://plus.codes/
     plus_global_code = models.CharField(
         blank=True, max_length=255, null=True, verbose_name=_("Google Plus Global Code")
     )
-    plus_local_code = models.CharField(blank=True, max_length=255, null=True, verbose_name=_("Google Plus Local Code"))
+    plus_local_code = models.CharField(
+        blank=True, max_length=255, null=True, verbose_name=_("Google Plus Local Code")
+    )
 
     # location_type = None  # REF: Google Maps https://developers.google.com/maps/documentation/geocoding/start
     # viewport = None  # REF: Google Maps https://developers.google.com/maps/documentation/geocoding/start

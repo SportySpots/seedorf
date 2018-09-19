@@ -19,15 +19,47 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name="Sport",
             fields=[
-                ("id", models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name="ID")),
-                ("uuid", models.UUIDField(default=uuid.uuid4, editable=False, verbose_name="Unique Identifier")),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "uuid",
+                    models.UUIDField(
+                        default=uuid.uuid4,
+                        editable=False,
+                        verbose_name="Unique Identifier",
+                    ),
+                ),
                 (
                     "created_at",
-                    models.DateTimeField(default=django.utils.timezone.now, editable=False, verbose_name="Created At"),
+                    models.DateTimeField(
+                        default=django.utils.timezone.now,
+                        editable=False,
+                        verbose_name="Created At",
+                    ),
                 ),
-                ("modified_at", models.DateTimeField(auto_now=True, verbose_name="Modified At")),
-                ("deleted_at", models.DateTimeField(blank=True, editable=False, null=True, verbose_name="Deleted At")),
-                ("translations", django.contrib.postgres.fields.jsonb.JSONField(blank=True, null=True)),
+                (
+                    "modified_at",
+                    models.DateTimeField(auto_now=True, verbose_name="Modified At"),
+                ),
+                (
+                    "deleted_at",
+                    models.DateTimeField(
+                        blank=True, editable=False, null=True, verbose_name="Deleted At"
+                    ),
+                ),
+                (
+                    "translations",
+                    django.contrib.postgres.fields.jsonb.JSONField(
+                        blank=True, null=True
+                    ),
+                ),
                 (
                     "category",
                     models.CharField(
@@ -59,10 +91,19 @@ class Migration(migrations.Migration):
                 ),
                 (
                     "description",
-                    models.TextField(blank=True, default="", max_length=4096, verbose_name="Sport Description"),
+                    models.TextField(
+                        blank=True,
+                        default="",
+                        max_length=4096,
+                        verbose_name="Sport Description",
+                    ),
                 ),
             ],
-            options={"verbose_name": "Sport", "verbose_name_plural": "Sports", "ordering": ("category", "name")},
+            options={
+                "verbose_name": "Sport",
+                "verbose_name_plural": "Sports",
+                "ordering": ("category", "name"),
+            },
             bases=(models.Model, nece.managers.TranslationMixin),
         )
     ]

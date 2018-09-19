@@ -1,9 +1,11 @@
 import pytz
 from django.conf import settings
-from django.core.validators import MinValueValidator
+from django.core.mail import EmailMessage
+from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db import models
-from django.utils.translation import ugettext as _
 from django.urls import reverse
+from django.utils.translation import ugettext as _
+from django_fsm import FSMField, transition
 
 from seedorf.utils.models import BasePropertiesModel
 
@@ -15,16 +17,23 @@ class Game(BasePropertiesModel):
     No game can be created on non-verified spots
     No game can be created outside of the establishment date and closure date of a temporary spot
     No game can be created on permanently closed spots
+
+    TODO: Add language to game
     """
 
     # Predefined Values
     STATUS_CANCELED = "canceled"  # When the organizer cancels the event
     STATUS_COMPLETED = "completed"  # When the organizer confirms the game took place
     STATUS_DRAFT = "draft"  # When the game is in the planning phase / draft
-    STATUS_ENDED = "ended"  # When the system sets the state automatically based on end time
+    STATUS_ENDED = (
+        "ended"
+    )  # When the system sets the state automatically based on end time
     STATUS_LIVE = "live"  # When the organizer confirms manually the game is live
     STATUS_PLANNED = "planned"  # When the game is planned
-    STATUS_STARTED = "started"  # When the system sets the state automatically based on start time
+    STATUS_UPDATED = "updated"  # When a planned game is updated
+    STATUS_STARTED = (
+        "started"
+    )  # When the system sets the state automatically based on start time
 
     STATUSES = (
         (STATUS_CANCELED, _("Canceled")),
@@ -33,6 +42,7 @@ class Game(BasePropertiesModel):
         (STATUS_ENDED, _("Ended")),
         (STATUS_LIVE, _("Live")),
         (STATUS_PLANNED, _("Planned")),
+        (STATUS_UPDATED, _("Updated")),
         (STATUS_STARTED, _("Started")),
     )
 
@@ -51,47 +61,71 @@ class Game(BasePropertiesModel):
 
     # Foreign Keys
     organizer = models.ForeignKey(
-        settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="game_organizers", verbose_name=_("Organizer")
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name="game_organizers",
+        verbose_name=_("Organizer"),
     )
     sport = models.ForeignKey(
-        "sports.Sport", on_delete=models.CASCADE, related_name="sport_games", verbose_name=_("Sport"), null=True
+        "sports.Sport",
+        on_delete=models.CASCADE,
+        related_name="sport_games",
+        verbose_name=_("Sport"),
+        null=True,
     )
     spot = models.ForeignKey(
-        "spots.Spot", on_delete=models.CASCADE, related_name="spot_games", verbose_name=_("Spot"), null=True
+        "spots.Spot",
+        on_delete=models.CASCADE,
+        related_name="spot_games",
+        verbose_name=_("Spot"),
+        null=True,
     )
 
     # Instance Fields
     # TODO: Maybe auto generate the game name based on the organizer, e.g. Soccer with Sam at Oosterpark
-    name = models.CharField(blank=True, max_length=255, null=False)
+    name = models.CharField(blank=True, default="", max_length=255, null=False)
 
     description = models.TextField(
-        blank=True, help_text=_("Description of the game."), null=False, verbose_name=_("Description")
+        blank=True,
+        default="",
+        help_text=_("Description of the game."),
+        null=False,
+        verbose_name=_("Description"),
     )
 
     # TODO: Evaluate if start_time / end_time could be replaced by DateTimeRangeField
     # REF: https://docs.djangoproject.com/en/1.11/ref/contrib/postgres/fields/#datetimerangefield
     start_time = models.DateTimeField(
-        blank=True, help_text=_("Start time of the game in UTC."), null=True, verbose_name=_("Start Time (UTC)")
+        blank=False,
+        help_text=_("Start time of the game in UTC."),
+        null=False,
+        verbose_name=_("Start Time (UTC)"),
     )
-    # TODO: Validate that the end time is max X hours from the start time
     end_time = models.DateTimeField(
-        blank=True, help_text=_("End time of the game in UTC."), null=True, verbose_name=_("End Time (UTC)")
+        blank=False,
+        help_text=_("End time of the game in UTC."),
+        null=False,
+        verbose_name=_("End Time (UTC)"),
     )
-    # TODO: Validate that the rsvp open time is before the start time and the rsvp close time
+
     rsvp_open_time = models.DateTimeField(
         blank=True,
-        help_text=_("UTC time before that RSVPs will no longer be accepted, though organizers may close RSVPs earlier"),
+        help_text=_(
+            "UTC time before that RSVPs will no longer be accepted, though organizers may close RSVPs earlier"
+        ),
         null=True,
         verbose_name=_("RSVP Open Time (UTC)"),
     )
-    # TODO: Validate that the rsvp close time is before the start time
-    # TODO: Set the RSVP close time to the start time automatically
+
     rsvp_close_time = models.DateTimeField(
         blank=True,
-        help_text=_("UTC time after that RSVPs will no longer be accepted, though organizers may close RSVPs earlier"),
+        help_text=_(
+            "UTC time after that RSVPs will no longer be accepted, though organizers may close RSVPs earlier"
+        ),
         null=True,
         verbose_name=_("RSVP Close Time (UTC)"),
     )
+
     rsvp_closed = models.BooleanField(
         blank=False,
         default=False,
@@ -99,6 +133,7 @@ class Game(BasePropertiesModel):
         null=False,
         verbose_name=_("RSVP Closed"),
     )
+
     start_timezone = models.CharField(
         blank=False,
         choices=TIMEZONES,
@@ -121,21 +156,37 @@ class Game(BasePropertiesModel):
         blank=False,
         choices=INVITE_MODES,
         default=INVITE_MODE_OPEN,
-        help_text=_("If the game is open for everyone to join or based on organizers approval or is invite only."),
+        help_text=_(
+            "If the game is open for everyone to join or based on organizers approval or is invite only."
+        ),
         max_length=25,
         null=False,
         verbose_name=_("Invite Mode"),
     )
-    status = models.CharField(
-        blank=False, choices=STATUSES, default=STATUS_DRAFT, max_length=25, null=False, verbose_name=_("Status")
+    status = FSMField(
+        blank=False,
+        choices=STATUSES,
+        default=STATUS_DRAFT,
+        max_length=25,
+        null=False,
+        protected=True,
+        verbose_name=_("Status"),
     )
     capacity = models.PositiveSmallIntegerField(
-        blank=True, null=True, validators=[MinValueValidator(limit_value=2)], verbose_name=_("Capacity")
+        blank=True,
+        null=True,
+        validators=[
+            MinValueValidator(limit_value=2),
+            MaxValueValidator(limit_value=50),
+        ],
+        verbose_name=_("Capacity"),
     )
     show_remaining = models.BooleanField(
         blank=False,
         default=True,
-        help_text=_("If the game page should show the number of open player spots left."),
+        help_text=_(
+            "If the game page should show the number of open player spots left."
+        ),
         null=False,
         verbose_name=_("Show Remaining Player Required Spots"),
     )
@@ -154,7 +205,11 @@ class Game(BasePropertiesModel):
         verbose_name=_("Is Shareable?"),
     )
     is_featured = models.BooleanField(
-        blank=False, default=False, help_text=_("If this game is featured."), null=False, verbose_name=_("Is Featured?")
+        blank=False,
+        default=False,
+        help_text=_("If this game is featured."),
+        null=False,
+        verbose_name=_("Is featured?"),
     )
 
     class Meta:
@@ -168,6 +223,108 @@ class Game(BasePropertiesModel):
     def get_absolute_url(self):
         return reverse("game-detail", args=[str(self.uuid)])
 
+    def send_organizer_confirmation_mail(self):
+
+        ctx = {
+            "first_name": self.organizer.first_name,
+            # TODO: Fix game url hardcoding
+            "game_url": "https://www.sportyspots.com/games/{}".format(self.uuid),
+        }
+
+        message = EmailMessage(subject="", body="", to=[self.organizer.email])
+
+        # REF: https://account.postmarkapp.com/servers/3930160/templates/6934046/edit
+        message.template_id = 6934046  # use this Postmark template
+
+        message.merge_global_data = ctx
+
+        message.send()
+
+    def send_attendees_update_email(self, message):
+        pass
+
+    def send_attendees_cancellation_email(self, message):
+        pass
+
+    def transition_status(self, status):
+        if status == Game.STATUS_CANCELED:
+            self.transition_status_canceled()
+        elif status == Game.STATUS_COMPLETED:
+            self.transition_status_completed()
+        elif status == Game.STATUS_ENDED:
+            self.transition_status_ended()
+        elif status == Game.STATUS_LIVE:
+            self.transition_status_live()
+        elif status == Game.STATUS_PLANNED:
+            self.transition_status_planned()
+        elif status == Game.STATUS_UPDATED:
+            self.transition_status_updated()
+        elif status == Game.STATUS_STARTED:
+            self.transition_status_started()
+
+    @transition(
+        field=status,
+        source=[STATUS_DRAFT, STATUS_UPDATED],
+        target=STATUS_PLANNED,
+        permission=lambda instance, user: instance.organizer.uuid == user.uuid,
+    )
+    def transition_status_planned(self):
+        self.send_organizer_confirmation_mail()
+
+    @transition(
+        field=status,
+        source=STATUS_PLANNED,
+        target=STATUS_UPDATED,
+        permission=lambda instance, user: instance.organizer.uuid == user.uuid,
+    )
+    def transition_status_updated(self):
+        self.send_attendees_update_email()
+
+    @transition(
+        field=status,
+        source=STATUS_PLANNED,
+        target=STATUS_STARTED,
+        permission=lambda instance, user: instance.organizer.uuid == user.uuid,
+    )
+    def transition_status_started(self):
+        pass
+
+    @transition(
+        field=status,
+        source=[STATUS_PLANNED, STATUS_STARTED],
+        target=STATUS_LIVE,
+        permission=lambda instance, user: instance.organizer.uuid == user.uuid,
+    )
+    def transition_status_live(self):
+        pass
+
+    @transition(
+        field=status,
+        source=[STATUS_LIVE, STATUS_STARTED],
+        target=STATUS_UPDATED,
+        permission=lambda instance, user: instance.organizer.uuid == user.uuid,
+    )
+    def transition_status_ended(self):
+        pass
+
+    @transition(
+        field=status,
+        source=[STATUS_STARTED, STATUS_LIVE, STATUS_ENDED],
+        target=STATUS_COMPLETED,
+        permission=lambda instance, user: instance.organizer.uuid == user.uuid,
+    )
+    def transition_status_completed(self):
+        pass
+
+    @transition(
+        field=status,
+        source=[STATUS_DRAFT, STATUS_PLANNED, STATUS_STARTED, STATUS_LIVE],
+        target=STATUS_CANCELED,
+        permission=lambda instance, user: instance.organizer.uuid == user.uuid,
+    )
+    def transition_status_canceled(self):
+        self.send_attendees_cancellation_email()
+
 
 class RsvpStatus(BasePropertiesModel):
     """
@@ -176,22 +333,22 @@ class RsvpStatus(BasePropertiesModel):
     """
 
     # Predefined Values
-    UNKNOWN = "unknown"
-    ACCEPTED = "accepted"  # When the game is approval based
-    ATTENDING = "attending"
-    CHECKED_IN = "checked_in"
-    DECLINED = "declined"
-    INTERESTED = "interested"
-    INVITED = "invited"
+    STATUS_ACCEPTED = "accepted"  # When the user is invited, and he/she accepts.
+    STATUS_ATTENDING = "attending"  # When the user signs up for an open event
+    STATUS_CHECKED_IN = "checked_in"
+    STATUS_DECLINED = "declined"
+    STATUS_INTERESTED = "interested"
+    STATUS_INVITED = "invited"
+    STATUS_UNKNOWN = "unknown"
 
     STATUS = (
-        (UNKNOWN, _("Unknown")),
-        (ACCEPTED, _("Accepted")),
-        (ATTENDING, _("Attending")),
-        (CHECKED_IN, _("Checked In")),
-        (DECLINED, _("Declined")),
-        (INTERESTED, _("Interested")),
-        (INVITED, _("Invited")),
+        (STATUS_ACCEPTED, _("Accepted")),
+        (STATUS_ATTENDING, _("Attending")),
+        (STATUS_CHECKED_IN, _("Checked In")),
+        (STATUS_DECLINED, _("Declined")),
+        (STATUS_INTERESTED, _("Interested")),
+        (STATUS_INVITED, _("Invited")),
+        (STATUS_UNKNOWN, _("Unknown")),
     )
 
     # Foreign Keys
@@ -212,8 +369,14 @@ class RsvpStatus(BasePropertiesModel):
         verbose_name=_("Game"),
     )
     # Instance Fields
-    status = models.CharField(
-        blank=False, choices=STATUS, default=UNKNOWN, max_length=25, null=True, verbose_name=_("Status")
+    status = FSMField(
+        blank=False,
+        choices=STATUS,
+        default=STATUS_UNKNOWN,
+        max_length=25,
+        null=True,
+        protected=True,
+        verbose_name=_("Status"),
     )
 
     class Meta:
@@ -226,3 +389,96 @@ class RsvpStatus(BasePropertiesModel):
 
     def __str__(self):
         return "{} : {}".format(self.game.name, self.user.name)
+
+    def send_user_confirmation_mail(self, template_id):
+        # TODO: Send the game details e.g. time, name, type of sport
+        # TODO: Create ICS file for calendar
+        ctx = {
+            "organizer_first_name": self.game.organizer.first_name,
+            "first_name": self.user.first_name,
+            # TODO: Fix game url hardcoding
+            "game_url": "https://www.sportyspots.com/games/{}".format(self.game.uuid),
+        }
+
+        message = EmailMessage(subject="", body="", to=[self.user.email])
+        message.template_id = template_id
+        message.merge_global_data = ctx
+        message.send()
+
+    def transition_status(self, status: str):
+        if status == self.STATUS_ACCEPTED:
+            self.transition_status_accepted()
+        elif status == self.STATUS_ATTENDING:
+            self.transition_status_attending()
+        elif status == self.STATUS_CHECKED_IN:
+            self.transition_status_checked_in()
+        elif status == self.STATUS_DECLINED:
+            self.transition_status_declined()
+        elif status == self.STATUS_INTERESTED:
+            self.transition_status_interested()
+        elif status == self.STATUS_INVITED:
+            self.transition_status_invited()
+        elif status == self.STATUS_UNKNOWN:
+            pass
+
+    @transition(
+        field=status,
+        source=[STATUS_INVITED, STATUS_INTERESTED],
+        target=STATUS_ACCEPTED,
+        permission=lambda instance, user: instance.user.uuid == user.uuid,
+    )
+    def transition_status_accepted(self):
+        # TODO: Send the organizer a confirmation email
+        # TODO: Send the user a confirmation email
+        pass
+
+    @transition(
+        field=status,
+        source=[STATUS_UNKNOWN, STATUS_DECLINED],
+        target=STATUS_ATTENDING,
+        permission=lambda instance, user: instance.user.uuid == user.uuid,
+    )
+    def transition_status_attending(self):
+        # TODO: Send a confirmation email to the user
+        # TODO: Send a confirmation emeail to organizer
+        # REF: https://account.postmarkapp.com/servers/3930160/templates/6789246/edit
+        self.send_user_confirmation_mail(template_id=6789246)
+
+    @transition(
+        field=status,
+        source=STATUS_ATTENDING,
+        target=STATUS_CHECKED_IN,
+        permission=lambda instance, user: instance.user.uuid == user.uuid,
+    )
+    def transition_status_checked_in(self):
+        pass
+
+    @transition(
+        field=status,
+        source=[STATUS_INVITED, STATUS_ACCEPTED, STATUS_INTERESTED, STATUS_ATTENDING],
+        target=STATUS_DECLINED,
+        permission=lambda instance, user: instance.user.uuid == user.uuid,
+    )
+    def transition_status_declined(self):
+        # TODO: Send the organizer an email, if he had invited the user
+        # REF: https://account.postmarkapp.com/servers/3930160/templates/6934047/edit
+        self.send_user_confirmation_mail(template_id=6934047)
+
+    @transition(
+        field=status,
+        source=STATUS_UNKNOWN,
+        target=STATUS_INTERESTED,
+        permission=lambda instance, user: instance.user.uuid == user.uuid,
+    )
+    def transition_status_interested(self):
+        pass
+
+    @transition(
+        field=status,
+        source=STATUS_UNKNOWN,
+        target=STATUS_INVITED,
+        permission=lambda instance, user: instance.user.uuid == user.uuid,
+    )
+    def transition_status_invited(self):
+        # TODO: Send the invitee an email, notification
+        pass
