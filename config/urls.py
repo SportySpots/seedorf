@@ -3,6 +3,7 @@ from django.conf import settings
 from django.conf.urls import include, url
 from django.conf.urls.static import static
 from django.contrib import admin
+from django.utils.translation import ugettext_lazy as _
 from django.views import defaults as default_views
 from django.views.decorators.csrf import csrf_exempt
 from drf_yasg import openapi
@@ -54,13 +55,11 @@ schema_view = get_schema_view(
 # Routers provide an easy way of automatically determining the URL conf.
 router = routers.DefaultRouter()
 
-# Top level urls
-router.register(r"users", UserViewSet)  # /api/users/
-router.register(r"spots", SpotViewSet)  # /api/spots/
-router.register(r"games", GameViewSet)  # /api/games/
+# Sport urls
 router.register(r"sports", SportViewSet)  # /api/sports/
 
 # User urls
+router.register(r"users", UserViewSet)  # /api/users/
 users_router = routers.NestedDefaultRouter(router, r"users", lookup="user")
 users_router.register(r"profile", UserProfileNestedViewSet, base_name="user-profile")  # /api/users/<uuid>/profile
 
@@ -69,6 +68,7 @@ users_profile_router.register(r'sports', UserProfileSportNestedViewSet, base_nam
 users_profile_router.register(r'spots', UserProfileSpotNestedViewSet, base_name='user-profile-spots')  # /api/users/<uuid>/profile/<uuid>/spots/
 
 # Spots urls
+router.register(r"spots", SpotViewSet)  # /api/spots/
 spots_router = routers.NestedDefaultRouter(router, r"spots", lookup="spot")
 spots_router.register(r"address", SpotAddressNestedViewSet, base_name="spot-address")  # /api/spots/<uuid>/address
 spots_router.register(r"sports", SpotSportsNestedViewSet, base_name="spot-sports")  # /api/spots/<uuid>/sports
@@ -89,6 +89,7 @@ spot_sports_opening_times_router.register(
 )  # /api/spots/<uuid>/sports/<uuid>/opening-times
 
 # Game urls
+router.register(r"games", GameViewSet)  # /api/games/
 games_router = routers.NestedDefaultRouter(router, r"games", lookup="game")
 games_router.register(r"organizer", GameUserNestedViewSet, base_name="game-organizer")  # /api/games/<uuid>/organizer
 games_router.register(r"rsvps", GameRsvpStatusNestedViewset, base_name="game-rsvps")  # /api/games/<uuid>/rsvps
@@ -165,9 +166,9 @@ if settings.DEBUG:
     # This allows the error pages to be debugged during development, just visit
     # these url in browser to see how these error pages look like.
     urlpatterns += [
-        url(r"^400/$", default_views.bad_request, kwargs={"exception": Exception("Bad Request!")}),
-        url(r"^403/$", default_views.permission_denied, kwargs={"exception": Exception("Permission Denied")}),
-        url(r"^404/$", default_views.page_not_found, kwargs={"exception": Exception("Page not Found")}),
+        url(r"^400/$", default_views.bad_request, kwargs={"exception": Exception(_("Bad Request!"))}),
+        url(r"^403/$", default_views.permission_denied, kwargs={"exception": Exception(_("Permission Denied"))}),
+        url(r"^404/$", default_views.page_not_found, kwargs={"exception": Exception(_("Page not Found"))}),
         url(r"^500/$", default_views.server_error),
     ]
     if "debug_toolbar" in settings.INSTALLED_APPS:

@@ -27,7 +27,7 @@ ALLOWED_HOSTS = ["localhost", "0.0.0.0", "127.0.0.1", "10.0.3.2", "host.docker.i
 
 CORS_ORIGIN_WHITELIST = ["localhost:8000", "localhost:8080", "127.0.0.1:8000" "127.0.0.1:8080"] + CORS_ORIGIN_WHITELIST
 
-EMAIL_BACKEND = env("DJANGO_EMAIL_BACKEND", default="seedorf.utils.LocalPostmarkEmailBackend.LocalPostmarkEmailBackend")
+EMAIL_BACKEND = env("DJANGO_EMAIL_BACKEND", default="seedorf.utils.email_backends.LocalPostmarkEmailBackend")
 
 # Mail settings
 # ------------------------------------------------------------------------------
