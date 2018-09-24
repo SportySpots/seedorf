@@ -1909,9 +1909,9 @@
         },
         "tabulate": {
             "hashes": [
-                "sha256:9071aacbd97a9a915096c1aaf0dc684ac2672904cd876db5904085d6dac9810e"
+                "sha256:e4ca13f26d0a6be2a2915428dc21e732f1e44dad7f76d7030b2ef1ec251cf7f2"
             ],
-            "version": "==0.7.5"
+            "version": "==0.8.2"
         },
         "termcolor": {
             "hashes": [
