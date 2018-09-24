@@ -1515,11 +1515,10 @@
         },
         "factory-boy": {
             "hashes": [
-                "sha256:340c602f6fed2d8dd160397f28f2c0219e937f0488460450e8e5bf2add020ed6",
-                "sha256:b8334bcc3c5b10af9a83ab5b8786f98cb322638dc1e6d320cad01c7f2b420e87"
+                "sha256:d552cb872b310ae78bd7429bf318e42e1e903b1a109e899a523293dfa762ea4f",
+                "sha256:6f25cc4761ac109efd503f096e2ad99421b1159f01a29dbb917359dcd68e08ca"
             ],
-            "index": "pypi",
-            "version": "==2.9.2"
+            "version": "==2.11.1"
         },
         "faker": {
             "hashes": [
