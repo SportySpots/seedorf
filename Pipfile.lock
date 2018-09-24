@@ -943,10 +943,10 @@
         },
         "rfc3987": {
             "hashes": [
-                "sha256:91a7826b0a26c246a5a91bef09c2c0809c713a689be689b9571e78a13f6557a4",
-                "sha256:eb58b75dcc029c43d4be6dc2518fdd37c816c3acb2be1680f8a44071a2483b10"
+                "sha256:10702b1e51e5658843460b189b185c0366d2cf4cff716f13111b0ea9fd2dce53",
+                "sha256:d3c4d257a560d544e9826b38bc81db676890c79ab9d7ac92b39c7a253d5ca733"
             ],
-            "version": "==1.3.7"
+            "version": "==1.3.8"
         },
         "rjsmin": {
             "hashes": [
