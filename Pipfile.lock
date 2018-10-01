@@ -624,10 +624,10 @@
         },
         "kappa": {
             "hashes": [
-                "sha256:4b5b372872f25d619e427e04282551048dc975a107385b076b3ffc6406a15833",
-                "sha256:4d6b7b3accce4a0aaaac92b36237a6304f0f2fffbbe3caea3f7c9f52d12c9989"
+                "sha256:f2c654f2a171c97ed7f1d0d20b09d6bdf9e66526ceb4e08624e821fac1b4c91b",
+                "sha256:029ac70d6e58e619b38adc72f8caafade4047776176ec9c242fa4b0f2c101d3f"
             ],
-            "version": "==0.6.0"
+            "version": "==0.7.0"
         },
         "kombu": {
             "hashes": [
