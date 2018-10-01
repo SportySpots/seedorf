@@ -1474,10 +1474,10 @@
         },
         "docker": {
             "hashes": [
-                "sha256:dbed56b8ba57b23919794e7cdcf7340c5052e9fd1cbe64b90b4eb9106437e0e3",
-                "sha256:e9cc39e24905e67ba9e2df14c94488f5cf030fb72ae1c60de505ce5ea90503f7"
+                "sha256:52cf5b1c3c394f9abf897638bfc3336d6b63a0f65969d0d4d2da6d3b1d8032b6",
+                "sha256:ad077b49660b711d20f50f344f70cfae014d635ef094bf21b0d7df5f0aeedf99"
             ],
-            "version": "==3.4.0"
+            "version": "==3.4.1"
         },
         "docker-compose": {
             "hashes": [
