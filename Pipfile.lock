@@ -1225,10 +1225,9 @@
         },
         "awsebcli": {
             "hashes": [
-                "sha256:02148d8cb3f78503d22ad43349eafa4e526fd9583831bede759c0331ac68da93"
+                "sha256:b2dff9efbd83979b8050a95803eb88b0902660d926eae31e3a0bfe0836c2d318"
             ],
-            "index": "pypi",
-            "version": "==3.14.1"
+            "version": "==3.14.6"
         },
         "babel": {
             "hashes": [
