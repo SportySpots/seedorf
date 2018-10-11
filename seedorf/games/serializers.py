@@ -240,7 +240,7 @@ class GameSerializer(serializers.ModelSerializer):
         if start_time < now:
             raise serializers.ValidationError(_("Start time cannot be in the past"))
 
-        if start_time > now + timedelta(minutes=15):
+        if start_time < now + timedelta(minutes=15):
             raise serializers.ValidationError(
                 _("Start time should be atleast 15 minutes from now")
             )
