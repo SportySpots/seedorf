@@ -106,8 +106,8 @@ class UserProfileSerializer(CountryFieldMixin, serializers.ModelSerializer):
 
     def update(self, instance, validated_data):
         # NOTE: We disallow nested object creation, hence pop out (ignore) related objects
-        validated_data.pop("spots")
-        validated_data.pop("sports")
+        validated_data.pop("spots", None)
+        validated_data.pop("sports", None)
 
         for k, v in validated_data.items():
             setattr(instance, k, v)
