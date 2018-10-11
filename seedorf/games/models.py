@@ -407,27 +407,27 @@ class RsvpStatus(BasePropertiesModel):
 
     def transition_status(self, status: str):
         if status == self.STATUS_ACCEPTED:
-            self.transition_status_accepted()
+            self.accept()
         elif status == self.STATUS_ATTENDING:
-            self.transition_status_attending()
+            self.attend()
         elif status == self.STATUS_CHECKED_IN:
-            self.transition_status_checked_in()
+            self.check_in()
         elif status == self.STATUS_DECLINED:
-            self.transition_status_declined()
+            self.decline()
         elif status == self.STATUS_INTERESTED:
-            self.transition_status_interested()
+            self.interested()
         elif status == self.STATUS_INVITED:
-            self.transition_status_invited()
+            self.invite()
         elif status == self.STATUS_UNKNOWN:
             pass
 
     @transition(
         field=status,
-        source=[STATUS_INVITED, STATUS_INTERESTED],
+        source=[STATUS_UNKNOWN, STATUS_INVITED, STATUS_INTERESTED],
         target=STATUS_ACCEPTED,
         permission=lambda instance, user: instance.user.uuid == user.uuid,
     )
-    def transition_status_accepted(self):
+    def accept(self):
         # TODO: Send the organizer a confirmation email
         # TODO: Send the user a confirmation email
         pass
@@ -438,7 +438,7 @@ class RsvpStatus(BasePropertiesModel):
         target=STATUS_ATTENDING,
         permission=lambda instance, user: instance.user.uuid == user.uuid,
     )
-    def transition_status_attending(self):
+    def attend(self):
         # TODO: Send a confirmation email to the user
         # TODO: Send a confirmation emeail to organizer
         # REF: https://account.postmarkapp.com/servers/3930160/templates/6789246/edit
@@ -450,7 +450,7 @@ class RsvpStatus(BasePropertiesModel):
         target=STATUS_CHECKED_IN,
         permission=lambda instance, user: instance.user.uuid == user.uuid,
     )
-    def transition_status_checked_in(self):
+    def check_in(self):
         pass
 
     @transition(
@@ -459,7 +459,7 @@ class RsvpStatus(BasePropertiesModel):
         target=STATUS_DECLINED,
         permission=lambda instance, user: instance.user.uuid == user.uuid,
     )
-    def transition_status_declined(self):
+    def decline(self):
         # TODO: Send the organizer an email, if he had invited the user
         # REF: https://account.postmarkapp.com/servers/3930160/templates/6934047/edit
         self.send_user_confirmation_mail(template_id=6934047)
@@ -470,7 +470,7 @@ class RsvpStatus(BasePropertiesModel):
         target=STATUS_INTERESTED,
         permission=lambda instance, user: instance.user.uuid == user.uuid,
     )
-    def transition_status_interested(self):
+    def interested(self):
         pass
 
     @transition(
@@ -479,6 +479,6 @@ class RsvpStatus(BasePropertiesModel):
         target=STATUS_INVITED,
         permission=lambda instance, user: instance.user.uuid == user.uuid,
     )
-    def transition_status_invited(self):
+    def invite(self):
         # TODO: Send the invitee an email, notification
         pass

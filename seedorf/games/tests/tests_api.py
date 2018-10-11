@@ -282,14 +282,14 @@ class GameAPIViewTest(APITestCase):
 
     def test_user_rsvp_initial(self):
         game = GameFactory()
-        data = {"status": RsvpStatus.ACCEPTED}
+        data = {"status": RsvpStatus.STATUS_ACCEPTED}
         url = reverse("game-rsvps-list", kwargs={"game_uuid": str(game.uuid)})
         response = self.client.post(url, data, format="json")
         self.assertEqual(201, response.status_code)
 
     def test_user_rsvp_update(self):
         rsvp = RsvpStatusFactory(user=self.user)
-        data = {"status": RsvpStatus.ATTENDING}
+        data = {"status": RsvpStatus.STATUS_ATTENDING}
 
         url = reverse(
             "game-rsvps-detail",
@@ -301,7 +301,7 @@ class GameAPIViewTest(APITestCase):
 
     def test_user_rsvp_error(self):
         rsvp = RsvpStatusFactory()
-        data = {"status": RsvpStatus.ATTENDING}
+        data = {"status": RsvpStatus.STATUS_ATTENDING}
 
         url = reverse(
             "game-rsvps-detail",
