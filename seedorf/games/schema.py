@@ -44,7 +44,7 @@ class Query(object):
     )
 
     @staticmethod
-    def resolve_game(args, **kwargs):
+    def resolve_game(args, info, **kwargs):
         uuid = kwargs.get("uuid")
 
         if uuid is not None:
