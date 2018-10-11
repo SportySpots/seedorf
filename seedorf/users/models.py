@@ -14,7 +14,6 @@ from seedorf.utils.models import BasePropertiesModel
 
 
 def get_avatar_upload_directory(instance, filename):
-    # file will be uploaded to MEDIA_ROOT/spots/<uuid>/images/<filename>
     # TODO: Test for files names with non latin characters
     # TODO: Upload files to CDN
     return "users/{0}/avatars/{1}".format(instance.uuid, filename)

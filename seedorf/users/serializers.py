@@ -59,7 +59,7 @@ class UserSportNestedSerializer(serializers.ModelSerializer):
             try:
                 sport = Sport.objects.get(uuid=str(sport_uuid))
             except Sport.DoesNotExist:
-                raise serializers.ValidationError(_("Sport not found"))
+                raise serializers.ValidationError(_("Invalid sport"))
 
             user.sports.add(sport)
             user.save()

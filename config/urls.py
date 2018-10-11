@@ -56,45 +56,78 @@ schema_view = get_schema_view(
 router = routers.DefaultRouter()
 
 # Sport urls
-router.register(r"sports", SportViewSet)  # /api/sports/
+
+# /api/sports/
+router.register(r"sports", SportViewSet)
 
 # User urls
-router.register(r"users", UserViewSet)  # /api/users/
+
+# /api/users/
+router.register(r"users", UserViewSet)
+
 users_router = routers.NestedDefaultRouter(router, r"users", lookup="user")
-users_router.register(r"profile", UserProfileNestedViewSet, base_name="user-profile")  # /api/users/<uuid>/profile
+
+# /api/users/<uuid>/profile
+users_router.register(r"profile", UserProfileNestedViewSet, base_name="user-profile")
 
 users_profile_router = routers.NestedDefaultRouter(users_router, r'profile', lookup='profile')
-users_profile_router.register(r'sports', UserProfileSportNestedViewSet, base_name='user-profile-sports')  # /api/users/<uuid>/profile/<uuid>/sports/
-users_profile_router.register(r'spots', UserProfileSpotNestedViewSet, base_name='user-profile-spots')  # /api/users/<uuid>/profile/<uuid>/spots/
+
+# /api/users/<uuid>/profile/<uuid>/sports/
+users_profile_router.register(r'sports', UserProfileSportNestedViewSet, base_name='user-profile-sports')
+
+# /api/users/<uuid>/profile/<uuid>/spots/
+users_profile_router.register(r'spots', UserProfileSpotNestedViewSet, base_name='user-profile-spots')
 
 # Spots urls
-router.register(r"spots", SpotViewSet)  # /api/spots/
+
+# /api/spots/
+router.register(r"spots", SpotViewSet)
+
 spots_router = routers.NestedDefaultRouter(router, r"spots", lookup="spot")
-spots_router.register(r"address", SpotAddressNestedViewSet, base_name="spot-address")  # /api/spots/<uuid>/address
-spots_router.register(r"sports", SpotSportsNestedViewSet, base_name="spot-sports")  # /api/spots/<uuid>/sports
+
+# /api/spots/<uuid>/address
+spots_router.register(r"address", SpotAddressNestedViewSet, base_name="spot-address")
+
+# /api/spots/<uuid>/sports
+spots_router.register(r"sports", SpotSportsNestedViewSet, base_name="spot-sports")
 
 spot_sports_images_router = routers.NestedDefaultRouter(spots_router, r"sports", lookup="sport")
+
+# /api/spots/<uuid>/sports/<uuid>/images
 spot_sports_images_router.register(
     r"images", SpotSportImagesNestedViewSet, base_name="spot-sport-images"
-)  # /api/spots/<uuid>/sports/<uuid>/images
+)
 
 spot_sports_amenities_router = routers.NestedDefaultRouter(spots_router, r"sports", lookup="sport")
+
+# /api/spots/<uuid>sports/<uuid>/amenities
 spot_sports_amenities_router.register(
     r"amenities", SpotSportAmenitesNestedViewSet, base_name="spot-sport-amenities"
-)  # /api/spots/<uuid>sports/<uuid>/amenities
+)
 
 spot_sports_opening_times_router = routers.NestedDefaultRouter(spots_router, r"sports", lookup="sport")
+
+# /api/spots/<uuid>/sports/<uuid>/opening-times
 spot_sports_opening_times_router.register(
     r"opening-times", SpotSportOpeningTimesNestedViewSet, base_name="spot-sport-opening-times"
-)  # /api/spots/<uuid>/sports/<uuid>/opening-times
+)
 
 # Game urls
-router.register(r"games", GameViewSet)  # /api/games/
+# /api/games/
+router.register(r"games", GameViewSet)
 games_router = routers.NestedDefaultRouter(router, r"games", lookup="game")
-games_router.register(r"organizer", GameUserNestedViewSet, base_name="game-organizer")  # /api/games/<uuid>/organizer
-games_router.register(r"rsvps", GameRsvpStatusNestedViewset, base_name="game-rsvps")  # /api/games/<uuid>/rsvps
-games_router.register(r"sport", GameSportNestedViewSet, base_name="game-sport")  # /api/games/<uuid>/sport
-games_router.register(r"spot", GameSpotNestedViewSet, base_name="game-spot")  # /api/games/<uuid>/spot
+
+# /api/games/<uuid>/organizer
+games_router.register(r"organizer", GameUserNestedViewSet, base_name="game-organizer")
+
+# /api/games/<uuid>/rsvps
+games_router.register(r"rsvps", GameRsvpStatusNestedViewset, base_name="game-rsvps")
+
+# /api/games/<uuid>/sport
+games_router.register(r"sport", GameSportNestedViewSet, base_name="game-sport")
+
+# /api/games/<uuid>/spot
+games_router.register(r"spot", GameSpotNestedViewSet, base_name="game-spot")
 
 
 urlpatterns = [

@@ -6,7 +6,6 @@ from django.utils import timezone
 from rest_framework.test import APITestCase
 
 from seedorf.games.models import Game, RsvpStatus
-from seedorf.games.serializers import RsvpStatusNestedSerializer, GameSerializer
 from seedorf.sports.models import Sport
 from seedorf.sports.tests.factories import SportFactory
 from seedorf.spots.models import Spot

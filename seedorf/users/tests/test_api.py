@@ -15,9 +15,6 @@ class UserRegistrationAPIViewTest(APITestCase):
     url = reverse("rest-auth-registration:rest_register")
 
     def test_user_creation(self):
-        """
-        Test to verify that a post call with user valid data
-        """
 
         user_data = {
             "first_name": "test create first name",
@@ -48,6 +45,22 @@ class UserRegistrationAPIViewTest(APITestCase):
 
             # Token has a the user with the right uuid
             self.assertEqual(decoded_token["uuid"], str(user.uuid))
+            self.assertEqual(response_user["email"], user_data["email"])
+            self.assertFalse(response_user["is_staff"])
+            self.assertTrue(response_user["is_active"])
+            self.assertFalse(response_user["groups"])
+
+            # user profile
+            response_user_profile = response_user["profile"]
+            self.assertFalse(response_user_profile["sports"])
+            self.assertFalse(response_user_profile["spots"])
+            self.assertEqual(response_user_profile["gender"], UserProfile.GENDER_NOT_SPECIFIED)
+            self.assertIsNone(response_user_profile["year_of_birth"])
+            self.assertIsNone(response_user_profile["avatar"])
+            self.assertEqual(response_user_profile["language"], "en")
+            self.assertEqual(response_user_profile["timezone"], "Europe/Amsterdam")
+            self.assertEqual(response_user_profile["country"], "")
+            self.assertEqual(response_user_profile["bio"], "")
 
     def test_duplicate_user_creation(self):
         """
@@ -75,19 +88,24 @@ class UserProfileAPIViewTest(APITestCase):
 
         url = reverse("user-profile-list", kwargs={"user_uuid": str(user.uuid)})
 
-        user_profile_data = {"year_of_birth": 1980}
+        user_profile_data = {
+            "year_of_birth": 1980,
+            "gender": UserProfile.GENDER_FEMALE,
+            "language": "nl",
+            "bio": "test"
+        }
 
         response = self.client.post(url, user_profile_data)
         self.assertEqual(201, response.status_code)
         self.assertEqual(response.data["sports"], [])
         self.assertEqual(response.data["spots"], [])
-        self.assertEqual(response.data["gender"], UserProfile.GENDER_NOT_SPECIFIED)
+        self.assertEqual(response.data["gender"], UserProfile.GENDER_FEMALE)
         self.assertEqual(response.data["year_of_birth"], 1980)
         self.assertEqual(response.data["avatar"], None)
-        self.assertEqual(response.data["language"], "en")
+        self.assertEqual(response.data["language"], "nl")
         self.assertEqual(response.data["timezone"], "Europe/Amsterdam")
         self.assertEqual(response.data["country"], "")
-        self.assertEqual(response.data["bio"], "")
+        self.assertEqual(response.data["bio"], "test")
         self.assertCountEqual(
             [
                 "uuid",
@@ -144,6 +162,11 @@ class UserProfileAPIViewTest(APITestCase):
 
         response = self.client.get(url)
         self.assertEqual(200, response.status_code)
+        response_sport = response.data["results"][0]
+        self.assertEqual(response_sport["uuid"], str(sport.uuid))
+        self.assertEqual(response_sport["category"], sport.category)
+        self.assertEqual(response_sport["description"], sport.description)
+        self.assertEqual(response_sport["name"], sport.name)
 
     def test_user_profile_spot_retrieve(self):
         sport = SportFactory()
@@ -163,6 +186,31 @@ class UserProfileAPIViewTest(APITestCase):
 
         response = self.client.get(url)
         self.assertEqual(200, response.status_code)
+        response_spot = response.data["results"][0]
+        self.assertEqual(response_spot["uuid"], str(spot.uuid))
+        self.assertCountEqual(
+            [
+                "uuid",
+                "address",
+                "sports",
+                "name",
+                "slug",
+                "owner",
+                "description",
+                "logo",
+                "homepage_url",
+                "is_verified",
+                "is_permanently_closed",
+                "is_public",
+                "is_temporary",
+                "establishment_date",
+                "closure_date",
+                "created_at",
+                "modified_at",
+                "deleted_at"
+            ],
+            response_spot.keys()
+        )
 
 
 # Create Token Manually
