@@ -1158,11 +1158,11 @@
         },
         "zappa": {
             "hashes": [
-                "sha256:827c2c1cc84790674476a98773601b924a2b4f3b0b81684571cd034326231158",
-                "sha256:cf4654dfa7cd8777403ea2e379139b126c7e47943edb4e5441bb222a555a1aff"
+                "sha256:779eeacf312306261c0d4ef144a3a64ed37aa7a379958712bf486d21c4e2b475",
+                "sha256:e823272b3827db0a3045c425ba8a27504224d20bda07e51ee5c08f79691aea28",
+                "sha256:f0e0e665c69e1cc758e2c86db7febd38ec919bc833ac0b58dcd38b5c75d2c64d"
             ],
-            "index": "pypi",
-            "version": "==0.45.1"
+            "version": "==0.47.0"
         }
     },
     "develop": {
