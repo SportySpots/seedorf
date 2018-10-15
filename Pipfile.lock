@@ -442,11 +442,10 @@
         },
         "elasticsearch-dsl": {
             "hashes": [
-                "sha256:de5fd68901c5b94e51e2ae4e8ad6f618b22665d89794d96f9b6b763986665527",
-                "sha256:de81b2322cde9bf1171c8a41d80596cdadd433b88b93daa09060af3a512523a7"
+                "sha256:794fc7e03fc580cf48c35c9491fa97f08afa1b9e897f9c59dfa285efb520d71c",
+                "sha256:d0a5137caf43c2ecb69f7a867d52d40e557b3ba16c361dff74a07affe7101c38"
             ],
-            "index": "pypi",
-            "version": "==5.3.0"
+            "version": "==6.2.1"
         },
         "flex": {
             "hashes": [
