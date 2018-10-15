@@ -416,10 +416,9 @@
         },
         "drf-writable-nested": {
             "hashes": [
-                "sha256:72e77e610c568ee4dc3f2be1efd324c915c7e0ddaa97cab02a006e7d5c076751"
+                "sha256:5c54eca93d74dc22014fb7ea54b6dbd559a058587596feba4d79078e32a83e16"
             ],
-            "index": "pypi",
-            "version": "==0.4.2"
+            "version": "==0.5.1"
         },
         "drf-yasg": {
             "hashes": [
