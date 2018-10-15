@@ -1944,9 +1944,9 @@
         },
         "texttable": {
             "hashes": [
-                "sha256:119041773ff03596b56392532f9315cb3a3116e404fd6f36e76a7dc088d95c79"
+                "sha256:95e8cfe85f8395a7eacdfbc8f09d885b9ef3a6ac6ead0364ea721de1127aa36b"
             ],
-            "version": "==0.9.1"
+            "version": "==1.4.0"
         },
         "toml": {
             "hashes": [
