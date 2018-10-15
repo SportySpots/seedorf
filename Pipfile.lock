@@ -1306,9 +1306,10 @@
         },
         "cement": {
             "hashes": [
-                "sha256:8765ed052c061d74e4d0189addc33d268de544ca219b259d797741f725e422d2"
+                "sha256:88a3ecf83aebada916bcafacae52c3977f0405c261a13ffb290b517848ff0c60",
+                "sha256:e50e1033d61d18b36787a60d52cad0d3fe20780e7e2f78f0204bde32000645f9"
             ],
-            "version": "==2.8.2"
+            "version": "==3.0.0"
         },
         "certifi": {
             "hashes": [
