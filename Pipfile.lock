@@ -1501,9 +1501,10 @@
         },
         "docker-compose": {
             "hashes": [
-                "sha256:27b8dab8d12b8aaedf16fcf829d3ae7cd107d819082d35e6fe248e74e2294093"
+                "sha256:1deb71e6efe265b419a24a5d5c9a13c6678c48de21acf1f2d374acfd173c572a",
+                "sha256:915cdd0ea7aff349d27a8e0585124ac38695635201770a35612837b25e234677"
             ],
-            "version": "==1.21.2"
+            "version": "==1.22.0"
         },
         "docker-pycreds": {
             "hashes": [
