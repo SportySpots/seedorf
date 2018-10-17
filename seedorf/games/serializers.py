@@ -258,10 +258,10 @@ class GameSerializer(serializers.ModelSerializer):
 
     @staticmethod
     def validate_rsvp_open_time(rsvp_open_time: datetime) -> datetime:
-        now = timezone.now()
+        # now = timezone.now()
 
-        if rsvp_open_time < now:
-            raise serializers.ValidationError(_("RSVP open time cannot be in the past"))
+        # if rsvp_open_time < now:
+        #     raise serializers.ValidationError(_("RSVP open time cannot be in the past"))
 
         return rsvp_open_time
 
