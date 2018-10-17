@@ -1,10 +1,14 @@
-from django.contrib.auth.models import Group
 from rest_framework import viewsets
 
 from seedorf.utils.permissions import IsOwnerOrReadOnly
 from seedorf.utils.regex import UUID as REGEX_UUID
+from seedorf.sports.serializers import SportSerializer
+from seedorf.spots.serializers import SpotSerializer
+from seedorf.sports.models import Sport
+from seedorf.spots.models import Spot
+
 from .models import User, UserProfile
-from .serializers import UserSerializer, UserProfileNestedSerializer, GroupSerializer
+from .serializers import UserSerializer, UserProfileSerializer
 
 
 class UserViewSet(viewsets.ModelViewSet):
@@ -24,15 +28,53 @@ class UserProfileNestedViewSet(viewsets.ModelViewSet):
     API endpoint that allows user profile to be viewed or edited.
     """
 
-    serializer_class = UserProfileNestedSerializer
+    serializer_class = UserProfileSerializer
     lookup_field = "uuid"
     lookup_value_regex = REGEX_UUID
-    # TODO: Only the user can update his/her own profile
     permission_classes = (IsOwnerOrReadOnly,)
 
     def get_queryset(self):
         user_uuid = self.kwargs["user_uuid"]
         return UserProfile.objects.filter(user__uuid=user_uuid)
+
+    # TODO: Fix avatar image creation
+    # @action(methods=['post'], detail=True, permission_classes=[IsOwnerOrReadOnly])
+    # def avatar(self, request, user_uuid=None, uuid=None):
+    #     try:
+    #         file = request.data['file']
+    #     except KeyError:
+    #         raise ParseError('Request has no resource file attached')
+    #     user_profile = UserProfile.objects.create(image=file, ....)
+
+
+class UserProfileSportNestedViewSet(viewsets.ModelViewSet):
+    """
+    API endpoint that allows users sports to be viewed or edited.
+    """
+
+    serializer_class = SportSerializer
+    lookup_field = "uuid"
+    lookup_value_regex = REGEX_UUID
+    permission_classes = (IsOwnerOrReadOnly,)
+
+    def get_queryset(self):
+        profile_uuid = self.kwargs["profile_uuid"]
+        return Sport.objects.filter(followers__uuid=profile_uuid)
+
+
+class UserProfileSpotNestedViewSet(viewsets.ModelViewSet):
+    """
+    API endpoint that allows users spots to be viewed or edited.
+    """
+
+    serializer_class = SpotSerializer
+    lookup_field = "uuid"
+    lookup_value_regex = REGEX_UUID
+    permission_classes = (IsOwnerOrReadOnly,)
+
+    def get_queryset(self):
+        profile_uuid = self.kwargs["profile_uuid"]
+        return Spot.objects.filter(followers__uuid=profile_uuid)
 
 
 class GameUserNestedViewSet(viewsets.ModelViewSet):
@@ -47,14 +89,3 @@ class GameUserNestedViewSet(viewsets.ModelViewSet):
     def get_queryset(self):
         game_uuid = self.kwargs["game_uuid"]
         return User.objects.filter(game_organizers__uuid=game_uuid)
-
-
-class GroupViewSet(viewsets.ModelViewSet):
-    """
-    API endpoint that allows groups to be viewed or edited.
-    """
-
-    queryset = Group.objects.all()
-    serializer_class = GroupSerializer
-    lookup_field = "uuid"
-    lookup_value_regex = REGEX_UUID

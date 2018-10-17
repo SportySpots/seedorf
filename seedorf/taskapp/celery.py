@@ -7,7 +7,9 @@ from django.conf import settings
 
 if not settings.configured:
     # set the default Django settings module for the 'celery' program.
-    os.environ.setdefault("DJANGO_SETTINGS_MODULE", "config.settings.dev")  # pragma: no cover
+    os.environ.setdefault(
+        "DJANGO_SETTINGS_MODULE", "config.settings.dev"
+    )  # pragma: no cover
 
 
 app = Celery("seedorf")
@@ -33,7 +35,9 @@ class CeleryConfig(AppConfig):
             # @formatter:off
             from raven import Client as RavenClient
             from raven.contrib.celery import register_signal as raven_register_signal
-            from raven.contrib.celery import register_logger_signal as raven_register_logger_signal
+            from raven.contrib.celery import (
+                register_logger_signal as raven_register_logger_signal
+            )
 
             # @formatter:on
 

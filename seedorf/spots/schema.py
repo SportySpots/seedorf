@@ -5,28 +5,10 @@ from graphene_django.types import DjangoObjectType
 from graphene_django_extras import DjangoFilterPaginateListField
 from graphene_django_extras.paginations import LimitOffsetGraphqlPagination
 
-from seedorf.games.schema import GameType
 from seedorf.locations.schema import AddressType
 from seedorf.sports.schema import SportType
 from .models import Spot, SpotAmenity, SpotImage, SpotOpeningTime
 from .viewsets import SpotFilter
-
-
-class SpotType(DjangoObjectType):
-    sports = graphene.List(SportType)
-    games = graphene.List(GameType)
-    address = graphene.Field(AddressType)
-
-    class Meta:
-        description = _("Type definition for a single spot")
-        model = Spot
-        exclude_fields = ("spot_games",)
-
-    def resolve_sports(self, info, **kwargs):
-        return self.sports.all()
-
-    def resolve_games(self, info, **kwargs):
-        return self.spot_games.all()
 
 
 class SpotImageType(DjangoObjectType):
@@ -50,13 +32,31 @@ class SpotOpeningTimeType(DjangoObjectType):
         model = SpotOpeningTime
 
 
+class SpotType(DjangoObjectType):
+    sports = graphene.List(SportType)
+    games = graphene.List("seedorf.games.schema.GameType")
+    address = graphene.Field(AddressType)
+
+    class Meta:
+        description = _("Type definition for a single spot")
+        model = Spot
+        exclude_fields = ("spot_games",)
+
+    def resolve_sports(self, info, **kwargs):
+        return self.sports.all()
+
+    def resolve_games(self, info, **kwargs):
+        return self.spot_games.all()
+
+
 class Query(graphene.ObjectType):
     spot = graphene.Field(SpotType, uuid=graphene.UUID())
     spots = DjangoFilterPaginateListField(
         SpotType, filterset_class=SpotFilter, pagination=LimitOffsetGraphqlPagination()
     )
 
-    def resolve_spot(self, info, **kwargs):
+    @staticmethod
+    def resolve_spot(info, **kwargs):
         uuid = kwargs.get("uuid")
 
         if uuid is not None:

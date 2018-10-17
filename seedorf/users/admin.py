@@ -2,7 +2,7 @@ from django import forms
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin as AuthUserAdmin
 from django.contrib.auth.forms import UserChangeForm, UserCreationForm
-
+from django.utils.text import ugettext_lazy as _
 from .models import User, UserProfile
 
 
@@ -14,7 +14,7 @@ class SportySpotsUserChangeForm(UserChangeForm):
 class SportySpotsUserCreationForm(UserCreationForm):
 
     error_message = UserCreationForm.error_messages.update(
-        {"duplicate_username": "This username has already been taken."}
+        {"duplicate_username": _("This username has already been taken.")}
     )
 
     class Meta(UserCreationForm.Meta):

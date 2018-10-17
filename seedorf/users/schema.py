@@ -41,7 +41,9 @@ class UserType(DjangoObjectType):
 
 
 class Query(object):
-    user = graphene.Field(UserType, email=graphene.String(), uuid=graphene.UUID(), id=graphene.ID())
+    user = graphene.Field(
+        UserType, email=graphene.String(), uuid=graphene.UUID(), id=graphene.ID()
+    )
     users = graphene.List(UserType)
 
     def resolve_user(self, args, **kwargs):

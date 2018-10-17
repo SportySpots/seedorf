@@ -1,5 +1,9 @@
 import graphene
-from graphene_django_extras import DjangoObjectType, DjangoFilterPaginateListField, LimitOffsetGraphqlPagination
+from graphene_django_extras import (
+    DjangoObjectType,
+    DjangoFilterPaginateListField,
+    LimitOffsetGraphqlPagination,
+)
 from seedorf.users.schema import UserType
 from .models import Game, RsvpStatus
 from .viewsets import GameFilter, RsvpStatusFilter
@@ -34,10 +38,13 @@ class Query(object):
 
     rsvp_status = graphene.Field(RsvpStatusType, uuid=graphene.UUID())
     rsvp_statuses = DjangoFilterPaginateListField(
-        RsvpStatusType, pagination=LimitOffsetGraphqlPagination(), filterset_class=RsvpStatusFilter
+        RsvpStatusType,
+        pagination=LimitOffsetGraphqlPagination(),
+        filterset_class=RsvpStatusFilter,
     )
 
-    def resolve_game(self, args, **kwargs):
+    @staticmethod
+    def resolve_game(args, info, **kwargs):
         uuid = kwargs.get("uuid")
 
         if uuid is not None:
@@ -45,10 +52,12 @@ class Query(object):
 
         return None
 
-    def resolve_games(self, args, **kwargs):
+    @staticmethod
+    def resolve_games(args, **kwargs):
         return Game.objects.all()
 
-    def resolve_rsvp_status(self, args, **kwargs):
+    @staticmethod
+    def resolve_rsvp_status(args, **kwargs):
         uuid = kwargs.get("uuid")
 
         if uuid is not None:
@@ -56,5 +65,6 @@ class Query(object):
 
         return None
 
-    def resolve_rsvp_statuses(self, args, **kwargs):
+    @staticmethod
+    def resolve_rsvp_statuses(args, **kwargs):
         return RsvpStatus.objects.all()

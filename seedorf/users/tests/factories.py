@@ -7,9 +7,15 @@ from seedorf.spots.tests.factories import SpotFactory
 class UserFactory(factory.django.DjangoModelFactory):
     first_name = factory.Faker("first_name")
     last_name = factory.Faker("last_name")
-    name = factory.LazyAttribute(lambda o: "{} {}".format(o.first_name.lower(), o.last_name.lower()))
-    username = factory.LazyAttribute(lambda o: "{}.{}".format(o.first_name.lower(), o.last_name.lower()))
-    email = factory.LazyAttribute(lambda o: "{}.{}@example.com".format(o.first_name.lower(), o.last_name.lower()))
+    name = factory.LazyAttribute(
+        lambda o: "{} {}".format(o.first_name.lower(), o.last_name.lower())
+    )
+    username = factory.LazyAttribute(
+        lambda o: "{}.{}".format(o.first_name.lower(), o.last_name.lower())
+    )
+    email = factory.LazyAttribute(
+        lambda o: "{}.{}@example.com".format(o.first_name.lower(), o.last_name.lower())
+    )
     password = factory.PostGenerationMethodCall("set_password", "password")
     is_staff = False
 

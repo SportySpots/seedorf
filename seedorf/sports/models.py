@@ -53,11 +53,20 @@ class Sport(BasePropertiesModel, TranslationModel):
         verbose_name=_("Sport Name"),
     )
     description = models.TextField(
-        blank=True, default="", max_length=4096, null=False, verbose_name=_("Sport Description")
+        blank=True,
+        default="",
+        max_length=4096,
+        null=False,
+        verbose_name=_("Sport Description"),
     )
 
     # Generic Relations
-    reaction = GenericRelation("reactions.Reaction", blank=True, null=True, related_query_name="sport_reactions")
+    reaction = GenericRelation(
+        "reactions.Reaction",
+        blank=True,
+        null=True,
+        related_query_name="sport_reactions",
+    )
 
     class Meta:
         verbose_name = _("Sport")

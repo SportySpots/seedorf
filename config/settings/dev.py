@@ -23,11 +23,11 @@ TEMPLATES[0]["OPTIONS"]["debug"] = DEBUG
 # ------------------------------------------------------------------------------
 SECRET_KEY = env("DJANGO_SECRET_KEY", default="u^*n1SI0y`_*xY0m)4t/AB$y~Ko:@~|mh^/qAP<daS+](8APRg")
 
-ALLOWED_HOSTS = ["localhost", "0.0.0.0", "127.0.0.1", "10.0.3.2", "host.docker.internal"]
+ALLOWED_HOSTS = ["localhost", "0.0.0.0", "127.0.0.1", "10.0.3.2", "10.0.2.2", "host.docker.internal"]
 
 CORS_ORIGIN_WHITELIST = ["localhost:8000", "localhost:8080", "127.0.0.1:8000" "127.0.0.1:8080"] + CORS_ORIGIN_WHITELIST
 
-EMAIL_BACKEND = env("DJANGO_EMAIL_BACKEND", default="seedorf.utils.LocalPostmarkEmailBackend.LocalPostmarkEmailBackend")
+EMAIL_BACKEND = env("DJANGO_EMAIL_BACKEND", default="seedorf.utils.email_backends.LocalPostmarkEmailBackend")
 
 # Mail settings
 # ------------------------------------------------------------------------------

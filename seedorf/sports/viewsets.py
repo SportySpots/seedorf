@@ -1,12 +1,25 @@
 from rest_framework import viewsets
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
+from django_filters import rest_framework as filters
 
 from seedorf.games.serializers import GameSportNestedSerializer
+from seedorf.users.serializers import UserSportNestedSerializer
 from seedorf.spots.serializers import SpotSportNestedSerializer
 from seedorf.utils.permissions import IsAdminOrReadOnly
 from seedorf.utils.regex import UUID as REGEX_UUID
 from .models import Sport
 from .serializers import SportSerializer
+
+
+class SportFilter(filters.FilterSet):
+    class Meta:
+        model = Sport
+        strict = True
+        fields = {
+            "category": ["exact"],
+            "name": ["exact", "icontains"],
+            "description": ["icontains"],
+        }
 
 
 class SportViewSet(viewsets.ModelViewSet):
@@ -19,6 +32,8 @@ class SportViewSet(viewsets.ModelViewSet):
     lookup_field = "uuid"
     lookup_value_regex = REGEX_UUID
     permission_classes = (IsAdminOrReadOnly,)
+    filter_backends = (filters.DjangoFilterBackend,)
+    filter_class = SportFilter
 
 
 class SpotSportsNestedViewSet(viewsets.ModelViewSet):
@@ -63,4 +78,6 @@ class UserSportNestedViewSet(viewsets.ModelViewSet):
     http_method_names = ("options", "head", "get", "post")
 
     def get_queryset(self):
-        return Sport.objects.filter(followers__user__uuid__exact=self.kwargs["user_uuid"])
+        return Sport.objects.filter(
+            followers__user__uuid__exact=self.kwargs["user_uuid"]
+        )

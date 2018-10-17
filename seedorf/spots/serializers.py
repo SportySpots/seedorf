@@ -1,10 +1,9 @@
 from django.utils.translation import ugettext_lazy as _
 from rest_framework import serializers
-from rest_framework_nested.serializers import NestedHyperlinkedModelSerializer
 
-from seedorf.games.models import Game
 from seedorf.locations.serializers import AddressSerializer
 from seedorf.sports.models import Sport
+from seedorf.sports.serializers import SportSerializer
 from .models import Spot, SpotAmenity, SpotImage, SpotOpeningTime
 
 
@@ -29,7 +28,15 @@ class AmenitySerializer(serializers.ModelSerializer):
 class OpeningTimeSerializer(serializers.ModelSerializer):
     class Meta:
         model = SpotOpeningTime
-        fields = ("uuid", "day", "start_time", "end_time", "is_closed", "created_at", "modified_at")
+        fields = (
+            "uuid",
+            "day",
+            "start_time",
+            "end_time",
+            "is_closed",
+            "created_at",
+            "modified_at",
+        )
         read_only_fields = ("uuid", "created_at", "modified_at")
 
     def create(self, validated_data):
@@ -39,7 +46,9 @@ class OpeningTimeSerializer(serializers.ModelSerializer):
         spot = Spot.objects.get(uuid=spot_uuid)
         sport = Sport.objects.get(uuid=sport_uuid)
 
-        opening_time = SpotOpeningTime.objects.create(spot=spot, sport=sport, **validated_data)
+        opening_time = SpotOpeningTime.objects.create(
+            spot=spot, sport=sport, **validated_data
+        )
 
         return opening_time
 
@@ -47,7 +56,14 @@ class OpeningTimeSerializer(serializers.ModelSerializer):
 class ImageSerializer(serializers.ModelSerializer):
     class Meta:
         model = SpotImage
-        fields = ("uuid", "image", "is_flagged", "is_user_submitted", "created_at", "modified_at")
+        fields = (
+            "uuid",
+            "image",
+            "is_flagged",
+            "is_user_submitted",
+            "created_at",
+            "modified_at",
+        )
         read_only_fields = ("uuid", "created_at", "modified_at")
 
     def create(self, validated_data):
@@ -101,7 +117,7 @@ class SpotSportNestedSerializer(serializers.ModelSerializer):
         try:
             sport = Sport.objects.get(uuid=sport_uuid)
         except Sport.DoesNotExist:
-            raise serializers.ValidationError(_("Sport not found"))
+            raise serializers.ValidationError(_("Invalid Sport"))
 
         spot.sports.clear()
         spot.sports.add(sport)
@@ -109,7 +125,7 @@ class SpotSportNestedSerializer(serializers.ModelSerializer):
 
     @staticmethod
     def get_spot_uuid(context):
-        if context["view"].basename == "spot":
+        if context["view"].basename in ["spot", "user"]:
             spot_uuid = context["spot_uuid"]
         elif context["view"].basename == "spot-sports":
             spot_uuid = context["view"].kwargs["spot_uuid"]
@@ -119,16 +135,22 @@ class SpotSportNestedSerializer(serializers.ModelSerializer):
     def get_images(self, obj):
         spot_uuid = self.get_spot_uuid(self.context)
         images = SpotImage.objects.filter(sport__uuid=obj.uuid, spot__uuid=spot_uuid)
-        return ImageSerializer(images, many=True, context={"request": self.context["request"]}).data
+        return ImageSerializer(
+            images, many=True, context={"request": self.context["request"]}
+        ).data
 
     def get_opening_times(self, obj):
         spot_uuid = self.get_spot_uuid(self.context)
-        opening_times = SpotOpeningTime.objects.filter(sport__uuid=obj.uuid, spot__uuid=spot_uuid)
+        opening_times = SpotOpeningTime.objects.filter(
+            sport__uuid=obj.uuid, spot__uuid=spot_uuid
+        )
         return OpeningTimeSerializer(opening_times, many=True).data
 
     def get_amenities(self, obj):
         spot_uuid = self.get_spot_uuid(self.context)
-        amenities = SpotAmenity.objects.filter(sport__uuid=obj.uuid, spot__uuid=spot_uuid)
+        amenities = SpotAmenity.objects.filter(
+            sport__uuid=obj.uuid, spot__uuid=spot_uuid
+        )
         return AmenitySerializer(amenities, many=True).data
 
 
@@ -136,13 +158,31 @@ class SpotSerializer(serializers.ModelSerializer):
 
     # TODO: is_verified can only be set by staff, currently its is covered by IsAdminOrReadOnly permission
     # TODO: is_permanently_closed can only be set by staff, currently is covered by IsAdminOrReadOnly permission
-    # address = AddressSerializer(read_only=True, many=False)
     address = serializers.SerializerMethodField()
-    sports = serializers.SerializerMethodField()
+    sports = SportSerializer(many=True, required=False)
 
     class Meta:
         model = Spot
-        exclude = ("id",)
+        fields = (
+            "uuid",
+            "address",
+            "sports",
+            "name",
+            "slug",
+            "owner",
+            "description",
+            "logo",
+            "homepage_url",
+            "is_verified",
+            "is_permanently_closed",
+            "is_public",
+            "is_temporary",
+            "establishment_date",
+            "closure_date",
+            "created_at",
+            "modified_at",
+            "deleted_at",
+        )
         read_only_fields = ("uuid", "created_at", "modified_at")
 
     def create(self, validated_data):
@@ -155,13 +195,10 @@ class SpotSerializer(serializers.ModelSerializer):
         instance.save()
         return instance
 
-    def get_sports(self, obj):
-        sports = obj.sports.all()
-        self.context["spot_uuid"] = obj.uuid
-        return SpotSportNestedSerializer(sports, many=True, read_only=True, context=self.context).data
-
     def get_address(self, obj):
         if obj.address is None:
             return None
         else:
-            return AddressSerializer(obj.address, many=False, read_only=True, context=self.context).data
+            return AddressSerializer(
+                obj.address, many=False, read_only=True, context=self.context
+            ).data

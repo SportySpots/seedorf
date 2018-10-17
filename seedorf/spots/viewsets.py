@@ -6,6 +6,7 @@ from rest_framework import viewsets
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
 from rest_framework_gis.filters import DistanceToPointFilter
 
+from seedorf.games.serializers import GameSpotNestedSerializer
 from seedorf.locations.models import Address
 from seedorf.locations.serializers import AddressSerializer
 from seedorf.sports.models import Sport
@@ -14,7 +15,6 @@ from seedorf.utils.regex import UUID as REGEX_UUID
 from .models import Spot, SpotOpeningTime, SpotAmenity, SpotImage
 from .serializers import (
     SpotSerializer,
-    GameSpotNestedSerializer,
     ImageSerializer,
     AmenitySerializer,
     OpeningTimeSerializer,
@@ -22,8 +22,12 @@ from .serializers import (
 
 
 class SpotFilter(filters.FilterSet):
-    sports__ids = filters.ModelMultipleChoiceFilter(field_name="sports", queryset=Sport.objects.all())
-    distance = filters.CharFilter(field_name="address__point", method="filter_by_distance")
+    sports__ids = filters.ModelMultipleChoiceFilter(
+        field_name="sports", queryset=Sport.objects.all()
+    )
+    distance = filters.CharFilter(
+        field_name="address__point", method="filter_by_distance"
+    )
 
     # def filter_m2m(self, qs, name, value):
     #     for instance in value:
@@ -102,7 +106,9 @@ class SpotSportOpeningTimesNestedViewSet(viewsets.ModelViewSet):
     def get_queryset(self):
         spot_uuid = self.kwargs["spot_uuid"]
         sport_uuid = self.kwargs["sport_uuid"]
-        return SpotOpeningTime.objects.filter(spot__uuid=spot_uuid, sport__uuid=sport_uuid)
+        return SpotOpeningTime.objects.filter(
+            spot__uuid=spot_uuid, sport__uuid=sport_uuid
+        )
 
 
 class SpotSportAmenitesNestedViewSet(viewsets.ModelViewSet):

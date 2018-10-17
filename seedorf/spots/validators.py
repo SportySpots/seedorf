@@ -25,7 +25,9 @@ class AllowedKeysValidator(object):
         disallowed_keys = keys - self.keys
         if disallowed_keys:
             raise ValidationError(
-                self.messages["invalid_keys"], code="invalid_keys", params={"keys": ", ".join(disallowed_keys)}
+                self.messages["invalid_keys"],
+                code="invalid_keys",
+                params={"keys": ", ".join(disallowed_keys)},
             )
 
     def __eq__(self, other):

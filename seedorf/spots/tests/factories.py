@@ -14,12 +14,17 @@ class SpotFactory(factory.django.DjangoModelFactory):
     description = factory.Faker("text")
     logo = factory.django.ImageField()
     homepage_url = factory.Faker("url")
+    is_verified = True
 
     establishment_date = factory.Maybe(
-        "is_permanently_closed", yes_declaration=factory.Faker("past_date", start_date="-60d"), no_declaration=None
+        "is_permanently_closed",
+        yes_declaration=factory.Faker("past_date", start_date="-60d"),
+        no_declaration=None,
     )
     closure_date = factory.Maybe(
-        "is_permanently_closed", yes_declaration=factory.Faker("past_date", start_date="-30d"), no_declaration=None
+        "is_permanently_closed",
+        yes_declaration=factory.Faker("past_date", start_date="-30d"),
+        no_declaration=None,
     )
 
     @factory.post_generation

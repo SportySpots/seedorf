@@ -72,9 +72,8 @@ THIRD_PARTY_APPS = [
 
 # Apps specific for this project go here.
 LOCAL_APPS = [
-    # custom users app
+    "seedorf.core.apps.CoreConfig",
     "seedorf.users.apps.UsersConfig",
-    # Your stuff: custom apps go here
     "seedorf.games.apps.GamesConfig",
     "seedorf.locations.apps.LocationsConfig",
     "seedorf.sports.apps.SportsConfig",
@@ -356,7 +355,7 @@ REST_AUTH_SERIALIZERS = {
     "LOGIN_SERIALIZER": "rest_auth.serializers.LoginSerializer",
     "TOKEN_SERIALIZER": "rest_auth.serializers.TokenSerializer",
     "JWT_SERIALIZER": "rest_auth.serializers.JWTSerializer",
-    "USER_DETAILS_SERIALIZER": "seedorf.users.serializers.UserDetailsSerializer",
+    "USER_DETAILS_SERIALIZER": "seedorf.users.serializers.UserSerializer",
     "PASSWORD_RESET_SERIALIZER": "rest_auth.serializers.PasswordResetSerializer",
     "PASSWORD_RESET_CONFIRM_SERIALIZER": "rest_auth.serializers.PasswordResetConfirmSerializer",
     "PASSWORD_CHANGE_SERIALIZER": "rest_auth.serializers.PasswordChangeSerializer",
