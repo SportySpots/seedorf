@@ -161,11 +161,11 @@ CACHES = {
 SENTRY_DSN = env("DJANGO_SENTRY_DSN")
 SENTRY_CLIENT = env("DJANGO_SENTRY_CLIENT", default="raven.contrib.django.raven_compat.DjangoClient")
 SENTRY_CELERY_LOGLEVEL = env.int("DJANGO_SENTRY_LOG_LEVEL", logging.INFO)
+SENTRY_ENVIRONMENT = env("ENV")
+SENTRY_RELEASE = raven.fetch_git_sha(os.path.abspath(ROOT_DIR))
 RAVEN_CONFIG = {
     "CELERY_LOGLEVEL": env.int("DJANGO_SENTRY_LOG_LEVEL", logging.INFO),
     "DSN": SENTRY_DSN,
-    "RELEASE": raven.fetch_git_sha(os.path.abspath(os.curdir)),
-    "ENVIRONMENT": env("ENV"),
 }
 
 # Logging Configuration
