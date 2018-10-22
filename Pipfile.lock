@@ -75,10 +75,11 @@
         },
         "base58": {
             "hashes": [
-                "sha256:93fa54b615a7c406701a56e3d11c3a5defdbcd371f36c0452f1ac77623e42d16",
-                "sha256:c5fe8b00fab798b4a3393da6235bdecb143db505833e3f979890f7c6fc99f651"
+                "sha256:53c7a0174077fb1e654fcef15dbcb44676f2521ab43882c170a0e4be6dcc97a5",
+                "sha256:e8c8cfae5ea66cb77c3cc2bec9bebede61e5b4ecc7c7227643e119ba94c0537f",
+                "sha256:4d21426893a3190c17397dea1307aebf5c34676eb7180c1f8fa865e42df54709"
             ],
-            "version": "==1.0.0"
+            "version": "==1.0.2"
         },
         "billiard": {
             "hashes": [
