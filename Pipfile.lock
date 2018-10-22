@@ -803,9 +803,10 @@
         },
         "promise": {
             "hashes": [
-                "sha256:8657db4f50511369afbe96088c28a034d1c5785a312afdac93efeed7cbc9cb93"
+                "sha256:2ebbfc10b7abf6354403ed785fe4f04b9dfd421eb1a474ac8d187022228332af",
+                "sha256:348f5f6c3edd4fd47c9cd65aed03ac1b31136d375aa63871a57d3e444c85655c"
             ],
-            "version": "==2.2rc1"
+            "version": "==2.2.1"
         },
         "psycopg2": {
             "hashes": [
