@@ -243,8 +243,26 @@ class Game(BasePropertiesModel):
     def send_attendees_update_email(self, message):
         pass
 
-    def send_attendees_cancellation_email(self, message):
-        pass
+    def send_attendees_cancellation_email(self):
+        # TODO: Abstract email sending so that default fields are added
+        attendees = [rsvp_status.user for rsvp_status in RsvpStatus.objects.filter(game=self, status=RsvpStatus.STATUS_ATTENDING)]
+        if len(attendees) > 0:
+            ctx = {
+                "organizer_first_name": self.organizer.first_name,
+                # TODO: Fix game url hardcoding
+                "game_url": "https://www.sportyspots.com/games/{}".format(self.uuid),
+                "product_name": "SportySpots",
+                "product_url": "https://www.sportyspots.com",
+                "support_email": "info@sportyspots.com",
+                "sender_name": "SportySpots",
+                "company_name": "SportySpots",
+                "company_address": "Amsterdam, The Netherlands",
+            }
+
+            message = EmailMessage(subject=None, body=None, to=[attendee.email for attendee in attendees])
+            message.template_id = 6790382
+            message.merge_global_data = ctx
+            message.send()
 
     def transition_status(self, status):
         if status == Game.STATUS_CANCELED:
