@@ -217,10 +217,9 @@
         },
         "django-allauth": {
             "hashes": [
-                "sha256:02175aa1c2ddfd935a54011d1196d70c976647fc46f603f8b8758fc395b9d277"
+                "sha256:45661b6fe308466154adf54461679fab6f0c6850b10c56dc322fbbb9d47e03d9"
             ],
-            "index": "pypi",
-            "version": "==0.37.1"
+            "version": "==0.38.0"
         },
         "django-anymail": {
             "hashes": [
