@@ -389,11 +389,10 @@
         },
         "django-timezone-field": {
             "hashes": [
-                "sha256:4d49aa24f5e005b98617b7270f064e487254119ed52bf233f5ca2a74be455720",
-                "sha256:826c046758de29fd199657c113a1886f2bf951d8568554466f666b51e097e1c2"
+                "sha256:d9fdab77c443b78c362ffaeb50fe7d7b54692c89aaae8ca1cae67848139b82ac",
+                "sha256:7d7a37cfeacec5b1e81cd2f0aa334d46ebaa369cd516028579ed343cbc676c38"
             ],
-            "index": "pypi",
-            "version": "==2.1"
+            "version": "==3.0"
         },
         "djangorestframework": {
             "hashes": [
