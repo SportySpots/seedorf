@@ -1198,11 +1198,11 @@
         },
         "zappa": {
             "hashes": [
-                "sha256:6b303a82698035d465e3426008a355b17733204c205e6efab7b4168ac84eb918",
-                "sha256:b4d310821d19c773f9d1457fa00287c154097c72e502d71f0879cb765a2130b4"
+                "sha256:779eeacf312306261c0d4ef144a3a64ed37aa7a379958712bf486d21c4e2b475",
+                "sha256:e823272b3827db0a3045c425ba8a27504224d20bda07e51ee5c08f79691aea28",
+                "sha256:f0e0e665c69e1cc758e2c86db7febd38ec919bc833ac0b58dcd38b5c75d2c64d"
             ],
-            "index": "pypi",
-            "version": "==0.46.2"
+            "version": "==0.47.0"
         }
     },
     "develop": {
