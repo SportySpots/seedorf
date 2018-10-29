@@ -72,7 +72,7 @@ pendulum = "*"
 
 [dev-packages]
 
-flake8 = "==3.5.0"
+flake8 = "==3.6.0"
 ansible = "==2.6.4"
 awscli = "==1.16.14"
 black = "==18.6b4"
