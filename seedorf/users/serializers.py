@@ -241,9 +241,6 @@ class RegisterSerializer(serializers.Serializer):
         self.cleaned_data = self.get_cleaned_data()
         adapter.save_user(request, user, self)
 
-        profile = UserProfile(user=user)
-        profile.save()
-
         self.custom_signup(request, user)
         setup_user_email(request, user, [])
         return user

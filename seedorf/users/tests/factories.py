@@ -2,6 +2,7 @@ import factory
 from seedorf.users.models import User, UserProfile
 from seedorf.sports.tests.factories import SportFactory
 from seedorf.spots.tests.factories import SpotFactory
+from django.db.models.signals import post_save
 
 
 class UserFactory(factory.django.DjangoModelFactory):
@@ -49,6 +50,7 @@ class SuperUserFactory(UserFactory):
     is_superuser = True
 
 
+@factory.django.mute_signals(post_save)
 class UserProfileFactory(factory.django.DjangoModelFactory):
     user = factory.SubFactory(UserFactory)
     gender = factory.Iterator(UserProfile.GENDERS, getter=lambda g: g[0])
