@@ -65,7 +65,8 @@ zappa = "==0.46.2"
 # REF: https://github.com/eamigo86/graphene-django-extras/pull/42
 # REF: https://github.com/eamigo86/graphene-django-extras/issues/43
 #graphene-django-extras = {editable = true, git = "https://github.com/eamigo86/graphene-django-extras.git"}
-graphene-django-extras = "==0.3.7"
+graphene-django-extras = {editable = true, git = "https://github.com/sportyspots/graphene-django-extras.git"}
+#graphene-django-extras = "==0.3.7"
 # REF: https://github.com/flavors/django-graphql-geojson/issues/1
 #graphene-django = { git = "https://github.com/graphql-python/graphene-django.git@master" }
 graphene-django = "==2.2.0"
