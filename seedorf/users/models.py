@@ -9,6 +9,9 @@ from django.utils.encoding import python_2_unicode_compatible
 from django.utils.translation import ugettext_lazy as _
 from django_countries.fields import CountryField
 from timezone_field import TimeZoneField
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+
 
 from seedorf.utils.models import BasePropertiesModel
 
@@ -138,3 +141,14 @@ class UserProfile(BasePropertiesModel):
 #     # blocks
 #     # emails
 #     # followers
+
+
+@receiver(post_save, sender=User)
+def create_user_profile(sender, instance, created, **kwargs):
+    if created:
+        UserProfile.objects.create(user=instance)
+
+
+@receiver(post_save, sender=User)
+def save_user_profile(sender, instance, **kwargs):
+    instance.profile.save()

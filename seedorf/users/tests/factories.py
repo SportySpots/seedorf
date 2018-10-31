@@ -19,6 +19,8 @@ class UserFactory(factory.django.DjangoModelFactory):
     password = factory.PostGenerationMethodCall("set_password", "password")
     is_staff = False
 
+    # profile = factory.PostGeneration(lambda obj, create, extracted, **kwargs: UserProfileFactory.create(user=obj))
+
     @factory.post_generation
     def groups(self, create, extracted, **kwargs):
         """
