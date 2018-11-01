@@ -55,8 +55,7 @@ class Query(graphene.ObjectType):
         SpotType, filterset_class=SpotFilter, pagination=LimitOffsetGraphqlPagination()
     )
 
-    @staticmethod
-    def resolve_spot(info, **kwargs):
+    def resolve_spot(self, info, **kwargs):
         uuid = kwargs.get("uuid")
 
         if uuid is not None:
