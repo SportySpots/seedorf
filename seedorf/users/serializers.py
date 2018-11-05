@@ -1,3 +1,5 @@
+import base64
+
 import pytz
 import six
 from allauth.account import app_settings as allauth_settings
@@ -5,6 +7,7 @@ from allauth.account.adapter import get_adapter
 from allauth.account.utils import setup_user_email
 from allauth.utils import email_address_exists
 from django.contrib.auth.models import Group
+from django.core.files.base import ContentFile
 from django.core.validators import EmailValidator
 from django.utils.translation import ugettext_lazy as _
 from rest_framework import serializers
@@ -69,12 +72,18 @@ class UserSportNestedSerializer(serializers.ModelSerializer):
         return {}
 
 
+class Base64ImageField(serializers.ImageField):
+    def to_internal_value(self, data):
+        data = ContentFile(base64.b64decode(data), name='avatar.jpg')
+        return super(Base64ImageField, self).to_internal_value(data)
+
+
 class UserProfileSerializer(CountryFieldMixin, serializers.ModelSerializer):
 
     sports = SportSerializer(read_only=True, many=True, required=False)
     spots = SpotSerializer(read_only=True, many=True, required=False)
     timezone = TimezoneField(required=False)
-
+    avatar = Base64ImageField()
     # spots = serializers.SerializerMethodField()
     # sports = serializers.SerializerMethodField()
 
@@ -85,8 +94,8 @@ class UserProfileSerializer(CountryFieldMixin, serializers.ModelSerializer):
             "sports",
             "spots",
             "gender",
-            "year_of_birth",
             "avatar",
+            "year_of_birth",
             "language",
             "timezone",
             "country",
