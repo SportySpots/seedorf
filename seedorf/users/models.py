@@ -105,7 +105,7 @@ class UserProfile(BasePropertiesModel):
 
     avatar = models.ImageField(
         blank=True,
-        null=False,
+        null=True,
         upload_to=get_avatar_upload_directory,
         verbose_name=_("Avatar Image"),
     )

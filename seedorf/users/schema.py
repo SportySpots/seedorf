@@ -16,7 +16,11 @@ class UserProfileType(DjangoObjectType):
 
     def resolve_avatar(self, info, **kwargs):
         # the default is to send a relative url (str(self.avatar)), but we want a full URL
-        return self.avatar.url
+        try:
+            return self.avatar.url
+        except ValueError:
+            # if no avatar has been set yet
+            return None
 
     def resolve_sports(self, info, **kwargs):
         return self.sports.all()
