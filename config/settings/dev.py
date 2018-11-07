@@ -76,4 +76,5 @@ CELERY_ALWAYS_EAGER = True
 
 # Your local stuff: Below this line define 3rd party library settings
 # ------------------------------------------------------------------------------
-MEDIA_URL = "http://localhost:8000/media/"
+MEDIA_URL = "http://10.0.2.2:8000/static/media/"
+MEDIA_ROOT = "./staticfiles/media"
