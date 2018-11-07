@@ -14,6 +14,10 @@ class UserProfileType(DjangoObjectType):
         model = UserProfile
         exclude_fields = ("user",)
 
+    def resolve_avatar(self, info, **kwargs):
+        # the default is to send a relative url (str(self.avatar)), but we want a full URL
+        return self.avatar.url
+
     def resolve_sports(self, info, **kwargs):
         return self.sports.all()
 
