@@ -1,4 +1,5 @@
 import base64
+import hashlib
 
 import pytz
 import six
@@ -76,7 +77,9 @@ class Base64ImageField(serializers.ImageField):
     def to_internal_value(self, data):
         # data looks like 'data:image/jpeg;base64,asdakhgf'
         base64_str = data.split(',')[1]
-        data = ContentFile(base64.b64decode(base64_str), name='avatar.jpg')
+        content = base64.b64decode(base64_str)
+        content_hash = hashlib.sha1(content).hexdigest()
+        data = ContentFile(content, name=content_hash)
         return super(Base64ImageField, self).to_internal_value(data)
 
 
