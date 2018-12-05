@@ -35,6 +35,7 @@ from seedorf.users.viewsets import (
     UserProfileSportNestedViewSet,
     UserProfileSpotNestedViewSet
 )
+from django.urls import path, re_path
 
 drf_schema_view = drf_get_schema_view(title="SportySpots API")
 
@@ -132,66 +133,66 @@ games_router.register(r"spot", GameSpotNestedViewSet, base_name="game-spot")
 
 urlpatterns = [
     # Django Admin, use {% url 'admin:index' %}
-    url(settings.ADMIN_URL, admin.site.urls),
+    path(settings.ADMIN_URL, admin.site.urls),
 
     # Anymail
-    url(r"^anymail/", include("anymail.urls")),
+    path("anymail/", include("anymail.urls")),
 
     # Your stuff: custom urls includes go here
 
     # Authentication / Registration
     # REF: https://github.com/blakey22/rest_email_signup
-    url(
-        r"^api/auth/registration/email-verification-sent/",
+    path(
+        "api/auth/registration/email-verification-sent/",
         registration_null_view,
         name="account_email_verification_sent",
     ),
-    url(
+    re_path(
         r"^api/auth/registration/confirm-email/(?P<key>[-:\w]+)/$",
         registration_confirm_email,
         name="account_confirm_email",
     ),
-    url(r"^api/auth/registration/status/$", registration_complete_view, name="account_confirm_complete"),
-    url(
+    path("api/auth/registration/status/", registration_complete_view, name="account_confirm_complete"),
+    re_path(
         r"^api/auth/password-reset/confirm/"
         r"(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$",
         registration_null_view,
         name="password_reset_confirm",
     ),
-    url(r"^api/auth/token-refresh/", refresh_jwt_token, name="token-refesh"),
-    url(r"^api/auth/token-verify/", verify_jwt_token, name="token-verify"),
-    url(r"^api/auth/", include("rest_auth.urls")),
-    url(r"^api/auth/registration/", include("rest_auth.registration.urls")),
-    url(r"^api/accounts/", include("allauth.urls")),
+    path("api/auth/token-refresh/", refresh_jwt_token, name="token-refesh"),
+    path("api/auth/token-verify/", verify_jwt_token, name="token-verify"),
+    path("api/auth/", include("rest_auth.urls")),
+    path("api/auth/registration/", include(("rest_auth.registration.urls", "rest_auth.registration"), namespace="rest-auth-registration")),
+    path("api/accounts/", include("allauth.urls")),
     # url(r'^api/api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     # url(r'^api/api-token-auth/', obtain_jwt_token),
 
     # REST API
-    url(r"^api/", include(router.urls), name="api-core"),
+    path("api/", include(router.urls), name="api-core"),
 
-    url(r"^api/", include(users_router.urls), name="api-users"),
-    url(r"^api/", include(spots_router.urls), name="api-spots"),
-    url(r"^api/", include(games_router.urls), name="api-games"),
+    path("api/", include(users_router.urls), name="api-users"),
+    path("api/", include(spots_router.urls), name="api-spots"),
+    path("api/", include(games_router.urls), name="api-games"),
 
-    url(r"^api/", include(users_profile_router.urls), name="api-user-profile"),
-    url(r"^api/", include(spot_sports_images_router.urls), name="api-spot-sports-images"),
-    url(r"^api/", include(spot_sports_amenities_router.urls), name="api-spot-sports-amenities"),
-    url(r"^api/", include(spot_sports_opening_times_router.urls), name="api-spot-sports-opening-times"),
+    path("api/", include(users_profile_router.urls), name="api-user-profile"),
+    path("api/", include(spot_sports_images_router.urls), name="api-spot-sports-images"),
+    path("api/", include(spot_sports_amenities_router.urls), name="api-spot-sports-amenities"),
+    path("api/", include(spot_sports_opening_times_router.urls), name="api-spot-sports-opening-times"),
 
     # GraphQL API
-    url(r"^graphql$", csrf_exempt(GraphQLView.as_view(graphiql=True, schema=schema)), name="graphql"),
+    path("graphql", csrf_exempt(GraphQLView.as_view(graphiql=True, schema=schema)), name="graphql"),
 
     # TODO: Choose one of the api documentation tools below
     # DRF schema
-    url(r"^schema/$", drf_schema_view),
-    url(r"^docs/", include_docs_urls(title="SportySpots API Docs", permission_classes=(AllowAny,))),
+    path("schema/", drf_schema_view),
+    path("docs/", include_docs_urls(title="SportySpots API Docs", permission_classes=(AllowAny,))),
     # Swagger
-    url(r"^swagger(?P<format>\.json|\.yaml)$", schema_view.without_ui(cache_timeout=None), name="schema-json"),
-    url(r"^swagger/$", schema_view.with_ui("swagger", cache_timeout=None), name="schema-swagger-ui"),
-    url(r"^redoc/$", schema_view.with_ui("redoc", cache_timeout=None), name="schema-redoc"),
+    re_path(r"^swagger(?P<format>\.json|\.yaml)$", schema_view.without_ui(cache_timeout=None), name="schema-json"),
+    path("swagger/", schema_view.with_ui("swagger", cache_timeout=None), name="schema-swagger-ui"),
+    path("redoc/", schema_view.with_ui("redoc", cache_timeout=None), name="schema-redoc"),
 
     # Apple ios deeplinking - app site association
-    url(r"^apple-app-site-association/?$", apple_app_site_association, name="apple-app-site-association"),
+    path("apple-app-site-association/?", apple_app_site_association, name="apple-app-site-association"),
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
@@ -199,10 +200,10 @@ if settings.DEBUG:
     # This allows the error pages to be debugged during development, just visit
     # these url in browser to see how these error pages look like.
     urlpatterns += [
-        url(r"^400/$", default_views.bad_request, kwargs={"exception": Exception(_("Bad Request!"))}),
-        url(r"^403/$", default_views.permission_denied, kwargs={"exception": Exception(_("Permission Denied"))}),
-        url(r"^404/$", default_views.page_not_found, kwargs={"exception": Exception(_("Page not Found"))}),
-        url(r"^500/$", default_views.server_error),
+        path("400/", default_views.bad_request, kwargs={"exception": Exception(_("Bad Request!"))}),
+        path("403/", default_views.permission_denied, kwargs={"exception": Exception(_("Permission Denied"))}),
+        path("404/", default_views.page_not_found, kwargs={"exception": Exception(_("Page not Found"))}),
+        path("500/", default_views.server_error),
     ]
     if "debug_toolbar" in settings.INSTALLED_APPS:
         import debug_toolbar

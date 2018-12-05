@@ -39,7 +39,7 @@ class SpotAPIViewTest(APITestCase):
         self.assertEqual(response.data["is_temporary"], False)
         self.assertEqual(response.data["is_public"], True)
         self.assertEqual(response.data["is_permanently_closed"], False)
-        self.assertFalse(response.data["is_verified"], False)
+        self.assertTrue(response.data["is_verified"])
         self.assertNotEqual(response.data["homepage_url"], "")
         self.assertNotEqual(response.data["logo"], "")
         self.assertNotEqual(response.data["owner"], "")

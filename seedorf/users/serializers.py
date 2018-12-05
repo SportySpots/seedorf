@@ -85,7 +85,7 @@ class UserProfileSerializer(CountryFieldMixin, serializers.ModelSerializer):
     sports = SportSerializer(read_only=True, many=True, required=False)
     spots = SpotSerializer(read_only=True, many=True, required=False)
     timezone = TimezoneField(required=False)
-    avatar = Base64ImageField()
+    avatar = Base64ImageField(required=False)
     # spots = serializers.SerializerMethodField()
     # sports = serializers.SerializerMethodField()
 
