@@ -2,7 +2,7 @@ import os
 import tempfile
 
 from PIL import Image
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from rest_framework.test import APITestCase
 
 from seedorf.locations.tests.factories import AddressFactory

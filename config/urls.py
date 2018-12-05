@@ -160,9 +160,9 @@ urlpatterns = [
     ),
     url(r"^api/auth/token-refresh/", refresh_jwt_token, name="token-refesh"),
     url(r"^api/auth/token-verify/", verify_jwt_token, name="token-verify"),
-    url(r"^api/auth/", include("rest_auth.urls", namespace="rest-auth")),
-    url(r"^api/auth/registration/", include("rest_auth.registration.urls", namespace="rest-auth-registration")),
-    url(r"^api/accounts/", include("allauth.urls", namespace="allauth")),
+    url(r"^api/auth/", include("rest_auth.urls")),
+    url(r"^api/auth/registration/", include("rest_auth.registration.urls")),
+    url(r"^api/accounts/", include("allauth.urls")),
     # url(r'^api/api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     # url(r'^api/api-token-auth/', obtain_jwt_token),
 

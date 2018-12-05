@@ -2,7 +2,7 @@ from datetime import date
 
 from django.conf import settings
 from django.contrib.auth.models import AbstractUser
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db import models
 from django.utils.encoding import python_2_unicode_compatible
@@ -69,6 +69,7 @@ class UserProfile(BasePropertiesModel):
         "users.User",
         blank=False,
         null=False,
+        on_delete=models.CASCADE,
         related_name="profile",
         verbose_name=_("Profile"),
     )
