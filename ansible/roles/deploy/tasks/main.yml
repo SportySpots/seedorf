@@ -130,11 +130,11 @@
   tags:
     - deploy_project
 
-- name: Test secure connection to SSL domain.
-  become: False
-  uri:
-    url: "https://{{ deploy.sub_domain }}.{{ domain }}/api/"
-    status_code: 200
-  delegate_to: localhost
+#- name: Test secure connection to SSL domain.
+#  become: False
+#  uri:
+#    url: "https://{{ deploy.sub_domain }}.{{ domain }}/api/"
+#    status_code: 200
+#  delegate_to: localhost
 
 ...
