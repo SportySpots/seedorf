@@ -15,12 +15,6 @@ class Migration(migrations.Migration):
     operations = [
         migrations.AlterField(
             model_name='game',
-            name='end_time',
-            field=models.DateTimeField(default=django.utils.timezone.now, help_text='End time of the game in UTC.', verbose_name='End Time (UTC)'),
-            preserve_default=False,
-        ),
-        migrations.AlterField(
-            model_name='game',
             name='start_time',
             field=models.DateTimeField(default=django.utils.timezone.now, help_text='Start time of the game in UTC.', verbose_name='Start Time (UTC)'),
             preserve_default=False,
