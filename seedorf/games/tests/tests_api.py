@@ -83,7 +83,7 @@ class GameAPIViewTest(APITestCase):
     def test_game_create_rsvp_open_time_past_error(self):
         url = reverse("game-list")
         now = timezone.now()
-        rsvp_open_time = now + timedelta(days=-1)
+        rsvp_open_time = now + timedelta(days=-13)
         rsvp_close_time = now + timedelta(days=1, hours=8)
         start_time = now + timedelta(days=2)
         end_time = now + timedelta(days=2, hours=8)
