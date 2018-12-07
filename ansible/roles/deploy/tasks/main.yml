@@ -66,29 +66,75 @@
   handlers:
     - include: ../../handlers.yml
 
-- name: Install Letsencrypt Certbot
-  include_role:
-    name: geerlingguy.certbot
-  vars:
-    certbot_auto_renew: true
-    certbot_admin_email: admin@sportyspots.com
-    certbot_create_if_missing: yes
-    certbot_create_standalone_stop_services:
-      - nginx
-    certbot_certs:
-      - domains:
-          - "{{ deploy.sub_domain }}.{{ domain }}"
-          - "{{ deploy.type }}.{{ domain }}"
+
+- name: Download certbot
+  get_url:
+    url: https://dl.eff.org/certbot-auto
+    dest: "{{ certbot_script }}"
+    mode: 0755
+  tags:
+    - letsencrypt
+
+- name: Check if Nginx exists
+  stat:
+    path: /etc/init.d/nginx
+  register: nginx_status
+  tags:
+    - letsencrypt
+
+- name: Ensure Nginx is stopped
+  service:
+    name: nginx
+    state: stopped
+  when: nginx_status.stat.exists
+  tags:
+    - letsencrypt
+
+- name: Install certbot and generate cert - {{ deploy.sub_domain }}.{{ domain }}
+  command: "{{ certbot_script }} certonly --noninteractive --agree-tos --standalone --email {{ certbot_admin_email }} -d {{ deploy.sub_domain }}.{{ domain }}"
+  args:
+    creates: "/etc/letsencrypt/live/{{ deploy.sub_domain }}.{{ domain }}"
+  tags:
+    - letsencrypt
+
+- name: Install certbot and generate cert - {{ deploy.type }}.{{ domain }}
+  command: "{{ certbot_script }} certonly --noninteractive --agree-tos --standalone --email {{ certbot_admin_email }} -d {{ deploy.type }}.{{ domain }}"
+  args:
+    creates: "/etc/letsencrypt/live/{{ deploy.type }}.{{ domain }}"
+  tags:
+    - letsencrypt
+
+- name: Ensure Nginx is started
+  service:
+    name: nginx
+    state: started
+  when: nginx_status.stat.exists
+  tags:
+    - letsencrypt
+
+- name: Ensure a cron job to auto-renew the cert exists
+  cron:
+    name: "letsencrypt"
+    user: root
+    cron_file: "letsencrypt"
+    special_time: weekly
+    job: "{{ certbot_script }} renew --standalone --pre-hook \"service nginx stop\" --post-hook \"service nginx start\" --quiet"
+    state: present
+  when: certbot_auto_renew
+  tags:
+    - letsencrypt
 
 - name: Deploy instances
-  include: deploy_project.yml
   become_user: ubuntu
-  tags: deploy_project
+  include: deploy_project.yml
+  tags:
+    - deploy_project
 
-#- name: Test secure connection to SSL domain.
-#  uri:
-#    url: "https://{{ deploy.sub_domain }}.{{ domain }}/api/"
-#    status_code: 200
-#  delegate_to: localhost
-#  become: False
+- name: Test secure connection to SSL domain.
+  become: False
+  uri:
+    url: "https://{{ deploy.sub_domain }}.{{ domain }}/api/"
+    status_code: 200
+  delegate_to: localhost
+
 ...

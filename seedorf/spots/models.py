@@ -32,6 +32,7 @@ class Spot(BasePropertiesModel):
         blank=True,
         null=True,
         related_name="spot",
+        on_delete=models.CASCADE,
         verbose_name=_("Address"),
     )
     sports = models.ManyToManyField(

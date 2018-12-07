@@ -270,7 +270,7 @@ HAYSTACK_CONNECTIONS = {"default": {"ENGINE": "haystack.backends.simple_backend.
 # AUTHENTICATION/ AUTHORIZATION Settings -------------------------------------------------------------------------------
 
 # Location of root django.contrib.admin URL, use {% url 'admin:index' %}
-ADMIN_URL = r"^admin/"
+ADMIN_URL = "admin/"
 LOGIN_URL = "rest-auth:rest_login"
 
 # Custom User Model
