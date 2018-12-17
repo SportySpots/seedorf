@@ -418,15 +418,11 @@
             "version": "==0.5.1"
         },
         "drf-yasg": {
-            "extras": [
-                "validation"
-            ],
             "hashes": [
-                "sha256:24a02bbf56361ae0e304744f9c4aa96544270decd9d79b37d10dfd6dd04e5f22",
-                "sha256:b07192a6697ced6da49c5b016f1805960b0a7a1682fb21e86045a6bb572ffa99"
+                "sha256:b0d5304cd2180699980fc8336edb5bfb774bbdfb79760376ed69538bf49cdcb2",
+                "sha256:9ee2072fb84ec60d951fa105e6926cf16e332973ba20ab2e3962fd9445cfd102"
             ],
-            "index": "pypi",
-            "version": "==1.11.0"
+            "version": "==1.11.1"
         },
         "flex": {
             "hashes": [
