@@ -29,7 +29,7 @@
     - include: handlers.yml
 
 - name: Provision db servers
-  hosts: dbservers
+  hosts: db_servers
   become: True
 
   roles:
@@ -39,7 +39,7 @@
     - include: handlers.yml
 
 - name: Provision app servers
-  hosts: appservers
+  hosts: app_servers
   become: True
 
   roles:
