@@ -14,14 +14,16 @@
     logging: on
 
 - name: Configure ufw defaults
-  ufw: direction={{ item.direction }} policy={{ item.policy }}
+  ufw:
+    direction: "{{ item.direction }}"
+    policy: "{{ item.policy }}"
   with_items:
     - direction: "incoming"
       policy: "deny"
     - direction: "outgoing"
       policy: "allow"
   notify:
-    - restart ufw
+    - restart_ufw
 
 - name: Allow ssh traffic
   ufw:
@@ -37,7 +39,7 @@
 
 - name: Setup SSH connection rate limiting
   ufw:
-    rule: limit
     port: ssh
     proto: tcp
+    rule: limit
 ...

@@ -1,13 +1,8 @@
 ---
-- include: ssh.yml
-
-- include: ufw.yml
-
-- include: fail2ban.yml
-
-- include: users.yml
-
 - include: locale.yml
-
 - include: hostname.yml
+- include: ssh.yml
+- include: ufw.yml
+- include: fail2ban.yml
+- include: users.yml
 ...
