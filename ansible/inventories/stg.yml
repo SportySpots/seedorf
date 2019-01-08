@@ -1,0 +1,10 @@
+---
+all:
+  children:
+    app_servers:
+      hosts:
+        stg.sportyspots.com:
+    db_servers:
+      hosts:
+        stg.sportyspots.com:
+...
