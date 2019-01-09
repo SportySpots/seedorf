@@ -1,7 +1,9 @@
+import urllib
 from datetime import date
 
 import uuid
 
+import requests
 from django.conf import settings
 from django.contrib.auth.models import AbstractUser
 from django.core.mail import EmailMessage
@@ -57,6 +59,7 @@ class User(AbstractUser, BasePropertiesModel):
         except MagicLoginLink.DoesNotExist:
             pass
         magic_link = MagicLoginLink(user=self)
+        magic_link.set_short_link()
         magic_link.save()
         magic_link.mail()
         return magic_link
@@ -192,6 +195,39 @@ class MagicLoginLink(BasePropertiesModel):
         default=random_string
     )
 
+    short_link = models.CharField(
+        blank=False,
+        null=False,
+        max_length=50,
+        verbose_name=_("Link")
+    )
+
+    def get_firebase_link(self):
+        # https://firebase.google.com/docs/reference/dynamic-links/link-shortener
+        # https://firebase.google.com/docs/dynamic-links/create-manually
+        firebase_url = 'https://firebasedynamiclinks.googleapis.com/v1/shortLinks?key=' + settings.FIREBASE_WEB_API_KEY
+        long_dynamic_link_base = "https://sportyspots.page.link/?"
+        long_dynamic_link_args = {
+            "link": "https://link.sportyspots.com/magic_link_login?token=" + self.token,
+            "apn": "com.sportyspots.android",
+            "afl": "https://www.sportyspots.com",
+            "ibi": "com.sportyspots.ios",
+            "ifl": "https://www.sportyspots.com",
+            "ofl": "https://www.sportyspots.com"
+        }
+        long_dynamic_link_url = long_dynamic_link_base + urllib.parse.urlencode(long_dynamic_link_args)
+        post_body = {
+            "longDynamicLink": long_dynamic_link_url,
+            "suffix": {
+                "option": "UNGUESSABLE"
+            }
+        }
+        result = requests.post(firebase_url, json=post_body)
+        return result.json()['shortLink']
+
+    def set_short_link(self):
+        self.short_link = self.get_firebase_link()
+
     def mail(self):
         ctx = {
             "product_name": "SportySpots",
@@ -209,4 +245,4 @@ class MagicLoginLink(BasePropertiesModel):
         message.send()
 
     def __str__(self):
-        return 'https://sportyspots.page.link/login/%s' % self.token
+        return self.short_link
