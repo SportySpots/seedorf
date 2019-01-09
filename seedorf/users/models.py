@@ -1,7 +1,10 @@
 from datetime import date
 
+import uuid
+
 from django.conf import settings
 from django.contrib.auth.models import AbstractUser
+from django.core.mail import EmailMessage
 from django.urls import reverse
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db import models
@@ -46,6 +49,17 @@ class User(AbstractUser, BasePropertiesModel):
 
     def get_absolute_url(self):
         return reverse("users:detail", kwargs={"uuid": self.uuid})
+
+    def create_magic_link(self):
+        try:
+            # if there is a current active link, delete it
+            self.magic_link.delete()
+        except MagicLoginLink.DoesNotExist:
+            pass
+        magic_link = MagicLoginLink(user=self)
+        magic_link.save()
+        magic_link.mail()
+        return magic_link
 
     class Meta:
         ordering = ("-created_at",)
@@ -153,3 +167,46 @@ def create_user_profile(sender, instance, created, **kwargs):
 @receiver(post_save, sender=User)
 def save_user_profile(sender, instance, **kwargs):
     instance.profile.save()
+
+
+
+def random_string():
+    return uuid.uuid4().hex
+
+
+class MagicLoginLink(BasePropertiesModel):
+    user = models.OneToOneField(
+        "users.User",
+        blank=False,
+        null=False,
+        on_delete=models.CASCADE,
+        related_name="magic_link",
+        verbose_name=_("Magic login link"),
+    )
+
+    token = models.CharField(
+        blank=False,
+        null=False,
+        max_length=32,
+        verbose_name=_("Token"),
+        default=random_string
+    )
+
+    def mail(self):
+        ctx = {
+            "product_name": "SportySpots",
+            "product_url": "https://www.sportyspots.com",
+            "support_email": "info@sportyspots.com",
+            "sender_name": "SportySpots",
+            "company_name": "SportySpots",
+            "company_address": "Amsterdam, The Netherlands",
+            "magic_link": str(self)
+        }
+
+        message = EmailMessage(subject=None, body=None, to=[self.user.email])
+        message.template_id = 9746750
+        message.merge_global_data = ctx
+        message.send()
+
+    def __str__(self):
+        return 'https://sportyspots.page.link/login/%s' % self.token
