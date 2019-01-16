@@ -2,6 +2,9 @@ from allauth.account.adapter import DefaultAccountAdapter
 from allauth.socialaccount.adapter import DefaultSocialAccountAdapter
 from django.conf import settings
 from django.core.mail import EmailMessage
+from rest_auth.utils import jwt_encode
+
+from seedorf.utils.firebase import get_firebase_link
 
 
 class AccountAdapter(DefaultAccountAdapter):
@@ -38,6 +41,10 @@ class AccountAdapter(DefaultAccountAdapter):
         message.merge_global_data = ctx
 
         message.send()
+
+    def get_login_redirect_url(self, request):
+        token = jwt_encode(request.user)
+        return get_firebase_link('login?token=' + token)
 
 
 class SocialAccountAdapter(DefaultSocialAccountAdapter):

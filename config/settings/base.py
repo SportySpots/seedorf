@@ -58,8 +58,9 @@ THIRD_PARTY_APPS = [
     "allauth",  # registration
     "allauth.account",  # registration
     "allauth.socialaccount",  # registration
-    "allauth.socialaccount.providers.facebook",
-    "allauth.socialaccount.providers.twitter",
+    # "allauth.socialaccount.providers.facebook",
+    # "allauth.socialaccount.providers.twitter",
+    "allauth.socialaccount.providers.google",
     "crispy_forms",  # Form layouts
     "graphene_django",  # graphql
     "haystack",  # solr/elastic-search

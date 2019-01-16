@@ -17,7 +17,7 @@ from timezone_field import TimeZoneField
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 
-
+from seedorf.utils.firebase import get_firebase_link
 from seedorf.utils.models import BasePropertiesModel
 
 
@@ -202,31 +202,8 @@ class MagicLoginLink(BasePropertiesModel):
         verbose_name=_("Link")
     )
 
-    def get_firebase_link(self):
-        # https://firebase.google.com/docs/reference/dynamic-links/link-shortener
-        # https://firebase.google.com/docs/dynamic-links/create-manually
-        firebase_url = 'https://firebasedynamiclinks.googleapis.com/v1/shortLinks?key=' + settings.FIREBASE_WEB_API_KEY
-        long_dynamic_link_base = "https://sportyspots.page.link/?"
-        long_dynamic_link_args = {
-            "link": "https://link.sportyspots.com/magic_link_login?token=" + self.token,
-            "apn": "com.sportyspots.android",
-            "afl": "https://www.sportyspots.com",
-            "ibi": "com.sportyspots.ios",
-            "ifl": "https://www.sportyspots.com",
-            "ofl": "https://www.sportyspots.com"
-        }
-        long_dynamic_link_url = long_dynamic_link_base + urllib.parse.urlencode(long_dynamic_link_args)
-        post_body = {
-            "longDynamicLink": long_dynamic_link_url,
-            "suffix": {
-                "option": "UNGUESSABLE"
-            }
-        }
-        result = requests.post(firebase_url, json=post_body)
-        return result.json()['shortLink']
-
     def set_short_link(self):
-        self.short_link = self.get_firebase_link()
+        self.short_link = get_firebase_link('magic_link_login?token=' + self.token)
 
     def mail(self):
         ctx = {
