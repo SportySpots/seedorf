@@ -1,9 +1,15 @@
 from allauth.account.adapter import DefaultAccountAdapter
+from allauth.exceptions import ImmediateHttpResponse
+from allauth.socialaccount import signals
 from allauth.socialaccount.adapter import DefaultSocialAccountAdapter
+from allauth.socialaccount.models import SocialLogin
 from django.conf import settings
+from django.contrib.auth import login
 from django.core.mail import EmailMessage
+from django.http import HttpResponseRedirect
 from rest_auth.utils import jwt_encode
 
+from seedorf.users.models import User
 from seedorf.utils.firebase import get_firebase_link
 
 
@@ -48,5 +54,28 @@ class AccountAdapter(DefaultAccountAdapter):
 
 
 class SocialAccountAdapter(DefaultSocialAccountAdapter):
+    def connect_by_email(self, request, sociallogin):
+        email_address = sociallogin.email_addresses[0].email
+
+        user = User.objects.get(email=email_address)
+        # user found with this email address, connect social account to this user.
+        login(request, user, "allauth.account.auth_backends.AuthenticationBackend")
+        sociallogin.connect(request, request.user)
+        signals.social_account_added.send(sender=SocialLogin,
+                                          request=request,
+                                          sociallogin=sociallogin)
+        raise ImmediateHttpResponse(HttpResponseRedirect(get_firebase_link('login?token=' + jwt_encode(user))))
+
+    def pre_social_login(self, request, sociallogin):
+        if sociallogin.user.pk:
+            return  # user logged in normally
+        else:
+            try:
+                self.connect_by_email(request, sociallogin)
+            except User.DoesNotExist:
+                if sociallogin.state['process'] == 'login':
+                    # user wants to login, but is not yet registered
+                    raise ImmediateHttpResponse(HttpResponseRedirect(get_firebase_link('social_login_not_registered')))
+
     def is_open_for_signup(self, request, sociallogin):
         return getattr(settings, "ACCOUNT_ALLOW_REGISTRATION", True)
