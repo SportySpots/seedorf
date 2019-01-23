@@ -27,3 +27,6 @@ DJANGO_POSTMARK_API_KEY={{ deploy.django_postmark_api_key }}
 DJANGO_SENTRY_DSN={{ deploy.django_sentry_dsn }}
 
 COMPRESS_ENABLED=False
+
+# Firebase
+FIREBASE_WEB_API_KEY={{ deploy.firebase_web_api_key }}
