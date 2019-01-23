@@ -13,13 +13,13 @@
     - listen: "80"
       server_name: "{{ deploy.sub_domain }}.{{ domain }} {{ deploy.type }}.{{ domain }}"
       filename: "{{ deploy.sub_domain }}.{{ domain }}.80.conf"
-      state: "present"
+      state: present
       access_log: "/var/log/nginx/sportyspots-{{ deploy.type }}-access.log"
       error_log: "/var/log/nginx/sportyspots-{{ deploy.type }}-error.log"
       return: "301 https://{{ deploy.sub_domain }}.{{ domain }}$request_uri"
     - listen: "443 ssl http2"
       server_name: "{{ deploy.sub_domain }}.{{ domain }} {{ deploy.type }}.{{ domain }}"
-      state: "present"
+      state: present
       filename: "{{ deploy.sub_domain }}.{{ domain }}.443.conf"
       access_log: "/var/log/nginx/sportyspots-{{ deploy.type }}-access.log"
       error_log: "/var/log/nginx/sportyspots-{{ deploy.type }}-error.log"

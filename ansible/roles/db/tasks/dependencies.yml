@@ -2,8 +2,8 @@
 - name: Install dependencies
   apt:
     name:
-    - libpq-dev
-    - python3-psycopg2
+      - libpq-dev
+      - python3-psycopg2
     state: present
     update_cache: yes
 

@@ -31,7 +31,8 @@
           - hstore
           - citext
           - postgis
-  notify: restart_postgres
+  notify:
+    - restart_postgres
   handlers:
     - include: ../../handlers.yml
 

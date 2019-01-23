@@ -8,12 +8,12 @@
 - name: Ensure required development tools are installed
   apt:
     name:
-    - git
-    - npm
-    - supervisor
-    - redis-server
-    - python3-redis
-    - vim
+      - git
+      - npm
+      - supervisor
+      - redis-server
+      - python3-redis
+      - vim
     state: present
 
 - name: Install Pipenv
@@ -66,3 +66,4 @@
 
       ubuntu ALL=NOPASSWD: SUPERVISOR, NGINX
     validate: 'visudo -cf %s'
+...
