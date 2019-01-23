@@ -58,8 +58,9 @@ THIRD_PARTY_APPS = [
     "allauth",  # registration
     "allauth.account",  # registration
     "allauth.socialaccount",  # registration
-    "allauth.socialaccount.providers.facebook",
-    "allauth.socialaccount.providers.twitter",
+    # "allauth.socialaccount.providers.facebook",
+    # "allauth.socialaccount.providers.twitter",
+    "allauth.socialaccount.providers.google",
     "crispy_forms",  # Form layouts
     "graphene_django",  # graphql
     "haystack",  # solr/elastic-search
@@ -417,12 +418,23 @@ ACCOUNT_USER_MODEL_USERNAME_FIELD = "username"
 ACCOUNT_USERNAME_MIN_LENGTH = 1
 ACCOUNT_USERNAME_REQUIRED = False
 ACCOUNT_USERNAME_VALIDATORS = None
-SOCIALACCOUNT_ADAPTER = "allauth.socialaccount.adapter.DefaultSocialAccountAdapter"
+# SOCIALACCOUNT_ADAPTER = "allauth.socialaccount.adapter.DefaultSocialAccountAdapter"
+SOCIALACCOUNT_ADAPTER = "seedorf.users.adapters.SocialAccountAdapter"
 SOCIALACCOUNT_AUTO_SIGNUP = True
 SOCIALACCOUNT_EMAIL_VERIFICATION = ACCOUNT_EMAIL_VERIFICATION
 SOCIALACCOUNT_EMAIL_REQUIRED = ACCOUNT_EMAIL_REQUIRED
 SOCIALACCOUNT_FORMS = {}
-SOCIALACCOUNT_PROVIDERS = {}
+SOCIALACCOUNT_PROVIDERS = {
+    'google': {
+        'SCOPE': [
+            'profile',
+            'email',
+        ],
+        'AUTH_PARAMS': {
+            'access_type': 'online',
+        }
+    }
+}
 SOCIALACCOUNT_QUERY_EMAIL = ACCOUNT_EMAIL_REQUIRED
 SOCIALACCOUNT_STORE_TOKENS = True
 
@@ -441,3 +453,5 @@ GRAPHENE_DJANGO_EXTRAS = {
     "CACHE_ACTIVE": False,
     "CACHE_TIMEOUT": 300,  # seconds
 }
+
+FIREBASE_WEB_API_KEY = env.str('FIREBASE_WEB_API_KEY')
