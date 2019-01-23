@@ -27,7 +27,7 @@ from seedorf.spots.viewsets import (
     SpotSportAmenitesNestedViewSet,
     SpotSportOpeningTimesNestedViewSet,
 )
-from seedorf.users.views import registration_null_view, registration_complete_view
+from seedorf.users.views import registration_null_view, registration_complete_view, create_magic_link_view, confirm_magic_link_view
 from seedorf.users.viewsets import (
     UserViewSet,
     GameUserNestedViewSet,
@@ -153,6 +153,8 @@ urlpatterns = [
         name="account_confirm_email",
     ),
     path("api/auth/registration/status/", registration_complete_view, name="account_confirm_complete"),
+    path("api/auth/create-magic-link/", create_magic_link_view, name="create_magic_link"),
+    path("api/auth/confirm-magic-link/", confirm_magic_link_view, name="confirm_magic_link"),
     re_path(
         r"^api/auth/password-reset/confirm/"
         r"(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$",
