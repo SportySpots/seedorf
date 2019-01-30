@@ -422,7 +422,7 @@ ACCOUNT_USERNAME_VALIDATORS = None
 SOCIALACCOUNT_ADAPTER = "seedorf.users.adapters.SocialAccountAdapter"
 SOCIALACCOUNT_AUTO_SIGNUP = True
 SOCIALACCOUNT_EMAIL_VERIFICATION = ACCOUNT_EMAIL_VERIFICATION
-SOCIALACCOUNT_EMAIL_REQUIRED = ACCOUNT_EMAIL_REQUIRED
+SOCIALACCOUNT_EMAIL_REQUIqRED = ACCOUNT_EMAIL_REQUIRED
 SOCIALACCOUNT_FORMS = {}
 SOCIALACCOUNT_PROVIDERS = {
     'google': {
@@ -433,6 +433,17 @@ SOCIALACCOUNT_PROVIDERS = {
         'AUTH_PARAMS': {
             'access_type': 'online',
         }
+    },
+    'facebook': {
+        'METHOD': 'oauth2',
+        'SCOPE': ['email'],
+        'FIELDS': [
+            'id',
+            'email',
+            'name',
+            'first_name',
+            'last_name',
+        ],
     }
 }
 SOCIALACCOUNT_QUERY_EMAIL = ACCOUNT_EMAIL_REQUIRED
