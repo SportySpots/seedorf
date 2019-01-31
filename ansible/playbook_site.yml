@@ -1,7 +1,7 @@
 ---
 - name: Install python minimal on all servers
   hosts: all
-  gather_facts: False
+  gather_facts: True
   become: True
 
   pre_tasks:
@@ -10,13 +10,13 @@
       raw: bash -c "test -e /usr/bin/python || (apt -qqy update && apt install -qqy python-minimal)"
       register: output
       changed_when:
-      - output.stdout != ""
+        - output.stdout != ""
     - name: Ensure python3 installed
       become: True
       raw: bash -c "test -e /usr/bin/python3.6 || (apt-get install -qqy software-properties-common && add-apt-repository --update --yes ppa:deadsnakes/ppa && apt -qqy update && apt install -qqy python3.6-dev && curl --silent https://bootstrap.pypa.io/get-pip.py | sudo python3.6 && ln -s -f /usr/bin/python3.6 /usr/local/bin/python3 && ln -s -f /usr/local/bin/pip /usr/local/bin/pip3)"
       register: output
       changed_when:
-      - output.stdout != ""
+        - output.stdout != ""
 
 - name: Base provision all servers
   hosts: all
@@ -29,7 +29,7 @@
     - include: handlers.yml
 
 - name: Provision db servers
-  hosts: dbservers
+  hosts: db_servers
   become: True
 
   roles:
@@ -39,7 +39,7 @@
     - include: handlers.yml
 
 - name: Provision app servers
-  hosts: appservers
+  hosts: app_servers
   become: True
 
   roles:

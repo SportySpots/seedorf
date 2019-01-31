@@ -32,7 +32,8 @@
     src: "{{ item.src }}"
     dest: "{{ item.dest }}"
   with_items:
-    - { src: env, dest: "/home/ubuntu/sportyspots/{{ deploy.type }}/.env" }
+    - src: env
+      dest: "/home/ubuntu/sportyspots/{{ deploy.type }}/.env"
 
 - name: Run migrations for {{ deploy.type }}
   become_user: ubuntu
@@ -58,3 +59,4 @@
 
 - name: Flush handlers in case any configs have changed.
   meta: flush_handlers
+...

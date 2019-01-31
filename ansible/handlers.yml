@@ -50,3 +50,4 @@
     name: rsyslog
     state: restarted
   listen: restart_rsyslog
+...
