@@ -39,9 +39,11 @@ class GameFilter(filters.FilterSet):
         distance, lat, lng = value.split(":")
 
         # REF: https://docs.djangoproject.com/en/2.0/ref/contrib/gis/db-api/#distance-lookups
-        pnt = GEOSGeometry(f"POINT({lng} {lat})", srid=4326)
+        ref_location = GEOSGeometry(f"POINT({lng} {lat})", srid=4326)
         lookup = f"{name}__distance_lte"
-        return queryset.filter(**{lookup: (pnt, D(m=int(distance)))})
+        return queryset.filter(**{
+            lookup: (ref_location, D(m=int(distance)))
+        })
 
 
 class RsvpStatusFilter(filters.FilterSet):
