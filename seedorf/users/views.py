@@ -19,21 +19,21 @@ def registration_complete_view(request):
     return Response(_("Email account is activated"))
 
 
-@api_view(['POST'])
+@api_view(["POST"])
 @permission_classes((permissions.AllowAny,))
 def create_magic_link_view(request):
-    user = User.objects.filter(email=request.data['email']).first()
+    user = User.objects.filter(email=request.data["email"]).first()
     if not user:
         return Response(_("Email not registered"), 400)
     user.create_magic_link()
     return Response(_("Email sent"))
 
 
-@api_view(['POST'])
+@api_view(["POST"])
 @permission_classes((permissions.AllowAny,))
 def confirm_magic_link_view(request):
-    token = request.data.get('token')
+    token = request.data.get("token")
     magic_link = MagicLoginLink.objects.filter(token=token).first()
     if not magic_link:
         return Response(_("Invalid token"), 400)
-    return Response({ 'token': jwt_encode(magic_link.user)})
+    return Response({"token": jwt_encode(magic_link.user)})

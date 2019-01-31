@@ -10,7 +10,12 @@ from seedorf.locations.serializers import AddressSerializer
 from seedorf.utils.permissions import IsAdminOrReadOnly
 from seedorf.utils.regex import UUID as REGEX_UUID
 from .models import Spot, SpotAmenity, SpotImage, SpotOpeningTime
-from .serializers import (AmenitySerializer, ImageSerializer, OpeningTimeSerializer, SpotSerializer)
+from .serializers import (
+    AmenitySerializer,
+    ImageSerializer,
+    OpeningTimeSerializer,
+    SpotSerializer,
+)
 from .filters import SpotFilter
 
 

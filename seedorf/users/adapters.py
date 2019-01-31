@@ -50,7 +50,7 @@ class AccountAdapter(DefaultAccountAdapter):
 
     def get_login_redirect_url(self, request):
         token = jwt_encode(request.user)
-        return get_firebase_link('login?token=' + token)
+        return get_firebase_link("login?token=" + token)
 
 
 class SocialAccountAdapter(DefaultSocialAccountAdapter):
@@ -61,10 +61,12 @@ class SocialAccountAdapter(DefaultSocialAccountAdapter):
         # user found with this email address, connect social account to this user.
         login(request, user, "allauth.account.auth_backends.AuthenticationBackend")
         sociallogin.connect(request, request.user)
-        signals.social_account_added.send(sender=SocialLogin,
-                                          request=request,
-                                          sociallogin=sociallogin)
-        raise ImmediateHttpResponse(HttpResponseRedirect(get_firebase_link('login?token=' + jwt_encode(user))))
+        signals.social_account_added.send(
+            sender=SocialLogin, request=request, sociallogin=sociallogin
+        )
+        raise ImmediateHttpResponse(
+            HttpResponseRedirect(get_firebase_link("login?token=" + jwt_encode(user)))
+        )
 
     def pre_social_login(self, request, sociallogin):
         if sociallogin.user.pk:
@@ -73,9 +75,13 @@ class SocialAccountAdapter(DefaultSocialAccountAdapter):
             try:
                 self.connect_by_email(request, sociallogin)
             except User.DoesNotExist:
-                if sociallogin.state['process'] == 'login':
+                if sociallogin.state["process"] == "login":
                     # user wants to login, but is not yet registered
-                    raise ImmediateHttpResponse(HttpResponseRedirect(get_firebase_link('social_login_not_registered')))
+                    raise ImmediateHttpResponse(
+                        HttpResponseRedirect(
+                            get_firebase_link("social_login_not_registered")
+                        )
+                    )
 
     def is_open_for_signup(self, request, sociallogin):
         return getattr(settings, "ACCOUNT_ALLOW_REGISTRATION", True)

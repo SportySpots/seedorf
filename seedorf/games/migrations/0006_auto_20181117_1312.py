@@ -8,15 +8,17 @@ import django_fsm
 
 class Migration(migrations.Migration):
 
-    dependencies = [
-        ('games', '0005_auto_20180613_1027'),
-    ]
+    dependencies = [("games", "0005_auto_20180613_1027")]
 
     operations = [
         migrations.AlterField(
-            model_name='game',
-            name='start_time',
-            field=models.DateTimeField(default=django.utils.timezone.now, help_text='Start time of the game in UTC.', verbose_name='Start Time (UTC)'),
+            model_name="game",
+            name="start_time",
+            field=models.DateTimeField(
+                default=django.utils.timezone.now,
+                help_text="Start time of the game in UTC.",
+                verbose_name="Start Time (UTC)",
+            ),
             preserve_default=False,
-        ),
+        )
     ]

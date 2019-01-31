@@ -32,7 +32,12 @@ EMAIL_BACKEND = "django.core.mail.backends.locmem.EmailBackend"
 # CACHING
 # Speed advantages of in-memory caching without having to run Memcached
 # ------------------------------------------------------------------------------
-CACHES = {"default": {"BACKEND": "django.core.cache.backends.locmem.LocMemCache", "LOCATION": ""}}
+CACHES = {
+    "default": {
+        "BACKEND": "django.core.cache.backends.locmem.LocMemCache",
+        "LOCATION": "",
+    }
+}
 
 # TESTING
 # ------------------------------------------------------------------------------
@@ -50,6 +55,9 @@ PASSWORD_HASHERS = ["django.contrib.auth.hashers.MD5PasswordHasher"]
 TEMPLATES[0]["OPTIONS"]["loaders"] = [
     [
         "django.template.loaders.cached.Loader",
-        ["django.template.loaders.filesystem.Loader", "django.template.loaders.app_directories.Loader"],
+        [
+            "django.template.loaders.filesystem.Loader",
+            "django.template.loaders.app_directories.Loader",
+        ],
     ]
 ]

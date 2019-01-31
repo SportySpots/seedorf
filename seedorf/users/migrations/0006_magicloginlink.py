@@ -10,25 +10,66 @@ import uuid
 
 class Migration(migrations.Migration):
 
-    dependencies = [
-        ('users', '0005_auto_20181117_1312'),
-    ]
+    dependencies = [("users", "0005_auto_20181117_1312")]
 
     operations = [
         migrations.CreateModel(
-            name='MagicLoginLink',
+            name="MagicLoginLink",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('uuid', models.UUIDField(default=uuid.uuid4, editable=False, verbose_name='Unique Identifier')),
-                ('created_at', models.DateTimeField(default=django.utils.timezone.now, editable=False, verbose_name='Created At')),
-                ('modified_at', models.DateTimeField(auto_now=True, verbose_name='Modified At')),
-                ('deleted_at', models.DateTimeField(blank=True, editable=False, null=True, verbose_name='Deleted At')),
-                ('token', models.CharField(default=seedorf.users.models.random_string, max_length=32, verbose_name='Token')),
-                ('short_link', models.CharField(max_length=50, verbose_name='Link')),
-                ('user', models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, related_name='magic_link', to=settings.AUTH_USER_MODEL, verbose_name='Magic login link')),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "uuid",
+                    models.UUIDField(
+                        default=uuid.uuid4,
+                        editable=False,
+                        verbose_name="Unique Identifier",
+                    ),
+                ),
+                (
+                    "created_at",
+                    models.DateTimeField(
+                        default=django.utils.timezone.now,
+                        editable=False,
+                        verbose_name="Created At",
+                    ),
+                ),
+                (
+                    "modified_at",
+                    models.DateTimeField(auto_now=True, verbose_name="Modified At"),
+                ),
+                (
+                    "deleted_at",
+                    models.DateTimeField(
+                        blank=True, editable=False, null=True, verbose_name="Deleted At"
+                    ),
+                ),
+                (
+                    "token",
+                    models.CharField(
+                        default=seedorf.users.models.random_string,
+                        max_length=32,
+                        verbose_name="Token",
+                    ),
+                ),
+                ("short_link", models.CharField(max_length=50, verbose_name="Link")),
+                (
+                    "user",
+                    models.OneToOneField(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="magic_link",
+                        to=settings.AUTH_USER_MODEL,
+                        verbose_name="Magic login link",
+                    ),
+                ),
             ],
-            options={
-                'abstract': False,
-            },
-        ),
+            options={"abstract": False},
+        )
     ]

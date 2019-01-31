@@ -54,7 +54,9 @@ class UserRegistrationAPIViewTest(APITestCase):
             response_user_profile = response_user["profile"]
             self.assertFalse(response_user_profile["sports"])
             self.assertFalse(response_user_profile["spots"])
-            self.assertEqual(response_user_profile["gender"], UserProfile.GENDER_NOT_SPECIFIED)
+            self.assertEqual(
+                response_user_profile["gender"], UserProfile.GENDER_NOT_SPECIFIED
+            )
             self.assertIsNone(response_user_profile["year_of_birth"])
             self.assertIsNone(response_user_profile["avatar"])
             self.assertEqual(response_user_profile["language"], "en")
@@ -86,7 +88,10 @@ class UserProfileAPIViewTest(APITestCase):
         user = UserFactory(username="test", email="test@example.com")
         self.client.force_authenticate(user=user)
 
-        url = reverse("user-profile-detail", kwargs={"user_uuid": str(user.uuid), "uuid": str(user.profile.uuid)})
+        url = reverse(
+            "user-profile-detail",
+            kwargs={"user_uuid": str(user.uuid), "uuid": str(user.profile.uuid)},
+        )
 
         response = self.client.get(url)
         self.assertEqual(200, response.status_code)
@@ -125,10 +130,7 @@ class UserProfileAPIViewTest(APITestCase):
 
         url = reverse(
             "user-profile-detail",
-            kwargs={
-                "user_uuid": str(user.uuid),
-                "uuid": str(user.profile.uuid),
-            },
+            kwargs={"user_uuid": str(user.uuid), "uuid": str(user.profile.uuid)},
         )
 
         user_profile_data = {"year_of_birth": 1981}
@@ -200,9 +202,9 @@ class UserProfileAPIViewTest(APITestCase):
                 "closure_date",
                 "created_at",
                 "modified_at",
-                "deleted_at"
+                "deleted_at",
             ],
-            response_spot.keys()
+            response_spot.keys(),
         )
 
 

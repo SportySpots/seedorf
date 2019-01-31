@@ -9,7 +9,11 @@ class LocalPostmarkEmailBackend(EmailBackend):
 
     def _send(self, email_message):
         message = email_message
-        if message.template_id and (message.body is None or message.body == '') and message.subject is None:
+        if (
+            message.template_id
+            and (message.body is None or message.body == "")
+            and message.subject is None
+        ):
             message.subject = "Postmark template #%s" % message.template_id
             message.body = """
                 Message template: %s,

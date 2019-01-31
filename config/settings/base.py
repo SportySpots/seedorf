@@ -13,7 +13,9 @@ import environ
 from django.utils.translation import ugettext_lazy as _
 from django.urls import reverse_lazy
 
-ROOT_DIR = environ.Path(__file__) - 3  # (seedorf/config/settings/base.py - 3 = seedorf/)
+ROOT_DIR = (
+    environ.Path(__file__) - 3
+)  # (seedorf/config/settings/base.py - 3 = seedorf/)
 APPS_DIR = ROOT_DIR.path("seedorf")
 
 # Load operating system environment variables and then prepare to use them
@@ -89,7 +91,9 @@ INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
 # CSRF CONFIGURATION
 # ------------------------------------------------------------------------------
 CSRF_COOKIE_SECURE = env.bool("DJANGO_CSRF_COOKIE_SECURE", default=True)
-CSRF_TRUSTED_ORIGINS = env.list("DJANGO_CSRF_TRUSTED_ORIGINS", default=[".sportyspots.com"])
+CSRF_TRUSTED_ORIGINS = env.list(
+    "DJANGO_CSRF_TRUSTED_ORIGINS", default=[".sportyspots.com"]
+)
 CSRF_COOKIE_DOMAIN = env.str("DJANGO_CSRF_COOKIE_DOMAIN", default="sportyspots.com")
 CSRF_USE_SESSIONS = env.bool("DJANGO_CSRF_USE_SESSIONS", default=False)
 
@@ -110,7 +114,11 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
-CORS_ORIGIN_WHITELIST = ["www.sportyspots.com", "sportyspots.com", "api.sportyspots.com"]
+CORS_ORIGIN_WHITELIST = [
+    "www.sportyspots.com",
+    "sportyspots.com",
+    "api.sportyspots.com",
+]
 
 # MIGRATIONS CONFIGURATION
 # ------------------------------------------------------------------------------
@@ -128,7 +136,9 @@ FIXTURE_DIRS = (str(APPS_DIR.path("fixtures")),)
 
 # EMAIL CONFIGURATION
 # ------------------------------------------------------------------------------
-EMAIL_BACKEND = env("DJANGO_EMAIL_BACKEND", default="django.core.mail.backends.smtp.EmailBackend")
+EMAIL_BACKEND = env(
+    "DJANGO_EMAIL_BACKEND", default="django.core.mail.backends.smtp.EmailBackend"
+)
 
 # MANAGER CONFIGURATION
 # ------------------------------------------------------------------------------
@@ -187,7 +197,10 @@ TEMPLATES = [
             "debug": DEBUG,
             # See: https://docs.djangoproject.com/en/dev/ref/settings/#template-loaders
             # https://docs.djangoproject.com/en/dev/ref/templates/api/#loader-types
-            "loaders": ["django.template.loaders.filesystem.Loader", "django.template.loaders.app_directories.Loader"],
+            "loaders": [
+                "django.template.loaders.filesystem.Loader",
+                "django.template.loaders.app_directories.Loader",
+            ],
             # See: https://docs.djangoproject.com/en/dev/ref/settings/#template-context-processors
             "context_processors": [
                 "django.template.context_processors.debug",
@@ -265,7 +278,9 @@ TRANSLATIONS_MAP = {"en": "en_us", "nl": "nl_nl"}
 
 # Haystack - Elasticsearch / Solr Integration
 # ------------------------------------------------------------------------------
-HAYSTACK_CONNECTIONS = {"default": {"ENGINE": "haystack.backends.simple_backend.SimpleEngine"}}
+HAYSTACK_CONNECTIONS = {
+    "default": {"ENGINE": "haystack.backends.simple_backend.SimpleEngine"}
+}
 
 
 # AUTHENTICATION/ AUTHORIZATION Settings -------------------------------------------------------------------------------
@@ -292,7 +307,9 @@ PASSWORD_HASHERS = [
 # https://docs.djangoproject.com/en/dev/ref/settings/#auth-password-validators
 # ------------------------------------------------------------------------------
 AUTH_PASSWORD_VALIDATORS = [
-    {"NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator"},
+    {
+        "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator"
+    },
     {"NAME": "django.contrib.auth.password_validation.MinimumLengthValidator"},
     {"NAME": "django.contrib.auth.password_validation.CommonPasswordValidator"},
     {"NAME": "django.contrib.auth.password_validation.NumericPasswordValidator"},
@@ -318,7 +335,9 @@ REST_FRAMEWORK = {
         "rest_framework.authentication.BasicAuthentication",
         "rest_framework.authentication.SessionAuthentication",
     ),
-    "DEFAULT_PERMISSION_CLASSES": ["rest_framework.permissions.IsAuthenticatedOrReadOnly"],
+    "DEFAULT_PERMISSION_CLASSES": [
+        "rest_framework.permissions.IsAuthenticatedOrReadOnly"
+    ],
     "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.LimitOffsetPagination",
     "PAGE_SIZE": 20,
 }
@@ -361,7 +380,9 @@ REST_AUTH_SERIALIZERS = {
     "PASSWORD_RESET_CONFIRM_SERIALIZER": "rest_auth.serializers.PasswordResetConfirmSerializer",
     "PASSWORD_CHANGE_SERIALIZER": "rest_auth.serializers.PasswordChangeSerializer",
 }
-REST_AUTH_REGISTER_SERIALIZERS = {"REGISTER_SERIALIZER": "seedorf.users.serializers.RegisterSerializer"}
+REST_AUTH_REGISTER_SERIALIZERS = {
+    "REGISTER_SERIALIZER": "seedorf.users.serializers.RegisterSerializer"
+}
 REST_AUTH_TOKEN_MODEL = "rest_framework.authtoken.models"
 REST_AUTH_TOKEN_CREATOR = "rest_auth.utils.default_create_token"
 REST_SESSION_LOGIN = True
@@ -377,8 +398,12 @@ ACCOUNT_ADAPTER = "seedorf.users.adapters.AccountAdapter"
 ACCOUNT_AUTHENTICATED_LOGIN_REDIRECTS = False
 ACCOUNT_AUTHENTICATION_METHOD = "username_email"
 ACCOUNT_CONFIRM_EMAIL_ON_GET = True
-ACCOUNT_EMAIL_CONFIRMATION_ANONYMOUS_REDIRECT_URL = reverse_lazy("account_confirm_complete")
-ACCOUNT_EMAIL_CONFIRMATION_AUTHENTICATED_REDIRECT_URL = reverse_lazy("account_confirm_complete")
+ACCOUNT_EMAIL_CONFIRMATION_ANONYMOUS_REDIRECT_URL = reverse_lazy(
+    "account_confirm_complete"
+)
+ACCOUNT_EMAIL_CONFIRMATION_AUTHENTICATED_REDIRECT_URL = reverse_lazy(
+    "account_confirm_complete"
+)
 ACCOUNT_EMAIL_CONFIRMATION_EXPIRE_DAYS = 3
 ACCOUNT_EMAIL_CONFIRMATION_HMAC = True
 ACCOUNT_EMAIL_REQUIRED = False
@@ -425,26 +450,12 @@ SOCIALACCOUNT_EMAIL_VERIFICATION = ACCOUNT_EMAIL_VERIFICATION
 SOCIALACCOUNT_EMAIL_REQUIqRED = ACCOUNT_EMAIL_REQUIRED
 SOCIALACCOUNT_FORMS = {}
 SOCIALACCOUNT_PROVIDERS = {
-    'google': {
-        'SCOPE': [
-            'profile',
-            'email',
-        ],
-        'AUTH_PARAMS': {
-            'access_type': 'online',
-        }
+    "google": {"SCOPE": ["profile", "email"], "AUTH_PARAMS": {"access_type": "online"}},
+    "facebook": {
+        "METHOD": "oauth2",
+        "SCOPE": ["email"],
+        "FIELDS": ["id", "email", "name", "first_name", "last_name"],
     },
-    'facebook': {
-        'METHOD': 'oauth2',
-        'SCOPE': ['email'],
-        'FIELDS': [
-            'id',
-            'email',
-            'name',
-            'first_name',
-            'last_name',
-        ],
-    }
 }
 SOCIALACCOUNT_QUERY_EMAIL = ACCOUNT_EMAIL_REQUIRED
 SOCIALACCOUNT_STORE_TOKENS = True
@@ -465,4 +476,4 @@ GRAPHENE_DJANGO_EXTRAS = {
     "CACHE_TIMEOUT": 300,  # seconds
 }
 
-FIREBASE_WEB_API_KEY = env.str('FIREBASE_WEB_API_KEY')
+FIREBASE_WEB_API_KEY = env.str("FIREBASE_WEB_API_KEY")

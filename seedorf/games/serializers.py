@@ -349,7 +349,11 @@ class GameSerializer(serializers.ModelSerializer):
 
         if rsvp_open_time and rsvp_open_time < rsvp_open_time_limit:
             raise serializers.ValidationError(
-                {"rsvp_open_time": [_("RSVP open time cannot be more than 12 hours in the past.")]}
+                {
+                    "rsvp_open_time": [
+                        _("RSVP open time cannot be more than 12 hours in the past.")
+                    ]
+                }
             )
 
         if rsvp_open_time and rsvp_open_time > start_time:

@@ -76,10 +76,10 @@ class UserSportNestedSerializer(serializers.ModelSerializer):
 class Base64ImageField(serializers.ImageField):
     def to_internal_value(self, data):
         # data looks like 'data:image/jpeg;base64,asdakhgf'
-        base64_str = data.split(',')[1]
+        base64_str = data.split(",")[1]
         content = base64.b64decode(base64_str)
         content_hash = hashlib.sha1(content).hexdigest()
-        data = ContentFile(content, name=content_hash + '.jpg')
+        data = ContentFile(content, name=content_hash + ".jpg")
         return super(Base64ImageField, self).to_internal_value(data)
 
 

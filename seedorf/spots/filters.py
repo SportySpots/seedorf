@@ -37,8 +37,5 @@ class SpotFilter(filters.FilterSet):
         # REF: https://docs.djangoproject.com/en/2.0/ref/contrib/gis/db-api/#distance-lookups
         ref_location = GEOSGeometry(f"POINT({lng} {lat})", srid=4326)
         lookup = f"{name}__distance_lte"
-        return queryset.filter(**{
-            lookup: (ref_location, D(m=int(distance)))
-        })
+        return queryset.filter(**{lookup: (ref_location, D(m=int(distance)))})
         # .annotate(distance=Distance("location", ref_location)).order_by("distance")
-

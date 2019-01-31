@@ -172,7 +172,6 @@ def save_user_profile(sender, instance, **kwargs):
     instance.profile.save()
 
 
-
 def random_string():
     return uuid.uuid4().hex
 
@@ -192,18 +191,15 @@ class MagicLoginLink(BasePropertiesModel):
         null=False,
         max_length=32,
         verbose_name=_("Token"),
-        default=random_string
+        default=random_string,
     )
 
     short_link = models.CharField(
-        blank=False,
-        null=False,
-        max_length=50,
-        verbose_name=_("Link")
+        blank=False, null=False, max_length=50, verbose_name=_("Link")
     )
 
     def set_short_link(self):
-        self.short_link = get_firebase_link('magic_link_login?token=' + self.token)
+        self.short_link = get_firebase_link("magic_link_login?token=" + self.token)
 
     def mail(self):
         ctx = {
@@ -213,7 +209,7 @@ class MagicLoginLink(BasePropertiesModel):
             "sender_name": "SportySpots",
             "company_name": "SportySpots",
             "company_address": "Amsterdam, The Netherlands",
-            "magic_link": str(self)
+            "magic_link": str(self),
         }
 
         message = EmailMessage(subject=None, body=None, to=[self.user.email])

@@ -245,7 +245,12 @@ class Game(BasePropertiesModel):
 
     def send_attendees_cancellation_email(self):
         # TODO: Abstract email sending so that default fields are added
-        attendees = [rsvp_status.user for rsvp_status in RsvpStatus.objects.filter(game=self, status=RsvpStatus.STATUS_ATTENDING)]
+        attendees = [
+            rsvp_status.user
+            for rsvp_status in RsvpStatus.objects.filter(
+                game=self, status=RsvpStatus.STATUS_ATTENDING
+            )
+        ]
         if len(attendees) > 0:
             ctx = {
                 "organizer_first_name": self.organizer.first_name,
@@ -259,7 +264,9 @@ class Game(BasePropertiesModel):
                 "company_address": "Amsterdam, The Netherlands",
             }
 
-            message = EmailMessage(subject=None, body=None, to=[attendee.email for attendee in attendees])
+            message = EmailMessage(
+                subject=None, body=None, to=[attendee.email for attendee in attendees]
+            )
             message.template_id = 6790382
             message.merge_global_data = ctx
             message.send()

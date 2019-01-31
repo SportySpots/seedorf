@@ -8,39 +8,84 @@ import django_fsm
 
 class Migration(migrations.Migration):
 
-    dependencies = [
-        ('games', '0007_auto_20181207_2023'),
-    ]
+    dependencies = [("games", "0007_auto_20181207_2023")]
 
     operations = [
         migrations.AlterField(
-            model_name='game',
-            name='capacity',
-            field=models.PositiveSmallIntegerField(blank=True, null=True, validators=[django.core.validators.MinValueValidator(limit_value=2), django.core.validators.MaxValueValidator(limit_value=50)], verbose_name='Capacity'),
+            model_name="game",
+            name="capacity",
+            field=models.PositiveSmallIntegerField(
+                blank=True,
+                null=True,
+                validators=[
+                    django.core.validators.MinValueValidator(limit_value=2),
+                    django.core.validators.MaxValueValidator(limit_value=50),
+                ],
+                verbose_name="Capacity",
+            ),
         ),
         migrations.AlterField(
-            model_name='game',
-            name='description',
-            field=models.TextField(blank=True, default='', help_text='Description of the game.', verbose_name='Description'),
+            model_name="game",
+            name="description",
+            field=models.TextField(
+                blank=True,
+                default="",
+                help_text="Description of the game.",
+                verbose_name="Description",
+            ),
         ),
         migrations.AlterField(
-            model_name='game',
-            name='is_featured',
-            field=models.BooleanField(default=False, help_text='If this game is featured.', verbose_name='Is featured?'),
+            model_name="game",
+            name="is_featured",
+            field=models.BooleanField(
+                default=False,
+                help_text="If this game is featured.",
+                verbose_name="Is featured?",
+            ),
         ),
         migrations.AlterField(
-            model_name='game',
-            name='name',
-            field=models.CharField(blank=True, default='', max_length=255),
+            model_name="game",
+            name="name",
+            field=models.CharField(blank=True, default="", max_length=255),
         ),
         migrations.AlterField(
-            model_name='game',
-            name='status',
-            field=django_fsm.FSMField(choices=[('canceled', 'Canceled'), ('completed', 'Completed'), ('draft', 'Draft'), ('ended', 'Ended'), ('live', 'Live'), ('planned', 'Planned'), ('updated', 'Updated'), ('started', 'Started')], default='draft', max_length=25, protected=True, verbose_name='Status'),
+            model_name="game",
+            name="status",
+            field=django_fsm.FSMField(
+                choices=[
+                    ("canceled", "Canceled"),
+                    ("completed", "Completed"),
+                    ("draft", "Draft"),
+                    ("ended", "Ended"),
+                    ("live", "Live"),
+                    ("planned", "Planned"),
+                    ("updated", "Updated"),
+                    ("started", "Started"),
+                ],
+                default="draft",
+                max_length=25,
+                protected=True,
+                verbose_name="Status",
+            ),
         ),
         migrations.AlterField(
-            model_name='rsvpstatus',
-            name='status',
-            field=django_fsm.FSMField(choices=[('accepted', 'Accepted'), ('attending', 'Attending'), ('checked_in', 'Checked In'), ('declined', 'Declined'), ('interested', 'Interested'), ('invited', 'Invited'), ('unknown', 'Unknown')], default='unknown', max_length=25, null=True, protected=True, verbose_name='Status'),
+            model_name="rsvpstatus",
+            name="status",
+            field=django_fsm.FSMField(
+                choices=[
+                    ("accepted", "Accepted"),
+                    ("attending", "Attending"),
+                    ("checked_in", "Checked In"),
+                    ("declined", "Declined"),
+                    ("interested", "Interested"),
+                    ("invited", "Invited"),
+                    ("unknown", "Unknown"),
+                ],
+                default="unknown",
+                max_length=25,
+                null=True,
+                protected=True,
+                verbose_name="Status",
+            ),
         ),
     ]
