@@ -1,9 +1,14 @@
 from .models import Game, RsvpStatus
-
+from django.contrib.gis.geos import GEOSGeometry
+from django.contrib.gis.measure import D
 from django_filters import rest_framework as filters
 
 
 class GameFilter(filters.FilterSet):
+    distance = filters.CharFilter(
+        field_name="spot__address__point", method="filter_by_distance"
+    )
+
     class Meta:
         model = Game
         fields = {
@@ -26,6 +31,17 @@ class GameFilter(filters.FilterSet):
             "is_shareable": ["exact"],
             "is_featured": ["exact"],
         }
+
+    # REF: https://django-filter.readthedocs.io/en/master/ref/filters.html#method
+    @staticmethod
+    def filter_by_distance(queryset, name, value):
+        # TODO: Validate distance is integer, and the lat and lng values are valid
+        distance, lat, lng = value.split(":")
+
+        # REF: https://docs.djangoproject.com/en/2.0/ref/contrib/gis/db-api/#distance-lookups
+        pnt = GEOSGeometry(f"POINT({lng} {lat})", srid=4326)
+        lookup = f"{name}__distance_lte"
+        return queryset.filter(**{lookup: (pnt, D(m=int(distance)))})
 
 
 class RsvpStatusFilter(filters.FilterSet):
