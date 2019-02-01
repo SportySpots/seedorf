@@ -7,4 +7,17 @@ all:
     db_servers:
       hosts:
         tst.sportyspots.com:
+  vars:
+    hostname: tst
+    deploy:
+      sub_domain: trials
+      celery_workers: 1
+      gunicorn_workers: 1
+      loglevel: info
+      type: tst
+    instances:
+      - name: tst
+        cache_url: redis:///var/run/redis/redis.sock?db=0
+        celery_broker_url: redis+socket:///var/run/redis/redis.sock?virtual_host=1
+        once_url: redis://localhost:6379/0
 ...
