@@ -52,4 +52,4 @@ class RsvpStatusFilter(filters.FilterSet):
             "game__uuid": ["exact"],
             "user__uuid": ["exact"],
             "status": ["exact"]
-        }
+         }
