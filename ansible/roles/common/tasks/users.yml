@@ -13,7 +13,7 @@
   authorized_key:
     user: "{{ item }}"
     state: present
-    key: "{{ lookup('file', 'ssh_keys/users/public/' + item.name + '.pub') }}"
+    key: "{{ lookup('file', 'ssh_keys/public/' + item + '.pub') }}"
   loop: "{{ ssh_users }}"
 
 - name: Set password less sudo for users in sudo group

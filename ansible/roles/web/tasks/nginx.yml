@@ -3,7 +3,7 @@
   include_role:
     name: geerlingguy.nginx
   vars:
-    nginx_remove_default_vhost: true
+    nginx_remove_default_vhost: True
   notify:
     - restart_nginx
 ...

@@ -1,5 +1,5 @@
 ---
-- name: Install dependencies
+- name: Install postgres dependencies
   apt:
     name:
       - libpq-dev

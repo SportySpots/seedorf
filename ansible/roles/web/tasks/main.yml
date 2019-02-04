@@ -1,7 +1,4 @@
 ---
 - include: ufw.yml
 - include: nginx.yml
-
-- name: Flush handlers in case any configs have changed.
-  meta: flush_handlers
 ...

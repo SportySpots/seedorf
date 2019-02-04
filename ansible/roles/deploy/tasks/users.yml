@@ -2,11 +2,11 @@
 - name: Add deploy authorized keys
   authorized_key:
     user: ubuntu
-    key: "{{ lookup('file', 'ssh_keys/deploy/public/id_rsa.pub') }}"
+    key: "{{ lookup('file', 'ssh_keys/public/deploy_id_rsa.pub') }}"
 
 - name: Install deploy ssh key public key
   copy:
-    content: "{{ lookup('file', 'ssh_keys/deploy/public/id_rsa.pub') }}"
+    content: "{{ lookup('file', 'ssh_keys/public/deploy_id_rsa.pub') }}"
     dest: /home/ubuntu/.ssh/id_rsa.pub
     mode: 0600
     owner: ubuntu
@@ -14,7 +14,7 @@
 
 - name: Install deploy ssh key private key
   copy:
-    content: "{{ lookup('file', 'ssh_keys/deploy/private/id_rsa.key') }}"
+    content: "{{ lookup('file', 'ssh_keys/private/deploy_id_rsa.key') }}"
     dest: /home/ubuntu/.ssh/id_rsa
     mode: 0600
     owner: ubuntu

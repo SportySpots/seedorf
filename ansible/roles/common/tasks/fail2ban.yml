@@ -6,7 +6,7 @@
 
 - name: Ensure fail2ban is started
   service:
-    name: ssh
+    name: fail2ban
     state: started
     enabled: yes
 ...

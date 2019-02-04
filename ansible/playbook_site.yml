@@ -25,18 +25,12 @@
   roles:
     - common
 
-  handlers:
-    - include: handlers.yml
-
 - name: Provision db servers
   hosts: db_servers
   become: True
 
   roles:
     - db
-
-  handlers:
-    - include: handlers.yml
 
 - name: Provision app servers
   hosts: app_servers
@@ -45,8 +39,4 @@
   roles:
     - web
     - deploy
-
-  handlers:
-    - include: handlers.yml
-
 ...

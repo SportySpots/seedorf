@@ -1,12 +1,4 @@
 ---
-- name: Restart supervisor
-  service:
-    name: supervisor
-    state: restarted
-  listen:
-    - restart_supervisor
-    - project_changed
-
 - name: Flush redis
   command: redis-cli flushall
   listen:
@@ -14,6 +6,14 @@
     - project_changed
   # We need to restart supervisor so celery will repopulate redis
   notify: restart_supervisor
+
+- name: Restart supervisor
+  service:
+    name: supervisor
+    state: restarted
+  listen:
+    - restart_supervisor
+    - project_changed
 
 - name: Restart nginx
   service:

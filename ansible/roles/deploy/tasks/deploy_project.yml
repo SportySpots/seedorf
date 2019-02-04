@@ -1,8 +1,16 @@
 ---
-- name: Ensure project directories exist for {{ deploy.type }}
+- name: Ensure /var/log/sportyspots exists
+  file:
+    path: /var/log/sportyspots
+    state: directory
+    recurse: yes
+    owner: ubuntu
+    group: ubuntu
+
+- name: Ensure project directories exist for {{ env }}
   become: True
   file:
-    path: "/home/ubuntu/sportyspots/{{ deploy.type }}"
+    path: "/home/ubuntu/sportyspots/{{ env }}"
     state: directory
     recurse: yes
     owner: ubuntu
@@ -12,51 +20,48 @@
   become_user: ubuntu
   git:
     repo: ssh://git@github.com/sportyspots/seedorf.git
-    dest: "/home/ubuntu/sportyspots/{{ deploy.type }}"
+    dest: "/home/ubuntu/sportyspots/{{ env }}"
     update: yes
     key_file: "/home/ubuntu/.ssh/id_rsa"
   notify:
     - project_changed
 
-- name: Install dependencies for {{ deploy.type }}
+- name: Install dependencies for {{ env }}
   become_user: ubuntu
   command: pipenv install --three --ignore-pipfile
   args:
-    chdir: "/home/ubuntu/sportyspots/{{ deploy.type }}/"
+    chdir: "/home/ubuntu/sportyspots/{{ env }}/"
   notify:
     - restart_supervisor
 
-- name: Generate deploy config for {{ deploy.type }}
+- name: Generate deploy config for {{ env }}
   become_user: ubuntu
   template:
     src: "{{ item.src }}"
     dest: "{{ item.dest }}"
   with_items:
     - src: env
-      dest: "/home/ubuntu/sportyspots/{{ deploy.type }}/.env"
+      dest: "/home/ubuntu/sportyspots/{{ env }}/.env"
 
-- name: Run migrations for {{ deploy.type }}
+- name: Run migrations for {{ env }}
   become_user: ubuntu
   command: pipenv run ./manage.py migrate
   args:
-    chdir: "/home/ubuntu/sportyspots/{{ deploy.type }}"
+    chdir: "/home/ubuntu/sportyspots/{{ env }}"
 
-- name: Run collectstatic for {{ deploy.type }}
+- name: Run collectstatic for {{ env }}
   become_user: ubuntu
   command: pipenv run ./manage.py collectstatic --noinput
   args:
-    chdir: "/home/ubuntu/sportyspots/{{ deploy.type }}"
+    chdir: "/home/ubuntu/sportyspots/{{ env }}"
   notify:
     - flush_redis
 
-- name: Generate supervisor config for {{ deploy.type }}
+- name: Generate supervisor config for {{ env }}
   become_user: root
   template:
     src: supervisor.conf
-    dest: "/etc/supervisor/conf.d/sportyspots-{{ deploy.type }}.conf"
+    dest: "/etc/supervisor/conf.d/sportyspots-{{ env }}.conf"
   notify:
     - restart_supervisor
-
-- name: Flush handlers in case any configs have changed.
-  meta: flush_handlers
 ...

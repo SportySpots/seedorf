@@ -1,0 +1,58 @@
+---
+- name: Download certbot
+  get_url:
+    url: https://dl.eff.org/certbot-auto
+    dest: "{{ certbot_script }}"
+    mode: 0755
+  tags:
+    - letsencrypt
+
+- name: Check if Nginx exists
+  stat:
+    path: /etc/init.d/nginx
+  register: nginx_status
+  tags:
+    - letsencrypt
+
+- name: Ensure Nginx is stopped
+  service:
+    name: nginx
+    state: stopped
+  when: nginx_status.stat.exists
+  tags:
+    - letsencrypt
+
+- name: Install certbot and generate cert - {{ sub_domain }}.{{ domain }}
+  command: "{{ certbot_script }} certonly --noninteractive --agree-tos --standalone --email {{ certbot_admin_email }} -d {{ sub_domain }}.{{ domain }}"
+  args:
+    creates: "/etc/letsencrypt/live/{{ sub_domain }}.{{ domain }}"
+  tags:
+    - letsencrypt
+
+- name: Install certbot and generate cert - {{ env }}.{{ domain }}
+  command: "{{ certbot_script }} certonly --noninteractive --agree-tos --standalone --email {{ certbot_admin_email }} -d {{ env }}.{{ domain }}"
+  args:
+    creates: "/etc/letsencrypt/live/{{ env }}.{{ domain }}"
+  tags:
+    - letsencrypt
+
+- name: Ensure Nginx is started
+  service:
+    name: nginx
+    state: started
+  when: nginx_status.stat.exists
+  tags:
+    - letsencrypt
+
+- name: Ensure a cron job to auto-renew the cert exists
+  cron:
+    name: "letsencrypt"
+    user: root
+    cron_file: "letsencrypt"
+    special_time: weekly
+    job: "{{ certbot_script }} renew --standalone --pre-hook \"service nginx stop\" --post-hook \"service nginx start\" --quiet"
+    state: present
+  when: certbot_auto_renew
+  tags:
+    - letsencrypt
+...

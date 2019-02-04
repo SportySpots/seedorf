@@ -1,32 +1,37 @@
 # Environment Dev
-ENV={{ deploy.type }}
+ENV={{ env }}
 
 # Database
 DATABASE_URL=postgis://localhost/seedorf
 
 # Domain name, used by caddy
-DOMAIN_NAME={{ deploy.sub_domain }}.{{ domain }}
+DOMAIN_NAME={{ sub_domain }}.{{ domain }}
 
 # General settings
-DJANGO_SETTINGS_MODULE=config.settings.{{ deploy.type }}
-DJANGO_SECRET_KEY={{ deploy.django_secret_key }}
+DJANGO_SETTINGS_MODULE=config.settings.{{ env }}
+DJANGO_SECRET_KEY={{ django_secret_key }}
 
+# Celery
 CELERY_BROKER_URL=None
+
+# Redis
 REDIS_URL=redis://redis:6379
+
+# Memcached
 MEMCACHED_URL=None
 
 # AWS Settings
-DJANGO_AWS_ACCESS_KEY_ID={{ deploy.django_aws_access_key_id }}
-DJANGO_AWS_SECRET_ACCESS_KEY={{ deploy.django_aws_secret_access_key }}
-DJANGO_AWS_STORAGE_BUCKET_NAME={{ deploy.django_aws_storage_bucket_name }}
+DJANGO_AWS_ACCESS_KEY_ID={{ django_aws_access_key_id }}
+DJANGO_AWS_SECRET_ACCESS_KEY={{ django_aws_secret_access_key }}
+DJANGO_AWS_STORAGE_BUCKET_NAME={{ django_aws_storage_bucket_name }}
 
-# Used with email
-DJANGO_POSTMARK_API_KEY={{ deploy.django_postmark_api_key }}
+# Postmark
+DJANGO_POSTMARK_API_KEY={{ django_postmark_api_key }}
 
 # Sentry
-DJANGO_SENTRY_DSN={{ deploy.django_sentry_dsn }}
+DJANGO_SENTRY_DSN={{ django_sentry_dsn }}
 
 COMPRESS_ENABLED=False
 
 # Firebase
-FIREBASE_WEB_API_KEY={{ deploy.firebase_web_api_key }}
+FIREBASE_WEB_API_KEY={{ firebase_web_api_key }}

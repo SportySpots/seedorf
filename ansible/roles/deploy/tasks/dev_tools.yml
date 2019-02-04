@@ -3,7 +3,7 @@
   apt_repository:
     repo: "{{ item }}"
   with_items:
-    - ppa:chris-lea/redis-server
+    - "ppa:chris-lea/redis-server"
 
 - name: Ensure required development tools are installed
   apt:
@@ -32,14 +32,6 @@
     name: supervisor
     state: started
     enabled: yes
-
-- name: Ensure /var/log/sportyspots exists
-  file:
-    path: /var/log/sportyspots
-    state: directory
-    recurse: yes
-    owner: ubuntu
-    group: ubuntu
 
 - name: Ensure ubuntu user can restart services
   blockinfile:
