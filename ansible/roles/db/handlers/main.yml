@@ -1,0 +1,7 @@
+---
+- name: Restart postgresql
+  service:
+    name: postgresql
+    state: restarted
+  listen: restart_postgres
+...

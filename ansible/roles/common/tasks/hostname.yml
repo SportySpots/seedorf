@@ -6,7 +6,7 @@
 - name: Add hostname to /etc/hosts
   lineinfile:
     dest: /etc/hosts
-    regexp: '^127\.0\.0\.1'
-    line: '127.0.0.1 localhost {{ hostname }}'
+    regexp: "^127\.0\.0\.1"
+    line: "127.0.0.1 localhost {{ hostname }}"
     state: present
 ...

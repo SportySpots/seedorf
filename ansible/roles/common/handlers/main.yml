@@ -1,0 +1,7 @@
+---
+- name: Restart ufw
+  service:
+    name: ufw
+    state: restarted
+  listen: restart_ufw
+...

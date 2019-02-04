@@ -21,22 +21,6 @@
     name: pipenv
     executable: pip3
 
-#- name: Ensure redis listens on unix socket
-#  lineinfile:
-#    dest: /etc/redis/redis.conf
-#    regexp: '^# unixsocket /var/run/redis/redis.sock'
-#    line: 'unixsocket /var/run/redis/redis.sock'
-#    backrefs: yes
-#  notify: restart_redis
-#
-#- name: Ensure proper permissions for redis unix socket
-#  lineinfile:
-#    dest: /etc/redis/redis.conf
-#    regexp: '^# unixsocketperm 700'
-#    line: 'unixsocketperm 777'
-#    backrefs: yes
-#  notify: restart_redis
-
 - name: Ensure the Redis service is running
   service:
     name: redis-server

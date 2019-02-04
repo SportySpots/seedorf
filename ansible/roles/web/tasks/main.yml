@@ -1,15 +1,6 @@
 ---
 - include: ufw.yml
-
-- name: Install Nginx
-  include_role:
-    name: geerlingguy.nginx
-  vars:
-    nginx_remove_default_vhost: true
-  notify:
-    - restart_nginx
-  handlers:
-    - include: ../../handlers.yml
+- include: nginx.yml
 
 - name: Flush handlers in case any configs have changed.
   meta: flush_handlers
