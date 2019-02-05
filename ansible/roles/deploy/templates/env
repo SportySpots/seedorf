@@ -7,9 +7,16 @@ DATABASE_URL=postgis://localhost/seedorf
 # Domain name, used by caddy
 DOMAIN_NAME={{ sub_domain }}.{{ domain }}
 
-# General settings
+# django settings
+DJANGO_READ_DOT_ENV_FILE=False
+DJANGO_DEBUG=False
 DJANGO_SETTINGS_MODULE=config.settings.{{ env }}
 DJANGO_SECRET_KEY={{ django_secret_key }}
+DJANGO_ALLOWED_HOSTS=.{{ domain }}
+
+DJANGO_CSRF_COOKIE_SECURE=True
+DJANGO_CSRF_USE_SESSIONS=False
+DJANGO_CSRF_COOKIE_DOMAIN={{ domain }}
 
 # Celery
 CELERY_BROKER_URL=None
@@ -28,10 +35,21 @@ DJANGO_AWS_STORAGE_BUCKET_NAME={{ django_aws_storage_bucket_name }}
 # Postmark
 DJANGO_POSTMARK_API_KEY={{ django_postmark_api_key }}
 
+# Security! Better to use DNS for this task, but you can use redirect
+DJANGO_SECURE_SSL_REDIRECT=True
+
+# django-allauth
+DJANGO_ACCOUNT_ALLOW_REGISTRATION=True
+
 # Sentry
 DJANGO_SENTRY_DSN={{ django_sentry_dsn }}
 
+# Compressor
 COMPRESS_ENABLED=False
+
+# Terraform
+TF_VAR_aws_root_access_key_id=None
+TF_VAR_aws_root_access_key_secret=None
 
 # Firebase
 FIREBASE_WEB_API_KEY={{ firebase_web_api_key }}
