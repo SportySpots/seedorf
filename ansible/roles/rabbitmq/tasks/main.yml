@@ -1,0 +1,98 @@
+---
+- name: Add the erlang release signing key to the apt trusted keys
+  apt_key:
+    url: https://bintray.com/user/downloadSubjectPublicKey?username=rabbitmq-erlang
+    state: present
+  tags:
+    - packages
+
+- name: Add the erlang repository to the apt sources list
+  apt_repository:
+    repo: "deb https://dl.bintray.com/rabbitmq-erlang/debian xenial erlang"
+    update_cache: "{{ update_apt_cache | default(true) }}"
+    state: present
+  tags:
+    - packages
+
+- name: Install erlang
+  apt:
+    name:
+      - erlang-nox
+    update_cache: "{{ update_apt_cache | default(true) }}"
+    state: present
+
+- name: Add the RabbitMQ release signing key to the apt trusted keys
+  apt_key:
+    url: https://github.com/rabbitmq/signing-keys/releases/download/2.0/rabbitmq-release-signing-key.asc
+    state: present
+  tags:
+    - packages
+
+- name: Add the RabbitMQ repository to the apt sources list
+  apt_repository:
+    repo: "deb https://dl.bintray.com/rabbitmq/debian xenial main"
+    update_cache: "{{ update_apt_cache | default(true) }}"
+    state: present
+  tags:
+    - packages
+
+- name: Install RabbitMQ server
+  apt:
+    name:
+      - rabbitmq-server
+    update_cache: "{{ update_apt_cache | default(true) }}"
+    state: present
+
+- name: Create the rabbitmq configuration file
+  template:
+    src: "rabbitmq.j2"
+    dest: /etc/rabbitmq/rabbitmq.config
+    backup: yes
+
+- name: Enable the RabbitMQ Management Console
+  rabbitmq_plugin:
+    name: rabbitmq_management
+    state: enabled
+  notify: restart_rabbitmq_server
+
+- name: Make sure rabbitmq-server is enabled and running
+  service:
+    name: rabbitmq-server
+    enabled: true
+    state: started
+
+- name: Create a vhost for the application
+  rabbitmq_vhost:
+    node: "rabbit@{{ env }}"
+    name: "{{ rabbitmq_application_vhost }}"
+    state: present
+
+- name: Create default admin user
+  rabbitmq_user:
+    user: "{{ rabbitmq_admin_user }}"
+    password: "{{ rabbitmq_admin_password }}"
+    vhost: /
+    tags: administrator
+    state: present
+
+- name: Create application user
+  rabbitmq_user:
+    user: "{{ rabbitmq_application_user }}"
+    password: "{{ rabbitmq_application_password }}"
+    vhost: "{{ rabbitmq_application_vhost }}"
+    configure_priv: .*
+    read_priv: .*
+    write_priv: .*
+    state: present
+
+- name: Ensure the default 'guest' user doesn't exist
+  rabbitmq_user:
+    user: guest
+    state: absent
+
+- name: Ensure that the RabbitMQ service is running
+  service:
+    name: rabbitmq-server
+    enabled: yes
+    state: started
+...

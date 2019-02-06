@@ -8,6 +8,7 @@
 - name: Ensure required development tools are installed
   apt:
     name:
+      - htop
       - git
       - npm
       - supervisor

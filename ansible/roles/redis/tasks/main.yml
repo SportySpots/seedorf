@@ -1,0 +1,8 @@
+---
+# REF: https://github.com/DavidWittman/ansible-redis/blob/master/README.md
+- name: Setup redis master
+  include_role:
+    name: davidwittman.redis
+  vars:
+    - redis_bind: 127.0.0.1
+...

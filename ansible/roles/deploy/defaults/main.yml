@@ -1,5 +1,6 @@
+debug_info: False
 # certbot
 # -----------------------------------------------------------------------------
-certbot_auto_renew: yes
+certbot_auto_renew: True
 certbot_admin_email: admin@sportyspots.com
 certbot_script: /opt/certbot-auto

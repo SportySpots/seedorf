@@ -31,6 +31,8 @@
 
   roles:
     - db
+    - memcached
+    - rabbitmq
 
 - name: Provision app servers
   hosts: app_servers
