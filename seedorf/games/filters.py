@@ -7,8 +7,7 @@ from .models import Game, RsvpStatus
 
 class GameFilter(filters.FilterSet):
     distance = filters.CharFilter(
-        field_name="spot__address__point",
-        method="filter_by_distance"
+        field_name="spot__address__point", method="filter_by_distance"
     )
 
     class Meta:
@@ -49,8 +48,4 @@ class GameFilter(filters.FilterSet):
 class RsvpStatusFilter(filters.FilterSet):
     class Meta:
         model = RsvpStatus
-        fields = {
-            "game__uuid": ["exact"],
-            "user__uuid": ["exact"],
-            "status": ["exact"]
-         }
+        fields = {"game__uuid": ["exact"], "user__uuid": ["exact"], "status": ["exact"]}

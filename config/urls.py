@@ -178,9 +178,7 @@ urlpatterns = [
         name="account_confirm_complete",
     ),
     path(
-        "api/auth/create-magic-link/",
-        create_magic_link_view,
-        name="create_magic_link"
+        "api/auth/create-magic-link/", create_magic_link_view, name="create_magic_link"
     ),
     path(
         "api/auth/confirm-magic-link/",
@@ -225,14 +223,12 @@ urlpatterns = [
         include(spot_sports_opening_times_router.urls),
         name="api-spot-sports-opening-times",
     ),
-
     # GraphQL API
     path(
         "graphql",
         csrf_exempt(GraphQLView.as_view(graphiql=True, schema=schema)),
         name="graphql",
     ),
-
     # TODO: Choose one of the api documentation tools below
     # DRF schema
     path("schema/", drf_schema_view),

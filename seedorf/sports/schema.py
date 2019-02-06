@@ -1,5 +1,9 @@
 import graphene
-from graphene_django_extras import (DjangoFilterPaginateListField, DjangoObjectType, LimitOffsetGraphqlPagination)
+from graphene_django_extras import (
+    DjangoFilterPaginateListField,
+    DjangoObjectType,
+    LimitOffsetGraphqlPagination,
+)
 
 from .models import Sport
 from .viewsets import SportFilter
