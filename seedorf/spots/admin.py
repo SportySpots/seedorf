@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Spot, SpotOpeningTime, SpotImage, SpotAmenity
+from .models import Spot, SpotAmenity, SpotImage, SpotOpeningTime
 
 
 class SpotOpeningTimeAdmin(admin.StackedInline):

@@ -11,9 +11,9 @@ from django.contrib.auth.models import Group
 from django.core.files.base import ContentFile
 from django.core.validators import EmailValidator
 from django.utils.translation import ugettext_lazy as _
+from django_countries.serializers import CountryFieldMixin
 from rest_framework import serializers
 from rest_framework.validators import UniqueValidator
-from django_countries.serializers import CountryFieldMixin
 
 from seedorf.sports.models import Sport
 from seedorf.sports.serializers import SportSerializer

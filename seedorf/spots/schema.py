@@ -17,7 +17,7 @@ class SpotImageType(DjangoObjectType):
 
     def resolve_image(self, info, **kwargs):
         if self.image:
-            return "{}{}".format(settings.MEDIA_URL, self.image)
+            return f"{settings.MEDIA_URL}{self.image}"
         else:
             return ""
 

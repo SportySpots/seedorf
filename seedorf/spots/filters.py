@@ -1,8 +1,8 @@
 from django.contrib.gis.geos import GEOSGeometry
 from django.contrib.gis.measure import D
+from django_filters import rest_framework as filters
 
 from seedorf.sports.models import Sport
-from django_filters import rest_framework as filters
 from .models import Spot
 
 

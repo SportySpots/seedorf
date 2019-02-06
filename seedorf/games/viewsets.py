@@ -3,7 +3,7 @@ from rest_framework import viewsets
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
 
 from seedorf.utils.regex import UUID as REGEX_UUID
-from .filters import RsvpStatusFilter, GameFilter
+from .filters import GameFilter, RsvpStatusFilter
 from .models import Game, RsvpStatus
 from .serializers import GameSerializer, RsvpStatusNestedSerializer
 

@@ -14,14 +14,14 @@ def get_logo_upload_directory(instance, filename):
     # file will be uploaded to MEDIA_ROOT/spots/<uuid>/logo/<filename>
     # TODO: Test for files names with non latin characters
     # TODO: Upload files to CDN
-    return "spots/{0}/logo/{1}".format(instance.uuid, filename)
+    return f"spots/{instance.uuid}/logo/{filename}"
 
 
 def get_images_upload_directory(instance, filename):
     # file will be uploaded to MEDIA_ROOT/spots/<uuid>/images/<filename>
     # TODO: Test for files names with non latin characters
     # TODO: Upload files to CDN
-    return "spots/{0}/images/{1}".format(instance.uuid, filename)
+    return f"spots/{instance.uuid}/images/{filename}"
 
 
 class Spot(BasePropertiesModel):
@@ -113,7 +113,7 @@ class Spot(BasePropertiesModel):
         ordering = ("-created_at",)
 
     def __str__(self):
-        return self.name
+        return f"{self.name}"
 
 
 class SpotImage(BasePropertiesModel):
@@ -156,7 +156,7 @@ class SpotImage(BasePropertiesModel):
         ordering = ("-created_at",)
 
     def __str__(self):
-        return "{} : {}".format(self.spot.name, self.sport.name)
+        return f"{self.spot.name} : {self.sport.name}"
 
 
 class SpotOpeningTime(BasePropertiesModel):
@@ -215,7 +215,7 @@ class SpotOpeningTime(BasePropertiesModel):
         ordering = ("-created_at",)
 
     def __str__(self):
-        return "{} : {}".format(self.spot.name, self.sport.name)
+        return f"{self.spot.name} : {self.sport.name}"
 
 
 AMENITIES_TYPE_SCHEMA = {
@@ -268,4 +268,4 @@ class SpotAmenity(BasePropertiesModel):
         ordering = ("-created_at",)
 
     def __str__(self):
-        return "{} : {}".format(self.spot.name, self.sport.name)
+        return f"{self.spot.name} : {self.sport.name}"

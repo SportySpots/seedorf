@@ -1,9 +1,6 @@
 import graphene
-from graphene_django_extras import (
-    DjangoObjectType,
-    DjangoFilterPaginateListField,
-    LimitOffsetGraphqlPagination,
-)
+from graphene_django_extras import (DjangoFilterPaginateListField, DjangoObjectType, LimitOffsetGraphqlPagination)
+
 from seedorf.users.schema import UserType
 from .models import Game, RsvpStatus
 from .viewsets import GameFilter, RsvpStatusFilter

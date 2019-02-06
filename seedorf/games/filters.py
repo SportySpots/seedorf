@@ -1,7 +1,8 @@
-from .models import Game, RsvpStatus
 from django.contrib.gis.geos import GEOSGeometry
 from django.contrib.gis.measure import D
 from django_filters import rest_framework as filters
+
+from .models import Game, RsvpStatus
 
 
 class GameFilter(filters.FilterSet):

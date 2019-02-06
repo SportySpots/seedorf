@@ -3,9 +3,8 @@ from datetime import datetime, timedelta
 import pendulum
 from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
-from rest_framework import serializers
-
 from django_fsm import TransitionNotAllowed
+from rest_framework import serializers
 
 from seedorf.sports.models import Sport
 from seedorf.spots.models import Spot

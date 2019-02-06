@@ -1,6 +1,6 @@
 from rest_framework import serializers
-from seedorf.spots.models import Spot
 
+from seedorf.spots.models import Spot
 from .models import Address
 
 

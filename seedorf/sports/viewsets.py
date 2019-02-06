@@ -1,10 +1,10 @@
+from django_filters import rest_framework as filters
 from rest_framework import viewsets
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
-from django_filters import rest_framework as filters
 
 from seedorf.games.serializers import GameSportNestedSerializer
-from seedorf.users.serializers import UserSportNestedSerializer
 from seedorf.spots.serializers import SpotSportNestedSerializer
+from seedorf.users.serializers import UserSportNestedSerializer
 from seedorf.utils.permissions import IsAdminOrReadOnly
 from seedorf.utils.regex import UUID as REGEX_UUID
 from .models import Sport

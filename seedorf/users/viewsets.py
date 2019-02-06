@@ -1,14 +1,13 @@
 from rest_framework import viewsets
 
+from seedorf.sports.models import Sport
+from seedorf.sports.serializers import SportSerializer
+from seedorf.spots.models import Spot
+from seedorf.spots.serializers import SpotSerializer
 from seedorf.utils.permissions import IsOwnerOrReadOnly
 from seedorf.utils.regex import UUID as REGEX_UUID
-from seedorf.sports.serializers import SportSerializer
-from seedorf.spots.serializers import SpotSerializer
-from seedorf.sports.models import Sport
-from seedorf.spots.models import Spot
-
 from .models import User, UserProfile
-from .serializers import UserSerializer, UserProfileSerializer
+from .serializers import UserProfileSerializer, UserSerializer
 
 
 class UserViewSet(viewsets.ModelViewSet):

@@ -1,14 +1,15 @@
 from django.db.models import Q
+from django_filters import rest_framework as filters
 from rest_framework import viewsets
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
 from rest_framework_gis.filters import DistanceToPointFilter
-from django_filters import rest_framework as filters
 
 from seedorf.games.serializers import GameSpotNestedSerializer
 from seedorf.locations.models import Address
 from seedorf.locations.serializers import AddressSerializer
 from seedorf.utils.permissions import IsAdminOrReadOnly
 from seedorf.utils.regex import UUID as REGEX_UUID
+from .filters import SpotFilter
 from .models import Spot, SpotAmenity, SpotImage, SpotOpeningTime
 from .serializers import (
     AmenitySerializer,
@@ -16,7 +17,6 @@ from .serializers import (
     OpeningTimeSerializer,
     SpotSerializer,
 )
-from .filters import SpotFilter
 
 
 class SpotViewSet(viewsets.ModelViewSet):

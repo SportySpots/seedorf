@@ -1,8 +1,8 @@
 import graphene
 from graphene_django.types import DjangoObjectType
+
 from seedorf.sports.schema import SportType
 from seedorf.spots.schema import SpotType
-
 from .models import User, UserProfile
 
 

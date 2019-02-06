@@ -1,20 +1,16 @@
 import urllib
 
 import requests
-
 from django.conf import settings
 
 
 def get_firebase_link(app_link):
     # https://firebase.google.com/docs/reference/dynamic-links/link-shortener
     # https://firebase.google.com/docs/dynamic-links/create-manually
-    firebase_url = (
-        "https://firebasedynamiclinks.googleapis.com/v1/shortLinks?key="
-        + settings.FIREBASE_WEB_API_KEY
-    )
+    firebase_url = f"https://firebasedynamiclinks.googleapis.com/v1/shortLinks?key={settings.FIREBASE_WEB_API_KEY}"
     long_dynamic_link_base = "https://sportyspots.page.link/?"
     long_dynamic_link_args = {
-        "link": "https://link.sportyspots.com/" + app_link,
+        "link": f"https://link.sportyspots.com/{app_link}",
         "apn": "com.sportyspots.android",
         "afl": "https://www.sportyspots.com",
         "ibi": "com.sportyspots.ios",

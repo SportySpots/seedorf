@@ -22,18 +22,22 @@ class Game(BasePropertiesModel):
     """
 
     # Predefined Values
-    STATUS_CANCELED = "canceled"  # When the organizer cancels the event
-    STATUS_COMPLETED = "completed"  # When the organizer confirms the game took place
-    STATUS_DRAFT = "draft"  # When the game is in the planning phase / draft
-    STATUS_ENDED = (
-        "ended"
-    )  # When the system sets the state automatically based on end time
-    STATUS_LIVE = "live"  # When the organizer confirms manually the game is live
-    STATUS_PLANNED = "planned"  # When the game is planned
-    STATUS_UPDATED = "updated"  # When a planned game is updated
-    STATUS_STARTED = (
-        "started"
-    )  # When the system sets the state automatically based on start time
+    # When the organizer cancels the event
+    STATUS_CANCELED = "canceled"
+    # When the organizer confirms the game took place
+    STATUS_COMPLETED = "completed"
+    # When the game is in the planning phase / draft
+    STATUS_DRAFT = "draft"
+    # When the system sets the state automatically based on end time
+    STATUS_ENDED = "ended"
+    # When the organizer confirms manually the game is live
+    STATUS_LIVE = "live"
+    # When the game is planned
+    STATUS_PLANNED = "planned"
+    # When a planned game is updated
+    STATUS_UPDATED = "updated"
+    # When the system sets the state automatically based on start time
+    STATUS_STARTED = "started"
 
     STATUSES = (
         (STATUS_CANCELED, _("Canceled")),
@@ -218,7 +222,7 @@ class Game(BasePropertiesModel):
         ordering = ("-created_at",)
 
     def __str__(self):
-        return self.name
+        return f"{self.name}"
 
     def get_absolute_url(self):
         return reverse("game-detail", args=[str(self.uuid)])
@@ -255,7 +259,7 @@ class Game(BasePropertiesModel):
             ctx = {
                 "organizer_first_name": self.organizer.first_name,
                 # TODO: Fix game url hardcoding
-                "game_url": "https://www.sportyspots.com/games/{}".format(self.uuid),
+                "game_url": f"https://www.sportyspots.com/games/{self.uuid}",
                 "product_name": "SportySpots",
                 "product_url": "https://www.sportyspots.com",
                 "support_email": "info@sportyspots.com",
@@ -358,8 +362,10 @@ class RsvpStatus(BasePropertiesModel):
     """
 
     # Predefined Values
-    STATUS_ACCEPTED = "accepted"  # When the user is invited, and he/she accepts.
-    STATUS_ATTENDING = "attending"  # When the user signs up for an open event
+    # When the user is invited, and he/she accepts.
+    STATUS_ACCEPTED = "accepted"
+    # When the user signs up for an open event
+    STATUS_ATTENDING = "attending"
     STATUS_CHECKED_IN = "checked_in"
     STATUS_DECLINED = "declined"
     STATUS_INTERESTED = "interested"
@@ -413,7 +419,7 @@ class RsvpStatus(BasePropertiesModel):
         unique_together = (("user", "game"),)
 
     def __str__(self):
-        return "{} : {}".format(self.game.name, self.user.name)
+        return f"{self.game.name} : { self.user.name}"
 
     def send_user_confirmation_mail(self, template_id):
         # TODO: Send the game details e.g. time, name, type of sport
@@ -422,7 +428,7 @@ class RsvpStatus(BasePropertiesModel):
             "organizer_first_name": self.game.organizer.first_name,
             "first_name": self.user.first_name,
             # TODO: Fix game url hardcoding
-            "game_url": "https://www.sportyspots.com/games/{}".format(self.game.uuid),
+            "game_url": f"https://www.sportyspots.com/games/{self.game.uuid}",
         }
 
         message = EmailMessage(subject="", body="", to=[self.user.email])

@@ -75,4 +75,4 @@ class Sport(BasePropertiesModel, TranslationModel):
         translatable_fields = ("name", "description")
 
     def __str__(self):
-        return "{} : {}".format(self.category, self.name)
+        return f"{self.category} : {self.name}"

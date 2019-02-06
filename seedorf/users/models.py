@@ -1,21 +1,18 @@
-import urllib
+import uuid
 from datetime import date
 
-import uuid
-
-import requests
 from django.conf import settings
 from django.contrib.auth.models import AbstractUser
 from django.core.mail import EmailMessage
-from django.urls import reverse
-from django.core.validators import MinValueValidator, MaxValueValidator
+from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+from django.urls import reverse
 from django.utils.encoding import python_2_unicode_compatible
 from django.utils.translation import ugettext_lazy as _
 from django_countries.fields import CountryField
 from timezone_field import TimeZoneField
-from django.db.models.signals import post_save
-from django.dispatch import receiver
 
 from seedorf.utils.firebase import get_firebase_link
 from seedorf.utils.models import BasePropertiesModel
@@ -24,7 +21,7 @@ from seedorf.utils.models import BasePropertiesModel
 def get_avatar_upload_directory(instance, filename):
     # TODO: Test for files names with non latin characters
     # TODO: Upload files to CDN
-    return "users/{0}/avatars/{1}".format(instance.uuid, filename)
+    return f"users/{instance.uuid}/avatars/{filename}"
 
 
 def max_value_year_of_birth(value):
@@ -149,7 +146,7 @@ class UserProfile(BasePropertiesModel):
         ordering = ("-created_at",)
 
     def __str__(self):
-        return self.user.email
+        return f"{self.user.email}"
 
 
 #     # is_under_age
@@ -218,4 +215,4 @@ class MagicLoginLink(BasePropertiesModel):
         message.send()
 
     def __str__(self):
-        return self.short_link
+        return f"{self.short_link}"
