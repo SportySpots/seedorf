@@ -1,4 +1,32 @@
 ---
+- name: Debug info
+  vars:
+    msg: |
+        Module Variables ("vars"):
+        --------------------------------
+        {{ vars | to_nice_json }}
+
+        Environment Variables ("environment"):
+        --------------------------------
+        {{ environment | to_nice_json }}
+
+        GROUP NAMES Variables ("group_names"):
+        --------------------------------
+        {{ group_names | to_nice_json }}
+
+        GROUPS Variables ("groups"):
+        --------------------------------
+        {{ groups | to_nice_json }}
+
+        HOST Variables ("hostvars"):
+        --------------------------------
+        {{ hostvars | to_nice_json }}
+
+  debug:
+    msg: "{{ msg.split('\n') }}"
+  when: debug_info
+  tags: debug_info
+
 - name: Ensure /var/log/sportyspots exists
   file:
     path: /var/log/sportyspots
@@ -34,14 +62,12 @@
   notify:
     - restart_supervisor
 
-- name: Generate deploy config for {{ env }}
+- name: Copy .env file
   become_user: ubuntu
-  template:
-    src: "{{ item.src }}"
-    dest: "{{ item.dest }}"
-  with_items:
-    - src: env
-      dest: "/home/ubuntu/sportyspots/{{ env }}/.env"
+  copy:
+    src: "../../../../.envs/.env.{{ env }}"
+    dest: "/home/ubuntu/sportyspots/{{ env }}/.env"
+    mode: 0644
 
 - name: Run migrations for {{ env }}
   become_user: ubuntu

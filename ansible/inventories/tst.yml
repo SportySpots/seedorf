@@ -12,5 +12,5 @@ all:
     celery_workers: 1
     gunicorn_workers: 1
     loglevel: info
-    sub_domain: trials
+    sub_domain: tst
 ...
