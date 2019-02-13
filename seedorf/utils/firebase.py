@@ -4,7 +4,7 @@ import requests
 from django.conf import settings
 
 
-def get_firebase_link(app_link):
+def get_firebase_link(app_link, unguessable=True, **kwargs):
     # https://firebase.google.com/docs/reference/dynamic-links/link-shortener
     # https://firebase.google.com/docs/dynamic-links/create-manually
     firebase_url = f"https://firebasedynamiclinks.googleapis.com/v1/shortLinks?key={settings.FIREBASE_WEB_API_KEY}"
@@ -17,10 +17,11 @@ def get_firebase_link(app_link):
         "ifl": "https://www.sportyspots.com",
         "ofl": "https://www.sportyspots.com",
     }
+    long_dynamic_link_args.update(kwargs)
     long_dynamic_link_url = long_dynamic_link_base + urllib.parse.urlencode(long_dynamic_link_args)
     post_body = {
         "longDynamicLink": long_dynamic_link_url,
-        "suffix": {"option": "UNGUESSABLE"},
+        "suffix": {"option": "UNGUESSABLE" if unguessable else "SHORT"},
     }
     result = requests.post(firebase_url, json=post_body)
     return result.json()["shortLink"]
