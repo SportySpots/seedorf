@@ -6,10 +6,7 @@ from django.contrib.auth.models import AbstractUser
 from django.core.mail import EmailMessage
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
-from django.db.models.signals import post_save
-from django.dispatch import receiver
 from django.urls import reverse
-from django.utils.encoding import python_2_unicode_compatible
 from django.utils.translation import ugettext_lazy as _
 from django_countries.fields import CountryField
 from timezone_field import TimeZoneField
@@ -20,7 +17,6 @@ from seedorf.utils.models import BasePropertiesModel
 
 def get_avatar_upload_directory(instance, filename):
     # TODO: Test for files names with non latin characters
-    # TODO: Upload files to CDN
     return f"users/{instance.uuid}/avatars/{filename}"
 
 
@@ -32,7 +28,6 @@ def min_value_year_of_birth(value):
     return MinValueValidator(date.today().year - 100)(value)
 
 
-@python_2_unicode_compatible
 class User(AbstractUser, BasePropertiesModel):
 
     name = models.CharField(
@@ -44,7 +39,7 @@ class User(AbstractUser, BasePropertiesModel):
     )
 
     def __str__(self):
-        return self.email
+        return f"{self.email}"
 
     def get_absolute_url(self):
         return reverse("users:detail", kwargs={"uuid": self.uuid})
@@ -158,17 +153,6 @@ class UserProfile(BasePropertiesModel):
 #     # followers
 
 
-@receiver(post_save, sender=User)
-def create_user_profile(sender, instance, created, **kwargs):
-    if created:
-        UserProfile.objects.create(user=instance)
-
-
-@receiver(post_save, sender=User)
-def save_user_profile(sender, instance, **kwargs):
-    instance.profile.save()
-
-
 def random_string():
     return uuid.uuid4().hex
 
@@ -196,7 +180,7 @@ class MagicLoginLink(BasePropertiesModel):
     )
 
     def set_short_link(self):
-        self.short_link = get_firebase_link("magic_link_login?token=" + self.token)
+        self.short_link = get_firebase_link(f"magic_link_login?token={self.token}")
 
     def mail(self):
         ctx = {
