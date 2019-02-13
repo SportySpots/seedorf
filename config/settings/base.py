@@ -29,7 +29,7 @@ if READ_DOT_ENV_FILE:
     # that is to say variables from the .env files will only be used if not defined
     # as environment variables.
     env_file = str(ROOT_DIR.path(".env"))
-    print("Loading : {}".format(env_file))
+    print(f"Loading : {env_file}")
     env.read_env(env_file)
     print("The .env file has been loaded. See base.py for more information")
 
@@ -52,20 +52,22 @@ DJANGO_APPS = [
 ]
 
 THIRD_PARTY_APPS = [
-    "rest_framework",  # rest framework
-    "rest_framework_gis",  # rest framework gis
-    "rest_framework.authtoken",  # http://www.django-rest-framework.org/api-guide/authentication/#tokenauthentication
-    "rest_auth",  # django-rest-auth
-    "rest_auth.registration",  # django-rest-auth
-    "allauth",  # registration
-    "allauth.account",  # registration
-    "allauth.socialaccount",  # registration
+    "rest_framework",
+    "rest_framework_gis",
+    # http://www.django-rest-framework.org/api-guide/authentication/#tokenauthentication
+    "rest_framework.authtoken",
+    "rest_auth",
+    "rest_auth.registration",
+    "allauth",
+    "allauth.account",
+    "allauth.socialaccount",
+    "allauth.socialaccount.providers.google",
     # "allauth.socialaccount.providers.facebook",
     # "allauth.socialaccount.providers.twitter",
-    "allauth.socialaccount.providers.google",
-    "crispy_forms",  # Form layouts
-    "graphene_django",  # graphql
-    "haystack",  # solr/elastic-search
+    "crispy_forms",
+    "graphene_django",
+    # solr/elastic-search
+    "haystack",
     "django_filters",
     "django_countries",
     "timezone_field",
@@ -115,8 +117,8 @@ MIDDLEWARE = [
 ]
 
 CORS_ORIGIN_WHITELIST = [
-    "www.sportyspots.com",
     "sportyspots.com",
+    "www.sportyspots.com",
     "api.sportyspots.com",
 ]
 
@@ -282,7 +284,6 @@ HAYSTACK_CONNECTIONS = {
     "default": {"ENGINE": "haystack.backends.simple_backend.SimpleEngine"}
 }
 
-
 # AUTHENTICATION/ AUTHORIZATION Settings -------------------------------------------------------------------------------
 
 # Location of root django.contrib.admin URL, use {% url 'admin:index' %}
@@ -443,27 +444,25 @@ ACCOUNT_USER_MODEL_USERNAME_FIELD = "username"
 ACCOUNT_USERNAME_MIN_LENGTH = 1
 ACCOUNT_USERNAME_REQUIRED = False
 ACCOUNT_USERNAME_VALIDATORS = None
-# SOCIALACCOUNT_ADAPTER = "allauth.socialaccount.adapter.DefaultSocialAccountAdapter"
+ACCOUNT_ALLOW_REGISTRATION = env.bool("DJANGO_ACCOUNT_ALLOW_REGISTRATION", True)
 SOCIALACCOUNT_ADAPTER = "seedorf.users.adapters.SocialAccountAdapter"
 SOCIALACCOUNT_AUTO_SIGNUP = True
-SOCIALACCOUNT_EMAIL_VERIFICATION = ACCOUNT_EMAIL_VERIFICATION
 SOCIALACCOUNT_EMAIL_REQUIRED = ACCOUNT_EMAIL_REQUIRED
+SOCIALACCOUNT_EMAIL_VERIFICATION = ACCOUNT_EMAIL_VERIFICATION
 SOCIALACCOUNT_FORMS = {}
+SOCIALACCOUNT_QUERY_EMAIL = ACCOUNT_EMAIL_REQUIRED
+SOCIALACCOUNT_STORE_TOKENS = True
 SOCIALACCOUNT_PROVIDERS = {
-    "google": {"SCOPE": ["profile", "email"], "AUTH_PARAMS": {"access_type": "online"}},
+    "google": {
+        "SCOPE": ["profile", "email"],
+        "AUTH_PARAMS": {"access_type": "online"}
+    },
     "facebook": {
         "METHOD": "oauth2",
         "SCOPE": ["email"],
         "FIELDS": ["id", "email", "name", "first_name", "last_name"],
     },
 }
-SOCIALACCOUNT_QUERY_EMAIL = ACCOUNT_EMAIL_REQUIRED
-SOCIALACCOUNT_STORE_TOKENS = True
-
-
-ACCOUNT_ALLOW_REGISTRATION = env.bool("DJANGO_ACCOUNT_ALLOW_REGISTRATION", True)
-# ACCOUNT_ADAPTER = 'seedorf.users.adapters.AccountAdapter'
-# SOCIALACCOUNT_ADAPTER = 'seedorf.users.adapters.SocialAccountAdapter'
 
 # graphene djang extra settings
 # REF: https://github.com/eamigo86/graphene-django-extras
