@@ -7,6 +7,7 @@ from django.urls import reverse
 from django.utils.translation import ugettext as _
 from django_fsm import FSMField, transition
 
+from seedorf.utils.firebase import get_firebase_link
 from seedorf.utils.models import BasePropertiesModel
 
 
@@ -226,6 +227,13 @@ class Game(BasePropertiesModel):
 
     def get_absolute_url(self):
         return reverse("game-detail", args=[str(self.uuid)])
+
+    def get_app_link(self):
+        image = self.spot.images.first()
+        if image:
+            return get_firebase_link(f'games/{self.uuid}', unguessable=False, st=self.name, sd=self.description, si=image.image.url)
+        else:
+            return get_firebase_link(f'games/{self.uuid}', unguessable=False, st=self.name, sd=self.description)
 
     def send_organizer_confirmation_mail(self):
 
