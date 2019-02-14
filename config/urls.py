@@ -3,6 +3,7 @@ from django.conf import settings
 from django.conf.urls import include, url
 from django.conf.urls.static import static
 from django.contrib import admin
+from django.urls import path, re_path
 from django.utils.translation import ugettext_lazy as _
 from django.views import defaults as default_views
 from django.views.decorators.csrf import csrf_exempt
@@ -16,35 +17,15 @@ from rest_framework_jwt.views import refresh_jwt_token, verify_jwt_token
 from rest_framework_nested import routers
 
 from seedorf.core.views import apple_app_site_association
-from seedorf.games.viewsets import GameViewSet, GameRsvpStatusNestedViewset
+from seedorf.games.viewsets import GameRsvpStatusNestedViewset, GameViewSet
 from seedorf.graphql.schema import schema
-from seedorf.sports.viewsets import (
-    SportViewSet,
-    SpotSportsNestedViewSet,
-    GameSportNestedViewSet,
-)
-from seedorf.spots.viewsets import (
-    SpotViewSet,
-    GameSpotNestedViewSet,
-    SpotAddressNestedViewSet,
-    SpotSportImagesNestedViewSet,
-    SpotSportAmenitesNestedViewSet,
-    SpotSportOpeningTimesNestedViewSet,
-)
-from seedorf.users.views import (
-    registration_null_view,
-    registration_complete_view,
-    create_magic_link_view,
-    confirm_magic_link_view,
-)
-from seedorf.users.viewsets import (
-    UserViewSet,
-    GameUserNestedViewSet,
-    UserProfileNestedViewSet,
-    UserProfileSportNestedViewSet,
-    UserProfileSpotNestedViewSet,
-)
-from django.urls import path, re_path
+from seedorf.sports.viewsets import GameSportNestedViewSet, SportViewSet, SpotSportsNestedViewSet
+from seedorf.spots.viewsets import (GameSpotNestedViewSet, SpotAddressNestedViewSet, SpotSportAmenitesNestedViewSet,
+                                    SpotSportImagesNestedViewSet, SpotSportOpeningTimesNestedViewSet, SpotViewSet)
+from seedorf.users.views import (confirm_magic_link_view, create_magic_link_view, registration_complete_view,
+                                 registration_null_view)
+from seedorf.users.viewsets import (GameUserNestedViewSet, UserProfileNestedViewSet, UserProfileSportNestedViewSet,
+                                    UserProfileSpotNestedViewSet, UserViewSet)
 
 drf_schema_view = drf_get_schema_view(title="SportySpots API")
 

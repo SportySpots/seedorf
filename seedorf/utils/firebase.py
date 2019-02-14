@@ -13,8 +13,8 @@ def get_firebase_link(app_link, unguessable=True, **kwargs):
         "link": f"https://app.sportyspots.com/{app_link}",
         "apn": "com.sportyspots.android",
         "ibi": "com.sportyspots.ios",
-        "afl": "https://www.sportyspots.com",
-        "ifl": "https://www.sportyspots.com",
+        "afl": "https://play.google.com/store/apps/details?id=com.sportyspots.android",
+        "ifl": "https://itunes.apple.com/nl/app/sportyspots/id1391625376",
         "ofl": "https://www.sportyspots.com",
     }
     long_dynamic_link_args.update(kwargs)
