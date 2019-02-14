@@ -19,13 +19,32 @@ from rest_framework_nested import routers
 from seedorf.core.views import apple_app_site_association
 from seedorf.games.viewsets import GameRsvpStatusNestedViewset, GameViewSet
 from seedorf.graphql.schema import schema
-from seedorf.sports.viewsets import GameSportNestedViewSet, SportViewSet, SpotSportsNestedViewSet
-from seedorf.spots.viewsets import (GameSpotNestedViewSet, SpotAddressNestedViewSet, SpotSportAmenitesNestedViewSet,
-                                    SpotSportImagesNestedViewSet, SpotSportOpeningTimesNestedViewSet, SpotViewSet)
-from seedorf.users.views import (confirm_magic_link_view, create_magic_link_view, registration_complete_view,
-                                 registration_null_view)
-from seedorf.users.viewsets import (GameUserNestedViewSet, UserProfileNestedViewSet, UserProfileSportNestedViewSet,
-                                    UserProfileSpotNestedViewSet, UserViewSet)
+from seedorf.sports.viewsets import (
+    GameSportNestedViewSet,
+    SportViewSet,
+    SpotSportsNestedViewSet,
+)
+from seedorf.spots.viewsets import (
+    GameSpotNestedViewSet,
+    SpotAddressNestedViewSet,
+    SpotSportAmenitesNestedViewSet,
+    SpotSportImagesNestedViewSet,
+    SpotSportOpeningTimesNestedViewSet,
+    SpotViewSet,
+)
+from seedorf.users.views import (
+    confirm_magic_link_view,
+    create_magic_link_view,
+    registration_complete_view,
+    registration_null_view,
+)
+from seedorf.users.viewsets import (
+    GameUserNestedViewSet,
+    UserProfileNestedViewSet,
+    UserProfileSportNestedViewSet,
+    UserProfileSpotNestedViewSet,
+    UserViewSet,
+)
 
 drf_schema_view = drf_get_schema_view(title="SportySpots API")
 

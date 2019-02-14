@@ -18,7 +18,9 @@ def get_firebase_link(app_link, unguessable=True, **kwargs):
         "ofl": "https://www.sportyspots.com",
     }
     long_dynamic_link_args.update(kwargs)
-    long_dynamic_link_url = long_dynamic_link_base + urllib.parse.urlencode(long_dynamic_link_args)
+    long_dynamic_link_url = long_dynamic_link_base + urllib.parse.urlencode(
+        long_dynamic_link_args
+    )
     post_body = {
         "longDynamicLink": long_dynamic_link_url,
         "suffix": {"option": "UNGUESSABLE" if unguessable else "SHORT"},

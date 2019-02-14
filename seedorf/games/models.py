@@ -231,9 +231,20 @@ class Game(BasePropertiesModel):
     def get_app_link(self):
         image = self.spot.images.first()
         if image:
-            return get_firebase_link(f'games/{self.uuid}', unguessable=False, st=self.name, sd=self.description, si=image.image.url)
+            return get_firebase_link(
+                f"games/{self.uuid}",
+                unguessable=False,
+                st=self.name,
+                sd=self.description,
+                si=image.image.url,
+            )
         else:
-            return get_firebase_link(f'games/{self.uuid}', unguessable=False, st=self.name, sd=self.description)
+            return get_firebase_link(
+                f"games/{self.uuid}",
+                unguessable=False,
+                st=self.name,
+                sd=self.description,
+            )
 
     def send_organizer_confirmation_mail(self):
 
