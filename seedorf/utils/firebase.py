@@ -12,8 +12,8 @@ def get_firebase_link(app_link, unguessable=True, **kwargs):
     long_dynamic_link_args = {
         "link": f"https://app.sportyspots.com/{app_link}",
         "apn": "com.sportyspots.android",
-        "afl": "https://www.sportyspots.com",
         "ibi": "com.sportyspots.ios",
+        "afl": "https://www.sportyspots.com",
         "ifl": "https://www.sportyspots.com",
         "ofl": "https://www.sportyspots.com",
     }

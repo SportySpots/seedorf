@@ -30,7 +30,7 @@ def create_magic_link_view(request):
     return Response(_("Email sent"), status=status.HTTP_201_CREATED)
 
 
-@api_view(["GET"])
+@api_view(["POST", "GET"])
 @permission_classes((permissions.AllowAny,))
 def confirm_magic_link_view(request):
     token = request.data.get("token")
