@@ -172,6 +172,7 @@ class MagicLoginLink(BasePropertiesModel):
         null=False,
         max_length=32,
         verbose_name=_("Token"),
+        unique=True,
         default=random_string,
     )
 

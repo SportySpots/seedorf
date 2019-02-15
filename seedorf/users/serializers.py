@@ -178,8 +178,7 @@ class UserSerializer(serializers.ModelSerializer):
         model = User
         fields = (
             "uuid",
-            "first_name",
-            "last_name",
+            "name",
             "email",
             "is_staff",
             "is_active",
@@ -207,14 +206,13 @@ class GroupSerializer(serializers.ModelSerializer):
 
 
 class RegisterSerializer(serializers.Serializer):
-    first_name = serializers.CharField(required=True)
-    last_name = serializers.CharField(required=True)
+    name = serializers.CharField(required=False)
     email = serializers.EmailField(
         required=True,
         validators=[EmailValidator(), UniqueValidator(queryset=User.objects.all())],
     )
-    password1 = serializers.CharField(write_only=True)
-    password2 = serializers.CharField(write_only=True)
+    password1 = serializers.CharField(required=False, write_only=True)
+    password2 = serializers.CharField(required=False, write_only=True)
 
     @staticmethod
     def validate_email(email):
@@ -228,10 +226,13 @@ class RegisterSerializer(serializers.Serializer):
 
     @staticmethod
     def validate_password1(password):
-        return get_adapter().clean_password(password)
+        if password:
+            return get_adapter().clean_password(password)
+        # set a random password, if the password is empty
+        return User.objects.make_random_password()
 
     def validate(self, data):
-        if data["password1"] != data["password2"]:
+        if data.get("password1") != data.get("password2"):
             raise serializers.ValidationError(
                 _("The two password fields didn't match.")
             )
@@ -242,9 +243,9 @@ class RegisterSerializer(serializers.Serializer):
 
     def get_cleaned_data(self):
         return {
-            "first_name": self.validated_data.get("first_name", ""),
-            "last_name": self.validated_data.get("last_name", ""),
-            "username": self.validated_data.get("username", ""),
+            "name": self.validated_data.get("name", ""),
+            # Force email to be the username
+            "username": self.validated_data.get("email", ""),
             "password1": self.validated_data.get("password1", ""),
             "email": self.validated_data.get("email", ""),
         }

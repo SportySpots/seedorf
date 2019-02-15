@@ -396,17 +396,17 @@ LOGOUT_ON_PASSWORD_CHANGE = True
 # ------------------------------------------------------------------------------
 ACCOUNT_ADAPTER = "seedorf.users.adapters.AccountAdapter"
 ACCOUNT_AUTHENTICATED_LOGIN_REDIRECTS = False
-ACCOUNT_AUTHENTICATION_METHOD = "username_email"
+ACCOUNT_AUTHENTICATION_METHOD = "email"
 ACCOUNT_CONFIRM_EMAIL_ON_GET = True
 ACCOUNT_EMAIL_CONFIRMATION_ANONYMOUS_REDIRECT_URL = reverse_lazy(
-    "account_confirm_complete"
+    "account_confirm_status"
 )
 ACCOUNT_EMAIL_CONFIRMATION_AUTHENTICATED_REDIRECT_URL = reverse_lazy(
-    "account_confirm_complete"
+    "account_confirm_status"
 )
 ACCOUNT_EMAIL_CONFIRMATION_EXPIRE_DAYS = 3
 ACCOUNT_EMAIL_CONFIRMATION_HMAC = True
-ACCOUNT_EMAIL_REQUIRED = False
+ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_EMAIL_VERIFICATION = "optional"
 ACCOUNT_EMAIL_SUBJECT_PREFIX = "[SportySpots]"
 ACCOUNT_DEFAULT_HTTP_PROTOCOL = "https"

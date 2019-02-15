@@ -15,7 +15,7 @@ def registration_null_view(request):
 
 @api_view()
 @permission_classes((permissions.AllowAny,))
-def registration_complete_view(request):
+def registration_status_view(request):
     return Response(_("Email account is activated"))
 
 

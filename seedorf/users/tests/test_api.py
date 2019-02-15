@@ -6,26 +6,22 @@ from unittest.mock import patch
 
 from seedorf.sports.tests.factories import SportFactory
 from seedorf.spots.tests.factories import SpotFactory
-from seedorf.users.adapters import AccountAdapter
 from seedorf.users.models import User, UserProfile
+from seedorf.users.adapters import AccountAdapter
+
 from .factories import UserFactory, UserProfileFactory
 
 
 class UserRegistrationAPIViewTest(APITestCase):
     url = reverse("rest-auth-registration:rest_register")
 
-    def test_user_creation(self):
+    def test_user_creation_without_password(self):
 
-        user_data = {
-            "first_name": "test create first name",
-            "last_name": "test create last name",
-            "username": "test_create@example.com",
-            "email": "test_create@example.com",
-            "password1": "super_$secure_passw0rd",
-            "password2": "super_$secure_passw0rd",
-        }
+        user_data = {"name": "test create name", "email": "test_create@example.com"}
 
-        with patch.object(AccountAdapter, "send_confirmation_mail", return_value=None):
+        with patch.object(
+            AccountAdapter, "send_confirmation_mail", return_value=None
+        ), patch.object(AccountAdapter, "get_login_redirect_url", return_value=""):
             response = self.client.post(self.url, user_data)
             self.assertEqual(201, response.status_code)
             self.assertTrue("token" in response.data)
@@ -40,12 +36,63 @@ class UserRegistrationAPIViewTest(APITestCase):
             self.assertTrue(
                 {"user_id", "uuid", "email", "username", "exp"}.issubset(decoded_token)
             )
-            self.assertEqual(response_user["first_name"], user_data["first_name"])
-            self.assertEqual(response_user["last_name"], user_data["last_name"])
+            self.assertEqual(response_user["name"], user_data["name"])
 
             # Token has a the user with the right uuid
             self.assertEqual(decoded_token["uuid"], str(user.uuid))
             self.assertEqual(response_user["email"], user_data["email"])
+            self.assertEqual(user.username, user_data["email"])
+            self.assertFalse(response_user["is_staff"])
+            self.assertTrue(response_user["is_active"])
+            self.assertFalse(response_user["groups"])
+
+            # user profile
+            response_user_profile = response_user["profile"]
+            self.assertFalse(response_user_profile["sports"])
+            self.assertFalse(response_user_profile["spots"])
+            self.assertEqual(
+                response_user_profile["gender"], UserProfile.GENDER_NOT_SPECIFIED
+            )
+            self.assertIsNone(response_user_profile["year_of_birth"])
+            self.assertIsNone(response_user_profile["avatar"])
+            self.assertEqual(response_user_profile["language"], "en")
+            self.assertEqual(response_user_profile["timezone"], "Europe/Amsterdam")
+            self.assertEqual(response_user_profile["country"], "")
+            self.assertEqual(response_user_profile["bio"], "")
+
+    def test_user_creation_with_password(self):
+
+        user_data = {
+            "name": "test create name",
+            "email": "test_create@example.com",
+            "password1": "super_$secure_passw0rd",
+            "password2": "super_$secure_passw0rd",
+        }
+
+        with patch.object(
+            AccountAdapter, "send_confirmation_mail", return_value=None
+        ), patch.object(AccountAdapter, "get_login_redirect_url", return_value=""):
+
+            response = self.client.post(self.url, user_data)
+            self.assertEqual(201, response.status_code)
+            self.assertTrue("token" in response.data)
+
+            user = User.objects.get(email=user_data["email"])
+            decoded_token = jwt.decode(
+                response.data["token"], settings.SECRET_KEY, algorithms=["HS256"]
+            )
+            response_user = response.data["user"]
+
+            # Token contains the defined keys
+            self.assertTrue(
+                {"user_id", "uuid", "email", "username", "exp"}.issubset(decoded_token)
+            )
+            self.assertEqual(response_user["name"], user_data["name"])
+
+            # Token has a the user with the right uuid
+            self.assertEqual(decoded_token["uuid"], str(user.uuid))
+            self.assertEqual(response_user["email"], user_data["email"])
+            self.assertEqual(user.username, user_data["email"])
             self.assertFalse(response_user["is_staff"])
             self.assertTrue(response_user["is_active"])
             self.assertFalse(response_user["groups"])

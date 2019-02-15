@@ -22,7 +22,7 @@ class AccountAdapter(DefaultAccountAdapter):
 
         ctx = {
             "product_name": "SportySpots",
-            "first_name": emailconfirmation.email_address.user.first_name,
+            "first_name": emailconfirmation.email_address.user.name,
             "product_url": "https://www.sportyspots.com",
             "activate_url": activate_url,
             "support_email": "info@sportyspots.com",
@@ -51,6 +51,32 @@ class AccountAdapter(DefaultAccountAdapter):
     def get_login_redirect_url(self, request):
         token = jwt_encode(request.user)
         return get_firebase_link("login?token=" + token)
+
+    def save_user(self, request, user, form, commit=True):
+        """
+        Saves a new `User` instance using information provided in the
+        signup form.
+        """
+        from allauth.account.utils import user_username, user_email, user_field
+
+        data = form.cleaned_data
+        name = data.get("name")
+        email = data.get("email")
+        username = data.get("username")
+        user_email(user, email)
+        user_username(user, username)
+        if name:
+            user_field(user, "name", name)
+        if "password1" in data:
+            user.set_password(data["password1"])
+        else:
+            user.set_unusable_password()
+        self.populate_username(request, user)
+        if commit:
+            # Ability not to commit makes it easier to derive from
+            # this adapter by adding
+            user.save()
+        return user
 
 
 class SocialAccountAdapter(DefaultSocialAccountAdapter):

@@ -35,7 +35,7 @@ from seedorf.spots.viewsets import (
 from seedorf.users.views import (
     confirm_magic_link_view,
     create_magic_link_view,
-    registration_complete_view,
+    registration_status_view,
     registration_null_view,
 )
 from seedorf.users.viewsets import (
@@ -174,16 +174,18 @@ urlpatterns = [
     ),
     path(
         "api/auth/registration/status/",
-        registration_complete_view,
-        name="account_confirm_complete",
+        registration_status_view,
+        name="account_confirm_status",
     ),
     path(
-        "api/auth/create-magic-link/", create_magic_link_view, name="create_magic_link"
+        "api/auth/create-magic-link/",
+        create_magic_link_view,
+        name="account_create_magic_link",
     ),
     path(
         "api/auth/confirm-magic-link/",
         confirm_magic_link_view,
-        name="confirm_magic_link",
+        name="account_confirm_magic_link",
     ),
     re_path(
         r"^api/auth/password-reset/confirm/"
@@ -202,8 +204,6 @@ urlpatterns = [
         ),
     ),
     path("api/accounts/", include("allauth.urls")),
-    # url(r'^api/api-auth/', include('rest_framework.urls', namespace='rest_framework')),
-    # url(r'^api/api-token-auth/', obtain_jwt_token),
     # REST API
     path("api/", include(router.urls), name="api-core"),
     path("api/", include(users_router.urls), name="api-users"),
