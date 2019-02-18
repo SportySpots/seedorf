@@ -1053,11 +1053,10 @@
         },
         "wheel": {
             "hashes": [
-                "sha256:0a2e54558a0628f2145d2fc822137e322412115173e8a2ddbe1c9024338ae83c",
-                "sha256:80044e51ec5bbf6c894ba0bc48d26a8c20a9ba629f4ca19ea26ecfcf87685f5f"
+                "sha256:12363e6df5678ecf9daf8429f06f97e7106e701405898f24318ce7f0b79c611a",
+                "sha256:b79ffea026bc0dbd940868347ae9eee36789b6496b6623bd2dec7c7c540a8f99"
             ],
-            "index": "pypi",
-            "version": "==0.31.1"
+            "version": "==0.33.0"
         },
         "whitenoise": {
             "hashes": [
