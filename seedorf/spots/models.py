@@ -35,38 +35,17 @@ class Spot(BasePropertiesModel):
         on_delete=models.CASCADE,
         verbose_name=_("Address"),
     )
-    sports = models.ManyToManyField(
-        "sports.Sport", blank=True, related_name="spots", verbose_name=_("Sports")
-    )
+    sports = models.ManyToManyField("sports.Sport", blank=True, related_name="spots", verbose_name=_("Sports"))
 
     # Instance Fields
-    name = models.CharField(
-        blank=False, max_length=512, null=False, verbose_name=_("Name")
-    )
+    name = models.CharField(blank=False, max_length=512, null=False, verbose_name=_("Name"))
     slug = AutoSlugField(
-        blank=True,
-        editable=True,
-        max_length=512,
-        populate_from="name",
-        unique=True,
-        verbose_name=_("Slug"),
+        blank=True, editable=True, max_length=512, populate_from="name", unique=True, verbose_name=_("Slug")
     )
-    owner = models.CharField(
-        blank=True, default="", max_length=512, null=False, verbose_name=_("Owner")
-    )
-    description = models.TextField(
-        blank=True,
-        default="",
-        max_length=4096,
-        null=False,
-        verbose_name=_("Description"),
-    )
+    owner = models.CharField(blank=True, default="", max_length=512, null=False, verbose_name=_("Owner"))
+    description = models.TextField(blank=True, default="", max_length=4096, null=False, verbose_name=_("Description"))
     logo = models.ImageField(
-        blank=True,
-        max_length=512,
-        null=False,
-        upload_to=get_logo_upload_directory,
-        verbose_name=_("Logo"),
+        blank=True, max_length=512, null=False, upload_to=get_logo_upload_directory, verbose_name=_("Logo")
     )
     homepage_url = models.URLField(
         blank=True,
@@ -76,36 +55,23 @@ class Spot(BasePropertiesModel):
         verbose_name=_("Homepage URL"),
     )
     is_verified = models.BooleanField(
-        blank=False,
-        default=False,
-        help_text=_("Is this Spot verfified by the SportySpots team ?"),
-        null=False,
+        blank=False, default=False, help_text=_("Is this Spot verfified by the SportySpots team ?"), null=False
     )
     is_permanently_closed = models.BooleanField(
-        blank=False,
-        default=False,
-        help_text=_("Is this Spot permanently closed ?"),
-        null=False,
+        blank=False, default=False, help_text=_("Is this Spot permanently closed ?"), null=False
     )
-    is_public = models.BooleanField(
-        blank=False, default=True, help_text=_("Is this Spot a public spot ?")
-    )
+    is_public = models.BooleanField(blank=False, default=True, help_text=_("Is this Spot a public spot ?"))
     # TODO: We need a cron job to set temporary spots are permanently closed
     # TODO: We need to validate if the spot is temporary, then it must have a establishment date and closure date
     is_temporary = models.BooleanField(
-        blank=False,
-        default=False,
-        help_text=_("Is this spot temporary (e.g. for a special event) ?"),
-        null=False,
+        blank=False, default=False, help_text=_("Is this spot temporary (e.g. for a special event) ?"), null=False
     )
     establishment_date = models.DateField(blank=True, null=True)
     # NOTE: Closure date can be in the future, incase of temporary events
     closure_date = models.DateField(blank=True, null=True)
 
     # Generic Keys
-    reaction = GenericRelation(
-        "reactions.Reaction", related_query_name="spot_reactions"
-    )
+    reaction = GenericRelation("reactions.Reaction", related_query_name="spot_reactions")
 
     class Meta:
         verbose_name = _("Spot")
@@ -119,12 +85,7 @@ class Spot(BasePropertiesModel):
 class SpotImage(BasePropertiesModel):
     # Foreign Keys
     spot = models.ForeignKey(
-        "spots.Spot",
-        blank=False,
-        null=False,
-        on_delete=models.CASCADE,
-        related_name="images",
-        verbose_name=_("Spot"),
+        "spots.Spot", blank=False, null=False, on_delete=models.CASCADE, related_name="images", verbose_name=_("Spot")
     )
     sport = models.ForeignKey(
         "sports.Sport",
@@ -136,18 +97,12 @@ class SpotImage(BasePropertiesModel):
     )
 
     # Instance Fields
-    image = models.ImageField(
-        blank=False, max_length=512, null=False, upload_to=get_images_upload_directory
-    )
+    image = models.ImageField(blank=False, max_length=512, null=False, upload_to=get_images_upload_directory)
     is_flagged = models.BooleanField(
-        default=False,
-        editable=False,
-        help_text=_("Is this image marked as offensive/ non-relevant ?"),
+        default=False, editable=False, help_text=_("Is this image marked as offensive/ non-relevant ?")
     )
     is_user_submitted = models.BooleanField(
-        default=True,
-        editable=False,
-        help_text=_("Is this image submitted by the user ?"),
+        default=True, editable=False, help_text=_("Is this image submitted by the user ?")
     )
 
     class Meta:
@@ -258,9 +213,7 @@ class SpotAmenity(BasePropertiesModel):
     )
 
     # Instance Fields
-    data = JSONField(
-        validators=[AllowedKeysValidator(list(AMENITIES_TYPE_SCHEMA.keys()))]
-    )
+    data = JSONField(validators=[AllowedKeysValidator(list(AMENITIES_TYPE_SCHEMA.keys()))])
 
     class Meta:
         verbose_name = _("Spot Amenity")

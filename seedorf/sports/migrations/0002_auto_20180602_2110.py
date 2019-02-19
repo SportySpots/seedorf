@@ -12,10 +12,6 @@ class Migration(migrations.Migration):
     operations = [
         migrations.AlterModelOptions(
             name="sport",
-            options={
-                "ordering": ("-created_at",),
-                "verbose_name": "Sport",
-                "verbose_name_plural": "Sports",
-            },
+            options={"ordering": ("-created_at",), "verbose_name": "Sport", "verbose_name_plural": "Sports"},
         )
     ]

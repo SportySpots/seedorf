@@ -33,27 +33,18 @@ class Migration(migrations.Migration):
             ),
         ),
         migrations.AlterField(
-            model_name="spot",
-            name="name",
-            field=models.CharField(max_length=512, verbose_name="Name"),
+            model_name="spot", name="name", field=models.CharField(max_length=512, verbose_name="Name")
         ),
         migrations.AlterField(
             model_name="spot",
             name="owner",
-            field=models.CharField(
-                blank=True, default="", max_length=512, verbose_name="Owner"
-            ),
+            field=models.CharField(blank=True, default="", max_length=512, verbose_name="Owner"),
         ),
         migrations.AlterField(
             model_name="spot",
             name="slug",
             field=django_extensions.db.fields.AutoSlugField(
-                blank=True,
-                editable=False,
-                max_length=512,
-                populate_from="name",
-                unique=True,
-                verbose_name="Slug",
+                blank=True, editable=False, max_length=512, populate_from="name", unique=True, verbose_name="Slug"
             ),
         ),
     ]

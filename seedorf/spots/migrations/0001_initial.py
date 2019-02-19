@@ -23,67 +23,23 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name="Spot",
             fields=[
-                (
-                    "id",
-                    models.AutoField(
-                        auto_created=True,
-                        primary_key=True,
-                        serialize=False,
-                        verbose_name="ID",
-                    ),
-                ),
-                (
-                    "uuid",
-                    models.UUIDField(
-                        default=uuid.uuid4,
-                        editable=False,
-                        verbose_name="Unique Identifier",
-                    ),
-                ),
+                ("id", models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name="ID")),
+                ("uuid", models.UUIDField(default=uuid.uuid4, editable=False, verbose_name="Unique Identifier")),
                 (
                     "created_at",
-                    models.DateTimeField(
-                        default=django.utils.timezone.now,
-                        editable=False,
-                        verbose_name="Created At",
-                    ),
+                    models.DateTimeField(default=django.utils.timezone.now, editable=False, verbose_name="Created At"),
                 ),
-                (
-                    "modified_at",
-                    models.DateTimeField(auto_now=True, verbose_name="Modified At"),
-                ),
-                (
-                    "deleted_at",
-                    models.DateTimeField(
-                        blank=True, editable=False, null=True, verbose_name="Deleted At"
-                    ),
-                ),
+                ("modified_at", models.DateTimeField(auto_now=True, verbose_name="Modified At")),
+                ("deleted_at", models.DateTimeField(blank=True, editable=False, null=True, verbose_name="Deleted At")),
                 ("name", models.CharField(max_length=255, verbose_name="Name")),
                 (
                     "slug",
                     django_extensions.db.fields.AutoSlugField(
-                        blank=True,
-                        editable=False,
-                        populate_from="name",
-                        unique=True,
-                        verbose_name="Slug",
+                        blank=True, editable=False, populate_from="name", unique=True, verbose_name="Slug"
                     ),
                 ),
-                (
-                    "owner",
-                    models.CharField(
-                        blank=True, default="", max_length=255, verbose_name="Owner"
-                    ),
-                ),
-                (
-                    "description",
-                    models.TextField(
-                        blank=True,
-                        default="",
-                        max_length=4096,
-                        verbose_name="Description",
-                    ),
-                ),
+                ("owner", models.CharField(blank=True, default="", max_length=255, verbose_name="Owner")),
+                ("description", models.TextField(blank=True, default="", max_length=4096, verbose_name="Description")),
                 (
                     "logo",
                     models.ImageField(
@@ -104,29 +60,16 @@ class Migration(migrations.Migration):
                 ),
                 (
                     "is_verified",
-                    models.BooleanField(
-                        default=False,
-                        help_text="Is this Spot verfified by the SportySpots team ?",
-                    ),
+                    models.BooleanField(default=False, help_text="Is this Spot verfified by the SportySpots team ?"),
                 ),
                 (
                     "is_permanently_closed",
-                    models.BooleanField(
-                        default=False, help_text="Is this Spot permanently closed ?"
-                    ),
+                    models.BooleanField(default=False, help_text="Is this Spot permanently closed ?"),
                 ),
-                (
-                    "is_public",
-                    models.BooleanField(
-                        default=True, help_text="Is this Spot a public spot ?"
-                    ),
-                ),
+                ("is_public", models.BooleanField(default=True, help_text="Is this Spot a public spot ?")),
                 (
                     "is_temporary",
-                    models.BooleanField(
-                        default=False,
-                        help_text="Is this spot temporary (e.g. for a special event) ?",
-                    ),
+                    models.BooleanField(default=False, help_text="Is this spot temporary (e.g. for a special event) ?"),
                 ),
                 ("establishment_date", models.DateField(blank=True, null=True)),
                 ("closure_date", models.DateField(blank=True, null=True)),
@@ -141,57 +84,21 @@ class Migration(migrations.Migration):
                         verbose_name="Address",
                     ),
                 ),
-                (
-                    "sports",
-                    models.ManyToManyField(
-                        related_name="spots", to="sports.Sport", verbose_name="Sports"
-                    ),
-                ),
+                ("sports", models.ManyToManyField(related_name="spots", to="sports.Sport", verbose_name="Sports")),
             ],
-            options={
-                "verbose_name": "Spot",
-                "verbose_name_plural": "Spots",
-                "ordering": ("-created_at",),
-            },
+            options={"verbose_name": "Spot", "verbose_name_plural": "Spots", "ordering": ("-created_at",)},
         ),
         migrations.CreateModel(
             name="SpotAmenity",
             fields=[
-                (
-                    "id",
-                    models.AutoField(
-                        auto_created=True,
-                        primary_key=True,
-                        serialize=False,
-                        verbose_name="ID",
-                    ),
-                ),
-                (
-                    "uuid",
-                    models.UUIDField(
-                        default=uuid.uuid4,
-                        editable=False,
-                        verbose_name="Unique Identifier",
-                    ),
-                ),
+                ("id", models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name="ID")),
+                ("uuid", models.UUIDField(default=uuid.uuid4, editable=False, verbose_name="Unique Identifier")),
                 (
                     "created_at",
-                    models.DateTimeField(
-                        default=django.utils.timezone.now,
-                        editable=False,
-                        verbose_name="Created At",
-                    ),
+                    models.DateTimeField(default=django.utils.timezone.now, editable=False, verbose_name="Created At"),
                 ),
-                (
-                    "modified_at",
-                    models.DateTimeField(auto_now=True, verbose_name="Modified At"),
-                ),
-                (
-                    "deleted_at",
-                    models.DateTimeField(
-                        blank=True, editable=False, null=True, verbose_name="Deleted At"
-                    ),
-                ),
+                ("modified_at", models.DateTimeField(auto_now=True, verbose_name="Modified At")),
+                ("deleted_at", models.DateTimeField(blank=True, editable=False, null=True, verbose_name="Deleted At")),
                 (
                     "data",
                     django.contrib.postgres.fields.jsonb.JSONField(
@@ -238,69 +145,30 @@ class Migration(migrations.Migration):
                     ),
                 ),
             ],
-            options={
-                "verbose_name": "Spot Amenity",
-                "verbose_name_plural": "Spot Amenities",
-            },
+            options={"verbose_name": "Spot Amenity", "verbose_name_plural": "Spot Amenities"},
         ),
         migrations.CreateModel(
             name="SpotImage",
             fields=[
-                (
-                    "id",
-                    models.AutoField(
-                        auto_created=True,
-                        primary_key=True,
-                        serialize=False,
-                        verbose_name="ID",
-                    ),
-                ),
-                (
-                    "uuid",
-                    models.UUIDField(
-                        default=uuid.uuid4,
-                        editable=False,
-                        verbose_name="Unique Identifier",
-                    ),
-                ),
+                ("id", models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name="ID")),
+                ("uuid", models.UUIDField(default=uuid.uuid4, editable=False, verbose_name="Unique Identifier")),
                 (
                     "created_at",
-                    models.DateTimeField(
-                        default=django.utils.timezone.now,
-                        editable=False,
-                        verbose_name="Created At",
-                    ),
+                    models.DateTimeField(default=django.utils.timezone.now, editable=False, verbose_name="Created At"),
                 ),
-                (
-                    "modified_at",
-                    models.DateTimeField(auto_now=True, verbose_name="Modified At"),
-                ),
-                (
-                    "deleted_at",
-                    models.DateTimeField(
-                        blank=True, editable=False, null=True, verbose_name="Deleted At"
-                    ),
-                ),
-                (
-                    "image",
-                    models.ImageField(
-                        upload_to=seedorf.spots.models.get_images_upload_directory
-                    ),
-                ),
+                ("modified_at", models.DateTimeField(auto_now=True, verbose_name="Modified At")),
+                ("deleted_at", models.DateTimeField(blank=True, editable=False, null=True, verbose_name="Deleted At")),
+                ("image", models.ImageField(upload_to=seedorf.spots.models.get_images_upload_directory)),
                 (
                     "is_flagged",
                     models.BooleanField(
-                        default=False,
-                        editable=False,
-                        help_text="Is this image marked as offensive/ non-relevant ?",
+                        default=False, editable=False, help_text="Is this image marked as offensive/ non-relevant ?"
                     ),
                 ),
                 (
                     "is_user_submitted",
                     models.BooleanField(
-                        default=True,
-                        editable=False,
-                        help_text="Is this image submitted by the user ?",
+                        default=True, editable=False, help_text="Is this image submitted by the user ?"
                     ),
                 ),
                 (
@@ -322,50 +190,19 @@ class Migration(migrations.Migration):
                     ),
                 ),
             ],
-            options={
-                "verbose_name": "Spot Image",
-                "verbose_name_plural": "Spot Images",
-                "ordering": ("-created_at",),
-            },
+            options={"verbose_name": "Spot Image", "verbose_name_plural": "Spot Images", "ordering": ("-created_at",)},
         ),
         migrations.CreateModel(
             name="SpotOpeningTime",
             fields=[
-                (
-                    "id",
-                    models.AutoField(
-                        auto_created=True,
-                        primary_key=True,
-                        serialize=False,
-                        verbose_name="ID",
-                    ),
-                ),
-                (
-                    "uuid",
-                    models.UUIDField(
-                        default=uuid.uuid4,
-                        editable=False,
-                        verbose_name="Unique Identifier",
-                    ),
-                ),
+                ("id", models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name="ID")),
+                ("uuid", models.UUIDField(default=uuid.uuid4, editable=False, verbose_name="Unique Identifier")),
                 (
                     "created_at",
-                    models.DateTimeField(
-                        default=django.utils.timezone.now,
-                        editable=False,
-                        verbose_name="Created At",
-                    ),
+                    models.DateTimeField(default=django.utils.timezone.now, editable=False, verbose_name="Created At"),
                 ),
-                (
-                    "modified_at",
-                    models.DateTimeField(auto_now=True, verbose_name="Modified At"),
-                ),
-                (
-                    "deleted_at",
-                    models.DateTimeField(
-                        blank=True, editable=False, null=True, verbose_name="Deleted At"
-                    ),
-                ),
+                ("modified_at", models.DateTimeField(auto_now=True, verbose_name="Modified At")),
+                ("deleted_at", models.DateTimeField(blank=True, editable=False, null=True, verbose_name="Deleted At")),
                 (
                     "day",
                     models.CharField(
@@ -382,10 +219,7 @@ class Migration(migrations.Migration):
                     ),
                 ),
                 ("start_time", models.TimeField(default=datetime.time(0, 0))),
-                (
-                    "end_time",
-                    models.TimeField(default=datetime.time(23, 59, 59, 999999)),
-                ),
+                ("end_time", models.TimeField(default=datetime.time(23, 59, 59, 999999))),
                 ("is_closed", models.BooleanField(default=False)),
                 (
                     "sport",
@@ -406,9 +240,6 @@ class Migration(migrations.Migration):
                     ),
                 ),
             ],
-            options={
-                "verbose_name": "Spot Opening Time",
-                "verbose_name_plural": "Spot Opening Times",
-            },
+            options={"verbose_name": "Spot Opening Time", "verbose_name_plural": "Spot Opening Times"},
         ),
     ]

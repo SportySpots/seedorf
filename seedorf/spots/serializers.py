@@ -28,15 +28,7 @@ class AmenitySerializer(serializers.ModelSerializer):
 class OpeningTimeSerializer(serializers.ModelSerializer):
     class Meta:
         model = SpotOpeningTime
-        fields = (
-            "uuid",
-            "day",
-            "start_time",
-            "end_time",
-            "is_closed",
-            "created_at",
-            "modified_at",
-        )
+        fields = ("uuid", "day", "start_time", "end_time", "is_closed", "created_at", "modified_at")
         read_only_fields = ("uuid", "created_at", "modified_at")
 
     def create(self, validated_data):
@@ -46,9 +38,7 @@ class OpeningTimeSerializer(serializers.ModelSerializer):
         spot = Spot.objects.get(uuid=spot_uuid)
         sport = Sport.objects.get(uuid=sport_uuid)
 
-        opening_time = SpotOpeningTime.objects.create(
-            spot=spot, sport=sport, **validated_data
-        )
+        opening_time = SpotOpeningTime.objects.create(spot=spot, sport=sport, **validated_data)
 
         return opening_time
 
@@ -56,14 +46,7 @@ class OpeningTimeSerializer(serializers.ModelSerializer):
 class ImageSerializer(serializers.ModelSerializer):
     class Meta:
         model = SpotImage
-        fields = (
-            "uuid",
-            "image",
-            "is_flagged",
-            "is_user_submitted",
-            "created_at",
-            "modified_at",
-        )
+        fields = ("uuid", "image", "is_flagged", "is_user_submitted", "created_at", "modified_at")
         read_only_fields = ("uuid", "created_at", "modified_at")
 
     def create(self, validated_data):
@@ -135,22 +118,16 @@ class SpotSportNestedSerializer(serializers.ModelSerializer):
     def get_images(self, obj):
         spot_uuid = self.get_spot_uuid(self.context)
         images = SpotImage.objects.filter(sport__uuid=obj.uuid, spot__uuid=spot_uuid)
-        return ImageSerializer(
-            images, many=True, context={"request": self.context["request"]}
-        ).data
+        return ImageSerializer(images, many=True, context={"request": self.context["request"]}).data
 
     def get_opening_times(self, obj):
         spot_uuid = self.get_spot_uuid(self.context)
-        opening_times = SpotOpeningTime.objects.filter(
-            sport__uuid=obj.uuid, spot__uuid=spot_uuid
-        )
+        opening_times = SpotOpeningTime.objects.filter(sport__uuid=obj.uuid, spot__uuid=spot_uuid)
         return OpeningTimeSerializer(opening_times, many=True).data
 
     def get_amenities(self, obj):
         spot_uuid = self.get_spot_uuid(self.context)
-        amenities = SpotAmenity.objects.filter(
-            sport__uuid=obj.uuid, spot__uuid=spot_uuid
-        )
+        amenities = SpotAmenity.objects.filter(sport__uuid=obj.uuid, spot__uuid=spot_uuid)
         return AmenitySerializer(amenities, many=True).data
 
 
@@ -199,6 +176,4 @@ class SpotSerializer(serializers.ModelSerializer):
         if obj.address is None:
             return None
         else:
-            return AddressSerializer(
-                obj.address, many=False, read_only=True, context=self.context
-            ).data
+            return AddressSerializer(obj.address, many=False, read_only=True, context=self.context).data

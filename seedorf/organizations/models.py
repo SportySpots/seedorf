@@ -6,9 +6,7 @@ from seedorf.utils.models import BasePropertiesModel
 
 
 class Organization(BasePropertiesModel):
-    name = models.CharField(
-        blank=False, max_length=255, null=False, verbose_name=_("Name")
-    )
+    name = models.CharField(blank=False, max_length=255, null=False, verbose_name=_("Name"))
     homepage_url = models.URLField(
         blank=True,
         help_text=_("Where can we find out more about this organization ?"),
@@ -17,9 +15,7 @@ class Organization(BasePropertiesModel):
         verbose_name=_("Homepage URL"),
     )
     members = models.ManyToManyField(
-        settings.AUTH_USER_MODEL,
-        through="Membership",
-        through_fields=("organization", settings.AUTH_USER_MODEL),
+        settings.AUTH_USER_MODEL, through="Membership", through_fields=("organization", settings.AUTH_USER_MODEL)
     )
 
     class Meta:

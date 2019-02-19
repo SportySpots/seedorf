@@ -12,10 +12,6 @@ class Migration(migrations.Migration):
     operations = [
         migrations.AlterModelOptions(
             name="address",
-            options={
-                "ordering": ("-created_at",),
-                "verbose_name": "Address",
-                "verbose_name_plural": "Addresses",
-            },
+            options={"ordering": ("-created_at",), "verbose_name": "Address", "verbose_name_plural": "Addresses"},
         )
     ]

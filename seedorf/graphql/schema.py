@@ -8,9 +8,7 @@ from seedorf.spots.schema import Query as SpotsQuery
 from seedorf.users.schema import Query as UsersQuery
 
 
-class Query(
-    LocationsQuery, SportsQuery, SpotsQuery, GamesQuery, UsersQuery, graphene.ObjectType
-):
+class Query(LocationsQuery, SportsQuery, SpotsQuery, GamesQuery, UsersQuery, graphene.ObjectType):
     debug = graphene.Field(DjangoDebug, name="debug")
 
 

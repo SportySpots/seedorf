@@ -73,11 +73,7 @@ class SpotAPIViewTest(APITestCase):
     def test_spot_update(self):
         spot = SpotFactory(name="spot-1")
         url = reverse("spot-detail", kwargs={"uuid": str(spot.uuid)})
-        data = {
-            "name": "spot-2",
-            "owner": "test owner",
-            "description": "test description",
-        }
+        data = {"name": "spot-2", "owner": "test owner", "description": "test description"}
         response = self.client.put(url, data, format="json")
         self.assertEqual(200, response.status_code)
         self.assertEqual(response.data["name"], "spot-2")
@@ -99,10 +95,7 @@ class SpotAPIViewTest(APITestCase):
     def test_address_update(self):
         address = AddressFactory(raw_address="1234 Amsterdam")
         spot = SpotFactory(address=address)
-        url = reverse(
-            "spot-address-detail",
-            kwargs={"spot_uuid": str(spot.uuid), "uuid": str(address.uuid)},
-        )
+        url = reverse("spot-address-detail", kwargs={"spot_uuid": str(spot.uuid), "uuid": str(address.uuid)})
         data = {"raw_address": "4321 Amsterdam"}
         response = self.client.put(url, data, format="json")
         self.assertEqual(200, response.status_code)
@@ -126,10 +119,7 @@ class SpotAPIViewTest(APITestCase):
 
         url = reverse(
             "spot-sport-images-list",
-            kwargs={
-                "sport_uuid": str(str(spot.sports.all()[0].uuid)),
-                "spot_uuid": str(spot.uuid),
-            },
+            kwargs={"sport_uuid": str(str(spot.sports.all()[0].uuid)), "spot_uuid": str(spot.uuid)},
         )
 
         with open(tmp_file.name, "rb") as photo:

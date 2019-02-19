@@ -14,20 +14,14 @@ class Migration(migrations.Migration):
             model_name="userprofile",
             name="sports",
             field=models.ManyToManyField(
-                blank=True,
-                related_name="followers",
-                to="sports.Sport",
-                verbose_name="Favourite Sports",
+                blank=True, related_name="followers", to="sports.Sport", verbose_name="Favourite Sports"
             ),
         ),
         migrations.AlterField(
             model_name="userprofile",
             name="spots",
             field=models.ManyToManyField(
-                blank=True,
-                related_name="followers",
-                to="spots.Spot",
-                verbose_name="Favourite Spots",
+                blank=True, related_name="followers", to="spots.Spot", verbose_name="Favourite Spots"
             ),
         ),
     ]

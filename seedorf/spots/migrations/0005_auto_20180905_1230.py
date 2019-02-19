@@ -13,11 +13,6 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name="spot",
             name="sports",
-            field=models.ManyToManyField(
-                blank=True,
-                related_name="spots",
-                to="sports.Sport",
-                verbose_name="Sports",
-            ),
+            field=models.ManyToManyField(blank=True, related_name="spots", to="sports.Sport", verbose_name="Sports"),
         )
     ]

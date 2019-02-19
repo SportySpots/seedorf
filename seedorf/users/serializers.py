@@ -37,22 +37,8 @@ class UserSportNestedSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Sport
-        fields = (
-            "uuid",
-            "category",
-            "name",
-            "description",
-            "created_at",
-            "modified_at",
-        )
-        read_only_fields = (
-            "uuid",
-            "category",
-            "name",
-            "description",
-            "created_at",
-            "modified_at",
-        )
+        fields = ("uuid", "category", "name", "description", "created_at", "modified_at")
+        read_only_fields = ("uuid", "category", "name", "description", "created_at", "modified_at")
 
     def create(self, validated_data):
         if self.context["view"].basename == "user-sport":
@@ -188,15 +174,7 @@ class UserSerializer(serializers.ModelSerializer):
             "modified_at",
             "groups",
         )
-        read_only_fields = (
-            "uuid",
-            "is_staff",
-            "is_active",
-            "date_joined",
-            "created_at",
-            "modified_at",
-            "groups",
-        )
+        read_only_fields = ("uuid", "is_staff", "is_active", "date_joined", "created_at", "modified_at", "groups")
 
 
 class GroupSerializer(serializers.ModelSerializer):
@@ -208,8 +186,7 @@ class GroupSerializer(serializers.ModelSerializer):
 class RegisterSerializer(serializers.Serializer):
     name = serializers.CharField(required=False)
     email = serializers.EmailField(
-        required=True,
-        validators=[EmailValidator(), UniqueValidator(queryset=User.objects.all())],
+        required=True, validators=[EmailValidator(), UniqueValidator(queryset=User.objects.all())]
     )
     password1 = serializers.CharField(required=False, write_only=True)
     password2 = serializers.CharField(required=False, write_only=True)
@@ -219,9 +196,7 @@ class RegisterSerializer(serializers.Serializer):
         email = get_adapter().clean_email(email)
         if allauth_settings.UNIQUE_EMAIL:
             if email and email_address_exists(email):
-                raise serializers.ValidationError(
-                    _("A user is already registered with this e-mail address.")
-                )
+                raise serializers.ValidationError(_("A user is already registered with this e-mail address."))
         return email
 
     @staticmethod
@@ -233,9 +208,7 @@ class RegisterSerializer(serializers.Serializer):
 
     def validate(self, data):
         if data.get("password1") != data.get("password2"):
-            raise serializers.ValidationError(
-                _("The two password fields didn't match.")
-            )
+            raise serializers.ValidationError(_("The two password fields didn't match."))
         return data
 
     def custom_signup(self, request, user):

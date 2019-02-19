@@ -27,9 +27,7 @@ class GameFactory(factory.django.DjangoModelFactory):
 
     # by default the game is created in the future
     rsvp_open_time = factory.LazyAttribute(lambda o: o.now + timedelta(days=2, hours=2))
-    rsvp_close_time = factory.LazyAttribute(
-        lambda o: o.now + timedelta(days=2, hours=4)
-    )
+    rsvp_close_time = factory.LazyAttribute(lambda o: o.now + timedelta(days=2, hours=4))
     start_time = factory.LazyAttribute(lambda o: o.now + timedelta(days=4, hours=2))
     end_time = factory.LazyAttribute(lambda o: o.now + timedelta(days=4, hours=4))
 
@@ -39,18 +37,10 @@ class GameFactory(factory.django.DjangoModelFactory):
 
     class Params:
         past = factory.Trait(
-            rsvp_open_time=factory.LazyAttribute(
-                lambda o: o.now - timedelta(days=4, hours=4)
-            ),
-            rsvp_close_time=factory.LazyAttribute(
-                lambda o: o.now - timedelta(days=4, hours=2)
-            ),
-            start_time=factory.LazyAttribute(
-                lambda o: o.now - timedelta(days=2, hours=4)
-            ),
-            end_time=factory.LazyAttribute(
-                lambda o: o.now - timedelta(days=2, hours=2)
-            ),
+            rsvp_open_time=factory.LazyAttribute(lambda o: o.now - timedelta(days=4, hours=4)),
+            rsvp_close_time=factory.LazyAttribute(lambda o: o.now - timedelta(days=4, hours=2)),
+            start_time=factory.LazyAttribute(lambda o: o.now - timedelta(days=2, hours=4)),
+            end_time=factory.LazyAttribute(lambda o: o.now - timedelta(days=2, hours=2)),
         )
 
 

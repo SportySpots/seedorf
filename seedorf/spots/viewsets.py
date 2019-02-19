@@ -11,12 +11,7 @@ from seedorf.utils.permissions import IsAdminOrReadOnly
 from seedorf.utils.regex import UUID as REGEX_UUID
 from .filters import SpotFilter
 from .models import Spot, SpotAmenity, SpotImage, SpotOpeningTime
-from .serializers import (
-    AmenitySerializer,
-    ImageSerializer,
-    OpeningTimeSerializer,
-    SpotSerializer,
-)
+from .serializers import AmenitySerializer, ImageSerializer, OpeningTimeSerializer, SpotSerializer
 
 
 class SpotViewSet(viewsets.ModelViewSet):
@@ -65,9 +60,7 @@ class SpotSportOpeningTimesNestedViewSet(viewsets.ModelViewSet):
     def get_queryset(self):
         spot_uuid = self.kwargs["spot_uuid"]
         sport_uuid = self.kwargs["sport_uuid"]
-        return SpotOpeningTime.objects.filter(
-            spot__uuid=spot_uuid, sport__uuid=sport_uuid
-        )
+        return SpotOpeningTime.objects.filter(spot__uuid=spot_uuid, sport__uuid=sport_uuid)
 
 
 class SpotSportAmenitesNestedViewSet(viewsets.ModelViewSet):

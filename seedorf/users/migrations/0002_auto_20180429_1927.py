@@ -14,51 +14,20 @@ import uuid
 
 class Migration(migrations.Migration):
 
-    dependencies = [
-        ("sports", "0001_initial"),
-        ("spots", "0001_initial"),
-        ("users", "0001_initial"),
-    ]
+    dependencies = [("sports", "0001_initial"), ("spots", "0001_initial"), ("users", "0001_initial")]
 
     operations = [
         migrations.CreateModel(
             name="UserProfile",
             fields=[
-                (
-                    "id",
-                    models.AutoField(
-                        auto_created=True,
-                        primary_key=True,
-                        serialize=False,
-                        verbose_name="ID",
-                    ),
-                ),
-                (
-                    "uuid",
-                    models.UUIDField(
-                        default=uuid.uuid4,
-                        editable=False,
-                        verbose_name="Unique Identifier",
-                    ),
-                ),
+                ("id", models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name="ID")),
+                ("uuid", models.UUIDField(default=uuid.uuid4, editable=False, verbose_name="Unique Identifier")),
                 (
                     "created_at",
-                    models.DateTimeField(
-                        default=django.utils.timezone.now,
-                        editable=False,
-                        verbose_name="Created At",
-                    ),
+                    models.DateTimeField(default=django.utils.timezone.now, editable=False, verbose_name="Created At"),
                 ),
-                (
-                    "modified_at",
-                    models.DateTimeField(auto_now=True, verbose_name="Modified At"),
-                ),
-                (
-                    "deleted_at",
-                    models.DateTimeField(
-                        blank=True, editable=False, null=True, verbose_name="Deleted At"
-                    ),
-                ),
+                ("modified_at", models.DateTimeField(auto_now=True, verbose_name="Modified At")),
+                ("deleted_at", models.DateTimeField(blank=True, editable=False, null=True, verbose_name="Deleted At")),
                 (
                     "gender",
                     models.CharField(
@@ -102,34 +71,18 @@ class Migration(migrations.Migration):
                         verbose_name="Languages",
                     ),
                 ),
-                (
-                    "timezone",
-                    timezone_field.fields.TimeZoneField(
-                        default="Europe/Amsterdam", verbose_name="Timezone"
-                    ),
-                ),
-                (
-                    "country",
-                    django_countries.fields.CountryField(
-                        blank=True, max_length=2, verbose_name="Country"
-                    ),
-                ),
+                ("timezone", timezone_field.fields.TimeZoneField(default="Europe/Amsterdam", verbose_name="Timezone")),
+                ("country", django_countries.fields.CountryField(blank=True, max_length=2, verbose_name="Country")),
                 ("bio", models.TextField(blank=True, default="", verbose_name="Bio")),
                 (
                     "sports",
                     models.ManyToManyField(
-                        related_name="followers",
-                        to="sports.Sport",
-                        verbose_name="Favourite Sports",
+                        related_name="followers", to="sports.Sport", verbose_name="Favourite Sports"
                     ),
                 ),
                 (
                     "spots",
-                    models.ManyToManyField(
-                        related_name="followers",
-                        to="spots.Spot",
-                        verbose_name="Favourite Spots",
-                    ),
+                    models.ManyToManyField(related_name="followers", to="spots.Spot", verbose_name="Favourite Spots"),
                 ),
             ],
             options={"abstract": False},
@@ -137,37 +90,25 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name="user",
             name="created_at",
-            field=models.DateTimeField(
-                default=django.utils.timezone.now,
-                editable=False,
-                verbose_name="Created At",
-            ),
+            field=models.DateTimeField(default=django.utils.timezone.now, editable=False, verbose_name="Created At"),
         ),
         migrations.AddField(
             model_name="user",
             name="deleted_at",
-            field=models.DateTimeField(
-                blank=True, editable=False, null=True, verbose_name="Deleted At"
-            ),
+            field=models.DateTimeField(blank=True, editable=False, null=True, verbose_name="Deleted At"),
         ),
         migrations.AddField(
-            model_name="user",
-            name="modified_at",
-            field=models.DateTimeField(auto_now=True, verbose_name="Modified At"),
+            model_name="user", name="modified_at", field=models.DateTimeField(auto_now=True, verbose_name="Modified At")
         ),
         migrations.AddField(
             model_name="user",
             name="uuid",
-            field=models.UUIDField(
-                default=uuid.uuid4, editable=False, verbose_name="Unique Identifier"
-            ),
+            field=models.UUIDField(default=uuid.uuid4, editable=False, verbose_name="Unique Identifier"),
         ),
         migrations.AlterField(
             model_name="user",
             name="name",
-            field=models.CharField(
-                blank=True, default="", max_length=255, verbose_name="Name of User"
-            ),
+            field=models.CharField(blank=True, default="", max_length=255, verbose_name="Name of User"),
         ),
         migrations.AddField(
             model_name="userprofile",

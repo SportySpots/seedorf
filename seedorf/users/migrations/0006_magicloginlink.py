@@ -16,48 +16,17 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name="MagicLoginLink",
             fields=[
-                (
-                    "id",
-                    models.AutoField(
-                        auto_created=True,
-                        primary_key=True,
-                        serialize=False,
-                        verbose_name="ID",
-                    ),
-                ),
-                (
-                    "uuid",
-                    models.UUIDField(
-                        default=uuid.uuid4,
-                        editable=False,
-                        verbose_name="Unique Identifier",
-                    ),
-                ),
+                ("id", models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name="ID")),
+                ("uuid", models.UUIDField(default=uuid.uuid4, editable=False, verbose_name="Unique Identifier")),
                 (
                     "created_at",
-                    models.DateTimeField(
-                        default=django.utils.timezone.now,
-                        editable=False,
-                        verbose_name="Created At",
-                    ),
+                    models.DateTimeField(default=django.utils.timezone.now, editable=False, verbose_name="Created At"),
                 ),
-                (
-                    "modified_at",
-                    models.DateTimeField(auto_now=True, verbose_name="Modified At"),
-                ),
-                (
-                    "deleted_at",
-                    models.DateTimeField(
-                        blank=True, editable=False, null=True, verbose_name="Deleted At"
-                    ),
-                ),
+                ("modified_at", models.DateTimeField(auto_now=True, verbose_name="Modified At")),
+                ("deleted_at", models.DateTimeField(blank=True, editable=False, null=True, verbose_name="Deleted At")),
                 (
                     "token",
-                    models.CharField(
-                        default=seedorf.users.models.random_string,
-                        max_length=32,
-                        verbose_name="Token",
-                    ),
+                    models.CharField(default=seedorf.users.models.random_string, max_length=32, verbose_name="Token"),
                 ),
                 ("short_link", models.CharField(max_length=50, verbose_name="Link")),
                 (

@@ -9,8 +9,4 @@ class Migration(migrations.Migration):
 
     dependencies = [("reactions", "0001_initial")]
 
-    operations = [
-        migrations.AlterModelOptions(
-            name="reaction", options={"ordering": ("-created_at",)}
-        )
-    ]
+    operations = [migrations.AlterModelOptions(name="reaction", options={"ordering": ("-created_at",)})]

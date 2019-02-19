@@ -30,13 +30,7 @@ def min_value_year_of_birth(value):
 
 class User(AbstractUser, BasePropertiesModel):
 
-    name = models.CharField(
-        blank=True,
-        default="",
-        max_length=255,
-        null=False,
-        verbose_name=_("Name of User"),
-    )
+    name = models.CharField(blank=True, default="", max_length=255, null=False, verbose_name=_("Name of User"))
 
     def __str__(self):
         return f"{self.email}"
@@ -84,26 +78,15 @@ class UserProfile(BasePropertiesModel):
     )
 
     sports = models.ManyToManyField(
-        "sports.Sport",
-        blank=True,
-        related_name="followers",
-        verbose_name=_("Favourite Sports"),
+        "sports.Sport", blank=True, related_name="followers", verbose_name=_("Favourite Sports")
     )
 
     spots = models.ManyToManyField(
-        "spots.Spot",
-        blank=True,
-        related_name="followers",
-        verbose_name=_("Favourite Spots"),
+        "spots.Spot", blank=True, related_name="followers", verbose_name=_("Favourite Spots")
     )
 
     gender = models.CharField(
-        blank=False,
-        choices=GENDERS,
-        default=GENDER_NOT_SPECIFIED,
-        max_length=25,
-        null=False,
-        verbose_name=_("Gender"),
+        blank=False, choices=GENDERS, default=GENDER_NOT_SPECIFIED, max_length=25, null=False, verbose_name=_("Gender")
     )
 
     year_of_birth = models.PositiveSmallIntegerField(
@@ -114,24 +97,14 @@ class UserProfile(BasePropertiesModel):
     )
 
     avatar = models.ImageField(
-        blank=True,
-        null=True,
-        upload_to=get_avatar_upload_directory,
-        verbose_name=_("Avatar Image"),
+        blank=True, null=True, upload_to=get_avatar_upload_directory, verbose_name=_("Avatar Image")
     )
 
     language = models.CharField(
-        blank=False,
-        choices=settings.LANGUAGES,
-        default="en",
-        max_length=25,
-        null=False,
-        verbose_name=_("Languages"),
+        blank=False, choices=settings.LANGUAGES, default="en", max_length=25, null=False, verbose_name=_("Languages")
     )
 
-    timezone = TimeZoneField(
-        blank=False, default="Europe/Amsterdam", null=False, verbose_name=_("Timezone")
-    )
+    timezone = TimeZoneField(blank=False, default="Europe/Amsterdam", null=False, verbose_name=_("Timezone"))
 
     country = CountryField(blank=True, null=False, verbose_name=_("Country"))
 
@@ -168,17 +141,10 @@ class MagicLoginLink(BasePropertiesModel):
     )
 
     token = models.CharField(
-        blank=False,
-        null=False,
-        max_length=32,
-        verbose_name=_("Token"),
-        unique=True,
-        default=random_string,
+        blank=False, null=False, max_length=32, verbose_name=_("Token"), unique=True, default=random_string
     )
 
-    short_link = models.CharField(
-        blank=False, null=False, max_length=50, verbose_name=_("Link")
-    )
+    short_link = models.CharField(blank=False, null=False, max_length=50, verbose_name=_("Link"))
 
     def set_short_link(self):
         self.short_link = get_firebase_link(f"magic_link_login?token={self.token}")

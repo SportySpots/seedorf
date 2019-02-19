@@ -19,11 +19,7 @@ from rest_framework_nested import routers
 from seedorf.core.views import apple_app_site_association
 from seedorf.games.viewsets import GameRsvpStatusNestedViewset, GameViewSet
 from seedorf.graphql.schema import schema
-from seedorf.sports.viewsets import (
-    GameSportNestedViewSet,
-    SportViewSet,
-    SpotSportsNestedViewSet,
-)
+from seedorf.sports.viewsets import GameSportNestedViewSet, SportViewSet, SpotSportsNestedViewSet
 from seedorf.spots.viewsets import (
     GameSpotNestedViewSet,
     SpotAddressNestedViewSet,
@@ -80,19 +76,13 @@ users_router = routers.NestedDefaultRouter(router, r"users", lookup="user")
 # /api/users/<uuid>/profile
 users_router.register(r"profile", UserProfileNestedViewSet, base_name="user-profile")
 
-users_profile_router = routers.NestedDefaultRouter(
-    users_router, r"profile", lookup="profile"
-)
+users_profile_router = routers.NestedDefaultRouter(users_router, r"profile", lookup="profile")
 
 # /api/users/<uuid>/profile/<uuid>/sports/
-users_profile_router.register(
-    r"sports", UserProfileSportNestedViewSet, base_name="user-profile-sports"
-)
+users_profile_router.register(r"sports", UserProfileSportNestedViewSet, base_name="user-profile-sports")
 
 # /api/users/<uuid>/profile/<uuid>/spots/
-users_profile_router.register(
-    r"spots", UserProfileSpotNestedViewSet, base_name="user-profile-spots"
-)
+users_profile_router.register(r"spots", UserProfileSpotNestedViewSet, base_name="user-profile-spots")
 
 # Spots urls
 
@@ -107,33 +97,21 @@ spots_router.register(r"address", SpotAddressNestedViewSet, base_name="spot-addr
 # /api/spots/<uuid>/sports
 spots_router.register(r"sports", SpotSportsNestedViewSet, base_name="spot-sports")
 
-spot_sports_images_router = routers.NestedDefaultRouter(
-    spots_router, r"sports", lookup="sport"
-)
+spot_sports_images_router = routers.NestedDefaultRouter(spots_router, r"sports", lookup="sport")
 
 # /api/spots/<uuid>/sports/<uuid>/images
-spot_sports_images_router.register(
-    r"images", SpotSportImagesNestedViewSet, base_name="spot-sport-images"
-)
+spot_sports_images_router.register(r"images", SpotSportImagesNestedViewSet, base_name="spot-sport-images")
 
-spot_sports_amenities_router = routers.NestedDefaultRouter(
-    spots_router, r"sports", lookup="sport"
-)
+spot_sports_amenities_router = routers.NestedDefaultRouter(spots_router, r"sports", lookup="sport")
 
 # /api/spots/<uuid>sports/<uuid>/amenities
-spot_sports_amenities_router.register(
-    r"amenities", SpotSportAmenitesNestedViewSet, base_name="spot-sport-amenities"
-)
+spot_sports_amenities_router.register(r"amenities", SpotSportAmenitesNestedViewSet, base_name="spot-sport-amenities")
 
-spot_sports_opening_times_router = routers.NestedDefaultRouter(
-    spots_router, r"sports", lookup="sport"
-)
+spot_sports_opening_times_router = routers.NestedDefaultRouter(spots_router, r"sports", lookup="sport")
 
 # /api/spots/<uuid>/sports/<uuid>/opening-times
 spot_sports_opening_times_router.register(
-    r"opening-times",
-    SpotSportOpeningTimesNestedViewSet,
-    base_name="spot-sport-opening-times",
+    r"opening-times", SpotSportOpeningTimesNestedViewSet, base_name="spot-sport-opening-times"
 )
 
 # Game urls
@@ -163,30 +141,16 @@ urlpatterns = [
     # Authentication / Registration
     # REF: https://github.com/blakey22/rest_email_signup
     path(
-        "api/auth/registration/email-verification-sent/",
-        registration_null_view,
-        name="account_email_verification_sent",
+        "api/auth/registration/email-verification-sent/", registration_null_view, name="account_email_verification_sent"
     ),
     re_path(
         r"^api/auth/registration/confirm-email/(?P<key>[-:\w]+)/$",
         registration_confirm_email,
         name="account_confirm_email",
     ),
-    path(
-        "api/auth/registration/status/",
-        registration_status_view,
-        name="account_confirm_status",
-    ),
-    path(
-        "api/auth/create-magic-link/",
-        create_magic_link_view,
-        name="account_create_magic_link",
-    ),
-    path(
-        "api/auth/confirm-magic-link/",
-        confirm_magic_link_view,
-        name="account_confirm_magic_link",
-    ),
+    path("api/auth/registration/status/", registration_status_view, name="account_confirm_status"),
+    path("api/auth/create-magic-link/", create_magic_link_view, name="account_create_magic_link"),
+    path("api/auth/confirm-magic-link/", confirm_magic_link_view, name="account_confirm_magic_link"),
     re_path(
         r"^api/auth/password-reset/confirm/"
         r"(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$",
@@ -198,10 +162,7 @@ urlpatterns = [
     path("api/auth/", include("rest_auth.urls")),
     path(
         "api/auth/registration/",
-        include(
-            ("rest_auth.registration.urls", "rest_auth.registration"),
-            namespace="rest-auth-registration",
-        ),
+        include(("rest_auth.registration.urls", "rest_auth.registration"), namespace="rest-auth-registration"),
     ),
     path("api/accounts/", include("allauth.urls")),
     # REST API
@@ -210,73 +171,30 @@ urlpatterns = [
     path("api/", include(spots_router.urls), name="api-spots"),
     path("api/", include(games_router.urls), name="api-games"),
     path("api/", include(users_profile_router.urls), name="api-user-profile"),
-    path(
-        "api/", include(spot_sports_images_router.urls), name="api-spot-sports-images"
-    ),
-    path(
-        "api/",
-        include(spot_sports_amenities_router.urls),
-        name="api-spot-sports-amenities",
-    ),
-    path(
-        "api/",
-        include(spot_sports_opening_times_router.urls),
-        name="api-spot-sports-opening-times",
-    ),
+    path("api/", include(spot_sports_images_router.urls), name="api-spot-sports-images"),
+    path("api/", include(spot_sports_amenities_router.urls), name="api-spot-sports-amenities"),
+    path("api/", include(spot_sports_opening_times_router.urls), name="api-spot-sports-opening-times"),
     # GraphQL API
-    path(
-        "graphql",
-        csrf_exempt(GraphQLView.as_view(graphiql=True, schema=schema)),
-        name="graphql",
-    ),
+    path("graphql", csrf_exempt(GraphQLView.as_view(graphiql=True, schema=schema)), name="graphql"),
     # TODO: Choose one of the api documentation tools below
     # DRF schema
     path("schema/", drf_schema_view),
-    path(
-        "docs/",
-        include_docs_urls(title="SportySpots API Docs", permission_classes=(AllowAny,)),
-    ),
+    path("docs/", include_docs_urls(title="SportySpots API Docs", permission_classes=(AllowAny,))),
     # Swagger
-    re_path(
-        r"^swagger(?P<format>\.json|\.yaml)$",
-        schema_view.without_ui(cache_timeout=None),
-        name="schema-json",
-    ),
-    path(
-        "swagger/",
-        schema_view.with_ui("swagger", cache_timeout=None),
-        name="schema-swagger-ui",
-    ),
-    path(
-        "redoc/", schema_view.with_ui("redoc", cache_timeout=None), name="schema-redoc"
-    ),
+    re_path(r"^swagger(?P<format>\.json|\.yaml)$", schema_view.without_ui(cache_timeout=None), name="schema-json"),
+    path("swagger/", schema_view.with_ui("swagger", cache_timeout=None), name="schema-swagger-ui"),
+    path("redoc/", schema_view.with_ui("redoc", cache_timeout=None), name="schema-redoc"),
     # Apple ios deeplinking - app site association
-    path(
-        "apple-app-site-association/?",
-        apple_app_site_association,
-        name="apple-app-site-association",
-    ),
+    path("apple-app-site-association/?", apple_app_site_association, name="apple-app-site-association"),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 if settings.DEBUG:
     # This allows the error pages to be debugged during development, just visit
     # these url in browser to see how these error pages look like.
     urlpatterns += [
-        path(
-            "400/",
-            default_views.bad_request,
-            kwargs={"exception": Exception(_("Bad Request!"))},
-        ),
-        path(
-            "403/",
-            default_views.permission_denied,
-            kwargs={"exception": Exception(_("Permission Denied"))},
-        ),
-        path(
-            "404/",
-            default_views.page_not_found,
-            kwargs={"exception": Exception(_("Page not Found"))},
-        ),
+        path("400/", default_views.bad_request, kwargs={"exception": Exception(_("Bad Request!"))}),
+        path("403/", default_views.permission_denied, kwargs={"exception": Exception(_("Permission Denied"))}),
+        path("404/", default_views.page_not_found, kwargs={"exception": Exception(_("Page not Found"))}),
         path("500/", default_views.server_error),
     ]
     if "debug_toolbar" in settings.INSTALLED_APPS:

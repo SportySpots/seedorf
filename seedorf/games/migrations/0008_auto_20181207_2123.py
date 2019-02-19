@@ -28,25 +28,18 @@ class Migration(migrations.Migration):
             model_name="game",
             name="description",
             field=models.TextField(
-                blank=True,
-                default="",
-                help_text="Description of the game.",
-                verbose_name="Description",
+                blank=True, default="", help_text="Description of the game.", verbose_name="Description"
             ),
         ),
         migrations.AlterField(
             model_name="game",
             name="is_featured",
             field=models.BooleanField(
-                default=False,
-                help_text="If this game is featured.",
-                verbose_name="Is featured?",
+                default=False, help_text="If this game is featured.", verbose_name="Is featured?"
             ),
         ),
         migrations.AlterField(
-            model_name="game",
-            name="name",
-            field=models.CharField(blank=True, default="", max_length=255),
+            model_name="game", name="name", field=models.CharField(blank=True, default="", max_length=255)
         ),
         migrations.AlterField(
             model_name="game",

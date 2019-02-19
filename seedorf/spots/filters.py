@@ -7,12 +7,8 @@ from .models import Spot
 
 
 class SpotFilter(filters.FilterSet):
-    sports__ids = filters.ModelMultipleChoiceFilter(
-        field_name="sports", queryset=Sport.objects.all()
-    )
-    distance = filters.CharFilter(
-        field_name="address__point", method="filter_by_distance"
-    )
+    sports__ids = filters.ModelMultipleChoiceFilter(field_name="sports", queryset=Sport.objects.all())
+    distance = filters.CharFilter(field_name="address__point", method="filter_by_distance")
 
     class Meta:
         model = Spot

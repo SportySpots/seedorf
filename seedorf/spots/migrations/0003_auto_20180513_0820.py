@@ -14,9 +14,6 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name="spotimage",
             name="image",
-            field=models.ImageField(
-                max_length=512,
-                upload_to=seedorf.spots.models.get_images_upload_directory,
-            ),
+            field=models.ImageField(max_length=512, upload_to=seedorf.spots.models.get_images_upload_directory),
         )
     ]

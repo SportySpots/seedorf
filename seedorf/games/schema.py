@@ -1,9 +1,5 @@
 import graphene
-from graphene_django_extras import (
-    DjangoFilterPaginateListField,
-    DjangoObjectType,
-    LimitOffsetGraphqlPagination,
-)
+from graphene_django_extras import DjangoFilterPaginateListField, DjangoObjectType, LimitOffsetGraphqlPagination
 
 from seedorf.users.schema import UserType
 from .models import Game, RsvpStatus
@@ -39,9 +35,7 @@ class Query(object):
 
     rsvp_status = graphene.Field(RsvpStatusType, uuid=graphene.UUID())
     rsvp_statuses = DjangoFilterPaginateListField(
-        RsvpStatusType,
-        pagination=LimitOffsetGraphqlPagination(),
-        filterset_class=RsvpStatusFilter,
+        RsvpStatusType, pagination=LimitOffsetGraphqlPagination(), filterset_class=RsvpStatusFilter
     )
 
     @staticmethod

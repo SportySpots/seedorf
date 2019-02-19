@@ -11,9 +11,7 @@ from .models import User, UserProfile
 from .serializers import UserProfileSerializer, UserSerializer
 
 
-class UserViewSet(
-    mixins.CreateModelMixin, mixins.RetrieveModelMixin, viewsets.GenericViewSet
-):
+class UserViewSet(mixins.CreateModelMixin, mixins.RetrieveModelMixin, viewsets.GenericViewSet):
     """
     API endpoint that allows users to be viewed or edited.
     """

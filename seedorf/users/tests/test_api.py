@@ -27,23 +27,19 @@ class UserRegistrationAPIViewTest(APITestCase):
 
         user_data = {"name": "test create name", "email": "test_create@example.com"}
 
-        with patch.object(
-            AccountAdapter, "send_confirmation_mail", return_value=None
-        ), patch.object(AccountAdapter, "get_login_redirect_url", return_value=""):
+        with patch.object(AccountAdapter, "send_confirmation_mail", return_value=None), patch.object(
+            AccountAdapter, "get_login_redirect_url", return_value=""
+        ):
             response = self.client.post(self.url, user_data)
             self.assertEqual(201, response.status_code)
             self.assertTrue("token" in response.data)
 
             user = User.objects.get(email=user_data["email"])
-            decoded_token = jwt.decode(
-                response.data["token"], settings.SECRET_KEY, algorithms=["HS256"]
-            )
+            decoded_token = jwt.decode(response.data["token"], settings.SECRET_KEY, algorithms=["HS256"])
             response_user = response.data["user"]
 
             # Token contains the defined keys
-            self.assertTrue(
-                {"user_id", "uuid", "email", "username", "exp"}.issubset(decoded_token)
-            )
+            self.assertTrue({"user_id", "uuid", "email", "username", "exp"}.issubset(decoded_token))
             self.assertEqual(response_user["name"], user_data["name"])
 
             # Token has a the user with the right uuid
@@ -58,9 +54,7 @@ class UserRegistrationAPIViewTest(APITestCase):
             response_user_profile = response_user["profile"]
             self.assertFalse(response_user_profile["sports"])
             self.assertFalse(response_user_profile["spots"])
-            self.assertEqual(
-                response_user_profile["gender"], UserProfile.GENDER_NOT_SPECIFIED
-            )
+            self.assertEqual(response_user_profile["gender"], UserProfile.GENDER_NOT_SPECIFIED)
             self.assertIsNone(response_user_profile["year_of_birth"])
             self.assertIsNone(response_user_profile["avatar"])
             self.assertEqual(response_user_profile["language"], "en")
@@ -77,24 +71,20 @@ class UserRegistrationAPIViewTest(APITestCase):
             "password2": "super_$secure_passw0rd",
         }
 
-        with patch.object(
-            AccountAdapter, "send_confirmation_mail", return_value=None
-        ), patch.object(AccountAdapter, "get_login_redirect_url", return_value=""):
+        with patch.object(AccountAdapter, "send_confirmation_mail", return_value=None), patch.object(
+            AccountAdapter, "get_login_redirect_url", return_value=""
+        ):
 
             response = self.client.post(self.url, user_data)
             self.assertEqual(201, response.status_code)
             self.assertTrue("token" in response.data)
 
             user = User.objects.get(email=user_data["email"])
-            decoded_token = jwt.decode(
-                response.data["token"], settings.SECRET_KEY, algorithms=["HS256"]
-            )
+            decoded_token = jwt.decode(response.data["token"], settings.SECRET_KEY, algorithms=["HS256"])
             response_user = response.data["user"]
 
             # Token contains the defined keys
-            self.assertTrue(
-                {"user_id", "uuid", "email", "username", "exp"}.issubset(decoded_token)
-            )
+            self.assertTrue({"user_id", "uuid", "email", "username", "exp"}.issubset(decoded_token))
             self.assertEqual(response_user["name"], user_data["name"])
 
             # Token has a the user with the right uuid
@@ -109,9 +99,7 @@ class UserRegistrationAPIViewTest(APITestCase):
             response_user_profile = response_user["profile"]
             self.assertFalse(response_user_profile["sports"])
             self.assertFalse(response_user_profile["spots"])
-            self.assertEqual(
-                response_user_profile["gender"], UserProfile.GENDER_NOT_SPECIFIED
-            )
+            self.assertEqual(response_user_profile["gender"], UserProfile.GENDER_NOT_SPECIFIED)
             self.assertIsNone(response_user_profile["year_of_birth"])
             self.assertIsNone(response_user_profile["avatar"])
             self.assertEqual(response_user_profile["language"], "en")
@@ -143,10 +131,7 @@ class UserProfileAPIViewTest(APITestCase):
         user = UserFactory(username="test", email="test@example.com")
         self.client.force_authenticate(user=user)
 
-        url = reverse(
-            "user-profile-detail",
-            kwargs={"user_uuid": str(user.uuid), "uuid": str(user.profile.uuid)},
-        )
+        url = reverse("user-profile-detail", kwargs={"user_uuid": str(user.uuid), "uuid": str(user.profile.uuid)})
 
         response = self.client.get(url)
         self.assertEqual(200, response.status_code)
@@ -160,18 +145,7 @@ class UserProfileAPIViewTest(APITestCase):
         self.assertEqual(response.data["country"], "")
         self.assertEqual(response.data["bio"], "")
         self.assertCountEqual(
-            [
-                "uuid",
-                "sports",
-                "spots",
-                "gender",
-                "year_of_birth",
-                "avatar",
-                "language",
-                "timezone",
-                "country",
-                "bio",
-            ],
+            ["uuid", "sports", "spots", "gender", "year_of_birth", "avatar", "language", "timezone", "country", "bio"],
             response.data.keys(),
         )
 
@@ -183,10 +157,7 @@ class UserProfileAPIViewTest(APITestCase):
 
         self.client.force_authenticate(user=user)
 
-        url = reverse(
-            "user-profile-detail",
-            kwargs={"user_uuid": str(user.uuid), "uuid": str(user.profile.uuid)},
-        )
+        url = reverse("user-profile-detail", kwargs={"user_uuid": str(user.uuid), "uuid": str(user.profile.uuid)})
 
         user_profile_data = {"year_of_birth": 1981}
 
@@ -204,10 +175,7 @@ class UserProfileAPIViewTest(APITestCase):
 
         url = reverse(
             "user-profile-sports-list",
-            kwargs={
-                "user_uuid": str(user_profile.user.uuid),
-                "profile_uuid": str(user_profile.uuid),
-            },
+            kwargs={"user_uuid": str(user_profile.user.uuid), "profile_uuid": str(user_profile.uuid)},
         )
 
         response = self.client.get(url)
@@ -228,10 +196,7 @@ class UserProfileAPIViewTest(APITestCase):
 
         url = reverse(
             "user-profile-spots-list",
-            kwargs={
-                "user_uuid": str(user_profile.user.uuid),
-                "profile_uuid": str(user_profile.uuid),
-            },
+            kwargs={"user_uuid": str(user_profile.user.uuid), "profile_uuid": str(user_profile.uuid)},
         )
 
         response = self.client.get(url)

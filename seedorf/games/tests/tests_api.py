@@ -144,9 +144,7 @@ class GameAPIViewTest(APITestCase):
         response = self.client.post(url, data, format="json")
         self.assertEqual(400, response.status_code)
 
-    def test_game_create_end_time_greater_than_twevle_hours_after_start_time_error(
-        self
-    ):
+    def test_game_create_end_time_greater_than_twevle_hours_after_start_time_error(self):
         url = reverse("game-list")
         now = timezone.now()
         start_time = now + timedelta(days=2)
@@ -161,12 +159,7 @@ class GameAPIViewTest(APITestCase):
         rsvp_open_time = now + timedelta(days=2, hours=2)
         start_time = now + timedelta(days=2)
         end_time = now + timedelta(days=2, hours=8)
-        data = {
-            "name": "test game",
-            "rsvp_open_time": rsvp_open_time,
-            "start_time": start_time,
-            "end_time": end_time,
-        }
+        data = {"name": "test game", "rsvp_open_time": rsvp_open_time, "start_time": start_time, "end_time": end_time}
         response = self.client.post(url, data, format="json")
         self.assertEqual(400, response.status_code)
 
@@ -176,12 +169,7 @@ class GameAPIViewTest(APITestCase):
         rsvp_close_time = now + timedelta(days=2, hours=2)
         start_time = now + timedelta(days=2)
         end_time = now + timedelta(days=2, hours=8)
-        data = {
-            "name": "test game",
-            "rsvp_close_time": rsvp_close_time,
-            "start_time": start_time,
-            "end_time": end_time,
-        }
+        data = {"name": "test game", "rsvp_close_time": rsvp_close_time, "start_time": start_time, "end_time": end_time}
         response = self.client.post(url, data, format="json")
         self.assertEqual(400, response.status_code)
 
@@ -290,10 +278,7 @@ class GameAPIViewTest(APITestCase):
         rsvp = RsvpStatusFactory(user=self.user)
         data = {"status": RsvpStatus.STATUS_ATTENDING}
 
-        url = reverse(
-            "game-rsvps-detail",
-            kwargs={"game_uuid": str(rsvp.game.uuid), "uuid": str(rsvp.uuid)},
-        )
+        url = reverse("game-rsvps-detail", kwargs={"game_uuid": str(rsvp.game.uuid), "uuid": str(rsvp.uuid)})
 
         response = self.client.put(url, data, format="json")
         self.assertEqual(200, response.status_code)
@@ -302,9 +287,6 @@ class GameAPIViewTest(APITestCase):
         rsvp = RsvpStatusFactory()
         data = {"status": RsvpStatus.STATUS_ATTENDING}
 
-        url = reverse(
-            "game-rsvps-detail",
-            kwargs={"game_uuid": str(rsvp.game.uuid), "uuid": str(rsvp.uuid)},
-        )
+        url = reverse("game-rsvps-detail", kwargs={"game_uuid": str(rsvp.game.uuid), "uuid": str(rsvp.uuid)})
         response = self.client.put(url, data, format="json")
         self.assertEqual(400, response.status_code)

@@ -1,9 +1,5 @@
 import graphene
-from graphene_django_extras import (
-    DjangoFilterPaginateListField,
-    DjangoObjectType,
-    LimitOffsetGraphqlPagination,
-)
+from graphene_django_extras import DjangoFilterPaginateListField, DjangoObjectType, LimitOffsetGraphqlPagination
 
 from .models import Sport
 from .viewsets import SportFilter
@@ -17,9 +13,7 @@ class SportType(DjangoObjectType):
 class Query(object):
     sport = graphene.Field(SportType, uuid=graphene.UUID())
     sports = DjangoFilterPaginateListField(
-        SportType,
-        filterset_class=SportFilter,
-        pagination=LimitOffsetGraphqlPagination(),
+        SportType, filterset_class=SportFilter, pagination=LimitOffsetGraphqlPagination()
     )
 
     @staticmethod

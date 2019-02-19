@@ -24,55 +24,22 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name="Game",
             fields=[
-                (
-                    "id",
-                    models.AutoField(
-                        auto_created=True,
-                        primary_key=True,
-                        serialize=False,
-                        verbose_name="ID",
-                    ),
-                ),
-                (
-                    "uuid",
-                    models.UUIDField(
-                        default=uuid.uuid4,
-                        editable=False,
-                        verbose_name="Unique Identifier",
-                    ),
-                ),
+                ("id", models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name="ID")),
+                ("uuid", models.UUIDField(default=uuid.uuid4, editable=False, verbose_name="Unique Identifier")),
                 (
                     "created_at",
-                    models.DateTimeField(
-                        default=django.utils.timezone.now,
-                        editable=False,
-                        verbose_name="Created At",
-                    ),
+                    models.DateTimeField(default=django.utils.timezone.now, editable=False, verbose_name="Created At"),
                 ),
-                (
-                    "modified_at",
-                    models.DateTimeField(auto_now=True, verbose_name="Modified At"),
-                ),
-                (
-                    "deleted_at",
-                    models.DateTimeField(
-                        blank=True, editable=False, null=True, verbose_name="Deleted At"
-                    ),
-                ),
+                ("modified_at", models.DateTimeField(auto_now=True, verbose_name="Modified At")),
+                ("deleted_at", models.DateTimeField(blank=True, editable=False, null=True, verbose_name="Deleted At")),
                 ("name", models.CharField(blank=True, max_length=255)),
                 (
                     "start_time",
-                    models.DateTimeField(
-                        help_text="Start time of the game in UTC.",
-                        verbose_name="Start Time (UTC)",
-                    ),
+                    models.DateTimeField(help_text="Start time of the game in UTC.", verbose_name="Start Time (UTC)"),
                 ),
                 (
                     "end_time",
-                    models.DateTimeField(
-                        help_text="End time of the game in UTC.",
-                        verbose_name="End Time (UTC)",
-                    ),
+                    models.DateTimeField(help_text="End time of the game in UTC.", verbose_name="End Time (UTC)"),
                 ),
                 (
                     "rsvp_open_time",
@@ -157,34 +124,16 @@ class Migration(migrations.Migration):
                             ("America/Anguilla", "America/Anguilla"),
                             ("America/Antigua", "America/Antigua"),
                             ("America/Araguaina", "America/Araguaina"),
-                            (
-                                "America/Argentina/Buenos_Aires",
-                                "America/Argentina/Buenos_Aires",
-                            ),
-                            (
-                                "America/Argentina/Catamarca",
-                                "America/Argentina/Catamarca",
-                            ),
+                            ("America/Argentina/Buenos_Aires", "America/Argentina/Buenos_Aires"),
+                            ("America/Argentina/Catamarca", "America/Argentina/Catamarca"),
                             ("America/Argentina/Cordoba", "America/Argentina/Cordoba"),
                             ("America/Argentina/Jujuy", "America/Argentina/Jujuy"),
-                            (
-                                "America/Argentina/La_Rioja",
-                                "America/Argentina/La_Rioja",
-                            ),
+                            ("America/Argentina/La_Rioja", "America/Argentina/La_Rioja"),
                             ("America/Argentina/Mendoza", "America/Argentina/Mendoza"),
-                            (
-                                "America/Argentina/Rio_Gallegos",
-                                "America/Argentina/Rio_Gallegos",
-                            ),
+                            ("America/Argentina/Rio_Gallegos", "America/Argentina/Rio_Gallegos"),
                             ("America/Argentina/Salta", "America/Argentina/Salta"),
-                            (
-                                "America/Argentina/San_Juan",
-                                "America/Argentina/San_Juan",
-                            ),
-                            (
-                                "America/Argentina/San_Luis",
-                                "America/Argentina/San_Luis",
-                            ),
+                            ("America/Argentina/San_Juan", "America/Argentina/San_Juan"),
+                            ("America/Argentina/San_Luis", "America/Argentina/San_Luis"),
                             ("America/Argentina/Tucuman", "America/Argentina/Tucuman"),
                             ("America/Argentina/Ushuaia", "America/Argentina/Ushuaia"),
                             ("America/Aruba", "America/Aruba"),
@@ -234,16 +183,10 @@ class Migration(migrations.Migration):
                             ("America/Halifax", "America/Halifax"),
                             ("America/Havana", "America/Havana"),
                             ("America/Hermosillo", "America/Hermosillo"),
-                            (
-                                "America/Indiana/Indianapolis",
-                                "America/Indiana/Indianapolis",
-                            ),
+                            ("America/Indiana/Indianapolis", "America/Indiana/Indianapolis"),
                             ("America/Indiana/Knox", "America/Indiana/Knox"),
                             ("America/Indiana/Marengo", "America/Indiana/Marengo"),
-                            (
-                                "America/Indiana/Petersburg",
-                                "America/Indiana/Petersburg",
-                            ),
+                            ("America/Indiana/Petersburg", "America/Indiana/Petersburg"),
                             ("America/Indiana/Tell_City", "America/Indiana/Tell_City"),
                             ("America/Indiana/Vevay", "America/Indiana/Vevay"),
                             ("America/Indiana/Vincennes", "America/Indiana/Vincennes"),
@@ -252,14 +195,8 @@ class Migration(migrations.Migration):
                             ("America/Iqaluit", "America/Iqaluit"),
                             ("America/Jamaica", "America/Jamaica"),
                             ("America/Juneau", "America/Juneau"),
-                            (
-                                "America/Kentucky/Louisville",
-                                "America/Kentucky/Louisville",
-                            ),
-                            (
-                                "America/Kentucky/Monticello",
-                                "America/Kentucky/Monticello",
-                            ),
+                            ("America/Kentucky/Louisville", "America/Kentucky/Louisville"),
+                            ("America/Kentucky/Monticello", "America/Kentucky/Monticello"),
                             ("America/Kralendijk", "America/Kralendijk"),
                             ("America/La_Paz", "America/La_Paz"),
                             ("America/Lima", "America/Lima"),
@@ -286,18 +223,9 @@ class Migration(migrations.Migration):
                             ("America/Nipigon", "America/Nipigon"),
                             ("America/Nome", "America/Nome"),
                             ("America/Noronha", "America/Noronha"),
-                            (
-                                "America/North_Dakota/Beulah",
-                                "America/North_Dakota/Beulah",
-                            ),
-                            (
-                                "America/North_Dakota/Center",
-                                "America/North_Dakota/Center",
-                            ),
-                            (
-                                "America/North_Dakota/New_Salem",
-                                "America/North_Dakota/New_Salem",
-                            ),
+                            ("America/North_Dakota/Beulah", "America/North_Dakota/Beulah"),
+                            ("America/North_Dakota/Center", "America/North_Dakota/Center"),
+                            ("America/North_Dakota/New_Salem", "America/North_Dakota/New_Salem"),
                             ("America/Ojinaga", "America/Ojinaga"),
                             ("America/Panama", "America/Panama"),
                             ("America/Pangnirtung", "America/Pangnirtung"),
@@ -646,34 +574,16 @@ class Migration(migrations.Migration):
                             ("America/Anguilla", "America/Anguilla"),
                             ("America/Antigua", "America/Antigua"),
                             ("America/Araguaina", "America/Araguaina"),
-                            (
-                                "America/Argentina/Buenos_Aires",
-                                "America/Argentina/Buenos_Aires",
-                            ),
-                            (
-                                "America/Argentina/Catamarca",
-                                "America/Argentina/Catamarca",
-                            ),
+                            ("America/Argentina/Buenos_Aires", "America/Argentina/Buenos_Aires"),
+                            ("America/Argentina/Catamarca", "America/Argentina/Catamarca"),
                             ("America/Argentina/Cordoba", "America/Argentina/Cordoba"),
                             ("America/Argentina/Jujuy", "America/Argentina/Jujuy"),
-                            (
-                                "America/Argentina/La_Rioja",
-                                "America/Argentina/La_Rioja",
-                            ),
+                            ("America/Argentina/La_Rioja", "America/Argentina/La_Rioja"),
                             ("America/Argentina/Mendoza", "America/Argentina/Mendoza"),
-                            (
-                                "America/Argentina/Rio_Gallegos",
-                                "America/Argentina/Rio_Gallegos",
-                            ),
+                            ("America/Argentina/Rio_Gallegos", "America/Argentina/Rio_Gallegos"),
                             ("America/Argentina/Salta", "America/Argentina/Salta"),
-                            (
-                                "America/Argentina/San_Juan",
-                                "America/Argentina/San_Juan",
-                            ),
-                            (
-                                "America/Argentina/San_Luis",
-                                "America/Argentina/San_Luis",
-                            ),
+                            ("America/Argentina/San_Juan", "America/Argentina/San_Juan"),
+                            ("America/Argentina/San_Luis", "America/Argentina/San_Luis"),
                             ("America/Argentina/Tucuman", "America/Argentina/Tucuman"),
                             ("America/Argentina/Ushuaia", "America/Argentina/Ushuaia"),
                             ("America/Aruba", "America/Aruba"),
@@ -723,16 +633,10 @@ class Migration(migrations.Migration):
                             ("America/Halifax", "America/Halifax"),
                             ("America/Havana", "America/Havana"),
                             ("America/Hermosillo", "America/Hermosillo"),
-                            (
-                                "America/Indiana/Indianapolis",
-                                "America/Indiana/Indianapolis",
-                            ),
+                            ("America/Indiana/Indianapolis", "America/Indiana/Indianapolis"),
                             ("America/Indiana/Knox", "America/Indiana/Knox"),
                             ("America/Indiana/Marengo", "America/Indiana/Marengo"),
-                            (
-                                "America/Indiana/Petersburg",
-                                "America/Indiana/Petersburg",
-                            ),
+                            ("America/Indiana/Petersburg", "America/Indiana/Petersburg"),
                             ("America/Indiana/Tell_City", "America/Indiana/Tell_City"),
                             ("America/Indiana/Vevay", "America/Indiana/Vevay"),
                             ("America/Indiana/Vincennes", "America/Indiana/Vincennes"),
@@ -741,14 +645,8 @@ class Migration(migrations.Migration):
                             ("America/Iqaluit", "America/Iqaluit"),
                             ("America/Jamaica", "America/Jamaica"),
                             ("America/Juneau", "America/Juneau"),
-                            (
-                                "America/Kentucky/Louisville",
-                                "America/Kentucky/Louisville",
-                            ),
-                            (
-                                "America/Kentucky/Monticello",
-                                "America/Kentucky/Monticello",
-                            ),
+                            ("America/Kentucky/Louisville", "America/Kentucky/Louisville"),
+                            ("America/Kentucky/Monticello", "America/Kentucky/Monticello"),
                             ("America/Kralendijk", "America/Kralendijk"),
                             ("America/La_Paz", "America/La_Paz"),
                             ("America/Lima", "America/Lima"),
@@ -775,18 +673,9 @@ class Migration(migrations.Migration):
                             ("America/Nipigon", "America/Nipigon"),
                             ("America/Nome", "America/Nome"),
                             ("America/Noronha", "America/Noronha"),
-                            (
-                                "America/North_Dakota/Beulah",
-                                "America/North_Dakota/Beulah",
-                            ),
-                            (
-                                "America/North_Dakota/Center",
-                                "America/North_Dakota/Center",
-                            ),
-                            (
-                                "America/North_Dakota/New_Salem",
-                                "America/North_Dakota/New_Salem",
-                            ),
+                            ("America/North_Dakota/Beulah", "America/North_Dakota/Beulah"),
+                            ("America/North_Dakota/Center", "America/North_Dakota/Center"),
+                            ("America/North_Dakota/New_Salem", "America/North_Dakota/New_Salem"),
                             ("America/Ojinaga", "America/Ojinaga"),
                             ("America/Panama", "America/Panama"),
                             ("America/Pangnirtung", "America/Pangnirtung"),
@@ -1077,11 +966,7 @@ class Migration(migrations.Migration):
                 (
                     "invite_mode",
                     models.CharField(
-                        choices=[
-                            ("approval", "Approval"),
-                            ("invite_only", "Invite Only"),
-                            ("open", "Open"),
-                        ],
+                        choices=[("approval", "Approval"), ("invite_only", "Invite Only"), ("open", "Open")],
                         default="open",
                         help_text="If the game is open for everyone to join or based on organizers approval or is invite only.",
                         max_length=25,
@@ -1109,9 +994,7 @@ class Migration(migrations.Migration):
                     models.PositiveSmallIntegerField(
                         blank=True,
                         null=True,
-                        validators=[
-                            django.core.validators.MinValueValidator(limit_value=2)
-                        ],
+                        validators=[django.core.validators.MinValueValidator(limit_value=2)],
                         verbose_name="Capacity",
                     ),
                 ),
@@ -1142,9 +1025,7 @@ class Migration(migrations.Migration):
                 (
                     "is_featured",
                     models.BooleanField(
-                        default=False,
-                        help_text="If this game is featured.",
-                        verbose_name="Is Featured?",
+                        default=False, help_text="If this game is featured.", verbose_name="Is Featured?"
                     ),
                 ),
                 (
@@ -1177,50 +1058,19 @@ class Migration(migrations.Migration):
                     ),
                 ),
             ],
-            options={
-                "verbose_name": "Game",
-                "verbose_name_plural": "Games",
-                "ordering": ("-start_time",),
-            },
+            options={"verbose_name": "Game", "verbose_name_plural": "Games", "ordering": ("-start_time",)},
         ),
         migrations.CreateModel(
             name="RsvpStatus",
             fields=[
-                (
-                    "id",
-                    models.AutoField(
-                        auto_created=True,
-                        primary_key=True,
-                        serialize=False,
-                        verbose_name="ID",
-                    ),
-                ),
-                (
-                    "uuid",
-                    models.UUIDField(
-                        default=uuid.uuid4,
-                        editable=False,
-                        verbose_name="Unique Identifier",
-                    ),
-                ),
+                ("id", models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name="ID")),
+                ("uuid", models.UUIDField(default=uuid.uuid4, editable=False, verbose_name="Unique Identifier")),
                 (
                     "created_at",
-                    models.DateTimeField(
-                        default=django.utils.timezone.now,
-                        editable=False,
-                        verbose_name="Created At",
-                    ),
+                    models.DateTimeField(default=django.utils.timezone.now, editable=False, verbose_name="Created At"),
                 ),
-                (
-                    "modified_at",
-                    models.DateTimeField(auto_now=True, verbose_name="Modified At"),
-                ),
-                (
-                    "deleted_at",
-                    models.DateTimeField(
-                        blank=True, editable=False, null=True, verbose_name="Deleted At"
-                    ),
-                ),
+                ("modified_at", models.DateTimeField(auto_now=True, verbose_name="Modified At")),
+                ("deleted_at", models.DateTimeField(blank=True, editable=False, null=True, verbose_name="Deleted At")),
                 (
                     "status",
                     models.CharField(
@@ -1264,7 +1114,5 @@ class Migration(migrations.Migration):
                 "ordering": ("-created_at",),
             },
         ),
-        migrations.AlterUniqueTogether(
-            name="rsvpstatus", unique_together=set([("user", "game")])
-        ),
+        migrations.AlterUniqueTogether(name="rsvpstatus", unique_together=set([("user", "game")])),
     ]

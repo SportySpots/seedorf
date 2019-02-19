@@ -66,24 +66,13 @@ class Game(BasePropertiesModel):
 
     # Foreign Keys
     organizer = models.ForeignKey(
-        settings.AUTH_USER_MODEL,
-        on_delete=models.CASCADE,
-        related_name="game_organizers",
-        verbose_name=_("Organizer"),
+        settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="game_organizers", verbose_name=_("Organizer")
     )
     sport = models.ForeignKey(
-        "sports.Sport",
-        on_delete=models.CASCADE,
-        related_name="sport_games",
-        verbose_name=_("Sport"),
-        null=True,
+        "sports.Sport", on_delete=models.CASCADE, related_name="sport_games", verbose_name=_("Sport"), null=True
     )
     spot = models.ForeignKey(
-        "spots.Spot",
-        on_delete=models.CASCADE,
-        related_name="spot_games",
-        verbose_name=_("Spot"),
-        null=True,
+        "spots.Spot", on_delete=models.CASCADE, related_name="spot_games", verbose_name=_("Spot"), null=True
     )
 
     # Instance Fields
@@ -91,42 +80,28 @@ class Game(BasePropertiesModel):
     name = models.CharField(blank=True, default="", max_length=255, null=False)
 
     description = models.TextField(
-        blank=True,
-        default="",
-        help_text=_("Description of the game."),
-        null=False,
-        verbose_name=_("Description"),
+        blank=True, default="", help_text=_("Description of the game."), null=False, verbose_name=_("Description")
     )
 
     # TODO: Evaluate if start_time / end_time could be replaced by DateTimeRangeField
     # REF: https://docs.djangoproject.com/en/1.11/ref/contrib/postgres/fields/#datetimerangefield
     start_time = models.DateTimeField(
-        blank=False,
-        help_text=_("Start time of the game in UTC."),
-        null=False,
-        verbose_name=_("Start Time (UTC)"),
+        blank=False, help_text=_("Start time of the game in UTC."), null=False, verbose_name=_("Start Time (UTC)")
     )
     end_time = models.DateTimeField(
-        blank=False,
-        help_text=_("End time of the game in UTC."),
-        null=False,
-        verbose_name=_("End Time (UTC)"),
+        blank=False, help_text=_("End time of the game in UTC."), null=False, verbose_name=_("End Time (UTC)")
     )
 
     rsvp_open_time = models.DateTimeField(
         blank=True,
-        help_text=_(
-            "UTC time before that RSVPs will no longer be accepted, though organizers may close RSVPs earlier"
-        ),
+        help_text=_("UTC time before that RSVPs will no longer be accepted, though organizers may close RSVPs earlier"),
         null=True,
         verbose_name=_("RSVP Open Time (UTC)"),
     )
 
     rsvp_close_time = models.DateTimeField(
         blank=True,
-        help_text=_(
-            "UTC time after that RSVPs will no longer be accepted, though organizers may close RSVPs earlier"
-        ),
+        help_text=_("UTC time after that RSVPs will no longer be accepted, though organizers may close RSVPs earlier"),
         null=True,
         verbose_name=_("RSVP Close Time (UTC)"),
     )
@@ -161,9 +136,7 @@ class Game(BasePropertiesModel):
         blank=False,
         choices=INVITE_MODES,
         default=INVITE_MODE_OPEN,
-        help_text=_(
-            "If the game is open for everyone to join or based on organizers approval or is invite only."
-        ),
+        help_text=_("If the game is open for everyone to join or based on organizers approval or is invite only."),
         max_length=25,
         null=False,
         verbose_name=_("Invite Mode"),
@@ -180,18 +153,13 @@ class Game(BasePropertiesModel):
     capacity = models.PositiveSmallIntegerField(
         blank=True,
         null=True,
-        validators=[
-            MinValueValidator(limit_value=2),
-            MaxValueValidator(limit_value=50),
-        ],
+        validators=[MinValueValidator(limit_value=2), MaxValueValidator(limit_value=50)],
         verbose_name=_("Capacity"),
     )
     show_remaining = models.BooleanField(
         blank=False,
         default=True,
-        help_text=_(
-            "If the game page should show the number of open player spots left."
-        ),
+        help_text=_("If the game page should show the number of open player spots left."),
         null=False,
         verbose_name=_("Show Remaining Player Required Spots"),
     )
@@ -210,11 +178,7 @@ class Game(BasePropertiesModel):
         verbose_name=_("Is Shareable?"),
     )
     is_featured = models.BooleanField(
-        blank=False,
-        default=False,
-        help_text=_("If this game is featured."),
-        null=False,
-        verbose_name=_("Is featured?"),
+        blank=False, default=False, help_text=_("If this game is featured."), null=False, verbose_name=_("Is featured?")
     )
 
     class Meta:
@@ -232,19 +196,10 @@ class Game(BasePropertiesModel):
         image = self.spot.images.first()
         if image:
             return get_firebase_link(
-                f"games/{self.uuid}",
-                unguessable=False,
-                st=self.name,
-                sd=self.description,
-                si=image.image.url,
+                f"games/{self.uuid}", unguessable=False, st=self.name, sd=self.description, si=image.image.url
             )
         else:
-            return get_firebase_link(
-                f"games/{self.uuid}",
-                unguessable=False,
-                st=self.name,
-                sd=self.description,
-            )
+            return get_firebase_link(f"games/{self.uuid}", unguessable=False, st=self.name, sd=self.description)
 
     def send_organizer_confirmation_mail(self):
 
@@ -269,10 +224,7 @@ class Game(BasePropertiesModel):
     def send_attendees_cancellation_email(self):
         # TODO: Abstract email sending so that default fields are added
         attendees = [
-            rsvp_status.user
-            for rsvp_status in RsvpStatus.objects.filter(
-                game=self, status=RsvpStatus.STATUS_ATTENDING
-            )
+            rsvp_status.user for rsvp_status in RsvpStatus.objects.filter(game=self, status=RsvpStatus.STATUS_ATTENDING)
         ]
         if len(attendees) > 0:
             ctx = {
@@ -287,9 +239,7 @@ class Game(BasePropertiesModel):
                 "company_address": "Amsterdam, The Netherlands",
             }
 
-            message = EmailMessage(
-                subject=None, body=None, to=[attendee.email for attendee in attendees]
-            )
+            message = EmailMessage(subject=None, body=None, to=[attendee.email for attendee in attendees])
             message.template_id = 6790382
             message.merge_global_data = ctx
             message.send()
