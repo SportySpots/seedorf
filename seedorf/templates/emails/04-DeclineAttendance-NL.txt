@@ -1,0 +1,20 @@
+Je hebt je afgemld voor {{organizer_first_name}}'s sportactiviteit.
+
+SportySpots ( https://www.sportyspots.com )
+
+*************
+Hoi, {{ first_name }}!
+*************
+
+Je hebt je afgemeld voor {{organizer_first_name}}'s sportactiviteit.
+
+Meld je aan ( {{ game_url }} )
+
+Veel plezier,
+Het SportySpots Team
+
+© 2018 SportySpots. All rights reserved.
+
+SportySpots
+
+Amsterdam, Nederland
