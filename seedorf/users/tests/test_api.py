@@ -12,6 +12,14 @@ from seedorf.users.adapters import AccountAdapter
 from .factories import UserFactory, UserProfileFactory
 
 
+class UserAPIViewTest(APITestCase):
+    url = reverse("user-list")
+
+    def test_user_list(self):
+        response = self.client.get(self.url)
+        self.assertEqual(405, response.status_code)
+
+
 class UserRegistrationAPIViewTest(APITestCase):
     url = reverse("rest-auth-registration:rest_register")
 
