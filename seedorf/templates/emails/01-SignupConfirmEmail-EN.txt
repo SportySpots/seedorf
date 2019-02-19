@@ -23,7 +23,7 @@ If you’re having trouble with the button above, copy and paste the URL below i
 
 {{activate_url}}
 
-© 2018 {{product_name}}. All rights reserved.
+© 2019 {{product_name}}. All rights reserved.
 
 {{company_name}}
 

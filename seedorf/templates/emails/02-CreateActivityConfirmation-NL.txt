@@ -17,7 +17,7 @@ Als de button niet goed werkt, knip en plak dan de URL in je webbrowser.
 
 {{ game_url }}
 
-© 2018 SportySpots. All rights reserved.
+© 2019 SportySpots. All rights reserved.
 
 SportySpots
 Amsterdam, Nederland

@@ -21,7 +21,7 @@ If you’re having trouble with the button above, copy and paste the URL below i
 
 {{action_url}}
 
-© 2017 {{ product_name }}. All rights reserved.
+© 2019 {{ product_name }}. All rights reserved.
 
 {{ company_name }}
 
