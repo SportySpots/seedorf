@@ -1,4 +1,5 @@
 from rest_framework import viewsets
+from rest_framework import mixins
 
 from seedorf.sports.models import Sport
 from seedorf.sports.serializers import SportSerializer
@@ -10,7 +11,7 @@ from .models import User, UserProfile
 from .serializers import UserProfileSerializer, UserSerializer
 
 
-class UserViewSet(viewsets.ModelViewSet):
+class UserViewSet(mixins.CreateModelMixin, mixins.RetrieveModelMixin, viewsets.GenericViewSet):
     """
     API endpoint that allows users to be viewed or edited.
     """
