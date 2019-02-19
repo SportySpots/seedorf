@@ -1,15 +1,16 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
-  <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <title>Je bent aangemeld voor {{organizer_first_name}}'s sportactiviteit.</title>
-    <!--
-    The style block is collapsed on page load to save you some scrolling.
-    Postmark automatically inlines all CSS properties for maximum email client
-    compatibility. You can just update styles here, and Postmark does the rest.
-    -->
-    <style type="text/css" rel="stylesheet" media="all">
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+  <title>Je bent aangemeld voor {{ organizer_first_name }}'s sportactiviteit.</title>
+  <!--
+  The style block is collapsed on page load to save you some scrolling.
+  Postmark automatically inlines all CSS properties for maximum email client
+  compatibility. You can just update styles here, and Postmark does the rest.
+  -->
+  <style type="text/css" rel="stylesheet" media="all">
     /* Base ------------------------------ */
 
     *:not(br):not(tr):not(html) {
@@ -46,6 +47,7 @@
     td {
       word-break: break-word;
     }
+
     /* Layout ------------------------------ */
 
     .email-wrapper {
@@ -66,6 +68,7 @@
       -premailer-cellpadding: 0;
       -premailer-cellspacing: 0;
     }
+
     /* Masthead ----------------------- */
 
     .email-masthead {
@@ -84,6 +87,7 @@
       text-decoration: none;
       text-shadow: 0 1px 0 white;
     }
+
     /* Body ------------------------------ */
 
     .email-body {
@@ -153,6 +157,7 @@
       opacity: 0;
       overflow: hidden;
     }
+
     /* Attribute list ------------------------------ */
 
     .attributes {
@@ -167,6 +172,7 @@
     .attributes_item {
       padding: 0;
     }
+
     /* Related Items ------------------------------ */
 
     .related {
@@ -200,6 +206,7 @@
       text-align: center;
       padding: 25px 0 10px;
     }
+
     /* Discount Code ------------------------------ */
 
     .discount {
@@ -221,6 +228,7 @@
       text-align: center;
       font-size: 15px;
     }
+
     /* Social Icons ------------------------------ */
 
     .social {
@@ -237,6 +245,7 @@
       margin: 0 8px 10px 8px;
       padding: 0;
     }
+
     /* Data table ------------------------------ */
 
     .purchase {
@@ -295,6 +304,7 @@
       width: 50%;
       padding: 16px;
     }
+
     /* Utilities ------------------------------ */
 
     .align-right {
@@ -308,6 +318,7 @@
     .align-center {
       text-align: center;
     }
+
     /*Media Queries ------------------------------ */
 
     @media only screen and (max-width: 600px) {
@@ -322,6 +333,7 @@
         width: 100% !important;
       }
     }
+
     /* Buttons ------------------------------ */
 
     .button {
@@ -353,6 +365,7 @@
       border-bottom: 16px solid #FF6136;
       border-left: 32px solid #FF6136;
     }
+
     }
     /* Type ------------------------------ */
 
@@ -395,93 +408,98 @@
     p.center {
       text-align: center;
     }
-    </style>
-  </head>
-  <body>
-    <span class="preheader">Je bent aangemeld voor {{organizer_first_name}}'s sportactiviteit.</span>
-    <table class="email-wrapper" width="100%" cellpadding="0" cellspacing="0">
-      <tr>
-        <td align="center">
-          <table class="email-content" width="100%" cellpadding="0" cellspacing="0">
-            <tr>
-              <td class="email-masthead">
-                <a href="https://www.sportyspots.com" class="email-masthead_name">
-                <img align="middle" alt="sportyspotslogo" width="160" src="https://api.sportyspots.com/static/images/sportyspots-logo-email.png">
-                </a>
-              </td>
-            </tr>
-            <!-- Email Body -->
-            <tr>
-              <td class="email-body" width="100%" cellpadding="0" cellspacing="0">
-                <table class="email-body_inner" align="center" width="570" cellpadding="0" cellspacing="0">
-                  <!-- Body content -->
-                  <tr>
-                    <td class="content-cell">
-                      <h1>Veel plezier!</h1>
-                      <p>Je bent aangemeld voor {{ organizer_first_name }}'s sportactiviteit.</p>
-                      <!-- Action -->
-                      <table class="body-action" align="center" width="100%" cellpadding="0" cellspacing="0">
-                        <tr>
-                          <td align="center">
-                            <!-- Border based button https://litmus.com/blog/a-guide-to-bulletproof-buttons-in-email-design -->
-                            <table width="100%" border="0" cellspacing="0" cellpadding="0">
-                              <tr>
-                                <td align="center">
-                                  <table border="0" cellspacing="0" cellpadding="0">
-                                    <tr>
-                                      <td>
-                                        <a href="{{ game_url }}" class="button button--green" target="_blank">
-                                          Bekijk de activiteit
-                                        </a>
-                                    </tr>
-                                  </table>
-                                </td>
-                              </tr>
-                            </table>
-                          </td>
-                        </tr>
-                      </table>
-                      <!-- Sub copy -->
-                      <table class="body-sub">
-                        <tr>
-                          <td align="center">
-                            <p class="sub">Download de app om alle event details te bekijkenen om te zien wie er nog meer mee doen.</p>
-                            <br>
-                            <a href="https://play.google.com/apps/testing/com.sportyspots.android">
-                              <img  align="middle" alt="playstore" src="https://gallery.mailchimp.com/19788d0e14a9a89bf69656e8a/images/4a6028a9-4ea3-41e9-9ae2-c8beac031bf9.png" width="147" style="max-width:294px;">
-                            </a>
-                            <a href="https://itunes.apple.com/en/app/sportyspots/id1391625376">
-                              <img align="middle" alt="appstore" width="147" src="https://gallery.mailchimp.com/19788d0e14a9a89bf69656e8a/images/cfb969bc-a7d1-49ac-a98a-411d8bbb9d5f.png">
-                            </a>
-                          </td>
-                        </tr>
-                      </table>
-                    </td>
-                  </tr>
-                </table>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <table class="email-footer" align="center" width="570" cellpadding="0" cellspacing="0">
-                  <tr>
-                    <td class="content-cell" align="center">
-                      <p class="sub align-center">
-                        &copy; 2018 SportySpots. All rights reserved.
-                      </p>
-                      <p class="sub align-center">
-                        SportySpots
+  </style>
+</head>
+<body>
+<span class="preheader">Je bent aangemeld voor {{ organizer_first_name }}'s sportactiviteit.</span>
+<table class="email-wrapper" width="100%" cellpadding="0" cellspacing="0">
+  <tr>
+    <td align="center">
+      <table class="email-content" width="100%" cellpadding="0" cellspacing="0">
+        <tr>
+          <td class="email-masthead">
+            <a href="https://www.sportyspots.com" class="email-masthead_name">
+              <img align="middle" alt="sportyspotslogo" width="160"
+                   src="https://api.sportyspots.com/static/images/sportyspots-logo-email.png">
+            </a>
+          </td>
+        </tr>
+        <!-- Email Body -->
+        <tr>
+          <td class="email-body" width="100%" cellpadding="0" cellspacing="0">
+            <table class="email-body_inner" align="center" width="570" cellpadding="0" cellspacing="0">
+              <!-- Body content -->
+              <tr>
+                <td class="content-cell">
+                  <h1>Veel plezier!</h1>
+                  <p>Je bent aangemeld voor {{ organizer_first_name }}'s sportactiviteit.</p>
+                  <!-- Action -->
+                  <table class="body-action" align="center" width="100%" cellpadding="0" cellspacing="0">
+                    <tr>
+                      <td align="center">
+                        <!-- Border based button https://litmus.com/blog/a-guide-to-bulletproof-buttons-in-email-design -->
+                        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                          <tr>
+                            <td align="center">
+                              <table border="0" cellspacing="0" cellpadding="0">
+                                <tr>
+                                  <td>
+                                    <a href="{{ game_url }}" class="button button--green" target="_blank">
+                                      Bekijk de activiteit
+                                    </a>
+                                </tr>
+                              </table>
+                            </td>
+                          </tr>
+                        </table>
+                      </td>
+                    </tr>
+                  </table>
+                  <!-- Sub copy -->
+                  <table class="body-sub">
+                    <tr>
+                      <td align="center">
+                        <p class="sub">Download de app om alle event details te bekijkenen om te zien wie er nog meer
+                          mee doen.</p>
                         <br>
-                        Amsterdam, The Netherlands
-                      </p>
-                    </td>
-                  </tr>
-                </table>
-              </td>
-            </tr>
-          </table>
-        </td>
-      </tr>
-    </table>
-  </body>
+                        <a href="https://play.google.com/apps/testing/com.sportyspots.android">
+                          <img align="middle" alt="playstore"
+                               src="https://gallery.mailchimp.com/19788d0e14a9a89bf69656e8a/images/4a6028a9-4ea3-41e9-9ae2-c8beac031bf9.png"
+                               width="147" style="max-width:294px;">
+                        </a>
+                        <a href="https://itunes.apple.com/en/app/sportyspots/id1391625376">
+                          <img align="middle" alt="appstore" width="147"
+                               src="https://gallery.mailchimp.com/19788d0e14a9a89bf69656e8a/images/cfb969bc-a7d1-49ac-a98a-411d8bbb9d5f.png">
+                        </a>
+                      </td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <table class="email-footer" align="center" width="570" cellpadding="0" cellspacing="0">
+              <tr>
+                <td class="content-cell" align="center">
+                  <p class="sub align-center">
+                    &copy; 2018 SportySpots. All rights reserved.
+                  </p>
+                  <p class="sub align-center">
+                    SportySpots
+                    <br>
+                    Amsterdam, The Netherlands
+                  </p>
+                </td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+</table>
+</body>
 </html>

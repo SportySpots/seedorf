@@ -1,15 +1,16 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
-  <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <title>Welcome to {{product_name}}, {{name}}!</title>
-    <!--
-    The style block is collapsed on page load to save you some scrolling.
-    Postmark automatically inlines all CSS properties for maximum email client
-    compatibility. You can just update styles here, and Postmark does the rest.
-    -->
-    <style type="text/css" rel="stylesheet" media="all">
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+  <title>Welcome to {{ product_name }}, {{ name }}!</title>
+  <!--
+  The style block is collapsed on page load to save you some scrolling.
+  Postmark automatically inlines all CSS properties for maximum email client
+  compatibility. You can just update styles here, and Postmark does the rest.
+  -->
+  <style type="text/css" rel="stylesheet" media="all">
     /* Base ------------------------------ */
 
     *:not(br):not(tr):not(html) {
@@ -44,8 +45,9 @@
     }
 
     td {
-        word-break: break-word;
+      word-break: break-word;
     }
+
     /* Layout ------------------------------ */
 
     .email-wrapper {
@@ -66,6 +68,7 @@
       -premailer-cellpadding: 0;
       -premailer-cellspacing: 0;
     }
+
     /* Masthead ----------------------- */
 
     .email-masthead {
@@ -84,6 +87,7 @@
       text-decoration: none;
       text-shadow: 0 1px 0 white;
     }
+
     /* Body ------------------------------ */
 
     .email-body {
@@ -153,6 +157,7 @@
       opacity: 0;
       overflow: hidden;
     }
+
     /* Attribute list ------------------------------ */
 
     .attributes {
@@ -167,6 +172,7 @@
     .attributes_item {
       padding: 0;
     }
+
     /* Related Items ------------------------------ */
 
     .related {
@@ -200,6 +206,7 @@
       text-align: center;
       padding: 25px 0 10px;
     }
+
     /* Discount Code ------------------------------ */
 
     .discount {
@@ -221,6 +228,7 @@
       text-align: center;
       font-size: 15px;
     }
+
     /* Social Icons ------------------------------ */
 
     .social {
@@ -237,6 +245,7 @@
       margin: 0 8px 10px 8px;
       padding: 0;
     }
+
     /* Data table ------------------------------ */
 
     .purchase {
@@ -290,6 +299,7 @@
     .purchase_total--label {
       padding: 0 15px 0 0;
     }
+
     /* Utilities ------------------------------ */
 
     .align-right {
@@ -303,6 +313,7 @@
     .align-center {
       text-align: center;
     }
+
     /*Media Queries ------------------------------ */
 
     @media only screen and (max-width: 600px) {
@@ -317,6 +328,7 @@
         width: 100% !important;
       }
     }
+
     /* Buttons ------------------------------ */
 
     .button {
@@ -348,6 +360,7 @@
       border-bottom: 16px solid #FF6136;
       border-left: 32px solid #FF6136;
     }
+
     /* Type ------------------------------ */
 
     h1 {
@@ -389,87 +402,90 @@
     p.center {
       text-align: center;
     }
-    </style>
-  </head>
-  <body>
-    <span class="preheader">Thanks for trying out {{product_name}}. We need to confirm your email to get started.</span>
-    <table class="email-wrapper" width="100%" cellpadding="0" cellspacing="0">
-      <tr>
-        <td align="center">
-          <table class="email-content" width="100%" cellpadding="0" cellspacing="0">
-            <tr>
-              <td class="email-masthead">
-                <a href="{{product_url}}" class="email-masthead_name">
-                  <img align="middle" alt="sportyspotslogo" width="160" src="https://startupinresidence.com/amsterdam/media/sites/2/2017/11/SportySpots-Logo-Black.png">
-                </a>
-              </td>
-            </tr>
-            <!-- Email Body -->
-            <tr>
-              <td class="email-body" width="100%" cellpadding="0" cellspacing="0">
-                <table class="email-body_inner" align="center" width="570" cellpadding="0" cellspacing="0">
-                  <!-- Body content -->
-                  <tr>
-                    <td class="content-cell">
-                      <h1>Welcome, {{name}}!</h1>
-                      <p>Thanks for trying out {{product_name}}. We’re thrilled to have you on board.</p>
-                      <p>To get started, please confirm your email:</p>
-                      <!-- Action -->
-                      <table class="body-action" align="center" width="100%" cellpadding="0" cellspacing="0">
-                        <tr>
-                          <td align="center">
-                            <!-- Border based button https://litmus.com/blog/a-guide-to-bulletproof-buttons-in-email-design -->
-                            <table width="100%" border="0" cellspacing="0" cellpadding="0">
-                              <tr>
-                                <td align="center">
-                                  <table border="0" cellspacing="0" cellpadding="0">
-                                    <tr>
-                                      <td>
-                                        <a href="{{activate_url}}" class="button button--green" target="_blank">Confirm your email</a>
-                                      </td>
-                                    </tr>
-                                  </table>
-                                </td>
-                              </tr>
-                            </table>
-                          </td>
-                        </tr>
-                      </table>
-                      <p>If you have any questions, feel free to <a href="mailto:{{support_email}}">email us.</a></p>
-                      <p>Thanks,<br>
-                      {{sender_name}} and the {{product_name}} Team</p>
-                      <!-- Sub copy -->
-                      <table class="body-sub">
-                        <tr>
-                          <td>
-                            <p class="sub">If you’re having trouble with the button above, copy and paste the URL below into your web browser.</p>
-                            <p class="sub">{{activate_url}}</p>
-                          </td>
-                        </tr>
-                      </table>
-                    </td>
-                  </tr>
-                </table>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <table class="email-footer" align="center" width="570" cellpadding="0" cellspacing="0">
-                  <tr>
-                    <td class="content-cell" align="center">
-                      <p class="sub align-center">&copy; 2018 {{product_name}}. All rights reserved.</p>
-                      <p class="sub align-center">
-                        {{company_name}}
-                        {{company_address}}
-                      </p>
-                    </td>
-                  </tr>
-                </table>
-              </td>
-            </tr>
-          </table>
-        </td>
-      </tr>
-    </table>
-  </body>
+  </style>
+</head>
+<body>
+<span class="preheader">Thanks for trying out {{ product_name }}. We need to confirm your email to get started.</span>
+<table class="email-wrapper" width="100%" cellpadding="0" cellspacing="0">
+  <tr>
+    <td align="center">
+      <table class="email-content" width="100%" cellpadding="0" cellspacing="0">
+        <tr>
+          <td class="email-masthead">
+            <a href="{{ product_url }}" class="email-masthead_name">
+              <img align="middle" alt="sportyspotslogo" width="160"
+                   src="https://startupinresidence.com/amsterdam/media/sites/2/2017/11/SportySpots-Logo-Black.png">
+            </a>
+          </td>
+        </tr>
+        <!-- Email Body -->
+        <tr>
+          <td class="email-body" width="100%" cellpadding="0" cellspacing="0">
+            <table class="email-body_inner" align="center" width="570" cellpadding="0" cellspacing="0">
+              <!-- Body content -->
+              <tr>
+                <td class="content-cell">
+                  <h1>Welcome, {{ name }}!</h1>
+                  <p>Thanks for trying out {{ product_name }}. We’re thrilled to have you on board.</p>
+                  <p>To get started, please confirm your email:</p>
+                  <!-- Action -->
+                  <table class="body-action" align="center" width="100%" cellpadding="0" cellspacing="0">
+                    <tr>
+                      <td align="center">
+                        <!-- Border based button https://litmus.com/blog/a-guide-to-bulletproof-buttons-in-email-design -->
+                        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                          <tr>
+                            <td align="center">
+                              <table border="0" cellspacing="0" cellpadding="0">
+                                <tr>
+                                  <td>
+                                    <a href="{{ activate_url }}" class="button button--green" target="_blank">Confirm
+                                      your email</a>
+                                  </td>
+                                </tr>
+                              </table>
+                            </td>
+                          </tr>
+                        </table>
+                      </td>
+                    </tr>
+                  </table>
+                  <p>If you have any questions, feel free to <a href="mailto:{{ support_email }}">email us.</a></p>
+                  <p>Thanks,<br>
+                    {{ sender_name }} and the {{ product_name }} Team</p>
+                  <!-- Sub copy -->
+                  <table class="body-sub">
+                    <tr>
+                      <td>
+                        <p class="sub">If you’re having trouble with the button above, copy and paste the URL below into
+                          your web browser.</p>
+                        <p class="sub">{{ activate_url }}</p>
+                      </td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <table class="email-footer" align="center" width="570" cellpadding="0" cellspacing="0">
+              <tr>
+                <td class="content-cell" align="center">
+                  <p class="sub align-center">&copy; 2018 {{ product_name }}. All rights reserved.</p>
+                  <p class="sub align-center">
+                    {{ company_name }}
+                    {{ company_address }}
+                  </p>
+                </td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+</table>
+</body>
 </html>
