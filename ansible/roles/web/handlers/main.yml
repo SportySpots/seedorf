@@ -10,4 +10,3 @@
     name: ufw
     state: restarted
   listen: restart_ufw
-...

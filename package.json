@@ -28,7 +28,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "pipenv run black .",
+      "pre-commit": "pipenv run black . && yarn prettier --write \"ansible/**/*.yml\"",
       "pre-push": "pipenv run ./manage.py test"
     }
   }

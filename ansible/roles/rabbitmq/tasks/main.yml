@@ -95,4 +95,3 @@
     name: rabbitmq-server
     enabled: yes
     state: started
-...

@@ -13,4 +13,3 @@ all:
     gunicorn_workers: 1
     loglevel: info
     sub_domain: stg
-...

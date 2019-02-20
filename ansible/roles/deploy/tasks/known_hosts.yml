@@ -6,4 +6,3 @@
     name: "{{ item.key }}"
     key: "{{ item.value }}"
   with_dict: "{{ ssh_known_hosts }}"
-...

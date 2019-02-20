@@ -13,4 +13,3 @@ all:
     gunicorn_workers: 6
     loglevel: info
     sub_domain: api
-...

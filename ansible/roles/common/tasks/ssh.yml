@@ -3,4 +3,3 @@
   group:
     name: ssh-users
     state: present
-...

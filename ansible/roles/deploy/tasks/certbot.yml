@@ -50,9 +50,8 @@
     user: root
     cron_file: "letsencrypt"
     special_time: weekly
-    job: "{{ certbot_script }} renew --standalone --pre-hook \"service nginx stop\" --post-hook \"service nginx start\" --quiet"
+    job: '{{ certbot_script }} renew --standalone --pre-hook "service nginx stop" --post-hook "service nginx start" --quiet'
     state: present
   when: certbot_auto_renew
   tags:
     - letsencrypt
-...

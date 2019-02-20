@@ -6,4 +6,3 @@
     nginx_remove_default_vhost: True
   notify:
     - restart_nginx
-...

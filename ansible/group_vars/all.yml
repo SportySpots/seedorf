@@ -15,4 +15,3 @@ application_name: sportyspots
 # apt settings
 # -----------------------------------------------------------------------------
 update_apt_cache: yes
-...

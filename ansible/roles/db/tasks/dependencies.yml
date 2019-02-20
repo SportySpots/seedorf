@@ -17,4 +17,3 @@
   user:
     name: postgres
     shell: /bin/bash
-...

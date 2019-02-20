@@ -1,9 +1,7 @@
 ---
-
 - name: Restart rabbitmq server
   service:
     name: rabbitmq-server
     state: restarted
     enabled: yes
   listen: restart_rabbitmq_server
-...

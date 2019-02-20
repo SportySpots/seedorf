@@ -5,4 +5,3 @@
     state: restarted
     enabled: yes
   listen: restart_redis
-...

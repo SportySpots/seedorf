@@ -1,5 +1,4 @@
 ---
-
 # to verify ufw configuration run:
 # sudo ufw status verbose
 # From: https://github.com/cturner80/digital-ocean-ansible/blob/master/tasks/ufw.yml
@@ -42,4 +41,3 @@
     port: ssh
     proto: tcp
     rule: limit
-...

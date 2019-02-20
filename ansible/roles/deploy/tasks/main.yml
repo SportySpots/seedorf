@@ -5,7 +5,6 @@
 - include: nginx.yml
 - include: certbot.yml
 - include: deploy_project.yml
-
 #- name: Test secure connection to SSL domain.
 #  become: False
 #  uri:
@@ -13,4 +12,3 @@
 #    status_code: 200
 #  delegate_to: localhost
 
-...

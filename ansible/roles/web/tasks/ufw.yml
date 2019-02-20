@@ -13,4 +13,3 @@
       proto: "tcp"
   notify:
     - restart_ufw
-...

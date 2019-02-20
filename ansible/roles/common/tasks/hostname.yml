@@ -9,4 +9,3 @@
     regexp: '^127\.0\.0\.1'
     line: "127.0.0.1 localhost {{ env }}"
     state: present
-...

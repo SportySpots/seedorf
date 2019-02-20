@@ -4,5 +4,4 @@
     name: "{{ item }}"
     state: present
   with_items:
-      - "en_US.UTF-8"
-...
+    - "en_US.UTF-8"
