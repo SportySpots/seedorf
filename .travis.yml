@@ -10,7 +10,7 @@ addons:
     - postgresql-server-dev-10
 env:
   global:
-  - ENV_FILE=.envs/.env.tst
+  - ENV_FILE=.env.tst
   - DJANGO_SETTINGS_MODULE=config.settings.tst
 services:
   - postgresql
@@ -24,10 +24,10 @@ before_install:
 install:
   - pip install pipenv
   - pipenv install --dev
-  - PIPENV_DOTENV_LOCATION=.envs/.env.tst pipenv run ./manage.py migrate --noinput
-  - PIPENV_DOTENV_LOCATION=.envs/.env.tst pipenv run ./manage.py collectstatic -c --noinput
+  - PIPENV_DOTENV_LOCATION=.env.tst pipenv run ./manage.py migrate --noinput
+  - PIPENV_DOTENV_LOCATION=.env.tst pipenv run ./manage.py collectstatic -c --noinput
 script:
-  - PIPENV_DOTENV_LOCATION=.envs/.env.tst pipenv run ./manage.py test
+  - PIPENV_DOTENV_LOCATION=.env.tst pipenv run ./manage.py test
 branches:
   only:
     - master
