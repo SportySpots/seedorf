@@ -23,6 +23,7 @@ before_install:
   - easy_install distribute
   - pip install --upgrade distribute
   - psql -U postgres -c "create extension postgis"
+  - psql -c 'create database seedorf;' -U postgres
 install:
   - pip install pipenv
   - pipenv install --dev
