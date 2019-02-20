@@ -24,12 +24,10 @@ before_install:
 install:
   - pip install pipenv
   - pipenv install --dev
-  - pipenv run ./manage.py migrate --noinput
-  - pipenv run ./manage.py collectstatic -c --noinput
-before_script:
-  - nohup python manage.py runserver > /dev/null 2>&1 &
+  - PIPENV_DOTENV_LOCATION=.envs/.env.tst pipenv run ./manage.py migrate --noinput
+  - PIPENV_DOTENV_LOCATION=.envs/.env.tst pipenv run ./manage.py collectstatic -c --noinput
 script:
-  - pipenv run ./manage.py test
+  - PIPENV_DOTENV_LOCATION=.envs/.env.tst pipenv run ./manage.py test
 branches:
   only:
     - master
