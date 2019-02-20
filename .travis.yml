@@ -23,7 +23,7 @@ before_install:
   - pip install --upgrade distribute
 install:
   - pip install pipenv
-  - pipenv install
+  - pipenv install --dev
   - pipenv run ./manage.py migrate --noinput
   - pipenv run ./manage.py collectstatic -c --noinput
 before_script:
