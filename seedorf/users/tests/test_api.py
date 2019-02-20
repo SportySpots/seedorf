@@ -12,12 +12,24 @@ from seedorf.users.adapters import AccountAdapter
 from .factories import UserFactory, UserProfileFactory
 
 
-class UserAPIViewTest(APITestCase):
+class UserListAPIViewTest(APITestCase):
     url = reverse("user-list")
 
     def test_user_list(self):
         response = self.client.get(self.url)
         self.assertEqual(405, response.status_code)
+
+
+class UserUpdateAPIViewTest(APITestCase):
+    def test_user_list(self):
+        user = UserFactory(name="test")
+        self.client.force_authenticate(user=user)
+
+        url = reverse("user-detail", kwargs={"uuid": str(user.uuid)})
+        user_data = {"name": "test1"}
+        response = self.client.patch(url, data=user_data)
+        self.assertEqual(200, response.status_code)
+        self.assertEqual(response.data["name"], user_data["name"])
 
 
 class UserRegistrationAPIViewTest(APITestCase):
