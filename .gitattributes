@@ -12,6 +12,7 @@ Dockerrun.aws.json filter=git-crypt diff=git-crypt merge=git-crypt
 *.key filter=git-crypt diff=git-crypt merge=git-crypt
 *.pub filter=git-crypt diff=git-crypt merge=git-crypt
 .env* filter=git-crypt diff=git-crypt merge=git-crypt
+.env.tst text=auto
 
 # ansible
 vault.yml filter=git-crypt diff=git-crypt merge=git-crypt
