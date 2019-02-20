@@ -1,11 +1,38 @@
-sudo: true
-before_install:
-  - sudo apt-get update -qq
-  - sudo apt-get install -qq build-essential gettext python-dev zlib1g-dev libpq-dev xvfb
-  - sudo apt-get install -qq libtiff4-dev libjpeg8-dev libfreetype6-dev liblcms1-dev libwebp-dev
-  - sudo apt-get install -qq graphviz-dev python-setuptools python3-dev python-virtualenv python-pip
-  - sudo apt-get install -qq firefox automake libtool libreadline6 libreadline6-dev libreadline-dev
-  - sudo apt-get install -qq libsqlite3-dev libxml2 libxml2-dev libssl-dev libbz2-dev wget curl llvm
+dist: xenial
+sudo: false
 language: python
 python:
-  - "3.6"
+- '3.6'
+addons:
+  postgresql: '10'
+  apt:
+    packages:
+    - postgresql-server-dev-10
+env:
+  global:
+  - ENV_FILE=.envs/.env.tst
+  - DJANGO_SETTINGS_MODULE=config.settings.tst
+services:
+  - postgresql
+before_install:
+  - sudo add-apt-repository ppa:chris-lea/redis-server -y
+  - sudo apt-get update -q
+  - sudo apt-get install redis-server -y
+  - pip install -U setuptools
+  - easy_install distribute
+  - pip install --upgrade distribute
+install:
+  - pip install pipenv
+  - pipenv install
+  - pipenv run ./manage.py migrate --noinput
+  - pipenv run ./manage.py collectstatic -c --noinput
+before_script:
+  - nohup python manage.py runserver > /dev/null 2>&1 &
+script:
+  - pipenv run ./manage.py test
+branches:
+  only:
+    - master
+notifications:
+  slack:
+    secure: I8MeBZTeNzA4KqTT9VlnQM+HPmOOhBE8Q1o6M0CU9YkZuSMmxFy7SZoQ91rrun8EV4ajcHLZvNFLVp2Iv0VMn46ikFpKKMDFeq9yoB829y5pUsu1Vb1Gswf6CF+6IYeW9AoRERDgNOe0VWFpPTJdcKWVv9qz2Ae41fztT6HQeVKTpyzr6LJinNU9At7sJUb/mA/s9LA1onv468pxXYETmjgDjTV8zIu5lbTfq+tjEDkIhFzGNbLiAbeOchnnshb7H5kCq8FfU8CRMjxhudqqGia9d4XuU8G+KevgS/dMAhi6SVbJEllLR+8hj/42eNmLX0jfHWebm0g6kmEOu33OosjbxqKJdVG/DduFzfLGj7XPdD8EGmBmUfZJaw/NHpzLcStnwdBvicMkmYhzNT+J5rnrNZfMFiYekUG20nLIHJRR0PHNpcUAvDzts4U7mA2wbfyzMm+Jjr1m7zGaeWADYfe3HL3qRMY9lGumE7a0x0duxdx/Y2clH1ajzJtSQwQ33rJH4hOMhKSC8+BRV75TU2R811tTWluZn8/pbAynGZQtZ3aO9BKmsApWg73zGT4KsliGzTVrArYdqQCJqzyiZIxYAnVgFpLIJG/+HAvgHwGNf1esiKGu0IH4ioEMl5eQsyrvhcIx2FllhkAEXkklzW4rFA8S6Hi91TtuCt67ZUQ=
