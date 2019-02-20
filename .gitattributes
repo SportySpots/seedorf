@@ -11,8 +11,8 @@ Dockerrun.aws.json filter=git-crypt diff=git-crypt merge=git-crypt
 # public and private keys for ansible, terraform etc
 *.key filter=git-crypt diff=git-crypt merge=git-crypt
 *.pub filter=git-crypt diff=git-crypt merge=git-crypt
-.env* filter=git-crypt diff=git-crypt merge=git-crypt
-.env.tst text=auto
+.envs/* filter=git-crypt diff=git-crypt merge=git-crypt
+
 
 # ansible
 vault.yml filter=git-crypt diff=git-crypt merge=git-crypt
