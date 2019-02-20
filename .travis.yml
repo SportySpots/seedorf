@@ -8,6 +8,7 @@ addons:
   apt:
     packages:
     - postgresql-server-dev-10
+    - postgresql-10-postgis-2.4
 env:
   global:
   - ENV_FILE=.env.tst
@@ -21,6 +22,7 @@ before_install:
   - pip install -U setuptools
   - easy_install distribute
   - pip install --upgrade distribute
+  - psql -U postgres -c "create extension postgis"
 install:
   - pip install pipenv
   - pipenv install --dev
