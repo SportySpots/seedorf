@@ -455,7 +455,7 @@ class RsvpStatus(BasePropertiesModel):
 
     @transition(
         field=status,
-        source=[STATUS_INVITED, STATUS_ACCEPTED, STATUS_INTERESTED, STATUS_ATTENDING],
+        source=[STATUS_UNKNOWN, STATUS_INVITED, STATUS_ACCEPTED, STATUS_INTERESTED, STATUS_ATTENDING],
         target=STATUS_DECLINED,
         permission=lambda instance, user: instance.user.uuid == user.uuid,
     )
