@@ -417,11 +417,10 @@
         },
         "flex": {
             "hashes": [
-                "sha256:17a58b3c0ca6524dbc79e1b266dcb8fc39d18060fbe8072ae297f14249ee0909",
-                "sha256:7002314367b7d497f4ef71fca8324ef5a640d3a90f7d1e89b3d3154b0af7b8d9"
+                "sha256:3217ac6951294429363e4bf0b90fcdb7809c57253ad046e9a6386f1e82ca0ef5",
+                "sha256:6d1aaafc5246cad127a3433ddfec10589fee33814d142157acbc371016f5a362"
             ],
-            "markers": "extra == 'validation'",
-            "version": "==6.13.2"
+            "version": "==6.14.0"
         },
         "gevent": {
             "hashes": [
