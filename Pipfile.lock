@@ -926,10 +926,10 @@
         },
         "rx": {
             "hashes": [
-                "sha256:7e6919a3159d6c6cee266fdeeb48783118bab20177e38fa5d6a8ebd24a132f72",
-                "sha256:e7ccf18bb8e76f8a44557febd5c149c2ad36df19442f678be529c710b0553d85"
+                "sha256:27636fea3b94236fb8ccef3e01cb6c57930ba17eca62763b8232cd8f28472678",
+                "sha256:30782cdf08e5b7f4c40a243103edb3e5adb007ba4a278bfe2b2675bd2bd33010"
             ],
-            "version": "==3.0.0a2"
+            "version": "==3.0.0a3"
         },
         "s3transfer": {
             "hashes": [
