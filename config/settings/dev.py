@@ -35,7 +35,7 @@ ALLOWED_HOSTS = [
 
 CORS_ORIGIN_WHITELIST = ["localhost:8000", "localhost:8080", "127.0.0.1:8000" "127.0.0.1:8080"] + CORS_ORIGIN_WHITELIST
 
-EMAIL_BACKEND = env("DJANGO_EMAIL_BACKEND", default="seedorf.utils.email_backends.LocalPostmarkEmailBackend")
+EMAIL_BACKEND = env("DJANGO_EMAIL_BACKEND", default="django.core.mail.backends.smtp.EmailBackend")
 
 # Mail settings
 # ------------------------------------------------------------------------------

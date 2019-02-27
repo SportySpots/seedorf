@@ -22,9 +22,9 @@ class AccountAdapter(DefaultAccountAdapter):
 
         ctx = {
             "product_name": "SportySpots",
-            "first_name": emailconfirmation.email_address.user.name,
+            "name": emailconfirmation.email_address.user.name,
             "product_url": "https://www.sportyspots.com",
-            "activate_url": activate_url,
+            "action_url": activate_url,
             "support_email": "info@sportyspots.com",
             "sender_name": "SportySpots",
             "company_name": "SportySpots",

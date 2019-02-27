@@ -204,9 +204,9 @@ class Game(BasePropertiesModel):
     def send_organizer_confirmation_mail(self):
 
         ctx = {
-            "first_name": self.organizer.first_name,
+            "name": self.organizer.name,
             # TODO: Fix game url hardcoding
-            "game_url": "https://www.sportyspots.com/games/{}".format(self.uuid),
+            "action_url": "https://www.sportyspots.com/games/{}".format(self.uuid),
         }
 
         message = EmailMessage(subject="", body="", to=[self.organizer.email])
@@ -228,9 +228,9 @@ class Game(BasePropertiesModel):
         ]
         if len(attendees) > 0:
             ctx = {
-                "organizer_first_name": self.organizer.first_name,
+                "organizer_name": self.organizer.name,
                 # TODO: Fix game url hardcoding
-                "game_url": f"https://www.sportyspots.com/games/{self.uuid}",
+                "action_url": f"https://www.sportyspots.com/games/{self.uuid}",
                 "product_name": "SportySpots",
                 "product_url": "https://www.sportyspots.com",
                 "support_email": "info@sportyspots.com",
@@ -394,10 +394,10 @@ class RsvpStatus(BasePropertiesModel):
         # TODO: Send the game details e.g. time, name, type of sport
         # TODO: Create ICS file for calendar
         ctx = {
-            "organizer_first_name": self.game.organizer.first_name,
-            "first_name": self.user.first_name,
+            "organizer_name": self.game.organizer.name,
+            "name": self.user.name,
             # TODO: Fix game url hardcoding
-            "game_url": f"https://www.sportyspots.com/games/{self.game.uuid}",
+            "action_url": f"https://www.sportyspots.com/games/{self.game.uuid}",
         }
 
         message = EmailMessage(subject="", body="", to=[self.user.email])

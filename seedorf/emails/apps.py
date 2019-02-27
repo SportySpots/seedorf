@@ -1,6 +1,6 @@
 from django.apps import AppConfig
 
 
-class LocationsConfig(AppConfig):
-    name = "seedorf.locations"
-    verbose_name = "Locations"
+class EmailsConfig(AppConfig):
+    name = "seedorf.emails"
+    verbose_name = "Emails"
