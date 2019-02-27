@@ -410,7 +410,7 @@
     </style>
   </head>
   <body>
-    <span class="preheader">Klik op de link om in te loggen: <a href="{{ magic_link }}">{{ magic_link }}</a>.</span>
+    <span class="preheader">Klik op de link om in te loggen: <a href="{{ action_url }}">{{ action_url }}</a>.</span>
     <table class="email-wrapper" width="100%" cellpadding="0" cellspacing="0">
       <tr>
         <td align="center">
@@ -435,7 +435,7 @@
                   <tr>
                     <td class="content-cell">
                       <h1>Inloggen</h1>
-                      <p>Klik op de link om in te loggen: <a href="{{ magic_link }}">{{ magic_link }}</a>.</p>
+                      <p>Klik op de link om in te loggen: <a href="{{ action_url }}">{{ action_url }}</a>.</p>
                       <!-- Action -->
                       <table class="body-action" align="center" width="100%" cellpadding="0" cellspacing="0">
                         <tr>
@@ -448,7 +448,7 @@
                                   <table border="0" cellspacing="0" cellpadding="0">
                                     <tr>
                                       <td>
-                                        <a href="{{ magic_link }}" class="button button--green" target="_blank"
+                                        <a href="{{ action_url }}" class="button button--green" target="_blank"
                                           >Inloggen</a
                                         >
                                       </td>
@@ -497,16 +497,19 @@
             <tr>
               <td>
                 <table class="email-footer" align="center" width="570" cellpadding="0" cellspacing="0">
-                  <tr>
-                    <td class="content-cell" align="center">
-                      <p class="sub align-center">&copy; 2019 {{ product_name }}. All rights reserved.</p>
-                      <p class="sub align-center">
-                        {{ company_name }}<br />
-                        {{ company_address }}
-                      </p>
-                    </td>
-                  </tr>
-                </table>
+                 <tr>
+                   <td class="content-cell" align="center">
+                     <p class="sub align-center">
+                       &copy; 2019 SportySpots. All rights reserved.
+                     </p>
+                     <p class="sub align-center">
+                       SportySpots
+                       <br />
+                       Amsterdam, The Netherlands
+                     </p>
+                   </td>
+                 </tr>
+               </table>
               </td>
             </tr>
           </table>

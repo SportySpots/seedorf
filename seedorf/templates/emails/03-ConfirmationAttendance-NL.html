@@ -3,7 +3,7 @@
   <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <title>Je bent aangemeld voor {{ organizer_first_name }}'s sportactiviteit.</title>
+    <title>Je bent aangemeld voor {{ organizer_name }}'s sportactiviteit.</title>
     <!--
   The style block is collapsed on page load to save you some scrolling.
   Postmark automatically inlines all CSS properties for maximum email client
@@ -410,7 +410,7 @@
     </style>
   </head>
   <body>
-    <span class="preheader">Je bent aangemeld voor {{ organizer_first_name }}'s sportactiviteit.</span>
+    <span class="preheader">Je bent aangemeld voor {{ organizer_name }}'s sportactiviteit.</span>
     <table class="email-wrapper" width="100%" cellpadding="0" cellspacing="0">
       <tr>
         <td align="center">
@@ -435,7 +435,7 @@
                   <tr>
                     <td class="content-cell">
                       <h1>Veel plezier!</h1>
-                      <p>Je bent aangemeld voor {{ organizer_first_name }}'s sportactiviteit.</p>
+                      <p>Je bent aangemeld voor {{ organizer_name }}'s sportactiviteit.</p>
                       <!-- Action -->
                       <table class="body-action" align="center" width="100%" cellpadding="0" cellspacing="0">
                         <tr>
@@ -447,7 +447,7 @@
                                   <table border="0" cellspacing="0" cellpadding="0">
                                     <tr>
                                       <td>
-                                        <a href="{{ game_url }}" class="button button--green" target="_blank">
+                                        <a href="{{ action_url }}" class="button button--green" target="_blank">
                                           Bekijk de activiteit
                                         </a>
                                       </td>

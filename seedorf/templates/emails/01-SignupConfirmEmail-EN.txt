@@ -2,7 +2,7 @@ Hi {{ name }},
 
 Nice to have you on board at SportySpots! Confirm your registration through this e-mail and start sporting!
 
-To confirm, follow this link: {{ activate_url }}
+To confirm, follow this link: {{ action_url }}
 
 If you have any questions, feel free to contact us at info@sportyspots.com.
 

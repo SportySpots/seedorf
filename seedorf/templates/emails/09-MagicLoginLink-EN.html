@@ -3,7 +3,7 @@
   <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <title>Inloggen.</title>
+    <title>Log in.</title>
     <!--
   The style block is collapsed on page load to save you some scrolling.
   Postmark automatically inlines all CSS properties for maximum email client
@@ -410,7 +410,7 @@
     </style>
   </head>
   <body>
-    <span class="preheader">Klik op de link om in te loggen: <a href="{{ magic_link }}">{{ magic_link }}</a>.</span>
+    <span class="preheader">Click the button below to log in.</span>
     <table class="email-wrapper" width="100%" cellpadding="0" cellspacing="0">
       <tr>
         <td align="center">
@@ -434,8 +434,8 @@
                   <!-- Body content -->
                   <tr>
                     <td class="content-cell">
-                      <h1>Inloggen</h1>
-                      <p>Klik op de link om in te loggen: <a href="{{ magic_link }}">{{ magic_link }}</a>.</p>
+                      <h1>Log in</h1>
+                      <p>Click the button below to log in.</p>
                       <!-- Action -->
                       <table class="body-action" align="center" width="100%" cellpadding="0" cellspacing="0">
                         <tr>
@@ -448,8 +448,8 @@
                                   <table border="0" cellspacing="0" cellpadding="0">
                                     <tr>
                                       <td>
-                                        <a href="{{ magic_link }}" class="button button--green" target="_blank"
-                                          >Inloggen</a
+                                        <a href="{{ action_url }}" class="button button--green" target="_blank"
+                                          >Log in</a
                                         >
                                       </td>
                                     </tr>
@@ -466,7 +466,7 @@
                         <tr>
                           <td align="center">
                             <p class="sub">
-                              Download de app om alle event details te bekijken en om te zien wie er nog meer mee doen.
+                              Download the app to see who else is joining and to get full access to all the game details.
                             </p>
                             <br />
                             <a href="https://play.google.com/store/apps/details?id=com.sportyspots.android">
@@ -499,10 +499,11 @@
                 <table class="email-footer" align="center" width="570" cellpadding="0" cellspacing="0">
                   <tr>
                     <td class="content-cell" align="center">
-                      <p class="sub align-center">&copy; 2019 {{ product_name }}. All rights reserved.</p>
+                      <p class="sub align-center">&copy; 2019 SportySpots. All rights reserved.</p>
                       <p class="sub align-center">
-                        {{ company_name }}<br />
-                        {{ company_address }}
+                        SportySpots
+                        <br />
+                        Amsterdam, The Netherlands
                       </p>
                     </td>
                   </tr>

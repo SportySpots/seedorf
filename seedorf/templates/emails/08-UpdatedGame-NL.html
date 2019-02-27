@@ -3,7 +3,7 @@
   <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <title>{{ invite_sender_name }} has edited the sport activity.</title>
+    <title>{{ invite_sender_name }}'s sportactiviteit is gewijzigd.</title>
     <!--
   The style block is collapsed on page load to save you some scrolling.
   Postmark automatically inlines all CSS properties for maximum email client
@@ -410,7 +410,7 @@
     </style>
   </head>
   <body>
-    <span class="preheader">{{ invite_sender_name }} has edited the sport activity.</span>
+    <span class="preheader">{{ invite_sender_name }}'s sportactiviteit is gewijzigd.</span>
     <table class="email-wrapper" width="100%" cellpadding="0" cellspacing="0">
       <tr>
         <td align="center">
@@ -435,7 +435,8 @@
                   <tr>
                     <td class="content-cell">
                       <h1>Heads up!</h1>
-                      <p>{{ invite_sender_name }} has edited the sport activity details.</p>
+                      <p>{{ invite_sender_name }}'s sportactiviteit is gewijzigd.</p>
+                      <p>Klik op onderstaande knop voor meer informatie.</p>
                       <!-- Action -->
                       <table class="body-action" align="center" width="100%" cellpadding="0" cellspacing="0">
                         <tr>
@@ -449,7 +450,7 @@
                                     <tr>
                                       <td>
                                         <a href="{{ action_url }}" class="button button--green" target="_blank"
-                                          >View invitation</a
+                                          >Bekijk activiteit</a
                                         >
                                       </td>
                                     </tr>
@@ -466,7 +467,8 @@
                         <tr>
                           <td align="center">
                             <p class="sub">
-                              Download the app to see who else is joining and to get full access to all the game details
+                              Download de SportySpots app om alle andere geplande sportactiviteiten te bekijken or
+                              oganiseer zelf een activiteit.
                             </p>
                             <br />
                             <img
@@ -493,16 +495,19 @@
             <tr>
               <td>
                 <table class="email-footer" align="center" width="570" cellpadding="0" cellspacing="0">
-                  <tr>
-                    <td class="content-cell" align="center">
-                      <p class="sub align-center">&copy; 2019 {{ product_name }}. All rights reserved.</p>
-                      <p class="sub align-center">
-                        {{ company_name }}
-                        <br />{{ company_address }}
-                      </p>
-                    </td>
-                  </tr>
-                </table>
+                 <tr>
+                   <td class="content-cell" align="center">
+                     <p class="sub align-center">
+                       &copy; 2019 SportySpots. All rights reserved.
+                     </p>
+                     <p class="sub align-center">
+                       SportySpots
+                       <br />
+                       Amsterdam, The Netherlands
+                     </p>
+                   </td>
+                 </tr>
+               </table>
               </td>
             </tr>
           </table>

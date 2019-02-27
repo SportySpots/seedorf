@@ -1,14 +1,8 @@
-Je bent aangemeld voor {{organizer_first_name}}'s sportactiviteit.
+Hi, {{ name }}!
 
-SportySpots ( https://www.sportyspots.com )
+Je bent aangemeld voor {{organizer_name}}'s sportactiviteit.
 
-*************
-Hi, {{ first_name }}!
-*************
-
-Je bent aangemeld voor {{organizer_first_name}}'s sportactiviteit.
-
-Bekijk de activiteit ( {{ game_url }} )
+Bekijk de activiteit ( {{ action_url }} )
 
 Happy sporting,
 The SportySpots Team

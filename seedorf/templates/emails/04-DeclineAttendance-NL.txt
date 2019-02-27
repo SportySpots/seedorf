@@ -1,14 +1,9 @@
-Je hebt je afgemld voor {{organizer_first_name}}'s sportactiviteit.
+Hoi, {{ name }}!
 
-SportySpots ( https://www.sportyspots.com )
+Je hebt je afgemeld voor {{organizer_name}}'s sportactiviteit.
 
-*************
-Hoi, {{ first_name }}!
-*************
-
-Je hebt je afgemeld voor {{organizer_first_name}}'s sportactiviteit.
-
-Meld je aan ( {{ game_url }} )
+Mocht je van gedachten veranderen, meld je daan aan via:
+{{ action_url }}
 
 Veel plezier,
 Het SportySpots Team

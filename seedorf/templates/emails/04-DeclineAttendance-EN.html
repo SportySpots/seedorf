@@ -3,7 +3,7 @@
   <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <title>Je bent aangemeld voor {{ organizer_first_name }}'s sportactiviteit.</title>
+    <title>You're not attending {{ organizer_name }}'s sport activity.</title>
     <!--
   The style block is collapsed on page load to save you some scrolling.
   Postmark automatically inlines all CSS properties for maximum email client
@@ -410,7 +410,7 @@
     </style>
   </head>
   <body>
-    <span class="preheader">Je bent aangemeld voor {{ organizer_first_name }}'s sportactiviteit.</span>
+    <span class="preheader">You're not attending {{ organizer_name }}'s sport activity.</span>
     <table class="email-wrapper" width="100%" cellpadding="0" cellspacing="0">
       <tr>
         <td align="center">
@@ -434,8 +434,10 @@
                   <!-- Body content -->
                   <tr>
                     <td class="content-cell">
-                      <h1>Veel plezier!</h1>
-                      <p>Je bent aangemeld voor {{ organizer_name }}'s sportactiviteit.</p>
+                      <p>
+                        You're not attending {{ organizer_name }}'s sportactiviteit. If you change your mind, you can
+                        still sign up by following the link below.
+                      </p>
                       <!-- Action -->
                       <table class="body-action" align="center" width="100%" cellpadding="0" cellspacing="0">
                         <tr>
@@ -448,8 +450,8 @@
                                   <table border="0" cellspacing="0" cellpadding="0">
                                     <tr>
                                       <td>
-                                        <a href="{{ game_url }}" class="button button--green" target="_blank"
-                                          >Bekijk de activiteit
+                                        <a href="{{ action_url }}" class="button button--green" target="_blank"
+                                          >View activity
                                         </a>
                                       </td>
                                     </tr>
@@ -466,7 +468,7 @@
                         <tr>
                           <td align="center">
                             <p class="sub">
-                              Download de app om alle event details te bekijken en om te zien wie er nog meer mee doen.
+                              Download the app to see who else is joining and to get full access to all the game details
                             </p>
                             <br />
                             <img

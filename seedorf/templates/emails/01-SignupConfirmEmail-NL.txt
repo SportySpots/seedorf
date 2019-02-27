@@ -4,7 +4,7 @@ Tof, dat je hebt aangemeld voor SportySpots.
 
 Volg onderstaande link om van start te kunnen gaan met SportySpots.
 
-{{ activate_url }}
+{{ action_url }}
 
 Mocht je vragen hebben, dan kun je ons altijd mailen op info@sportyspots.com
 
