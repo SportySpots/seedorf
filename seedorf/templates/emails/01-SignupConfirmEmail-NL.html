@@ -3,7 +3,7 @@
   <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <title>Welkom bij SportySpots, {{ first_name }}!</title>
+    <title>Welkom bij SportySpots, {{ name }}!</title>
     <!--
   The style block is collapsed on page load to save you some scrolling.
   Postmark automatically inlines all CSS properties for maximum email client
@@ -430,7 +430,7 @@
                   <!-- Body content -->
                   <tr>
                     <td class="content-cell">
-                      <h1>Welcome, {{ first_name }}!</h1>
+                      <h1>Welkom, {{ name }}!</h1>
                       <p>Tof, dat je hebt aangemeld voor SportySpots.</p>
                       <p>Om van start te kunnen gaan met SportySpots hebben we een email bevestiging nodig.</p>
                       <!-- Action -->
@@ -468,8 +468,7 @@
                         <tr>
                           <td>
                             <p class="sub">
-                              If you’re having trouble with the button above, copy and paste the URL below into your web
-                              browser.
+                              Als bovenstaande knop niet werkt, kopieer dan onderstaande link, en plak deze in je web-browser.
                             </p>
                             <p class="sub">{{ activate_url }}</p>
                           </td>

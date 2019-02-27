@@ -3,7 +3,7 @@
   <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <title>Welcome to {{ product_name }}, {{ name }}!</title>
+    <title>Welcome to SportySpots, {{ name }}!</title>
     <!--
   The style block is collapsed on page load to save you some scrolling.
   Postmark automatically inlines all CSS properties for maximum email client
@@ -405,7 +405,7 @@
   </head>
   <body>
     <span class="preheader"
-      >Hi! Nice to have you on board! Press the login button to continue.</span
+      >Hi {{ name }}, nice to have you on board at SportySpots! Confirm your registration through this e-mail and start sporting!</span
     >
     <table class="email-wrapper" width="100%" cellpadding="0" cellspacing="0">
       <tr>
@@ -430,9 +430,8 @@
                   <!-- Body content -->
                   <tr>
                     <td class="content-cell">
-                      <h1>Welcome, {{ name }}!</h1>
-                      <p>Thanks for trying out {{ product_name }}. We’re thrilled to have you on board.</p>
-                      <p>To get started, please confirm your email:</p>
+                      <h1>Hi, nice to have you on board at SportySpots!</h1>
+                      <p>Confirm your registration through by following the link below and start sporting!.</p>
                       <!-- Action -->
                       <table class="body-action" align="center" width="100%" cellpadding="0" cellspacing="0">
                         <tr>
@@ -457,11 +456,8 @@
                         </tr>
                       </table>
 
-                      <p>If you have any questions, feel free to <a href="mailto:{{ support_email }}">email us.</a></p>
-                      <p>
-                        Thanks,<br />
-                        {{ sender_name }} and the {{ product_name }} Team
-                      </p>
+                      <p>If you have any questions, feel free to <a href="mailto:info@sportyspots.com">email us.</a></p>
+                      <p>Kind regards, <br />Team SportySpots</p>
                       <!-- Sub copy -->
                       <table class="body-sub">
                         <tr>
