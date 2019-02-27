@@ -8,7 +8,7 @@ Hola, {{first_name}}!
 
 Gracias por probar {{product_name}}. Estamos encantados de tenerte a bordo.
 
-Para aprovechar al máximo {{product_name}}, por favor confirma tu correo electrónico::
+Para aprovechar al máximo {{product_name}}, por favor confirma tu correo electrónico:
 
 Confirmar correo electrónico ( {{ activate_url }} )
 

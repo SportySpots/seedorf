@@ -3,7 +3,7 @@
   <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <title>Welcome to {{ product_name }}, {{ name }}!</title>
+    <title>Bienvenid@ a {{ product_name }}, {{ name }}!</title>
     <!--
   The style block is collapsed on page load to save you some scrolling.
   Postmark automatically inlines all CSS properties for maximum email client
@@ -405,7 +405,7 @@
   </head>
   <body>
     <span class="preheader"
-      >Thanks for trying out {{ product_name }}. We need to confirm your email to get started.</span
+      >Gracias por probar {{ product_name }}. Necesitamos confirmar tu correo electrónico para comenzar.</span
     >
     <table class="email-wrapper" width="100%" cellpadding="0" cellspacing="0">
       <tr>
@@ -430,9 +430,9 @@
                   <!-- Body content -->
                   <tr>
                     <td class="content-cell">
-                      <h1>Welcome, {{ name }}!</h1>
-                      <p>Thanks for trying out {{ product_name }}. We’re thrilled to have you on board.</p>
-                      <p>To get started, please confirm your email:</p>
+                      <h1>Bienvenid@, {{ name }}!</h1>
+                      <p>Gracias por probar {{ product_name }}. Estamos encantados de tenerte a bordo.</p>
+                      <p>Para comenzar, por favor confirma tu correo electrónico:</p>
                       <!-- Action -->
                       <table class="body-action" align="center" width="100%" cellpadding="0" cellspacing="0">
                         <tr>
@@ -445,7 +445,7 @@
                                     <tr>
                                       <td>
                                         <a href="{{ activate_url }}" class="button button--green" target="_blank"
-                                          >Confirm your email</a
+                                          >Confirmar correo electrónico</a
                                         >
                                       </td>
                                     </tr>
@@ -457,18 +457,17 @@
                         </tr>
                       </table>
 
-                      <p>If you have any questions, feel free to <a href="mailto:{{ support_email }}">email us.</a></p>
+                      <p>Si tiene alguna pregunta, no dudes en enviarnos un <a href="mailto:{{ support_email }}">correo.</a></p>
                       <p>
-                        Thanks,<br />
-                        {{ sender_name }} and the {{ product_name }} Team
+                        Gracias,<br />
+                        {{ sender_name }} y el equipo de {{ product_name }}
                       </p>
                       <!-- Sub copy -->
                       <table class="body-sub">
                         <tr>
                           <td>
                             <p class="sub">
-                              If you’re having trouble with the button above, copy and paste the URL below into your web
-                              browser.
+                              Si tienes problemas con el botón de arriba, copia y pega la siguiente URL en tu navegador web.
                             </p>
                             <p class="sub">{{ activate_url }}</p>
                           </td>
@@ -484,7 +483,7 @@
                 <table class="email-footer" align="center" width="570" cellpadding="0" cellspacing="0">
                   <tr>
                     <td class="content-cell" align="center">
-                      <p class="sub align-center">&copy; 2019 {{ product_name }}. All rights reserved.</p>
+                      <p class="sub align-center">&copy; 2019 {{ product_name }}. Todos los derechos reservados.</p>
                       <p class="sub align-center">
                         {{ company_name }} {{ company_address }}
                       </p>
