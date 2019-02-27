@@ -3,7 +3,7 @@
   <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <title>Welcome to {{ product_name }}, {{ name }}!</title>
+    <title>Welkom bij SportySpots, {{ first_name }}!</title>
     <!--
   The style block is collapsed on page load to save you some scrolling.
   Postmark automatically inlines all CSS properties for maximum email client
@@ -405,7 +405,7 @@
   </head>
   <body>
     <span class="preheader"
-      >Hi! Nice to have you on board! Press the login button to continue.</span
+      >Tof, dat je hebt aangemeld bij SportySpots. Bevestig je aanmelding via deze email en start met sporten!</span
     >
     <table class="email-wrapper" width="100%" cellpadding="0" cellspacing="0">
       <tr>
@@ -413,7 +413,7 @@
           <table class="email-content" width="100%" cellpadding="0" cellspacing="0">
             <tr>
               <td class="email-masthead">
-                <a href="{{ product_url }}" class="email-masthead_name">
+                <a href="https://www.sportyspots.com" class="email-masthead_name">
                   <img
                     align="middle"
                     alt="sportyspotslogo"
@@ -430,14 +430,15 @@
                   <!-- Body content -->
                   <tr>
                     <td class="content-cell">
-                      <h1>Welcome, {{ name }}!</h1>
-                      <p>Thanks for trying out {{ product_name }}. We’re thrilled to have you on board.</p>
-                      <p>To get started, please confirm your email:</p>
+                      <h1>Welcome, {{ first_name }}!</h1>
+                      <p>Tof, dat je hebt aangemeld voor SportySpots.</p>
+                      <p>Om van start te kunnen gaan met SportySpots hebben we een email bevestiging nodig.</p>
                       <!-- Action -->
                       <table class="body-action" align="center" width="100%" cellpadding="0" cellspacing="0">
                         <tr>
                           <td align="center">
-                            <!-- Border based button https://litmus.com/blog/a-guide-to-bulletproof-buttons-in-email-design -->
+                            <!-- Border based button
+                   https://litmus.com/blog/a-guide-to-bulletproof-buttons-in-email-design -->
                             <table width="100%" border="0" cellspacing="0" cellpadding="0">
                               <tr>
                                 <td align="center">
@@ -445,7 +446,7 @@
                                     <tr>
                                       <td>
                                         <a href="{{ activate_url }}" class="button button--green" target="_blank"
-                                          >Confirm your email</a
+                                          >Bevestig je email</a
                                         >
                                       </td>
                                     </tr>
@@ -457,11 +458,11 @@
                         </tr>
                       </table>
 
-                      <p>If you have any questions, feel free to <a href="mailto:{{ support_email }}">email us.</a></p>
                       <p>
-                        Thanks,<br />
-                        {{ sender_name }} and the {{ product_name }} Team
+                        Mocht je vragen hebben, dan kun je ons altijd mailen op
+                        <a href="mailto:{{ support_email }}">info@sportyspots.com</a>
                       </p>
+                      <p>Sportieve groet, <br />Team SportySpots</p>
                       <!-- Sub copy -->
                       <table class="body-sub">
                         <tr>
@@ -484,9 +485,9 @@
                 <table class="email-footer" align="center" width="570" cellpadding="0" cellspacing="0">
                   <tr>
                     <td class="content-cell" align="center">
-                      <p class="sub align-center">&copy; 2019 {{ product_name }}. All rights reserved.</p>
+                      <p class="sub align-center">&copy; 2019 SportySpots. All rights reserved.</p>
                       <p class="sub align-center">
-                        {{ company_name }} {{ company_address }}
+                        SportySpots Amsterdam, The Netherlands
                       </p>
                     </td>
                   </tr>
