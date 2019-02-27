@@ -7,6 +7,7 @@ from allauth.account import app_settings as allauth_settings
 from allauth.account.adapter import get_adapter
 from allauth.account.utils import setup_user_email
 from allauth.utils import email_address_exists
+from django.conf import settings
 from django.contrib.auth.models import Group
 from django.core.files.base import ContentFile
 from django.core.validators import EmailValidator
@@ -183,8 +184,18 @@ class GroupSerializer(serializers.ModelSerializer):
         fields = ("name",)
 
 
+class LanguageField(serializers.CharField):
+    def to_internal_value(self, data):
+        languages_codes = [language[0] for language in settings.LANGUAGES]
+        if data not in languages_codes:
+            # if language is not supported, default to english
+            return super().to_internal_value('en')
+        return super().to_internal_value(data)
+
+
 class RegisterSerializer(serializers.Serializer):
     name = serializers.CharField(required=False)
+    language = LanguageField(required=False)
     email = serializers.EmailField(
         required=True, validators=[EmailValidator(), UniqueValidator(queryset=User.objects.all())]
     )
@@ -221,6 +232,7 @@ class RegisterSerializer(serializers.Serializer):
             "username": self.validated_data.get("email", ""),
             "password1": self.validated_data.get("password1", ""),
             "email": self.validated_data.get("email", ""),
+            "language": self.validated_data.get("language", ""),
         }
 
     def save(self, request):

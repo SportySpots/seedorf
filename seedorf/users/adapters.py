@@ -70,6 +70,7 @@ class AccountAdapter(DefaultAccountAdapter):
         else:
             user.set_unusable_password()
         self.populate_username(request, user)
+        # user.profile.language = data.get("language", "en")
         if commit:
             # Ability not to commit makes it easier to derive from
             # this adapter by adding
