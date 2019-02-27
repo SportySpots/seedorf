@@ -1,0 +1,30 @@
+Gracias por probar {{product_name}}. Necesitamos confirmar tu correo electrónico para comenzar.
+
+{{product_name}} ( {{product_url}} )
+
+******************
+Hola, {{first_name}}!
+******************
+
+Gracias por probar {{product_name}}. Estamos encantados de tenerte a bordo.
+
+Para aprovechar al máximo {{product_name}}, por favor confirma tu correo electrónico:
+
+Confirmar correo electrónico ( {{ activate_url }} )
+
+Si tienes alguna pregunta, no dudes en enviar un correo electrónico a nuestro equipo de soporte ( {{ support_email }} ). (Somos rápidos en responder).
+
+Gracias,
+{{sender_name}} y el equipo de {{product_name}}
+
+P.D. ¿Necesitas ayuda inmediata para comenzar? Simplemente responde a este correo electrónico, el equipo de soporte de {{product_name}} siempre está listo para ayudarte.
+
+Si tienes problemas con el botón de arriba, copia y pega la siguiente URL en tu navegador web.
+
+{{activate_url}}
+
+© 2019 {{product_name}}. Todos los derechos reservados.
+
+{{company_name}}
+
+{{company_address}}
