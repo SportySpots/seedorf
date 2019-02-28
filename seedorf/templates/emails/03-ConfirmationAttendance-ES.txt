@@ -1,0 +1,9 @@
+{% extends "emails/00-BaseEmail-EN.txt" %}
+
+{% block content %}
+Game On! {{ name }},
+
+You're attending {{ invite_sender_name }}'s sport activity.
+
+View Activity: {{ action_url }}
+{% endblock content %}
