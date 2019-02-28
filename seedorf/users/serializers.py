@@ -189,7 +189,7 @@ class LanguageField(serializers.CharField):
         languages_codes = [language[0] for language in settings.LANGUAGES]
         if data not in languages_codes:
             # if language is not supported, default to english
-            return super().to_internal_value('en')
+            return super().to_internal_value("en")
         return super().to_internal_value(data)
 
 
