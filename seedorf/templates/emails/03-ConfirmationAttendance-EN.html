@@ -1,7 +1,7 @@
 {% extends "emails/00-BaseEmail-EN.html" %}
 
 {% block title %}
-  SportySpots - Accept Activity Details.
+  SportySpots - Activity Attendance Confirmed
 {% endblock title %}
 
 {% block preheader %}
@@ -9,7 +9,7 @@
 {% endblock preheader %}
 
 {% block email_body %}
-<h1>Game On!</h1>
+<h1>Game On! {{ name }},</h1>
 <p>You're attending {{ invite_sender_name }}'s sport activity.</p>
 <!-- Action -->
 <table class="body-action"
