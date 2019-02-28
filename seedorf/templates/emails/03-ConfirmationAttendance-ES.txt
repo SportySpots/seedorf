@@ -1,4 +1,4 @@
-{% extends "emails/00-BaseEmail-EN.txt" %}
+{% extends "emails/00-BaseEmail-ES.txt" %}
 
 {% block content %}
 Game On! {{ name }},
