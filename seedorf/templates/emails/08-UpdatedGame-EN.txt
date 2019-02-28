@@ -1,14 +1,9 @@
-Hi, {{name}}!
+{% extends "emails/00-BaseEmail-EN.txt" %}
 
-{{ invite_sender_name }} has edited the sport activity.
+{% block content %}
+Heads Up! {{ name }},
 
-For details, go to the activity by following the link below.
-{{action_url}}
+{{ invite_sender_name }}'s has updated the sport activity.
 
-Sport On,
-The SportySpots Team
-
-© 2019 SportySpots. All rights reserved.
-
-SportySpots
-Amsterdam, The Netherlands
+View Activity: {{ action_url }}
+{% endblock content %}

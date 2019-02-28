@@ -1,14 +1,9 @@
-Hi, {{name}}!
+{% extends "emails/00-BaseEmail-EN.txt" %}
 
-You're attending {{invite_sender_name}}'s sport activity.
+{% block content %}
+Game On! {{ name }},
 
-You can find this activity by following this link:
-{{action_url}}
+You're attending {{ invite_sender_name }}'s sport activity.
 
-Sport On,
-The SportySpots Team
-
-© 2019 SportySpots. All rights reserved.
-
-SportySpots
-Amsterdam, The Netherlands
+View Activity: {{ action_url }}
+{% endblock content %}

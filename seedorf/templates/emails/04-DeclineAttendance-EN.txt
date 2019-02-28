@@ -1,14 +1,10 @@
-Hi, {{name}}!
+{% extends "emails/00-BaseEmail-EN.txt" %}
 
-You're not attending {{invite_sender_name}}'s sport activity.
+{% block content %}
+Aah! {{ name }},
 
-If you change your mind, you can still sign up by following the link below.
-{{action_url}}
+You've declined {{ invite_sender_name }}'s sport activity. If you change your mind, you can still sign up by following
+the link below.
 
-Sport On,
-The SportySpots Team
-
-© 2019 SportySpots. All rights reserved.
-
-SportySpots
-Amsterdam, The Netherlands
+View Activity: {{ action_url }}
+{% endblock content %}

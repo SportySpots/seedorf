@@ -1,13 +1,10 @@
-Hi, {{name}}!
+{% extends "emails/00-BaseEmail-EN.txt" %}
+
+{% block content %}
+Wohooo! {{ name }},
 
 Thanks for trying out SportySpots. We’re thrilled to have you on board.
-To get started, please confirm your email by following the link below:
-{{action_url}}
+To get started, please confirm your email:
 
-Sport On,
-The SportySpots Team
-
-© 2019 SportySpots. All rights reserved.
-
-SportySpots
-Amsterdam, The Netherlands
+Confirm Email: {{ action_url }}
+{% endblock content %}

@@ -1,12 +1,9 @@
-Hi, {{name}}!
+{% extends "emails/00-BaseEmail-EN.txt" %}
 
-To log in, follow the link below.
-{{action_url}}
+{% block content %}
+Wohooo! {{ name }},
 
-Sport On,
-The SportySpots Team
+Here's your magic login link. Click to login directly without a password.
 
-© 2019 SportySpots. All rights reserved.
-
-SportySpots
-Amsterdam, The Netherlands
+Login: {{ action_url }}
+{% endblock content %}

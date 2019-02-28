@@ -1,14 +1,9 @@
-Hi, {{name}}!
+{% extends "emails/00-BaseEmail-EN.txt" %}
+
+{% block content %}
+Howdy! {{ name }},
 
 {{ invite_sender_name }} has invited you to join a sport activity.
 
-For details, go to the activity by following the link below.
-{{action_url}}
-
-Sport On,
-The SportySpots Team
-
-© 2019 SportySpots. All rights reserved.
-
-SportySpots
-Amsterdam, The Netherlands
+View Activity: {{ action_url }}
+{% endblock content %}

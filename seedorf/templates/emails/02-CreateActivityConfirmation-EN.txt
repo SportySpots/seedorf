@@ -1,13 +1,9 @@
-Hi {{ name }}!
+{% extends "emails/00-BaseEmail-EN.txt" %}
+
+{% block content %}
+Aloha! {{ name }},
 
 Thank you for creating a new activity on SportySpots. You can view the activity details and invite others by sharing the link below.
 
-Game Details ( {{ action_url }} )
-
-Sport On,
-The SportySpots Team
-
-© 2019 SportySpots. All rights reserved.
-
-SportySpots
-Amsterdam, The Netherlands
+View Activity: {{ action_url }}
+{% endblock content %}
