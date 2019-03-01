@@ -131,7 +131,6 @@ FIXTURE_DIRS = (str(APPS_DIR.path("fixtures")),)
 # EMAIL CONFIGURATION
 # ------------------------------------------------------------------------------
 EMAIL_BACKEND = env("DJANGO_EMAIL_BACKEND", default="django.core.mail.backends.smtp.EmailBackend")
-EMAIL_FORCE_SELF_RENDER = env.bool("EMAIL_FORCE_SELF_RENDER", False)
 
 # MANAGER CONFIGURATION
 # ------------------------------------------------------------------------------

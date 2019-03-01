@@ -1,6 +1,11 @@
 import pytz
 from django.conf import settings
 from django.core.mail import EmailMessage
+from django.core.mail import EmailMultiAlternatives
+
+from django.template import Context
+from django.template.loader import get_template
+
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db import models
 from django.urls import reverse
@@ -217,6 +222,33 @@ class Game(BasePropertiesModel):
         message.merge_global_data = ctx
 
         message.send()
+
+        # ------------------------------
+        language = self.organizer.profile.language.upper()
+        template_file_prefix = f"CreateActivityConfirmation-{language}"
+        text_template = get_template(f"{template_file_prefix}.txt")
+        html_template = get_template(f"{template_file_prefix}.html")
+
+        email_plain_text = ""
+        email_html = ""
+
+        msg = EmailMultiAlternatives(
+            subject=_("Game on! You're attending!"),
+            body=email_plain_text,
+            from_email="SportySpots <info@sportyspots.com>",
+            to=[f"{self.organizer.name} <{self.organizer.email}>"],
+            reply_to=["SportySpots <info@sportyspots.com>"],
+        )
+
+        msg.attach_alternative(email_html, "text/html")
+
+        # Optional Anymail extensions:
+        msg.tags = ["activation"]
+        msg.track_clicks = True
+        msg.track_opens = True
+
+        # Send it:
+        msg.send()
 
     def send_attendees_update_email(self, message):
         pass

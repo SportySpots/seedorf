@@ -1,5 +1,6 @@
 from django.contrib.gis.geos import GEOSGeometry
 from django.contrib.gis.measure import D
+from django.contrib.gis.db.models.functions import Distance
 from django_filters import rest_framework as filters
 
 from seedorf.sports.models import Sport
@@ -28,10 +29,12 @@ class SpotFilter(filters.FilterSet):
     @staticmethod
     def filter_by_distance(queryset, name, value):
         # TODO: Validate distance is integer, and the lat and lng values are valid
-        distance, lat, lng = value.split(":")
+        radius, lat, lng = value.split(":")
 
         # REF: https://docs.djangoproject.com/en/2.0/ref/contrib/gis/db-api/#distance-lookups
         ref_location = GEOSGeometry(f"POINT({lng} {lat})", srid=4326)
         lookup = f"{name}__distance_lte"
-        return queryset.filter(**{lookup: (ref_location, D(m=int(distance)))})
-        # .annotate(distance=Distance("location", ref_location)).order_by("distance")
+        qs = queryset.filter(**{lookup: (ref_location, D(m=int(radius)))}).annotate(
+            distance=Distance("address__point", ref_location)
+        )
+        return qs
