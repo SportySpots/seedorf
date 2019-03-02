@@ -213,12 +213,13 @@ class Game(BasePropertiesModel):
             "action_url": "https://www.sportyspots.com/games/{}".format(self.uuid),
         }
 
-        send_mail(self.organizer.email,
-                  template_prefix="CreateActivityConfirmation",
-                  subject=_("Your activity details"),
-                  language=self.organizer.profile.language,
-                  context=context
-                  )
+        send_mail(
+            self.organizer.email,
+            template_prefix="CreateActivityConfirmation",
+            subject=_("Your activity details"),
+            language=self.organizer.profile.language,
+            context=context,
+        )
 
     def send_attendees_update_email(self, message):
         pass
