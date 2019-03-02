@@ -1,0 +1,14 @@
+Hi, {{name}}!
+
+{{ invite_sender_name }}'s heeft de sportactiviteit geannuleerd.
+
+Open de activeit voor meer informatie, bijvoorbeeld door onderstaande link to volgen.
+{{action_url}}
+
+Sportze!
+The SportySpots Team
+
+© 2019 SportySpots. All rights reserved.
+
+SportySpots
+Amsterdam, The Netherlands

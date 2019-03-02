@@ -1,0 +1,9 @@
+{% extends "emails/BaseEmail-en.txt" %}
+
+{% block content %}
+Shoot! {{ name }},
+
+{{ invite_sender_name }} has cancelled the sport activity.
+
+View Activity: {{ action_url }}
+{% endblock content %}

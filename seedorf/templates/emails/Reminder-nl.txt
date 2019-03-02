@@ -1,0 +1,14 @@
+Hoi, {{name}}!
+
+Vandaag is {{ invite_sender_name }}'s sportactiviteit.
+
+Volg onderstaande link voor meer informatie.
+{{action_url}}
+
+Veel plezier!
+The SportySpots Team
+
+© 2019 SportySpots. All rights reserved.
+
+SportySpots
+Amsterdam, The Netherlands

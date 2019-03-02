@@ -1,0 +1,9 @@
+{% extends "emails/BaseEmail-en.txt" %}
+
+{% block content %}
+Howdy! {{ name }},
+
+Nice to have you on board at SportySpots! Confirm your registration by following the link below and start sporting!.
+
+To confirm, follow this link: {{ action_url }}
+{% endblock content %}

@@ -1,0 +1,14 @@
+Hi, {{ name }}!
+
+Je bent aangemeld voor {{organizer_name}}'s sportactiviteit.
+
+Bekijk de activiteit ( {{ action_url }} )
+
+Happy sporting,
+The SportySpots Team
+
+© 2019 SportySpots. All rights reserved.
+
+SportySpots
+
+Amsterdam, The Netherlands

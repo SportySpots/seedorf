@@ -1,0 +1,14 @@
+Hi, {{name}}!
+
+{{ invite_sender_name }} heeft je uitgenodigd om mee te doen aan een sportactiviteit.
+
+Bekijk de activiteit via onderstaande link voor meer informatie.
+{{action_url}}
+
+Sport On,
+The SportySpots Team
+
+© 2019 SportySpots. All rights reserved.
+
+SportySpots
+Amsterdam, The Netherlands

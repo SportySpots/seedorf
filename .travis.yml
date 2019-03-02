@@ -25,12 +25,13 @@ before_install:
   - psql -U postgres -c "create extension postgis"
   - psql -c 'create database seedorf;' -U postgres
 install:
+  - ln -s .envs/.env.tst .env
   - pip install pipenv
   - pipenv install --dev
-  - PIPENV_DOTENV_LOCATION=.env.tst pipenv run ./manage.py migrate --noinput
-  - PIPENV_DOTENV_LOCATION=.env.tst pipenv run ./manage.py collectstatic -c --noinput
+  - pipenv run ./manage.py migrate --noinput
+  - pipenv run ./manage.py collectstatic -c --noinput
 script:
-  - PIPENV_DOTENV_LOCATION=.env.tst pipenv run ./manage.py test
+  - pipenv run ./manage.py test
 branches:
   only:
     - master

@@ -1,0 +1,13 @@
+Welkom, {{name}}!
+
+Tof dat je je hebt aangemeld bij SportySpots.
+Bevestig je aanmelding door onderstaand link te volgen:
+{{action_url}}
+
+Veel sportplezier!
+The SportySpots Team
+
+© 2019 SportySpots. All rights reserved.
+
+SportySpots
+Amsterdam, The Netherlands

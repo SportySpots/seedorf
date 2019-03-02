@@ -1,0 +1,15 @@
+Welkom, {{ name }}!
+
+Tof, dat je hebt aangemeld voor SportySpots.
+
+Volg onderstaande link om van start te kunnen gaan met SportySpots.
+
+{{ action_url }}
+
+Mocht je vragen hebben, dan kun je ons altijd mailen op info@sportyspots.com
+
+Sportieve groet,
+Team SportySpots
+
+© 2019 SportySpots. All rights reserved.
+SportySpots Amsterdam, The Netherlands

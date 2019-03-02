@@ -1,0 +1,12 @@
+Hoi, {{name}}!
+
+Volg onderstaand link om in te loggen.
+{{action_url}}
+
+Sportze!
+Het SportySpots Team
+
+© 2019 SportySpots. All rights reserved.
+
+SportySpots
+Amsterdam, The Netherlands

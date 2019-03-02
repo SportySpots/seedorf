@@ -1,0 +1,9 @@
+{% extends "emails/BaseEmail-es.txt" %}
+
+{% block content %}
+Howdy! {{ name }},
+
+{{ invite_sender_name }} has invited you to join a sport activity.
+
+View Activity: {{ action_url }}
+{% endblock content %}

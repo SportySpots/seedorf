@@ -1,0 +1,9 @@
+{% extends "emails/BaseEmail-en.txt" %}
+
+{% block content %}
+Wohooo! {{ name }},
+
+Here's your magic login link. Click to login directly without a password.
+
+Login: {{ action_url }}
+{% endblock content %}

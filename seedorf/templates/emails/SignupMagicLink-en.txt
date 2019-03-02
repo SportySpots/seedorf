@@ -1,0 +1,10 @@
+{% extends "emails/BaseEmail-en.txt" %}
+
+{% block content %}
+Wohooo! {{ name }},
+
+Thanks for trying out SportySpots. We’re thrilled to have you on board.
+To get started, please confirm your email:
+
+Confirm Email: {{ action_url }}
+{% endblock content %}

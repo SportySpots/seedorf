@@ -36,7 +36,6 @@ class UserRegistrationAPIViewTest(APITestCase):
     url = reverse("rest-auth-registration:rest_register")
 
     def test_user_creation_without_password(self):
-
         user_data = {"name": "test create name", "email": "test_create@example.com"}
 
         with patch.object(AccountAdapter, "send_confirmation_mail", return_value=None), patch.object(
@@ -73,6 +72,32 @@ class UserRegistrationAPIViewTest(APITestCase):
             self.assertEqual(response_user_profile["timezone"], "Europe/Amsterdam")
             self.assertEqual(response_user_profile["country"], "")
             self.assertEqual(response_user_profile["bio"], "")
+
+    def test_user_creation_with_unsupported_language(self):
+        user_data = {"name": "test create name", "email": "test_create@example.com", "language": "xx"}
+
+        with patch.object(AccountAdapter, "send_confirmation_mail", return_value=None), patch.object(
+            AccountAdapter, "get_login_redirect_url", return_value=""
+        ):
+            response = self.client.post(self.url, user_data)
+            response_user = response.data["user"]
+            response_user_profile = response_user["profile"]
+            self.assertEqual(201, response.status_code)
+            self.assertTrue("token" in response.data)
+            self.assertEqual(response_user_profile["language"], "en")
+
+    def test_user_creation_with_supported_language(self):
+        user_data = {"name": "test create name", "email": "test_create@example.com", "language": "nl"}
+
+        with patch.object(AccountAdapter, "send_confirmation_mail", return_value=None), patch.object(
+            AccountAdapter, "get_login_redirect_url", return_value=""
+        ):
+            response = self.client.post(self.url, user_data)
+            response_user = response.data["user"]
+            response_user_profile = response_user["profile"]
+            self.assertEqual(201, response.status_code)
+            self.assertTrue("token" in response.data)
+            self.assertEqual(response_user_profile["language"], "nl")
 
     def test_user_creation_with_password(self):
 

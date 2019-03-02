@@ -1,0 +1,15 @@
+Hoi, {{ name }}!
+
+Je hebt je afgemeld voor {{organizer_name}}'s sportactiviteit.
+
+Mocht je van gedachten veranderen, meld je daan aan via:
+{{ action_url }}
+
+Veel plezier,
+Het SportySpots Team
+
+© 2019 SportySpots. All rights reserved.
+
+SportySpots
+
+Amsterdam, Nederland

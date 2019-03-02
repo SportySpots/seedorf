@@ -12,6 +12,7 @@ from seedorf.spots.models import Spot
 from seedorf.spots.tests.factories import SpotFactory
 from seedorf.users.tests.factories import UserFactory
 from .factories import GameFactory, RsvpStatusFactory
+from django.core import mail
 
 
 class GameAPIViewTest(APITestCase):
@@ -254,6 +255,10 @@ class GameAPIViewTest(APITestCase):
 
         response = self.client.patch(url, data, format="json")
         self.assertEqual(200, response.status_code)
+
+        # test emails
+        self.assertEqual(len(mail.outbox), 1)
+        self.assertEqual(mail.outbox[0].subject, "Your activity details")
 
     def test_valid_spot_assign(self):
         game = GameFactory()

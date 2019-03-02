@@ -1,0 +1,13 @@
+Hoi {{ name }}!
+
+Top, je activiteit is aangemaakt op SportySpots. Je kunt alle activiteit details bekijken en anderen uitnodigen door de link hieronder te delen.
+
+Activiteit details ( {{ action_url }} )
+
+Sportze,
+Het SportySpots Team
+
+© 2019 SportySpots. All rights reserved.
+
+SportySpots
+Amsterdam, Nederland

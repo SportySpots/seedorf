@@ -1,0 +1,9 @@
+{% extends "emails/BaseEmail-es.txt" %}
+
+{% block content %}
+Aloha! {{ name }},
+
+Thank you for creating a new activity on SportySpots. You can view the activity details and invite others by sharing the link below.
+
+View Activity: {{ action_url }}
+{% endblock content %}

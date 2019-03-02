@@ -1,12 +1,12 @@
 import pytz
 from django.conf import settings
-from django.core.mail import EmailMessage
-from django.core.validators import MinValueValidator, MaxValueValidator
+from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
 from django.urls import reverse
 from django.utils.translation import ugettext as _
 from django_fsm import FSMField, transition
 
+from seedorf.utils.email import send_mail
 from seedorf.utils.firebase import get_firebase_link
 from seedorf.utils.models import BasePropertiesModel
 
@@ -202,21 +202,19 @@ class Game(BasePropertiesModel):
             return get_firebase_link(f"games/{self.uuid}", unguessable=False, st=self.name, sd=self.description)
 
     def send_organizer_confirmation_mail(self):
-
-        ctx = {
-            "first_name": self.organizer.first_name,
+        context = {
+            "name": self.organizer.name,
             # TODO: Fix game url hardcoding
-            "game_url": "https://www.sportyspots.com/games/{}".format(self.uuid),
+            "action_url": "https://www.sportyspots.com/games/{}".format(self.uuid),
         }
 
-        message = EmailMessage(subject="", body="", to=[self.organizer.email])
-
-        # REF: https://account.postmarkapp.com/servers/3930160/templates/6934046/edit
-        message.template_id = 6934046  # use this Postmark template
-
-        message.merge_global_data = ctx
-
-        message.send()
+        send_mail(
+            self.organizer.email,
+            template_prefix="CreateActivityConfirmation",
+            subject=_("Your activity details"),
+            language=self.organizer.profile.language,
+            context=context,
+        )
 
     def send_attendees_update_email(self, message):
         pass
@@ -227,22 +225,21 @@ class Game(BasePropertiesModel):
             rsvp_status.user for rsvp_status in RsvpStatus.objects.filter(game=self, status=RsvpStatus.STATUS_ATTENDING)
         ]
         if len(attendees) > 0:
-            ctx = {
-                "organizer_first_name": self.organizer.first_name,
-                # TODO: Fix game url hardcoding
-                "game_url": f"https://www.sportyspots.com/games/{self.uuid}",
-                "product_name": "SportySpots",
-                "product_url": "https://www.sportyspots.com",
-                "support_email": "info@sportyspots.com",
-                "sender_name": "SportySpots",
-                "company_name": "SportySpots",
-                "company_address": "Amsterdam, The Netherlands",
-            }
+            for attendee in attendees:
+                context = {
+                    "name": attendee.name,
+                    "invite_sender_name": self.organizer.name,
+                    # TODO: Fix game url hardcoding
+                    "action_url": f"https://www.sportyspots.com/games/{self.uuid}",
+                }
 
-            message = EmailMessage(subject=None, body=None, to=[attendee.email for attendee in attendees])
-            message.template_id = 6790382
-            message.merge_global_data = ctx
-            message.send()
+                send_mail(
+                    to=attendee.email,
+                    template_prefix="CancelledGame",
+                    subject=_(f"Sport activity has been cancelled."),
+                    language=attendee.profile.language,
+                    context=context,
+                )
 
     def transition_status(self, status):
         if status == Game.STATUS_CANCELED:
@@ -390,20 +387,23 @@ class RsvpStatus(BasePropertiesModel):
     def __str__(self):
         return f"{self.game.name} : { self.user.name}"
 
-    def send_user_confirmation_mail(self, template_id):
+    def send_user_confirmation_mail(self):
         # TODO: Send the game details e.g. time, name, type of sport
         # TODO: Create ICS file for calendar
-        ctx = {
-            "organizer_first_name": self.game.organizer.first_name,
-            "first_name": self.user.first_name,
+        context = {
+            "invite_sender_name": self.game.organizer.name,
+            "name": self.user.name,
             # TODO: Fix game url hardcoding
-            "game_url": f"https://www.sportyspots.com/games/{self.game.uuid}",
+            "action_url": f"https://www.sportyspots.com/games/{self.game.uuid}",
         }
 
-        message = EmailMessage(subject="", body="", to=[self.user.email])
-        message.template_id = template_id
-        message.merge_global_data = ctx
-        message.send()
+        send_mail(
+            to=self.user.email,
+            template_prefix="ConfirmationAttendance",
+            subject=_("Game on! You're attending!"),
+            language=self.user.profile.language,
+            context=context,
+        )
 
     def transition_status(self, status: str):
         if status == self.STATUS_ACCEPTED:
@@ -441,8 +441,7 @@ class RsvpStatus(BasePropertiesModel):
     def attend(self):
         # TODO: Send a confirmation email to the user
         # TODO: Send a confirmation emeail to organizer
-        # REF: https://account.postmarkapp.com/servers/3930160/templates/6789246/edit
-        self.send_user_confirmation_mail(template_id=6789246)
+        self.send_user_confirmation_mail()
 
     @transition(
         field=status,
@@ -461,8 +460,7 @@ class RsvpStatus(BasePropertiesModel):
     )
     def decline(self):
         # TODO: Send the organizer an email, if he had invited the user
-        # REF: https://account.postmarkapp.com/servers/3930160/templates/6934047/edit
-        self.send_user_confirmation_mail(template_id=6934047)
+        self.send_user_confirmation_mail()
 
     @transition(
         field=status,

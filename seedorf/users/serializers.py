@@ -7,6 +7,7 @@ from allauth.account import app_settings as allauth_settings
 from allauth.account.adapter import get_adapter
 from allauth.account.utils import setup_user_email
 from allauth.utils import email_address_exists
+from django.conf import settings
 from django.contrib.auth.models import Group
 from django.core.files.base import ContentFile
 from django.core.validators import EmailValidator
@@ -30,6 +31,16 @@ class TimezoneField(serializers.Field):
             return pytz.timezone(str(data))
         except pytz.exceptions.UnknownTimeZoneError:
             raise serializers.ValidationError(_("Unknown timezone"))
+
+
+class Base64ImageField(serializers.ImageField):
+    def to_internal_value(self, data):
+        # data looks like 'data:image/jpeg;base64,asdakhgf'
+        base64_str = data.split(",")[1]
+        content = base64.b64decode(base64_str)
+        content_hash = hashlib.sha1(content).hexdigest()
+        data = ContentFile(content, name=content_hash + ".jpg")
+        return super(Base64ImageField, self).to_internal_value(data)
 
 
 class UserSportNestedSerializer(serializers.ModelSerializer):
@@ -57,16 +68,6 @@ class UserSportNestedSerializer(serializers.ModelSerializer):
             return sport
 
         return {}
-
-
-class Base64ImageField(serializers.ImageField):
-    def to_internal_value(self, data):
-        # data looks like 'data:image/jpeg;base64,asdakhgf'
-        base64_str = data.split(",")[1]
-        content = base64.b64decode(base64_str)
-        content_hash = hashlib.sha1(content).hexdigest()
-        data = ContentFile(content, name=content_hash + ".jpg")
-        return super(Base64ImageField, self).to_internal_value(data)
 
 
 class UserProfileSerializer(CountryFieldMixin, serializers.ModelSerializer):
@@ -185,6 +186,7 @@ class GroupSerializer(serializers.ModelSerializer):
 
 class RegisterSerializer(serializers.Serializer):
     name = serializers.CharField(required=False)
+    language = serializers.CharField(default="en", required=False)
     email = serializers.EmailField(
         required=True, validators=[EmailValidator(), UniqueValidator(queryset=User.objects.all())]
     )
@@ -206,29 +208,36 @@ class RegisterSerializer(serializers.Serializer):
         # set a random password, if the password is empty
         return User.objects.make_random_password()
 
+    @staticmethod
+    def validate_language(language):
+        languages_codes = [language[0] for language in settings.LANGUAGES]
+        if language in languages_codes:
+            return language
+        return "en"
+
     def validate(self, data):
         if data.get("password1") != data.get("password2"):
             raise serializers.ValidationError(_("The two password fields didn't match."))
         return data
 
-    def custom_signup(self, request, user):
-        pass
-
     def get_cleaned_data(self):
         return {
-            "name": self.validated_data.get("name", ""),
             # Force email to be the username
             "username": self.validated_data.get("email", ""),
-            "password1": self.validated_data.get("password1", ""),
             "email": self.validated_data.get("email", ""),
+            "password1": self.validated_data.get("password1", ""),
+            "name": self.validated_data.get("name", ""),
+            "language": self.validated_data.get("language", "en"),
         }
 
     def save(self, request):
+        self.cleaned_data = self.get_cleaned_data()
         adapter = get_adapter()
         user = adapter.new_user(request)
-        self.cleaned_data = self.get_cleaned_data()
-        adapter.save_user(request, user, self)
+        user_instance = adapter.save_user(request, user, self)
+        setup_user_email(request, user_instance, [])
 
-        self.custom_signup(request, user)
-        setup_user_email(request, user, [])
+        # force set the language on user profile
+        user_instance.profile.language = self.cleaned_data["language"]
+        user_instance.profile.save()
         return user
