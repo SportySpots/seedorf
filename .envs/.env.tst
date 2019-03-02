@@ -22,7 +22,7 @@ DJANGO_DEBUG=True
 DJANGO_SECRET_KEY=sportyspots
 DJANGO_SETTINGS_MODULE=config.settings.tst
 DJANGO_ALLOWED_HOSTS=127.0.0.1
-DJANGO_EMAIL_BACKEND=seedorf.utils.email_backends.LocalPostmarkEmailBackend
+DJANGO_EMAIL_BACKEND=django.core.mail.backends.locmem.EmailBackend
 
 DJANGO_CSRF_COOKIE_SECURE=False
 DJANGO_CSRF_COOKIE_DOMAIN=127.0.0.1

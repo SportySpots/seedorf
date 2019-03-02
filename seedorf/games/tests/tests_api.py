@@ -44,7 +44,7 @@ class GameAPIViewTest(APITestCase):
 
         # test emails
         self.assertEqual(len(mail.outbox), 1)
-        self.assertEqual(mail.outbox[0].subject, 'Subject here')
+        self.assertEqual(mail.outbox[0].subject, "Subject here")
 
     def test_game_create_set_status_error(self):
         url = reverse("game-list")
