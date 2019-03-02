@@ -42,10 +42,6 @@ class GameAPIViewTest(APITestCase):
         self.assertListEqual(response.data["rsvps"], [])
         self.assertEqual(response.data["status"], "draft")
 
-        # test emails
-        self.assertEqual(len(mail.outbox), 1)
-        self.assertEqual(mail.outbox[0].subject, "Subject here")
-
     def test_game_create_set_status_error(self):
         url = reverse("game-list")
         now = timezone.now()
@@ -259,6 +255,10 @@ class GameAPIViewTest(APITestCase):
 
         response = self.client.patch(url, data, format="json")
         self.assertEqual(200, response.status_code)
+
+        # test emails
+        self.assertEqual(len(mail.outbox), 1)
+        self.assertEqual(mail.outbox[0].subject, "Your activity details")
 
     def test_valid_spot_assign(self):
         game = GameFactory()

@@ -2,8 +2,8 @@ import pytz
 from django.conf import settings
 from django.core.mail import EmailMessage
 from django.core.mail import EmailMultiAlternatives
+from seedorf.utils.email import send_mail
 
-from django.template import Context
 from django.template.loader import get_template
 
 from django.core.validators import MinValueValidator, MaxValueValidator
@@ -207,54 +207,18 @@ class Game(BasePropertiesModel):
             return get_firebase_link(f"games/{self.uuid}", unguessable=False, st=self.name, sd=self.description)
 
     def send_organizer_confirmation_mail(self):
-
-        # ctx = {
-        #     "name": self.organizer.name,
-        #     # TODO: Fix game url hardcoding
-        #     "action_url": "https://www.sportyspots.com/games/{}".format(self.uuid),
-        # }
-        #
-        # message = EmailMessage(subject="", body="", to=[self.organizer.email])
-        #
-        # # REF: https://account.postmarkapp.com/servers/3930160/templates/6934046/edit
-        # message.template_id = 6934046  # use this Postmark template
-        #
-        # message.merge_global_data = ctx
-        #
-        # message.send()
-
-        # ------------------------------
-        language = self.organizer.profile.language.upper()
-        template_file_prefix = f"CreateActivityConfirmation-{language}"
-        html_template = get_template(f"emails/{template_file_prefix}.html")
-        text_template = get_template(f"emails/{template_file_prefix}.txt")
-
         context = {
             "name": self.organizer.name,
             # TODO: Fix game url hardcoding
             "action_url": "https://www.sportyspots.com/games/{}".format(self.uuid),
         }
 
-        email_plain_text = text_template.render(context)
-        email_html = html_template.render(context)
-
-        msg = EmailMultiAlternatives(
-            subject=_("Game on! You're attending!"),
-            body=email_plain_text,
-            from_email="SportySpots <info@sportyspots.com>",
-            to=[f"{self.organizer.name} <{self.organizer.email}>"],
-            reply_to=["SportySpots <info@sportyspots.com>"],
-        )
-
-        msg.attach_alternative(email_html, "text/html")
-
-        # Optional Anymail extensions:
-        msg.tags = ["activation"]
-        msg.track_clicks = True
-        msg.track_opens = True
-
-        # Send it:
-        msg.send()
+        send_mail(self.organizer.email,
+                  template_prefix="CreateActivityConfirmation",
+                  subject=_("Your activity details"),
+                  language=self.organizer.profile.language,
+                  context=context
+                  )
 
     def send_attendees_update_email(self, message):
         pass
