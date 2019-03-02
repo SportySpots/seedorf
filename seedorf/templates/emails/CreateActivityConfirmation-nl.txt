@@ -1,13 +1,9 @@
-Hoi {{ name }}!
+{% extends "emails/BaseEmail-en.txt" %}
 
-Top, je activiteit is aangemaakt op SportySpots. Je kunt alle activiteit details bekijken en anderen uitnodigen door de link hieronder te delen.
+{% block content %}
+Aloha! {{ name }},
 
-Activiteit details ( {{ action_url }} )
+Thank you for creating a new activity on SportySpots. You can view the activity details and invite others by sharing the link below.
 
-Sportze,
-Het SportySpots Team
-
-© 2019 SportySpots. All rights reserved.
-
-SportySpots
-Amsterdam, Nederland
+View Activity: {{ action_url }}
+{% endblock content %}

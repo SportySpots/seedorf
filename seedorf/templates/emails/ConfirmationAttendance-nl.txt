@@ -1,14 +1,9 @@
-Hi, {{ name }}!
+{% extends "emails/BaseEmail-en.txt" %}
 
-Je bent aangemeld voor {{organizer_name}}'s sportactiviteit.
+{% block content %}
+Game On! {{ name }},
 
-Bekijk de activiteit ( {{ action_url }} )
+You're attending {{ invite_sender_name }}'s sport activity.
 
-Happy sporting,
-The SportySpots Team
-
-© 2019 SportySpots. All rights reserved.
-
-SportySpots
-
-Amsterdam, The Netherlands
+View Activity: {{ action_url }}
+{% endblock content %}

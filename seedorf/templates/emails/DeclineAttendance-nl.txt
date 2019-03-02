@@ -1,15 +1,10 @@
-Hoi, {{ name }}!
+{% extends "emails/BaseEmail-en.txt" %}
 
-Je hebt je afgemeld voor {{organizer_name}}'s sportactiviteit.
+{% block content %}
+Aah! {{ name }},
 
-Mocht je van gedachten veranderen, meld je daan aan via:
-{{ action_url }}
+You've declined {{ invite_sender_name }}'s sport activity. If you change your mind, you can still sign up by following
+the link below.
 
-Veel plezier,
-Het SportySpots Team
-
-© 2019 SportySpots. All rights reserved.
-
-SportySpots
-
-Amsterdam, Nederland
+View Activity: {{ action_url }}
+{% endblock content %}
