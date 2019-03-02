@@ -208,29 +208,35 @@ class Game(BasePropertiesModel):
 
     def send_organizer_confirmation_mail(self):
 
-        ctx = {
+        # ctx = {
+        #     "name": self.organizer.name,
+        #     # TODO: Fix game url hardcoding
+        #     "action_url": "https://www.sportyspots.com/games/{}".format(self.uuid),
+        # }
+        #
+        # message = EmailMessage(subject="", body="", to=[self.organizer.email])
+        #
+        # # REF: https://account.postmarkapp.com/servers/3930160/templates/6934046/edit
+        # message.template_id = 6934046  # use this Postmark template
+        #
+        # message.merge_global_data = ctx
+        #
+        # message.send()
+
+        # ------------------------------
+        language = self.organizer.profile.language.upper()
+        template_file_prefix = f"CreateActivityConfirmation-{language}"
+        html_template = get_template(f"emails/{template_file_prefix}.html")
+        text_template = get_template(f"emails/{template_file_prefix}.txt")
+
+        context = {
             "name": self.organizer.name,
             # TODO: Fix game url hardcoding
             "action_url": "https://www.sportyspots.com/games/{}".format(self.uuid),
         }
 
-        message = EmailMessage(subject="", body="", to=[self.organizer.email])
-
-        # REF: https://account.postmarkapp.com/servers/3930160/templates/6934046/edit
-        message.template_id = 6934046  # use this Postmark template
-
-        message.merge_global_data = ctx
-
-        message.send()
-
-        # ------------------------------
-        language = self.organizer.profile.language.upper()
-        template_file_prefix = f"CreateActivityConfirmation-{language}"
-        text_template = get_template(f"{template_file_prefix}.txt")
-        html_template = get_template(f"{template_file_prefix}.html")
-
-        email_plain_text = ""
-        email_html = ""
+        email_plain_text = text_template.render(context)
+        email_html = html_template.render(context)
 
         msg = EmailMultiAlternatives(
             subject=_("Game on! You're attending!"),

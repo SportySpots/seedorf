@@ -12,6 +12,7 @@ from seedorf.spots.models import Spot
 from seedorf.spots.tests.factories import SpotFactory
 from seedorf.users.tests.factories import UserFactory
 from .factories import GameFactory, RsvpStatusFactory
+from django.core import mail
 
 
 class GameAPIViewTest(APITestCase):
@@ -40,6 +41,10 @@ class GameAPIViewTest(APITestCase):
         self.assertIsNone(response.data["spot"])
         self.assertListEqual(response.data["rsvps"], [])
         self.assertEqual(response.data["status"], "draft")
+
+        # test emails
+        self.assertEqual(len(mail.outbox), 1)
+        self.assertEqual(mail.outbox[0].subject, 'Subject here')
 
     def test_game_create_set_status_error(self):
         url = reverse("game-list")
