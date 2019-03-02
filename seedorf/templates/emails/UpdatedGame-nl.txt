@@ -1,14 +1,9 @@
-Hoi, {{name}}!
+{% extends "emails/BaseEmail-nl.txt" %}
 
-{{ invite_sender_name }}'s sportactiviteit is gewijzigd.
+{% block content %}
+Heads Up! {{ name }},
 
-Volg onderstaande link voor meer informatie.
-{{action_url}}
+{{ invite_sender_name }}'s has updated the sport activity.
 
-Veel plezier!
-The SportySpots Team
-
-© 2019 SportySpots. All rights reserved.
-
-SportySpots
-Amsterdam, The Netherlands
+View Activity: {{ action_url }}
+{% endblock content %}

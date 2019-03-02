@@ -1,14 +1,9 @@
-Hi, {{name}}!
+{% extends "emails/BaseEmail-nl.txt" %}
 
-{{ invite_sender_name }}'s heeft de sportactiviteit geannuleerd.
+{% block content %}
+Shoot! {{ name }},
 
-Open de activeit voor meer informatie, bijvoorbeeld door onderstaande link to volgen.
-{{action_url}}
+{{ invite_sender_name }} has cancelled the sport activity.
 
-Sportze!
-The SportySpots Team
-
-© 2019 SportySpots. All rights reserved.
-
-SportySpots
-Amsterdam, The Netherlands
+View Activity: {{ action_url }}
+{% endblock content %}

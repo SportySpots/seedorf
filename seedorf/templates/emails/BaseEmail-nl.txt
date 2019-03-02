@@ -1,0 +1,18 @@
+{% block content %}
+Hi {{ name }},
+
+Nice to have you on board at SportySpots! Confirm your registration through this e-mail and start sporting!
+
+To confirm, follow this link: {{ action_url }}
+{% endblock content %}
+
+{% block footer %}
+
+If you have any questions, feel free to contact us at info@sportyspots.com.
+
+Kind regards,
+Team SportySpots
+
+© 2019 SportySpots. All rights reserved.
+SportySpots Amsterdam, The Netherlands
+{% endblock footer %}

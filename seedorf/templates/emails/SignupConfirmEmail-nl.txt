@@ -1,15 +1,9 @@
-Welkom, {{ name }}!
+{% extends "emails/BaseEmail-nl.txt" %}
 
-Tof, dat je hebt aangemeld voor SportySpots.
+{% block content %}
+Howdy! {{ name }},
 
-Volg onderstaande link om van start te kunnen gaan met SportySpots.
+Nice to have you on board at SportySpots! Confirm your registration by following the link below and start sporting!.
 
-{{ action_url }}
-
-Mocht je vragen hebben, dan kun je ons altijd mailen op info@sportyspots.com
-
-Sportieve groet,
-Team SportySpots
-
-© 2019 SportySpots. All rights reserved.
-SportySpots Amsterdam, The Netherlands
+To confirm, follow this link: {{ action_url }}
+{% endblock content %}
