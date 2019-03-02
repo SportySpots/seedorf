@@ -13,7 +13,7 @@ def send_mail(to, template_prefix, subject="", language="en", context=None):
         subject=subject,
         body=email_html,
         from_email="SportySpots <info@sportyspots.com>",
-        to=[f"{to}>"],
+        to=[f"{to}"],
         reply_to=["SportySpots <info@sportyspots.com>"],
     )
 

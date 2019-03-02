@@ -3,7 +3,6 @@ from datetime import date
 
 from django.conf import settings
 from django.contrib.auth.models import AbstractUser
-from django.core.mail import EmailMessage
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
 from django.urls import reverse
@@ -11,6 +10,7 @@ from django.utils.translation import ugettext_lazy as _
 from django_countries.fields import CountryField
 from timezone_field import TimeZoneField
 
+from seedorf.utils.email import send_mail
 from seedorf.utils.firebase import get_firebase_link
 from seedorf.utils.models import BasePropertiesModel
 
@@ -150,20 +150,15 @@ class MagicLoginLink(BasePropertiesModel):
         self.short_link = get_firebase_link(f"magic_link_login?token={self.token}")
 
     def mail(self):
-        ctx = {
-            "product_name": "SportySpots",
-            "product_url": "https://www.sportyspots.com",
-            "support_email": "info@sportyspots.com",
-            "sender_name": "SportySpots",
-            "company_name": "SportySpots",
-            "company_address": "Amsterdam, The Netherlands",
-            "magic_link": str(self),
-        }
+        context = {"name": self.user.name, "action_url": str(self)}
 
-        message = EmailMessage(subject=None, body=None, to=[self.user.email])
-        message.template_id = 9746750
-        message.merge_global_data = ctx
-        message.send()
+        send_mail(
+            to=self.user.email,
+            template_prefix="MagicLoginLink",
+            subject=_("Login"),
+            language=self.user.profile.language,
+            context=context,
+        )
 
     def __str__(self):
         return f"{self.short_link}"

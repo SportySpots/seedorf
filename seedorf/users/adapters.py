@@ -5,11 +5,11 @@ from allauth.socialaccount.adapter import DefaultSocialAccountAdapter
 from allauth.socialaccount.models import SocialLogin
 from django.conf import settings
 from django.contrib.auth import login
-from django.core.mail import EmailMessage
 from django.http import HttpResponseRedirect
 from rest_auth.utils import jwt_encode
 
 from seedorf.users.models import User
+from seedorf.utils.email import send_mail
 from seedorf.utils.firebase import get_firebase_link
 
 
@@ -20,31 +20,21 @@ class AccountAdapter(DefaultAccountAdapter):
     def send_confirmation_mail(self, request, emailconfirmation, signup):
         activate_url = self.get_email_confirmation_url(request, emailconfirmation)
 
-        ctx = {
-            "product_name": "SportySpots",
+        context = {
             "name": emailconfirmation.email_address.user.name,
-            "product_url": "https://www.sportyspots.com",
             "action_url": activate_url,
-            "support_email": "info@sportyspots.com",
-            "sender_name": "SportySpots",
-            "company_name": "SportySpots",
-            "company_address": "Amsterdam, The Netherlands",
             "key": emailconfirmation.key,
         }
 
-        message = EmailMessage(subject=None, body=None, to=[emailconfirmation.email_address.email])
-
-        if signup:
-            # TODO: Define template ids in settings
-            message.template_id = 6756321  # use this Postmark template
-        else:
-            # TODO: Create a postmark template for email confirmation
-            # email_template = 'account/email/email_confirmation'
-            message.template_id = 6756321  # use this Postmark template
-
-        message.merge_global_data = ctx
-
-        message.send()
+        # TODO: Set user language
+        # FIX: key is not defined in the template
+        send_mail(
+            to=emailconfirmation.email_address.email,
+            template_prefix="SignupConfirmEmail",
+            subject=_("Welcome to SportySpots."),
+            language="en",
+            context=context,
+        )
 
     def get_login_redirect_url(self, request):
         token = jwt_encode(request.user)
