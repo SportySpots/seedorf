@@ -81,7 +81,6 @@ LOCAL_APPS = [
     "seedorf.sports.apps.SportsConfig",
     "seedorf.spots.apps.SpotsConfig",
     "seedorf.reactions.apps.ReactionsConfig",
-    "seedorf.emails.apps.EmailsConfig",
 ]
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
