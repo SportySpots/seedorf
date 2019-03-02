@@ -1,4 +1,4 @@
-{% extends "emails/BaseEmail-ES.txt" %}
+{% extends "emails/BaseEmail-es.txt" %}
 
 {% block content %}
 Heads Up! {{ name }},
