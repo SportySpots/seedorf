@@ -80,10 +80,10 @@ class UserRegistrationAPIViewTest(APITestCase):
             AccountAdapter, "get_login_redirect_url", return_value=""
         ):
             response = self.client.post(self.url, user_data)
-            self.assertEqual(201, response.status_code)
-            self.assertTrue("token" in response.data)
             response_user = response.data["user"]
             response_user_profile = response_user["profile"]
+            self.assertEqual(201, response.status_code)
+            self.assertTrue("token" in response.data)
             self.assertEqual(response_user_profile["language"], "en")
 
     def test_user_creation_with_supported_language(self):
@@ -93,11 +93,11 @@ class UserRegistrationAPIViewTest(APITestCase):
             AccountAdapter, "get_login_redirect_url", return_value=""
         ):
             response = self.client.post(self.url, user_data)
-            self.assertEqual(201, response.status_code)
-            self.assertTrue("token" in response.data)
             response_user = response.data["user"]
             response_user_profile = response_user["profile"]
-            self.assertEqual("nl", response_user_profile["language"])
+            self.assertEqual(201, response.status_code)
+            self.assertTrue("token" in response.data)
+            self.assertEqual(response_user_profile["language"], "nl")
 
     def test_user_creation_with_password(self):
 
