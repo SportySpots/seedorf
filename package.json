@@ -5,5 +5,8 @@
   "main": "index.js",
   "repository": "git@github.com:SportySpots/seedorf.git",
   "author": "ashutosh <ashutoshb@gmail.com>",
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "husky": "1.3.1"
+  }
 }
