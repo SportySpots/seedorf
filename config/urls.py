@@ -15,6 +15,7 @@ from rest_framework.permissions import AllowAny
 from rest_framework.schemas import get_schema_view as drf_get_schema_view
 from rest_framework_jwt.views import refresh_jwt_token, verify_jwt_token
 from rest_framework_nested import routers
+from django.views.generic import TemplateView
 
 from seedorf.core.views import apple_app_site_association
 from seedorf.games.viewsets import GameRsvpStatusNestedViewset, GameViewSet
@@ -135,6 +136,9 @@ games_router.register(r"spot", GameSpotNestedViewSet, base_name="game-spot")
 urlpatterns = [
     # Django Admin, use {% url 'admin:index' %}
     path(settings.ADMIN_URL, admin.site.urls),
+    # SportySpots
+    path('games/', TemplateView.as_view(template_name="pages/home.html")),
+
     # Anymail
     path("anymail/", include("anymail.urls")),
     # Your stuff: custom urls includes go here
