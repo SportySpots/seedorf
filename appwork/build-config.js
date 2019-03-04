@@ -9,7 +9,7 @@ module.exports = {
   },
   development: {
     // Build path can be both relative or absolute.
-    buildPath: '../dist',
+    buildPath: '../seedorf/static',
 
     // Minify assets.
     minify: false,
@@ -25,7 +25,7 @@ module.exports = {
   },
   production: {
     // Build path can be both relative or absolute.
-    buildPath: '../dist',
+    buildPath: '../seedorf/static',
 
     // Minify assets.
     // Note: Webpack will minify js sources in production mode regardless to this option
