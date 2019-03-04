@@ -1,0 +1,9 @@
+{
+  "name": "seedorf",
+  "version": "1.0.0",
+  "description": "SportySpots",
+  "main": "index.js",
+  "repository": "git@github.com:SportySpots/seedorf.git",
+  "author": "ashutosh <ashutoshb@gmail.com>",
+  "license": "MIT"
+}
