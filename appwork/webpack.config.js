@@ -24,65 +24,65 @@ const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 const ConcatSource = require('webpack-sources').ConcatSource
 
 class CustomTemplatePlugin {
-	apply(compilation) {
+    apply(compilation) {
     const { mainTemplate, chunkTemplate } = compilation;
 
     const onRenderWithEntry = (source, chunk, hash) => {
       return new ConcatSource(`
 (function(r,f) {
-	var a=f();
-	if(typeof a!=='object')return;
-	var e=[typeof module==='object'&&typeof module.exports==='object'?module.exports:null,typeof window!=='undefined'?window:null,r&&r!==window?r:null];
-	for(var i in a){e[0]&&(e[0][i]=a[i]);e[1]&&i!=='__esModule'&&(e[1][i] = a[i]);e[2]&&(e[2][i]=a[i]);}
+    var a=f();
+    if(typeof a!=='object')return;
+    var e=[typeof module==='object'&&typeof module.exports==='object'?module.exports:null,typeof window!=='undefined'?window:null,r&&r!==window?r:null];
+    for(var i in a){e[0]&&(e[0][i]=a[i]);e[1]&&i!=='__esModule'&&(e[1][i] = a[i]);e[2]&&(e[2][i]=a[i]);}
 })(this,function(){
-	return `, source, `;
+    return `, source, `;
 });`)
-		};
+        };
 
-		for (const template of [mainTemplate, chunkTemplate]) {
-			template.hooks.renderWithEntry.tap(
-				'CustomTemplatePlugin',
-				onRenderWithEntry
-			);
-		}
+        for (const template of [mainTemplate, chunkTemplate]) {
+            template.hooks.renderWithEntry.tap(
+                'CustomTemplatePlugin',
+                onRenderWithEntry
+            );
+        }
 
-		mainTemplate.hooks.globalHashPaths.tap("CustomTemplatePlugin", paths => {
-			return paths;
-		});
+        mainTemplate.hooks.globalHashPaths.tap("CustomTemplatePlugin", paths => {
+            return paths;
+        });
 
-		mainTemplate.hooks.hash.tap("CustomTemplatePlugin", hash => {
+        mainTemplate.hooks.hash.tap("CustomTemplatePlugin", hash => {
       hash.update('CustomTemplatePlugin');
-			hash.update('2');
-		});
-	}
+            hash.update('2');
+        });
+    }
 }
 
 class CustomLibraryTemplatePlugin {
-	apply(compiler) {
+    apply(compiler) {
     compiler.hooks.thisCompilation.tap('CustomLibraryTemplatePlugin', compilation => {
       new CustomTemplatePlugin().apply(compilation);
     });
-	}
+    }
 }
 
 // -------------------------------------------------------------------------------
 // Build config
 
 const webpackConfig = {
-	target: 'web',
+    target: 'web',
   mode: process.env.NODE_ENV === 'production' ? 'production' : 'development',
 
   // Collect entries
-	entry: (glob.sync(`!(${conf.exclude.join('|')})/**/!(_)*.@(js|es6)`) || [])
-		.reduce((entries, file) => {
-			entries[file.replace(/\.(?:js|es6)$/, '')] = `./${file.replace(/\\/g, '/')}`
-			return entries
-		}, {}),
+    entry: (glob.sync(`!(${conf.exclude.join('|')})/**/!(_)*.@(js|es6)`) || [])
+        .reduce((entries, file) => {
+            entries[file.replace(/\.(?:js|es6)$/, '')] = `./${file.replace(/\\/g, '/')}`
+            return entries
+        }, {}),
 
-	output: {
-		path: conf.buildPath,
-		filename: '[name].js'
-	},
+    output: {
+        path: conf.buildPath,
+        filename: '[name].js'
+    },
 
   module: {
 
@@ -94,49 +94,49 @@ const webpackConfig = {
           options: {
             presets: [['@babel/preset-env', {
                 targets: 'last 2 versions, ie >= 10'
-			      }]],
-						plugins: ['@babel/plugin-transform-destructuring', '@babel/plugin-proposal-object-rest-spread', '@babel/plugin-transform-template-literals'],
+                  }]],
+                        plugins: ['@babel/plugin-transform-destructuring', '@babel/plugin-proposal-object-rest-spread', '@babel/plugin-transform-template-literals'],
             babelrc: false
           }
         }
       ]
     }, {
-			test: /\.css$/,
-			use: [{
-				loader: 'style-loader',
-				options: {
-					hmr: false
-				}
-			}, {
-				loader: 'css-loader',
-				options: {
-					minimize: true
-				}
-			}]
-		}, {
-			test: /\.scss$/,
-			use: [{
-				loader: 'style-loader',
-				options: {
-					hmr: false
-				}
-			}, {
-				loader: 'css-loader',
-				options: {
-					minimize: true
-				}
-			}, {
+            test: /\.css$/,
+            use: [{
+                loader: 'style-loader',
+                options: {
+                    hmr: false
+                }
+            }, {
+                loader: 'css-loader',
+                options: {
+                    minimize: true
+                }
+            }]
+        }, {
+            test: /\.scss$/,
+            use: [{
+                loader: 'style-loader',
+                options: {
+                    hmr: false
+                }
+            }, {
+                loader: 'css-loader',
+                options: {
+                    minimize: true
+                }
+            }, {
           loader: 'sass-loader'
       }]
-		}, {
-			test: /\.html$/,
-			use: [{
-				loader: 'html-loader',
-				options: {
-					minimize: true
-				}
-			}]
-		}, { // Remove imports
+        }, {
+            test: /\.html$/,
+            use: [{
+                loader: 'html-loader',
+                options: {
+                    minimize: true
+                }
+            }]
+        }, { // Remove imports
       test: /node_modules(?:\\|\/)bootstrap(?:\\|\/)js(?:\\|\/)src(?:\\|\/)\w+\.js$/,
       use: {
         loader: StringReplacePlugin.replace({
@@ -171,9 +171,9 @@ const webpackConfig = {
   },
 
   plugins: [
-		new webpack.DefinePlugin({
-			'process.env': process.env.NODE_ENV
-		}),
+        new webpack.DefinePlugin({
+            'process.env': process.env.NODE_ENV
+        }),
     new webpack.IgnorePlugin(/codemirror/),
     new CustomLibraryTemplatePlugin()
   ],
@@ -188,9 +188,9 @@ const webpackConfig = {
     'eve': 'window.eve',
     'velocity': 'window.Velocity',
     'hammer': 'window.Hammer',
-		'raphael': 'window.Raphael',
+        'raphael': 'window.Raphael',
     'jquery-mapael': 'window.Mapael',
-		'pace': '"pace-progress"',
+        'pace': '"pace-progress"',
 
     // blueimp-file-upload plugin
     'canvas-to-blob': 'window.blueimpDataURLtoBlob',
@@ -199,7 +199,7 @@ const webpackConfig = {
     'load-image-meta': 'null',
     'load-image-scale': 'null',
     'load-image-exif': 'null',
-		'jquery-ui/ui/widget': 'null',
+    'jquery-ui/ui/widget': 'null',
     './jquery.fileupload': 'null',
     './jquery.fileupload-process': 'null',
     './jquery.fileupload-image': 'null',
@@ -217,7 +217,7 @@ const webpackConfig = {
 // Sourcemaps
 
 if (conf.sourcemaps) {
-	webpackConfig.devtool = conf.devtool
+    webpackConfig.devtool = conf.devtool
 }
 
 // -------------------------------------------------------------------------------
@@ -225,17 +225,17 @@ if (conf.sourcemaps) {
 
 // Minifies sources by default in production mode
 if (process.env.NODE_ENV !== 'production' && conf.minify) {
-	webpackConfig.plugins.push(
-		new UglifyJsPlugin({
-			uglifyOptions: {
-				compress: {
-					warnings: false
-				}
-			},
-			sourceMap: conf.sourcemaps,
-			parallel: true
-		})
-	)
+    webpackConfig.plugins.push(
+        new UglifyJsPlugin({
+            uglifyOptions: {
+                compress: {
+                    warnings: false
+                }
+            },
+            sourceMap: conf.sourcemaps,
+            parallel: true
+        })
+    )
 }
 
 module.exports = webpackConfig
