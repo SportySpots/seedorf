@@ -3,7 +3,7 @@
 {% block content %}
 Howdy! {{ name }},
 
-{{ invite_sender_name }} has invited you to join a sport activity.
+{{ invite_sender_name }} te ha invitado a participar de una actividad deportiva.
 
 View Activity: {{ action_url }}
 {% endblock content %}

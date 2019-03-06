@@ -3,7 +3,7 @@
 {% block content %}
 Aloha! {{ name }},
 
-Thank you for creating a new activity on SportySpots. You can view the activity details and invite others by sharing the link below.
+Gracias por crear una nueva actividad en SportySpots. Puedes ver los detalles de la actividad e invitar a otros utilizando el siguiente enlace.
 
 View Activity: {{ action_url }}
 {% endblock content %}

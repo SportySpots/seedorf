@@ -3,7 +3,7 @@
 {% block content %}
 Wohooo! {{ name }},
 
-Here's your magic login link. Click to login directly without a password.
+Aquí está tu enlace mágico de inicio de sesión. Haz clic en el botón para iniciar sesión directamente sin una contraseña.
 
-Login: {{ action_url }}
+Iniciar sesión: {{ action_url }}
 {% endblock content %}

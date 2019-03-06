@@ -3,8 +3,8 @@
 {% block content %}
 Wohooo! {{ name }},
 
-Thanks for trying out SportySpots. We’re thrilled to have you on board.
-To get started, please confirm your email:
+Gracias por probar SportySpots. Estamos encantados de tenerte a bordo.
+Para comenzar, por favor confirma tu correo electrónico:
 
-Confirm Email: {{ action_url }}
+Confirmar correo electrónico: {{ action_url }}
 {% endblock content %}
