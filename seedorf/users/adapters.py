@@ -13,7 +13,6 @@ from seedorf.users.models import User
 from seedorf.utils.email import send_mail
 from seedorf.utils.firebase import get_firebase_link
 
-from django.utils.translation import ugettext_lazy as _
 
 class AccountAdapter(DefaultAccountAdapter):
     def is_open_for_signup(self, request):
@@ -23,10 +22,7 @@ class AccountAdapter(DefaultAccountAdapter):
         user = request.user
         magic_url = str(user.create_magic_link())
 
-        context = {
-            "name": emailconfirmation.email_address.user.name,
-            "action_url": magic_url,
-        }
+        context = {"name": emailconfirmation.email_address.user.name, "action_url": magic_url}
 
         send_mail(
             to=emailconfirmation.email_address.email,

@@ -20,9 +20,9 @@ def send_mail(to, template_prefix, subject="", language="en", context=None):
     msg.attach_alternative(email_html, "text/html")
 
     # Optional Anymail extensions:
-    msg.tags = ["activation"]
-    msg.track_clicks = True
-    msg.track_opens = True
+    # msg.tags = ["activation"]
+    # msg.track_clicks = True
+    # msg.track_opens = True
 
     # Send it:
     msg.send()
