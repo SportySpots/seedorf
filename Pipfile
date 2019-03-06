@@ -68,6 +68,7 @@ graphene-django-extras = {editable = true, git = "https://github.com/sportyspots
 graphene-django = "==2.2.0"
 "iso8601" = "*"
 pendulum = "*"
+wagtail = "*"
 
 [dev-packages]
 "flake8" = "==3.6.0"

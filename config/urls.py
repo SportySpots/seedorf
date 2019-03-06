@@ -43,6 +43,10 @@ from seedorf.users.viewsets import (
     UserViewSet,
 )
 
+from wagtail.admin import urls as wagtailadmin_urls
+from wagtail.documents import urls as wagtaildocs_urls
+from wagtail.core import urls as wagtail_urls
+
 drf_schema_view = drf_get_schema_view(title="SportySpots API")
 
 schema_view = get_schema_view(
@@ -137,8 +141,15 @@ urlpatterns = [
     # Django Admin, use {% url 'admin:index' %}
     path(settings.ADMIN_URL, admin.site.urls),
     # SportySpots
-    path('games/', TemplateView.as_view(template_name="pages/home.html")),
-
+    path("home/", TemplateView.as_view(template_name="pages/home.html")),
+    path("register/", TemplateView.as_view(template_name="pages/login_register.html")),
+    path("login/", TemplateView.as_view(template_name="pages/login_register.html")),
+    path("password-reset/", TemplateView.as_view(template_name="pages/password_reset.html")),
+    path("confirm-email/", TemplateView.as_view(template_name="pages/confirm_email.html")),
+    # Wagtail
+    re_path(r"^cms/", include(wagtailadmin_urls)),
+    re_path(r"^documents/", include(wagtaildocs_urls)),
+    re_path(r"^pages/", include(wagtail_urls)),
     # Anymail
     path("anymail/", include("anymail.urls")),
     # Your stuff: custom urls includes go here

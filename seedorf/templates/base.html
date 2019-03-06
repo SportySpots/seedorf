@@ -1,7 +1,7 @@
 {% load static i18n compress %}
 <!DOCTYPE html>
 
-<html lang="en" class="default-style layout-collapsed layout-navbar-fixed">
+<html lang="en" class="landing-1 default-style layout-collapsed layout-navbar-fixed">
 <head>
   <meta charset="utf-8">
   <meta http-equiv="x-ua-compatible" content="IE=edge,chrome=1">
@@ -26,24 +26,30 @@
   <link rel="stylesheet" href="{% static 'css/theme-soft.css' %}">
   <link rel="stylesheet" href="{% static 'css/colors.css' %}">
   <link rel="stylesheet" href="{% static 'css/uikit.css' %}">
+  <link rel="stylesheet" href="{% static 'css/sportyspots.css' %}">
 
   <!-- Layout helpers -->
   <script src="{% static 'js/layout-helpers.js' %}"></script>
 
   <!-- Libs -->
-
   <!-- `perfect-scrollbar` library required by SideNav plugin -->
   <link rel="stylesheet" href="{% static 'libs/perfect-scrollbar/perfect-scrollbar.css' %}">
+
+  {% block custom_css %}
+  {% endblock custom_css %}
 
 </head>
 <body>
 
   <!-- Layout wrapper -->
+  {% block layout_wrapper %}
   <div class="layout-wrapper layout-1">
     <!-- Layout inner -->
+    {% block layout_inner %}
     <div class="layout-inner">
 
       <!-- Layout navbar -->
+      {% block layout_navbar %}
       <nav class="layout-navbar navbar navbar-expand-lg align-items-lg-center bg-navbar-theme container-p-x" id="layout-navbar">
         <a href="index.html" class="navbar-brand">HTML Starter</a>
 
@@ -66,11 +72,13 @@
           </div>
         </div>
       </nav>
+      {% endblock layout_navbar %}
       <!-- / Layout navbar -->
 
       <div class="layout-container">
 
         <!-- Layout sidenav -->
+        {% block layout_sidenav %}
         <div id="layout-sidenav" class="layout-sidenav sidenav sidenav-vertical bg-sidenav-theme">
           <ul class="sidenav-inner py-1">
             <li class="sidenav-item active">
@@ -81,11 +89,13 @@
             </li>
           </ul>
         </div>
+        {% endblock layout_sidenav %}
         <!-- / Layout sidenav -->
 
         <div class="layout-content">
 
           <!-- Page content -->
+          {% block page_content %}
           <div class="container-fluid flex-grow-1 d-flex align-items-stretch p-0">
             <div class="flex-shrink-1 flex-grow-0 w-25 bg-light container-p-x container-p-y">
               Side box
@@ -96,15 +106,18 @@
               <p><button class="btn btn-primary btn-lg">Button</button></p>
             </div>
           </div>
+          {% endblock page_content %}
           <!-- / Page content -->
 
           <!-- Layout footer -->
+          {% block layout_footer %}
           <nav class="layout-footer footer bg-footer-theme">
             <div class="container-fluid container-p-x pb-3">
               <a href="#" class="footer-link pt-3">Link 1</a>
               <a href="#" class="footer-link pt-3 ml-4">Link 2</a>
             </div>
           </nav>
+          {% endblock layout_footer %}
           <!-- / Layout footer -->
 
         </div>
@@ -112,9 +125,10 @@
 
     </div>
     <!-- Layout inner -->
-
     <div class="layout-overlay layout-sidenav-toggle"></div>
+    {% endblock layout_inner %}
   </div>
+  {% endblock layout_wrapper %}
   <!-- / Layout wrapper -->
 
   <!-- Core scripts -->
@@ -125,13 +139,10 @@
   <script src="{% static 'js/sidenav.js' %}"></script>
 
   <!-- Libs -->
-
   <!-- `perfect-scrollbar` library required by SideNav plugin -->
   <script src="{% static 'libs/perfect-scrollbar/perfect-scrollbar.js' %}"></script>
 
-  <!-- Main script -->
-
-  <script src="{% static 'js/main.js' %}"></script>
-
+  {% block custom_js %}
+  {% endblock custom_js %}
 </body>
 </html>

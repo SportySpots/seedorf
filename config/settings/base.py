@@ -70,6 +70,20 @@ THIRD_PARTY_APPS = [
     "timezone_field",
     "corsheaders",
     "drf_yasg",
+    # wagtail
+    "wagtail.contrib.forms",
+    "wagtail.contrib.redirects",
+    "wagtail.embeds",
+    "wagtail.sites",
+    "wagtail.users",
+    "wagtail.snippets",
+    "wagtail.documents",
+    "wagtail.images",
+    "wagtail.search",
+    "wagtail.admin",
+    "wagtail.core",
+    "modelcluster",
+    "taggit",
 ]
 
 # Apps specific for this project go here.
@@ -109,6 +123,8 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "wagtail.core.middleware.SiteMiddleware",
+    "wagtail.contrib.redirects.middleware.RedirectMiddleware",
 ]
 
 CORS_ORIGIN_WHITELIST = ["sportyspots.com", "www.sportyspots.com", "api.sportyspots.com"]
@@ -443,3 +459,9 @@ GRAPHENE_DJANGO_EXTRAS = {
 }
 
 FIREBASE_WEB_API_KEY = env.str("FIREBASE_WEB_API_KEY")
+
+
+# Wagtail
+# REF: http://docs.wagtail.io/en/v2.4/getting_started/integrating_into_django.html
+# ------------------------------------------------------------------------------
+WAGTAIL_SITE_NAME = "SportySpots"

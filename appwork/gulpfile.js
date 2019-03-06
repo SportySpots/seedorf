@@ -146,7 +146,7 @@ gulp.task('build:fonts', FONT_TASKS)
 
 gulp.task('build:copy', function() {
   return gulp
-    .src(getSrc('**/*.png', '**/*.gif', '**/*.jpg', '**/*.jpeg', '**/*.svg', '**/*.swf', '**/*.eot', '**/*.ttf', '**/*.woff', '**/*.woff2'), { base: '.' })
+    .src(getSrc('**/*.png', '**/*.gif', '**/*.jpg', '**/*.jpeg', '**/*.svg', '**/*.swf', '**/*.eot', '**/*.ttf', '**/*.woff', '**/*.woff2', '**/*.mp4', '**/*.mp3'), { base: '.' })
     .pipe(gulp.dest(conf.buildPath))
 })
 
