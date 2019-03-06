@@ -47,7 +47,6 @@ class User(AbstractUser, BasePropertiesModel):
         magic_link = MagicLoginLink(user=self)
         magic_link.set_short_link()
         magic_link.save()
-        magic_link.mail()
         return magic_link
 
     class Meta:

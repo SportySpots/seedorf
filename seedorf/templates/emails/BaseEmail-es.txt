@@ -1,18 +1,18 @@
 {% block content %}
-Hi {{ name }},
+Hola {{ name }},
 
-Nice to have you on board at SportySpots! Confirm your registration through this e-mail and start sporting!
+Encantados de tenerte a bordo en SportySpots! ¡Confirma tu cuenta a través de este correo electrónico y comienza a divertirte!
 
-To confirm, follow this link: {{ action_url }}
+Para confirmar, haz click en el siguiente enlace: {{ action_url }}
 {% endblock content %}
 
 {% block footer %}
 
-If you have any questions, feel free to contact us at info@sportyspots.com.
+Si tienes alguna pregunta, no dudes en ponerte en contacto con nosotros a través de info@sportyspots.com.
 
-Kind regards,
-Team SportySpots
+Saludos cordiales,
+El equipo de SportySpots
 
-© 2019 SportySpots. All rights reserved.
-SportySpots Amsterdam, The Netherlands
+© 2019 SportySpots. Todos los derechos reservados.
+SportySpots Amsterdam, Holanda
 {% endblock footer %}

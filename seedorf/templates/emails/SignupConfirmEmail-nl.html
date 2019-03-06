@@ -1,17 +1,17 @@
 {% extends "emails/BaseEmail-nl.html" %}
 
 {% block title %}
-  SportySpots - Signup Confirmation
+  SportySpots - Bevestig aanmelding
 {% endblock title %}
 
 {% block preheader %}
-  Confirm your registration to start sporting!
+  Bevestig je aanmelding om te beginnen met sporten!
 {% endblock preheader %}
 
 {% block email_body %}
-<h1>Howdy! {{ name }},</h1>
-<p>Nice to have you on board at SportySpots!</p>
-<p>Confirm your registration by following the link below and start sporting!.</p>
+<h1>Hoi {{ name }}!</h1>
+<p>Leuk om je aan boord te hebben bij SportySpots!</p>
+<p>Bevestig je registratie door op onderstaande link te klikken en begin met sporten.</p>
 <!-- Action -->
 <table class="body-action"
        align="center"
@@ -33,7 +33,7 @@
               <tr>
                 <td>
                   <a href="{{ action_url }}" class="button button--green" target="_blank">
-                    Confirm your email
+                    Bevestigen
                   </a>
                 </td>
               </tr>
@@ -43,8 +43,7 @@
               <tr>
                 <td>
                   <p class="sub">
-                    If you’re having trouble with the button above, copy and paste the URL below into your web
-                    browser.
+                    Als de knop hier boven niet goed werkt, kopieer en plak onderstaande link dan in je browser.
                   </p>
                   <p class="sub">{{ action_url }}</p>
                 </td>

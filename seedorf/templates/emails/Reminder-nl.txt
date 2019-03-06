@@ -1,9 +1,10 @@
 {% extends "emails/BaseEmail-nl.txt" %}
 
 {% block content %}
-Have fun! {{ name }},
+Veel plezier {{ name }}!
 
-{{ invite_sender_name }}'s sport activity is taking place today.
+Vandaag is {{ invite_sender_name }}'s activiteit. Je ontvangt deze e-mail ter herinnering omdat je je eerder hebt
+aangemeld.
 
-View Activity: {{ action_url }}
+Bekijk activiteit: {{ action_url }}
 {% endblock content %}

@@ -1,18 +1,18 @@
 {% extends "emails/BaseEmail-es.html" %}
 
 {% block title %}
-  SportySpots - Sport Activity Declined.
+  SportySpots - Actividad Deportiva Declinada.
 {% endblock title %}
 
 {% block preheader %}
-  You've declined {{invite_sender_name }}'s sport activity.
+  Has declinado la invitación de {{ invite_sender_name }}.
 {% endblock preheader %}
 
 {% block email_body %}
 <h1>Aah! {{ name }},</h1>
 <p>
-  You've declined {{ invite_sender_name }}'s sport activity. If you change your mind, you can still sign up by following
-  the link below.
+  Has declinado la invitación de {{ invite_sender_name }}. Si cambias de opinión, aún puedes registrarte utilizando
+   el siguiente enlace.
 </p>
 <!-- Action -->
 <table class="body-action"
@@ -35,7 +35,7 @@
               <tr>
                 <td>
                   <a href="{{ action_url }}" class="button button--green" target="_blank">
-                    View activity
+                    Ver evento
                   </a>
                 </td>
               </tr>
@@ -45,8 +45,7 @@
               <tr>
                 <td>
                   <p class="sub">
-                    If you’re having trouble with the button above, copy and paste the URL below into your web
-                    browser.
+                    Si tienes problemas con el botón de arriba, copia y pega el siguiente enlace en tu navegador web.
                   </p>
                   <p class="sub">{{ action_url }}</p>
                 </td>

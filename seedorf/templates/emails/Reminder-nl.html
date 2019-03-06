@@ -1,17 +1,18 @@
 {% extends "emails/BaseEmail-nl.html" %}
 
 {% block title %}
-  SportySpots - Sport Activity Reminder.
+  SportySpots - Herinnering deelname activiteit.
 {% endblock title %}
 
 {% block preheader %}
-  {{ invite_sender_name }}'s sport activity is taking place today.
+  Vandaag is {{ invite_sender_name }}'s activiteit.
 {% endblock preheader %}
 
 {% block email_body %}
-<h1>Have fun! {{ name }},</h1>
+<h1>Veel plezier, {{ name }}!</h1>
 <p>
-  {{ invite_sender_name }}'s sport activity is taking place today.
+  Vandaag is {{ invite_sender_name }}'s activiteit. Je ontvangt deze e-mail ter herinnering omdat je je eerder hebt
+aangemeld.
 </p>
 <!-- Action -->
 <table class="body-action"
@@ -34,7 +35,7 @@
               <tr>
                 <td>
                   <a href="{{ action_url }}" class="button button--green" target="_blank">
-                    View activity
+                    Bekijk activiteit
                   </a>
                 </td>
               </tr>
@@ -44,8 +45,7 @@
               <tr>
                 <td>
                   <p class="sub">
-                    If you’re having trouble with the button above, copy and paste the URL below into your web
-                    browser.
+                    Als de knop hier boven niet goed werkt, kopieer en plak onderstaande link dan in je browser.
                   </p>
                   <p class="sub">{{ action_url }}</p>
                 </td>

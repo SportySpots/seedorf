@@ -1,9 +1,9 @@
 {% extends "emails/BaseEmail-nl.txt" %}
 
 {% block content %}
-Heads Up! {{ name }},
+Opgelet, {{ name }}!
 
-{{ invite_sender_name }}'s has updated the sport activity.
+{{ invite_sender_name }} heeft iets aangepast in een activiteit waar jij voor bent aangemeld.
 
-View Activity: {{ action_url }}
+Bekijk activiteit: {{ action_url }}
 {% endblock content %}

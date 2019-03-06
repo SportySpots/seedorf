@@ -27,6 +27,7 @@ def create_magic_link_view(request):
     except User.DoesNotExist:
         return Response(_("Email not registered"), status=status.HTTP_404_NOT_FOUND)
     user.create_magic_link()
+    user.magic_link.mail()
     return Response(_("Email sent"), status=status.HTTP_201_CREATED)
 
 

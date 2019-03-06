@@ -1,18 +1,17 @@
 {% extends "emails/BaseEmail-nl.html" %}
 
 {% block title %}
-  SportySpots - Activity Created
+  SportySpots - Activiteit Aangemaakt
 {% endblock title %}
 
 {% block preheader %}
-  Sport activity created.
+  Activiteit aangemaakt.
 {% endblock preheader %}
 
 {% block email_body %}
-<h1>Aloha! {{ name }},</h1>
+<h1>Aloha {{ name }}!</h1>
 <p>
-  Thank you for creating a new activity on SportySpots. You can view the activity details and invite others by sharing
-  the link below.
+  Bedankt voor het aanmaken van een nieuwe activiteit op SportySpots. Je kunt de activiteit bekijken en delen met anderen via onderstaande link.
 </p>
 <!-- Action -->
 <table class="body-action"
@@ -35,7 +34,7 @@
               <tr>
                 <td>
                   <a href="{{ action_url }}" class="button button--green" target="_blank">
-                    View Activity
+                    Bekijk activiteit
                   </a>
                 </td>
               </tr>
@@ -45,8 +44,7 @@
               <tr>
                 <td>
                   <p class="sub">
-                    If you’re having trouble with the button above, copy and paste the URL below into your web
-                    browser.
+                   Als de knop hier boven niet goed werkt, kopieer en plak onderstaande link dan in je browser.
                   </p>
                   <p class="sub">{{ action_url }}</p>
                 </td>

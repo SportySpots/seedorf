@@ -1,10 +1,9 @@
 {% extends "emails/BaseEmail-nl.txt" %}
 
 {% block content %}
-Wohooo! {{ name }},
+Hoi {{ name }},
 
-Thanks for trying out SportySpots. We’re thrilled to have you on board.
-To get started, please confirm your email:
+Leuk om je aan boord te hebben bij SportySpots! Bevestig je registratie door op onderstaande link te klikken en begin met sporten.
+{{ action_url }}
 
-Confirm Email: {{ action_url }}
 {% endblock content %}
