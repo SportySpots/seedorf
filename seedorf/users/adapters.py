@@ -19,21 +19,18 @@ class AccountAdapter(DefaultAccountAdapter):
         return getattr(settings, "ACCOUNT_ALLOW_REGISTRATION", True)
 
     def send_confirmation_mail(self, request, emailconfirmation, signup):
-        activate_url = self.get_email_confirmation_url(request, emailconfirmation)
+        magic_url = self.get_login_redirect_url(request)
 
         context = {
             "name": emailconfirmation.email_address.user.name,
-            "action_url": activate_url,
-            "key": emailconfirmation.key,
+            "action_url": magic_url,
         }
 
-        # TODO: Set user language
-        # FIX: key is not defined in the template
         send_mail(
             to=emailconfirmation.email_address.email,
             template_prefix="SignupConfirmEmail",
             subject=_("Welcome to SportySpots."),
-            language="en",
+            language=request.user.profile.language,
             context=context,
         )
 
@@ -66,6 +63,7 @@ class AccountAdapter(DefaultAccountAdapter):
             # Ability not to commit makes it easier to derive from
             # this adapter by adding
             user.save()
+            request.user = user
         return user
 
 
