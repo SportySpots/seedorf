@@ -6,6 +6,7 @@ from allauth.socialaccount.models import SocialLogin
 from django.conf import settings
 from django.contrib.auth import login
 from django.http import HttpResponseRedirect
+from django.utils.translation import ugettext_lazy as _
 from rest_auth.utils import jwt_encode
 
 from seedorf.users.models import User
