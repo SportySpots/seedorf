@@ -3,7 +3,7 @@
 {% block content %}
 Shoot! {{ name }},
 
-{{ invite_sender_name }} has cancelled the sport activity.
+{{ invite_sender_name }} ha cancelado la actividad deportiva.
 
-View Activity: {{ action_url }}
+Ver evento: {{ action_url }}
 {% endblock content %}

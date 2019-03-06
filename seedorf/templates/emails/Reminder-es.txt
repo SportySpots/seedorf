@@ -1,9 +1,9 @@
 {% extends "emails/BaseEmail-es.txt" %}
 
 {% block content %}
-Have fun! {{ name }},
+Que te diviertas! {{ name }},
 
-{{ invite_sender_name }}'s sport activity is taking place today.
+La actividad deportiva de {{ invite_sender_name }} está teniendo lugar hoy.
 
-View Activity: {{ action_url }}
+Ver evento: {{ action_url }}
 {% endblock content %}

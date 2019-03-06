@@ -1,17 +1,17 @@
 {% extends "emails/BaseEmail-es.html" %}
 
 {% block title %}
-  SportySpots - Signup Confirmation
+  SportySpots - Confirma tu Cuenta
 {% endblock title %}
 
 {% block preheader %}
-  Confirm your registration to start sporting!
+  ¡Confirma tu cuenta para empezar a divertirte!
 {% endblock preheader %}
 
 {% block email_body %}
 <h1>Howdy! {{ name }},</h1>
-<p>Nice to have you on board at SportySpots!</p>
-<p>Confirm your registration by following the link below and start sporting!.</p>
+<p>¡Encantados de tenerte a bordo en SportySpots!</p>
+<p>¡Confirma tu cuenta utilizando el siguiente enlace y comienza a divertirte!</p>
 <!-- Action -->
 <table class="body-action"
        align="center"
@@ -33,7 +33,7 @@
               <tr>
                 <td>
                   <a href="{{ action_url }}" class="button button--green" target="_blank">
-                    Confirm your email
+                    Confirma tu correo electrónico
                   </a>
                 </td>
               </tr>
@@ -43,8 +43,7 @@
               <tr>
                 <td>
                   <p class="sub">
-                    If you’re having trouble with the button above, copy and paste the URL below into your web
-                    browser.
+                    Si tienes problemas con el botón de arriba, copia y pega el siguiente enlace en tu navegador web.
                   </p>
                   <p class="sub">{{ action_url }}</p>
                 </td>

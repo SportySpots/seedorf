@@ -3,7 +3,7 @@
 {% block content %}
 Howdy! {{ name }},
 
-Nice to have you on board at SportySpots! Confirm your registration by following the link below and start sporting!.
+¡Encantados de tenerte a bordo en SportySpots! ¡Confirma tu cuenta utilizando el siguiente enlace y comienza a divertirte!
 
-To confirm, follow this link: {{ action_url }}
+Para confirmar, utiliza el siguiente enlace: {{ action_url }}
 {% endblock content %}

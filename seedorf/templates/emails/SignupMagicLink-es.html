@@ -1,17 +1,17 @@
 {% extends "emails/BaseEmail-es.html" %}
 
 {% block title %}
-  SportySpots - Signup Magic Login.
+  SportySpots - Link de Registro Mágico.
 {% endblock title %}
 
 {% block preheader %}
-  Thanks for trying out SportySpots.
+  Gracias por probar SportySpots.
 {% endblock preheader %}
 
 {% block email_body %}
 <h1>Wohooo! {{ name }},</h1>
-<p>Thanks for trying out SportySpots. We’re thrilled to have you on board.</p>
-<p>To get started, please confirm your email:</p>
+<p>Gracias por probar SportySpots. Estamos encantados de tenerte a bordo.</p>
+<p>Para comenzar, por favor confirma tu correo electrónico:</p>
 
 <!-- Action -->
 <table class="body-action"
@@ -34,7 +34,7 @@
               <tr>
                 <td>
                   <a href="{{ action_url }}" class="button button--green" target="_blank">
-                    Confirm Email
+                    Confirmar correo electrónico
                   </a>
                 </td>
               </tr>
@@ -44,8 +44,7 @@
               <tr>
                 <td>
                   <p class="sub">
-                    If you’re having trouble with the button above, copy and paste the URL below into your web
-                    browser.
+                    Si tienes problemas con el botón de arriba, copia y pega el siguiente enlace en tu navegador web.
                   </p>
                   <p class="sub">{{ action_url }}</p>
                 </td>

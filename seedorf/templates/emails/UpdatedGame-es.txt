@@ -1,9 +1,9 @@
 {% extends "emails/BaseEmail-es.txt" %}
 
 {% block content %}
-Heads Up! {{ name }},
+¡Atención! {{ name }},
 
-{{ invite_sender_name }}'s has updated the sport activity.
+{{ invite_sender_name }} ha actualizado la actividad deportiva.
 
-View Activity: {{ action_url }}
+Ver evento: {{ action_url }}
 {% endblock content %}
