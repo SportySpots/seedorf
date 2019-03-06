@@ -12,6 +12,7 @@ from seedorf.users.models import User
 from seedorf.utils.email import send_mail
 from seedorf.utils.firebase import get_firebase_link
 
+from django.utils.translation import ugettext_lazy as _
 
 class AccountAdapter(DefaultAccountAdapter):
     def is_open_for_signup(self, request):
