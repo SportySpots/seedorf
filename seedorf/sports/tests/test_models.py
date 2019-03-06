@@ -1,6 +1,6 @@
-from test_plus.test import TestCase
-from django.test import TransactionTestCase
+from django.db import transaction
 from django.db.utils import IntegrityError
+from test_plus.test import TestCase
 
 from . import factories
 from ..models import Sport
@@ -14,7 +14,7 @@ class TestSport(TestCase):
         self.assertEqual(self.sport_soccer.__str__(), "soccer : soccer")
 
 
-class TestSportUniqueness(TransactionTestCase):
+class TestSportUniqueness(TestCase):
     """
     NOTE: To avoid TransactionManagementError, we need to inherit from TransactionTestCase
     REF: https://stackoverflow.com/a/24589930/7574302
@@ -24,5 +24,5 @@ class TestSportUniqueness(TransactionTestCase):
         self.sport_soccer = factories.SportFactory(category=Sport.SOCCER, name="soccer")
 
     def test_unique_name(self):
-        with self.assertRaises(IntegrityError):
+        with transaction.atomic(), self.assertRaises(IntegrityError):
             Sport.objects.create(category=Sport.SOCCER, name="soccer")

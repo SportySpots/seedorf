@@ -68,6 +68,7 @@ graphene-django-extras = {editable = true, git = "https://github.com/sportyspots
 graphene-django = "==2.2.0"
 "iso8601" = "*"
 pendulum = "*"
+wagtail = "*"
 
 [dev-packages]
 "flake8" = "==3.6.0"
@@ -84,7 +85,6 @@ ipdb = "==0.11"
 mock = "==2.0.0"
 pytest-django = "==3.4.4"
 sphinx = "==1.8.0"
-python-githooks = "*"
 #awsebcli = "*"
 # NOTE: Disable pytest-sugar till the following issues are fixed
 # REF: https://github.com/pydanny/cookiecutter-django/pull/1472
