@@ -11,6 +11,7 @@ class GameAdmin(admin.ModelAdmin):
     readonly_fields = ("uuid", "created_at", "modified_at", "deleted_at")
     list_display = ("uuid", "name", "sport", "status", "start_time", "end_time")
     list_filter = ("status", "invite_mode")
+    search_fields = ("uuid", "name", "sport__name", "spot__name")
     inlines = [RsvpStatusAdmin]
     fieldsets = (
         (None, {"fields": ("uuid", "name", "organizer", "sport", "spot", "status", "capacity", "description")}),

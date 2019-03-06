@@ -68,7 +68,7 @@ class Address(BasePropertiesModel):
         ordering = ("-created_at",)
 
     def __str__(self):
-        return self.formatted_address
+        return f"{self.formatted_address}"
 
     def save(self, *args, **kwargs):
         self.point = Point(x=float(self.lng), y=float(self.lat), srid=4326)
