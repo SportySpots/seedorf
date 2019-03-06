@@ -1,17 +1,17 @@
 {% extends "emails/BaseEmail-nl.html" %}
 
 {% block title %}
-  SportySpots - Magic Login.
+  SportySpots - Inloggen.
 {% endblock title %}
 
 {% block preheader %}
-  Here's your magic login link
+  Bij deze je login link!
 {% endblock preheader %}
 
 {% block email_body %}
-<h1>Wohooo! {{ name }},</h1>
+<h1>Hoi {{ name }}!</h1>
 <p>
-  Here's your magic login link. Click on the button to login directly without a password.
+  Klik op onderstaande knop om in te loggen in de SportySpots app!
 </p>
 <!-- Action -->
 <table class="body-action"
@@ -34,7 +34,7 @@
               <tr>
                 <td>
                   <a href="{{ action_url }}" class="button button--green" target="_blank">
-                    Login
+                    Inloggen
                   </a>
                 </td>
               </tr>
@@ -44,8 +44,7 @@
               <tr>
                 <td>
                   <p class="sub">
-                    If you’re having trouble with the button above, copy and paste the URL below into your web
-                    browser.
+                    Als de knop hier boven niet goed werkt, kopieer en plak onderstaande link dan in je browser.
                   </p>
                   <p class="sub">{{ action_url }}</p>
                 </td>

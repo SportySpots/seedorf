@@ -13,31 +13,31 @@ from seedorf.users.models import User
 from seedorf.utils.email import send_mail
 from seedorf.utils.firebase import get_firebase_link
 
+from django.utils.translation import ugettext_lazy as _
 
 class AccountAdapter(DefaultAccountAdapter):
     def is_open_for_signup(self, request):
         return getattr(settings, "ACCOUNT_ALLOW_REGISTRATION", True)
 
     def send_confirmation_mail(self, request, emailconfirmation, signup):
-        activate_url = self.get_email_confirmation_url(request, emailconfirmation)
+        user = request.user
+        magic_url = str(user.create_magic_link())
 
         context = {
             "name": emailconfirmation.email_address.user.name,
-            "action_url": activate_url,
-            "key": emailconfirmation.key,
+            "action_url": magic_url,
         }
 
-        # TODO: Set user language
-        # FIX: key is not defined in the template
         send_mail(
             to=emailconfirmation.email_address.email,
             template_prefix="SignupConfirmEmail",
             subject=_("Welcome to SportySpots."),
-            language="en",
+            language=request.user.profile.language,
             context=context,
         )
 
     def get_login_redirect_url(self, request):
+        # This happens after OAuth
         token = jwt_encode(request.user)
         return get_firebase_link("login?token=" + token)
 
@@ -66,6 +66,7 @@ class AccountAdapter(DefaultAccountAdapter):
             # Ability not to commit makes it easier to derive from
             # this adapter by adding
             user.save()
+            request.user = user
         return user
 
 

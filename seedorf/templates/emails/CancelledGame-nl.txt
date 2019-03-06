@@ -1,9 +1,9 @@
 {% extends "emails/BaseEmail-nl.txt" %}
 
 {% block content %}
-Shoot! {{ name }},
+Hoi {{ name }},
 
-{{ invite_sender_name }} has cancelled the sport activity.
+Helaas is de activiteit van {{ invite_sender_name }} geannuleerd.
 
-View Activity: {{ action_url }}
+Bekijk de activiteit: {{ action_url }}
 {% endblock content %}

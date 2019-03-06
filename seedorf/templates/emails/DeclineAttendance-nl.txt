@@ -1,10 +1,10 @@
 {% extends "emails/BaseEmail-nl.txt" %}
 
 {% block content %}
-Aah! {{ name }},
+Helaas {{ name }},
 
-You've declined {{ invite_sender_name }}'s sport activity. If you change your mind, you can still sign up by following
-the link below.
+Je hebt je afgemeld voor {{ invite_sender_name }}'s activiteit. Mocht je van gedachten veranderen kun je je altijd
+nog aanmelden via onderstaande link.
 
-View Activity: {{ action_url }}
+Bekijk activiteit: {{ action_url }}
 {% endblock content %}

@@ -1,16 +1,16 @@
 {% extends "emails/BaseEmail-es.html" %}
 
 {% block title %}
-  SportySpots - Activity Attendance Confirmed
+  SportySpots - Asistencia Confirmada
 {% endblock title %}
 
 {% block preheader %}
-  You're attending {{ invite_sender_name }}'s sport activity.
+  Asistencia confirmada a la actividad deportiva de {{ invite_sender_name }}.
 {% endblock preheader %}
 
 {% block email_body %}
 <h1>Game On! {{ name }},</h1>
-<p>You're attending {{ invite_sender_name }}'s sport activity.</p>
+<p>Asistencia confirmada a la actividad deportiva de {{ invite_sender_name }}.</p>
 <!-- Action -->
 <table class="body-action"
        align="center"
@@ -32,7 +32,7 @@
               <tr>
                 <td>
                   <a href="{{ action_url }}" class="button button--green" target="_blank">
-                    View activity
+                    Ver evento
                   </a>
                 </td>
               </tr>
@@ -42,8 +42,7 @@
               <tr>
                 <td>
                   <p class="sub">
-                    If you’re having trouble with the button above, copy and paste the URL below into your web
-                    browser.
+                    Si tienes problemas con el botón de arriba, copia y pega el siguiente enlace en tu navegador web.
                   </p>
                   <p class="sub">{{ action_url }}</p>
                 </td>

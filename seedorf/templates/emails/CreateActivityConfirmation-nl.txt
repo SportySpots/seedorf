@@ -1,9 +1,9 @@
 {% extends "emails/BaseEmail-nl.txt" %}
 
 {% block content %}
-Aloha! {{ name }},
+Aloha {{ name }}!
 
-Thank you for creating a new activity on SportySpots. You can view the activity details and invite others by sharing the link below.
+Bedankt voor het aanmaken van een nieuwe activiteit op SportySpots. Je kunt de activiteit bekijken en delen met anderen via onderstaande link.
 
-View Activity: {{ action_url }}
+Bekijk activiteit: {{ action_url }}
 {% endblock content %}

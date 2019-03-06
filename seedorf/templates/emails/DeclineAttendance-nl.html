@@ -1,18 +1,18 @@
 {% extends "emails/BaseEmail-nl.html" %}
 
 {% block title %}
-  SportySpots - Sport Activity Declined.
+  SportySpots - Afgemeld voor activiteit.
 {% endblock title %}
 
 {% block preheader %}
-  You've declined {{invite_sender_name }}'s sport activity.
+  Je hebt je afgemeld voor {{invite_sender_name }}'s activiteit.
 {% endblock preheader %}
 
 {% block email_body %}
 <h1>Aah! {{ name }},</h1>
 <p>
-  You've declined {{ invite_sender_name }}'s sport activity. If you change your mind, you can still sign up by following
-  the link below.
+  Je hebt je afgemeld voor {{ invite_sender_name }}'s activiteit. Mocht je van gedachten veranderen kun je je altijd
+  nog aanmelden via onderstaande link.
 </p>
 <!-- Action -->
 <table class="body-action"
@@ -35,7 +35,7 @@
               <tr>
                 <td>
                   <a href="{{ action_url }}" class="button button--green" target="_blank">
-                    View activity
+                    Bekijk activiteit
                   </a>
                 </td>
               </tr>
@@ -45,8 +45,7 @@
               <tr>
                 <td>
                   <p class="sub">
-                    If you’re having trouble with the button above, copy and paste the URL below into your web
-                    browser.
+                   Als de knop hier boven niet goed werkt, kopieer en plak onderstaande link dan in je browser.
                   </p>
                   <p class="sub">{{ action_url }}</p>
                 </td>

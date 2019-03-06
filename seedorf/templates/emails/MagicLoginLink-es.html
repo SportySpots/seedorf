@@ -1,17 +1,17 @@
 {% extends "emails/BaseEmail-es.html" %}
 
 {% block title %}
-  SportySpots - Magic Login.
+  SportySpots - Inicio de Sesión Mágico.
 {% endblock title %}
 
 {% block preheader %}
-  Here's your magic login link
+  Aquí está tu enlace mágico de inicio de sesión
 {% endblock preheader %}
 
 {% block email_body %}
 <h1>Wohooo! {{ name }},</h1>
 <p>
-  Here's your magic login link. Click on the button to login directly without a password.
+  Aquí está tu enlace mágico de inicio de sesión. Haz clic en el botón para iniciar sesión directamente sin una contraseña.
 </p>
 <!-- Action -->
 <table class="body-action"
@@ -34,7 +34,7 @@
               <tr>
                 <td>
                   <a href="{{ action_url }}" class="button button--green" target="_blank">
-                    Login
+                    Iniciar sesión
                   </a>
                 </td>
               </tr>
@@ -44,8 +44,7 @@
               <tr>
                 <td>
                   <p class="sub">
-                    If you’re having trouble with the button above, copy and paste the URL below into your web
-                    browser.
+                    Si tienes problemas con el botón de arriba, copia y pega el siguiente enlace en tu navegador web.
                   </p>
                   <p class="sub">{{ action_url }}</p>
                 </td>

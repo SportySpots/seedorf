@@ -1,9 +1,9 @@
 {% extends "emails/BaseEmail-nl.txt" %}
 
 {% block content %}
-Howdy! {{ name }},
+Hoi {{ name }},
 
-Nice to have you on board at SportySpots! Confirm your registration by following the link below and start sporting!.
+Leuk om je aan boord te hebben bij SportySpots! Bevestig je registratie door op onderstaande link te klikken en begin met sporten.
+{{ action_url }}
 
-To confirm, follow this link: {{ action_url }}
 {% endblock content %}

@@ -1,9 +1,9 @@
 {% extends "emails/BaseEmail-nl.txt" %}
 
 {% block content %}
-Game On! {{ name }},
+Sportze, {{ name }}!
 
-You're attending {{ invite_sender_name }}'s sport activity.
+Je ontvangt deze e-mail omdat je je hebt aangemeld voor {{ invite_sender_name }}'s activiteit.
 
-View Activity: {{ action_url }}
+Bekijk activiteit: {{ action_url }}
 {% endblock content %}
