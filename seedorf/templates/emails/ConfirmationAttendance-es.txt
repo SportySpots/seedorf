@@ -3,7 +3,7 @@
 {% block content %}
 Game On! {{ name }},
 
-Asistirás a la actividad deportiva de {{ invite_sender_name }}.
+Asistencia confirmada a la actividad deportiva de {{ invite_sender_name }}.
 
 Ver evento: {{ action_url }}
 {% endblock content %}
