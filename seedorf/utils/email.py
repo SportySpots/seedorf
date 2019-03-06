@@ -11,14 +11,13 @@ def send_mail(to, template_prefix, subject="", language="en", context=None):
 
     msg = EmailMultiAlternatives(
         subject=subject,
-        body=email_html,
+        body=email_plain_text,
         from_email="SportySpots <info@sportyspots.com>",
         to=[f"{to}"],
         reply_to=["SportySpots <info@sportyspots.com>"],
     )
 
-    msg.content_subtype = "html"  # Main content is now text/html
-    msg.attach_alternative(email_plain_text, "text/plain")
+    msg.attach_alternative(email_html, "text/html")
 
     # Optional Anymail extensions:
     msg.tags = ["activation"]
