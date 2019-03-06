@@ -1,9 +1,9 @@
 {% extends "emails/BaseEmail-nl.txt" %}
 
 {% block content %}
-Howdy! {{ name }},
+Hallo {{ name }}!
 
-{{ invite_sender_name }} has invited you to join a sport activity.
+{{ invite_sender_name }} heeft je uitgenodigd om mee te doen aan een activiteit via SportySpots.
 
-View Activity: {{ action_url }}
+Bekijk activiteit: {{ action_url }}
 {% endblock content %}

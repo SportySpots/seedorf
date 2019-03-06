@@ -1,9 +1,9 @@
 {% extends "emails/BaseEmail-nl.txt" %}
 
 {% block content %}
-Wohooo! {{ name }},
+Hoi {{ name }}!
 
-Here's your magic login link. Click to login directly without a password.
+Volg onderstaande link om in te loggen in de SportySpots app!
 
-Login: {{ action_url }}
+Inloggen: {{ action_url }}
 {% endblock content %}
