@@ -19,7 +19,8 @@ class AccountAdapter(DefaultAccountAdapter):
         return getattr(settings, "ACCOUNT_ALLOW_REGISTRATION", True)
 
     def send_confirmation_mail(self, request, emailconfirmation, signup):
-        magic_url = self.get_login_redirect_url(request)
+        user = request.user
+        magic_url = str(user.create_magic_link())
 
         context = {
             "name": emailconfirmation.email_address.user.name,
@@ -35,6 +36,7 @@ class AccountAdapter(DefaultAccountAdapter):
         )
 
     def get_login_redirect_url(self, request):
+        # This happens after OAuth
         token = jwt_encode(request.user)
         return get_firebase_link("login?token=" + token)
 
