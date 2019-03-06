@@ -2,11 +2,9 @@
 all:
   children:
     app_servers:
-      hosts:
-        prd.sportyspots.com:
+      hosts: prd.sportyspots.com
     db_servers:
-      hosts:
-        prd.sportyspots.com:
+      hosts: prd.sportyspots.com
   vars:
     env: prd
     celery_workers: 6
