@@ -2,12 +2,23 @@
 
 {% block title %}Server Error{% endblock %}
 
-{% block content %}
-<h1>Ooops!!! 500</h1>
+{% block layout_wrapper %}
+  <div class="overflow-hidden">
+    <div class="container d-flex align-items-stretch ui-mh-100vh p-0">
+      <div class="row w-100">
+        <div class="d-flex col-md justify-content-center align-items-center order-2 order-md-1 position-relative p-5">
+          <div class="error-bg-skew bg-white"></div>
 
-<h3>Looks like something went wrong!</h3>
+          <div class="text-md-left text-center">
+            <h1 class="display-2 font-weight-bolder mb-4">Whoops... Looks like something went wrong!</h1>
+            <div class="text-xlarge font-weight-light mb-5">We track these errors automatically, but if the problem persists feel free to contact us. In the meantime, try refreshing.</div>
+            <button type="button" class="btn btn-primary">←&nbsp; Go Back</button>
+          </div>
 
-<p>We track these errors automatically, but if the problem persists feel free to contact us. In the meantime, try refreshing.</p>
-{% endblock content %}
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock layout_wrapper %}
 
 

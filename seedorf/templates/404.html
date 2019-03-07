@@ -2,8 +2,21 @@
 
 {% block title %}Page not found{% endblock %}
 
-{% block content %}
-<h1>Page not found</h1>
+{% block layout_wrapper %}
+  <div class="overflow-hidden">
+    <div class="container d-flex align-items-stretch ui-mh-100vh p-0">
+      <div class="row w-100">
+        <div class="d-flex col-md justify-content-center align-items-center order-2 order-md-1 position-relative p-5">
+          <div class="error-bg-skew bg-white"></div>
 
-<p>This is not the page you were looking for.</p>
-{% endblock content %}
+          <div class="text-md-left text-center">
+            <h1 class="display-2 font-weight-bolder mb-4">Whoops...</h1>
+            <div class="text-xlarge font-weight-light mb-5">We couldn't find the page<br> you are looking for :(</div>
+            <button type="button" class="btn btn-primary">←&nbsp; Go Back</button>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock layout_wrapper %}

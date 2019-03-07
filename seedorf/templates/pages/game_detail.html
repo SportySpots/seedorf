@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% load i18n static %}
+
+{% block layout_navbar %}
+  <nav class="landing-navbar navbar navbar-expand-lg navbar-light fixed-top pt-lg-4">
+    <div class="container-fluid px-3">
+      <a href="#" class="navbar-brand text-big font-weight-bolder line-height-1 text-expanded py-3">LANDING</a>
+
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#landing-navbar-collapse">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="landing-navbar-collapse">
+        <div class="navbar-nav align-items-lg-center ml-auto">
+          <a class="anchor-link nav-item nav-link" href="#features">Features</a>
+          <a class="anchor-link nav-item nav-link" href="#screenshots">Screenshots</a>
+          <a class="anchor-link nav-item nav-link" href="#pricing">Pricing</a>
+          <a class="anchor-link nav-item nav-link" href="#subscribe">Subscribe</a>
+          <div class="nav-item py-3 py-lg-0 ml-lg-4">
+            <a href="#downloads" class="anchor-link btn btn-primary btn-round text-expanded">
+              <small>DOWNLOAD</small>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav>
+{% endblock layout_navbar %}

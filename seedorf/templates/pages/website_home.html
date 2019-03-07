@@ -1,38 +1,7 @@
-{% extends "base.html" %}
-{% load static %}
+{% extends "base_website.html" %}
+{% load static i18n %}
 
-{% block custom_css %}
-  <link rel="stylesheet" href="{% static 'libs/swiper/swiper.css' %}">
-  <link rel="stylesheet" href="{% static 'libs/plyr/plyr.css' %}">
-{% endblock custom_css %}
-
-{% block layout_wrapper %}
-  <!-- Navbar -->
-  <nav class="landing-navbar navbar navbar-expand-lg navbar-light fixed-top pt-lg-4">
-    <div class="container-fluid px-3">
-      <a href="#" class="navbar-brand text-big font-weight-bolder line-height-1 text-expanded py-3">LANDING</a>
-
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#landing-navbar-collapse">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-
-      <div class="collapse navbar-collapse" id="landing-navbar-collapse">
-        <div class="navbar-nav align-items-lg-center ml-auto">
-          <a class="anchor-link nav-item nav-link" href="#features">Features</a>
-          <a class="anchor-link nav-item nav-link" href="#screenshots">Screenshots</a>
-          <a class="anchor-link nav-item nav-link" href="#pricing">Pricing</a>
-          <a class="anchor-link nav-item nav-link" href="#subscribe">Subscribe</a>
-          <div class="nav-item py-3 py-lg-0 ml-lg-4">
-            <a href="#downloads" class="anchor-link btn btn-primary btn-round text-expanded">
-              <small>DOWNLOAD</small>
-            </a>
-          </div>
-        </div>
-      </div>
-    </div>
-  </nav>
-  <!-- / Navbar -->
-
+{% block layout_content %}
   <!-- Header -->
   <div class="jumbotron ui-hero ui-mh-100vh ui-bg-cover"
        style="background-image: url({% static 'images/pages/landing-1-bg.png' %});">
@@ -695,51 +664,4 @@
     </div>
   </div>
   <!-- / Block -->
-
-  <!-- Footer -->
-  <nav class="footer bg-white pt-4">
-    <div class="container text-center py-4">
-      <div class="pb-3">
-        <a href="#" class="footer-text text-big font-weight-bolder text-expanded">LANDING</a>
-        <span class="align-top">©</span>
-      </div>
-      <hr class="mb-4">
-      <div class="row">
-        <div class="col-6 col-sm pb-4">
-          <div class="footer-text font-secondary text-tiny font-weight-bold mb-3">ABOUT US</div>
-          <a href="#" class="footer-link d-block small pb-2">About</a>
-          <a href="#" class="footer-link d-block small pb-2">Our Story</a>
-          <a href="#" class="footer-link d-block small pb-2">Careers</a>
-        </div>
-        <div class="col-6 col-sm pb-4">
-          <div class="footer-text font-secondary text-tiny font-weight-bold mb-3">SUPPORT</div>
-          <a href="#" class="footer-link d-block small pb-2">FAQ</a>
-          <a href="#" class="footer-link d-block small pb-2">Support</a>
-          <a href="#" class="footer-link d-block small pb-2">Consultant</a>
-        </div>
-        <div class="col-6 col-sm pb-4">
-          <div class="footer-text font-secondary text-tiny font-weight-bold mb-3">PARTNERS</div>
-          <a href="#" class="footer-link d-block small pb-2">Wholesale</a>
-          <a href="#" class="footer-link d-block small pb-2">Office solutions</a>
-          <a href="#" class="footer-link d-block small pb-2">Press Resource</a>
-        </div>
-        <div class="col-6 col-sm pb-4">
-          <div class="footer-text font-secondary text-tiny font-weight-bold mb-3">CONNECT</div>
-          <a href="#" class="footer-link d-block small pb-2">
-            <i class="ion ion-logo-twitter text-twitter"></i> &nbsp;Twitter</a>
-          <a href="#" class="footer-link d-block small pb-2">
-            <i class="ion ion-logo-facebook text-facebook"></i> &nbsp;Facebook</a>
-          <a href="#" class="footer-link d-block small pb-2">
-            <i class="ion ion-logo-instagram text-instagram"></i> &nbsp;Instagram</a>
-        </div>
-      </div>
-    </div>
-  </nav>
-  <!-- / Footer -->
-{% endblock layout_wrapper %}
-
-{% block custom_js %}
-  <script src="{% static 'libs/swiper/swiper.js' %}"></script>
-  <script src="{% static 'libs/plyr/plyr.js' %}"></script>
-  <script src="{% static 'js/landing.js' %}"></script>
-{% endblock custom_js %}
+{% endblock layout_content %}

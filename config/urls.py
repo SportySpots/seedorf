@@ -128,11 +128,13 @@ urlpatterns = [
     path(settings.ADMIN_URL, admin.site.urls),
     # SportySpots
     # ------------------------------------------------------------------------------
-    path("home/", TemplateView.as_view(template_name="pages/home.html")),
+    path("home/", TemplateView.as_view(template_name="pages/website_home.html")),
+    path("dashboard/", TemplateView.as_view(template_name="pages/dashboard_home.html")),
     path("register/", TemplateView.as_view(template_name="pages/login_register.html")),
     path("login/", TemplateView.as_view(template_name="pages/login_register.html")),
     path("password-reset/", TemplateView.as_view(template_name="pages/password_reset.html")),
     path("confirm-email/", TemplateView.as_view(template_name="pages/confirm_email.html")),
+    path("games/", TemplateView.as_view(template_name="pages/game_detail.html")),
     # Wagtail
     # ------------------------------------------------------------------------------
     re_path(r"^cms/", include(wagtailadmin_urls)),
@@ -201,10 +203,10 @@ if settings.DEBUG:
     # This allows the error pages to be debugged during development, just visit
     # these url in browser to see how these error pages look like.
     urlpatterns += [
-        path("400/", default_views.bad_request, kwargs={"exception": Exception(_("Bad Request!"))}),
-        path("403/", default_views.permission_denied, kwargs={"exception": Exception(_("Permission Denied"))}),
-        path("404/", default_views.page_not_found, kwargs={"exception": Exception(_("Page not Found"))}),
-        path("500/", default_views.server_error),
+        path("400/", TemplateView.as_view(template_name="400.html")),
+        path("403/", TemplateView.as_view(template_name="403_csrf.html")),
+        path("404/", TemplateView.as_view(template_name="404.html")),
+        path("500/", TemplateView.as_view(template_name="500.html")),
     ]
     if "debug_toolbar" in settings.INSTALLED_APPS:
         import debug_toolbar
