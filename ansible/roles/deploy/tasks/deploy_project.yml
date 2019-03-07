@@ -47,12 +47,26 @@
 - name: Ensure project repository exists
   become_user: ubuntu
   git:
-    repo: ssh://git@github.com/sportyspots/seedorf.git
-    dest: "/home/ubuntu/sportyspots/{{ env }}"
+    repo: "{{ git_repo }}"
+    version: "{{ git_branch }}"
     update: yes
+    dest: "/home/ubuntu/sportyspots/{{ env }}"
     key_file: "/home/ubuntu/.ssh/id_rsa"
+  register: git_update
   notify:
     - project_changed
+
+
+- name: Slack alert git update
+  slack:
+    token: "{{ slack_api_token }}"
+    msg: "*github*: deployed branch {{ git_branch }}\n https://github.com/sportyspots/seedorf/compare/{{ git_update.before}}...{{ git_update.after }}"
+    channel: "{{ slack_alert_channel }}"
+    username: "Ansible [{{ inventory_hostname }}]"
+    link_names: 0
+    parse: "full"
+  tags:
+    - deploy
 
 - name: Install dependencies for {{ env }}
   become_user: ubuntu

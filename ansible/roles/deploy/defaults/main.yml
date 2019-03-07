@@ -4,3 +4,13 @@ debug_info: False
 certbot_auto_renew: True
 certbot_admin_email: admin@sportyspots.com
 certbot_script: /opt/certbot-auto
+
+# git
+# -----------------------------------------------------------------------------
+git_repo: "ssh://git@github.com/sportyspots/seedorf.git"
+git_branch: "master"
+
+# slack
+# -----------------------------------------------------------------------------
+slack_alert_channel: "dev-ansible"
+slack_api_token: ""
