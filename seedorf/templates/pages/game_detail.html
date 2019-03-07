@@ -1,28 +1,88 @@
-{% extends "base.html" %}
+{% extends "base_website.html" %}
 {% load i18n static %}
 
-{% block layout_navbar %}
-  <nav class="landing-navbar navbar navbar-expand-lg navbar-light fixed-top pt-lg-4">
-    <div class="container-fluid px-3">
-      <a href="#" class="navbar-brand text-big font-weight-bolder line-height-1 text-expanded py-3">LANDING</a>
+{% block layout_content %}
+  <div class="landing-block pb-5">
+    <div class="container px-3">
+      <div class="row">
+        <div class="col">
+          <div class="card mb-4">
 
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#landing-navbar-collapse">
-        <span class="navbar-toggler-icon"></span>
-      </button>
+            <div class="card-header border-0">
+              <div class="text-big font-weight-bold">
+                Ashu's Game
+              </div>
+            </div>
 
-      <div class="collapse navbar-collapse" id="landing-navbar-collapse">
-        <div class="navbar-nav align-items-lg-center ml-auto">
-          <a class="anchor-link nav-item nav-link" href="#features">Features</a>
-          <a class="anchor-link nav-item nav-link" href="#screenshots">Screenshots</a>
-          <a class="anchor-link nav-item nav-link" href="#pricing">Pricing</a>
-          <a class="anchor-link nav-item nav-link" href="#subscribe">Subscribe</a>
-          <div class="nav-item py-3 py-lg-0 ml-lg-4">
-            <a href="#downloads" class="anchor-link btn btn-primary btn-round text-expanded">
-              <small>DOWNLOAD</small>
-            </a>
+            <img class="card-img-top" src="https://source.unsplash.com/1600x900/?sport"/>
+
+            <div class="card-body border-top border-bottom text-center p-0">
+              <div class="row no-gutters row-bordered row-border-light">
+                <div class="d-flex col flex-column text-dark py-3">
+                  <div class="display-4 text-secondary mx-auto mb-3">
+                    <span class="lnr lnr-star"></span>
+                  </div>
+                  <div class="font-weight-bold">Tennis</div>
+                  <div class="text-muted small">Sport</div>
+                </div>
+                <div class="d-flex col flex-column text-dark py-3">
+                  <div class="display-4 text-secondary mx-auto mb-3">
+                    <span class="lnr lnr-calendar-full"></span>
+                  </div>
+                  <div class="font-weight-bold">Sunday, 17 March</div>
+                  <div class="text-muted small">Day</div>
+                </div>
+                <div class="d-flex col flex-column text-dark py-3">
+                  <div class="display-4 text-secondary mx-auto mb-3">
+                    <span class="lnr lnr-clock"></span>
+                  </div>
+                  <div class="font-weight-bold">18:00 - 19:00</div>
+                  <div class="text-muted small">Time</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="card-body">
+              <div class="text-muted small mb-2">Organizer</div>
+              <div class="media">
+                <img src="{% static 'images/avatars/4.png' %}" alt="" class="ui-w-60 rounded-circle">
+                <div class="media-body pt-2 ml-3">
+                  <h5 class="mb-2">Kenneth Frazier</h5>
+                </div>
+              </div>
+            </div>
+
+            <div class="card-body py-3">
+              <div class="text-muted small mb-2">Attending</div>
+              <div class="d-flex flex-wrap">
+                <a href="javascript:void(0)" class="d-block mr-1 mb-1"><img src="{% static 'images/avatars/2-small.png' %}" alt="" class="ui-w-30 rounded-circle"></a>
+                <a href="javascript:void(0)" class="d-block mr-1 mb-1"><img src="{% static 'images/avatars/3-small.png' %}" alt="" class="ui-w-30 rounded-circle"></a>
+                <a href="javascript:void(0)" class="d-block mr-1 mb-1"><img src="{% static 'images/avatars/4-small.png' %}" alt="" class="ui-w-30 rounded-circle"></a>
+                <a href="javascript:void(0)" class="d-block mr-1 mb-1"><img src="{% static 'images/avatars/5-small.png' %}" alt="" class="ui-w-30 rounded-circle"></a>
+                <a href="javascript:void(0)" class="d-block mr-1 mb-1"><img src="{% static 'images/avatars/6-small.png' %}" alt="" class="ui-w-30 rounded-circle"></a>
+              </div>
+            </div>
+
+            <div class="card-body">
+
+              <div class="media mb-3">
+                <div class="ion ion-md-information-circle ui-w-30 text-center text-lighter mt-1"></div>
+                <div class="media-body ml-2">
+                  Lorem ipsum dolor sit amet, nibh suavitate qualisque ut nam.
+                  Ad harum primis electram duo, porro principes ei has.
+                </div>
+              </div>
+
+              <div class="media">
+                <div class="ion ion-md-globe ui-w-30 text-center text-lighter mt-1"></div>
+                <a href="#" class="media-body d-block ml-2">website.com/about</a>
+              </div>
+
+            </div>
+
           </div>
         </div>
       </div>
     </div>
-  </nav>
-{% endblock layout_navbar %}
+  </div>
+{% endblock layout_content %}
