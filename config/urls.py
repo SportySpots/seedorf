@@ -155,8 +155,8 @@ urlpatterns = [
         name="account_confirm_email",
     ),
     path("api/auth/registration/status/", registration_status_view, name="account_confirm_status"),
-    path("api/auth/create-magic-link/", create_magic_link_view, name="account_create_magic_link"),
-    path("api/auth/confirm-magic-link/", confirm_magic_link_view, name="account_confirm_magic_link"),
+    path("api/auth/create-magic-link/", csrf_exempt(create_magic_link_view), name="account_create_magic_link"),
+    path("api/auth/confirm-magic-link/", csrf_exempt(confirm_magic_link_view), name="account_confirm_magic_link"),
     re_path(
         r"^api/auth/password-reset/confirm/"
         r"(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$",
