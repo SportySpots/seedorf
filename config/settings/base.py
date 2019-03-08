@@ -176,7 +176,7 @@ TIME_ZONE = "UTC"
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#language-code
 LANGUAGE_CODE = "en-us"
 
-LANGUAGES = (("en", _("English")), ("nl", _("Dutch")))
+LANGUAGES = (("en", _("English")), ("nl", _("Dutch")), ("es", _("Spanish")))
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#site-id
 SITE_ID = 1
