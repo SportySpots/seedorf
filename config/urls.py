@@ -20,6 +20,7 @@ from wagtail.admin import urls as wagtailadmin_urls
 from wagtail.core import urls as wagtail_urls
 from wagtail.documents import urls as wagtaildocs_urls
 
+from seedorf.games.views import GameDetailView
 from seedorf.core.views import apple_app_site_association
 from seedorf.games.viewsets import GameRsvpStatusNestedViewset, GameViewSet
 from seedorf.graphql.schema import schema
@@ -134,7 +135,7 @@ urlpatterns = [
     path("login/", TemplateView.as_view(template_name="pages/login_register.html")),
     path("password-reset/", TemplateView.as_view(template_name="pages/password_reset.html")),
     path("confirm-email/", TemplateView.as_view(template_name="pages/confirm_email.html")),
-    path("games/", TemplateView.as_view(template_name="pages/game_detail.html")),
+    path("games/<uuid:uuid>/", GameDetailView.as_view(), name="game-detail"),
     # Wagtail
     # ------------------------------------------------------------------------------
     re_path(r"^cms/", include(wagtailadmin_urls)),

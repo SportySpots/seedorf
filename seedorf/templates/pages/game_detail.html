@@ -5,12 +5,19 @@
   <div class="landing-block pb-5">
     <div class="container px-3">
       <div class="row">
+        <div class="col-lg-2"></div>
         <div class="col">
           <div class="card mb-4">
 
             <div class="card-header border-0">
-              <div class="text-big font-weight-bold">
-                Ashu's Game
+              <div class="display-4">
+                {% if game.name %}
+                  {{ game.name }}
+                {% else %}
+                  {% blocktrans with sport=game.sport.get_category_display %}
+                    {{ sport }} game
+                  {% endblocktrans %}
+                {% endif %}
               </div>
             </div>
 
@@ -22,38 +29,48 @@
                   <div class="display-4 text-secondary mx-auto mb-3">
                     <span class="lnr lnr-star"></span>
                   </div>
-                  <div class="font-weight-bold">Tennis</div>
-                  <div class="text-muted small">Sport</div>
+                  <div class="font-weight-bold">{{ game.sport.get_category_display }}</div>
+                  <div class="text-muted small">{% trans "Sport" %}</div>
                 </div>
                 <div class="d-flex col flex-column text-dark py-3">
                   <div class="display-4 text-secondary mx-auto mb-3">
                     <span class="lnr lnr-calendar-full"></span>
                   </div>
-                  <div class="font-weight-bold">Sunday, 17 March</div>
-                  <div class="text-muted small">Day</div>
+                  <div class="font-weight-bold">{{ game.start_time | date:"D d M Y" }}</div>
+                  <div class="text-muted small">{% trans "Day" %}</div>
                 </div>
                 <div class="d-flex col flex-column text-dark py-3">
                   <div class="display-4 text-secondary mx-auto mb-3">
                     <span class="lnr lnr-clock"></span>
                   </div>
-                  <div class="font-weight-bold">18:00 - 19:00</div>
-                  <div class="text-muted small">Time</div>
+                  <div class="font-weight-bold">{{ game.start_time | date:"H:s" }} - {{ game.end_time | time:"H:s" }}</div>
+                  <div class="text-muted small">{% trans "Time" %}</div>
+                </div>
+                <div class="d-flex col flex-column text-dark py-3">
+                  <div class="display-4 text-secondary mx-auto mb-3">
+                    <span class="lnr lnr-map-marker"></span>
+                  </div>
+                  <div class="font-weight-bold">{{ game.spot.address.formatted_address }}</div>
+                  <div class="text-muted small">{% trans "Address" %}</div>
                 </div>
               </div>
             </div>
+            <!-- https://*.sportyspots.com/* -->
+            <img class="card-img" src="https://maps.googleapis.com/maps/api/staticmap?center=Brooklyn+Bridge,New+York,NY&zoom=13&size=1200x300&maptype=roadmap&markers=color:blue%7Clabel:S%7C40.702147,-74.015794&markers=color:green%7Clabel:G%7C40.711614,-74.012318&markers=color:red%7Clabel:C%7C40.718217,-73.998284&key=AIzaSyC99uVW_9nOJ32T7BY3Yeqt0iMWqOrGuAQ">
 
             <div class="card-body">
-              <div class="text-muted small mb-2">Organizer</div>
+              <div class="display-4 mb-2">{% trans "Organizer" %}</div>
               <div class="media">
                 <img src="{% static 'images/avatars/4.png' %}" alt="" class="ui-w-60 rounded-circle">
-                <div class="media-body pt-2 ml-3">
-                  <h5 class="mb-2">Kenneth Frazier</h5>
+                <div class="media-body pt-3 ml-3">
+                  <h4 class="mb-2">{{ game.organizer.name | default:"Sporty" }}</h4>
+                  <div class="text-muted small">member since: </div>
                 </div>
               </div>
             </div>
 
             <div class="card-body py-3">
-              <div class="text-muted small mb-2">Attending</div>
+              <div class="display-4 mb-2">{% trans "Attending" %}</div>
               <div class="d-flex flex-wrap">
                 <a href="javascript:void(0)" class="d-block mr-1 mb-1"><img src="{% static 'images/avatars/2-small.png' %}" alt="" class="ui-w-30 rounded-circle"></a>
                 <a href="javascript:void(0)" class="d-block mr-1 mb-1"><img src="{% static 'images/avatars/3-small.png' %}" alt="" class="ui-w-30 rounded-circle"></a>
@@ -63,6 +80,7 @@
               </div>
             </div>
 
+            <!--
             <div class="card-body">
 
               <div class="media mb-3">
@@ -79,9 +97,10 @@
               </div>
 
             </div>
-
+            -->
           </div>
         </div>
+        <div class="col-lg-2"></div>
       </div>
     </div>
   </div>

@@ -147,7 +147,7 @@ class Game(BasePropertiesModel):
         default=STATUS_DRAFT,
         max_length=25,
         null=False,
-        protected=True,
+        protected=False,
         verbose_name=_("Status"),
     )
     capacity = models.PositiveSmallIntegerField(
@@ -372,7 +372,7 @@ class RsvpStatus(BasePropertiesModel):
         default=STATUS_UNKNOWN,
         max_length=25,
         null=True,
-        protected=True,
+        protected=False,
         verbose_name=_("Status"),
     )
 
