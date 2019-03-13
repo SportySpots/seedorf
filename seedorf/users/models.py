@@ -127,10 +127,6 @@ class UserProfile(BasePropertiesModel):
 #     # followers
 
 
-def random_string():
-    return uuid.uuid4().hex
-
-
 class MagicLoginLink(BasePropertiesModel):
     user = models.OneToOneField(
         "users.User",

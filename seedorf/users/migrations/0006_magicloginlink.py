@@ -26,7 +26,7 @@ class Migration(migrations.Migration):
                 ("deleted_at", models.DateTimeField(blank=True, editable=False, null=True, verbose_name="Deleted At")),
                 (
                     "token",
-                    models.CharField(default=seedorf.users.models.random_string, max_length=32, verbose_name="Token"),
+                    models.CharField(default="dummt", max_length=32, verbose_name="Token"),
                 ),
                 ("short_link", models.CharField(max_length=50, verbose_name="Link")),
                 (
