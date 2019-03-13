@@ -266,6 +266,11 @@ class UserProfileAPIViewTest(APITestCase):
         )
 
 
+def mock_get_firebase_link(app_link, unguessable=True, **kwargs):
+    return f"https://mock.link/{app_link[0:10]}"
+
+
+@patch('seedorf.users.models.get_firebase_link', mock_get_firebase_link)
 class UserMagicLinkAPIViewTest(APITestCase):
     def test_create_magic_link(self):
         user = UserFactory(name="test", email="test@test.com")
