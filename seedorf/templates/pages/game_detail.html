@@ -83,16 +83,20 @@
               </div>
             </div>
             <!-- https://*.sportyspots.com/* -->
-            <img class="card-img" src="https://maps.googleapis.com/maps/api/staticmap?center={{ game.spot.address.lat }},{{ game.spot.address.lng }}&zoom=13&scale=1&size=600x300&maptype=roadmap&format=png&visual_refresh=true&markers=size:mid%7Ccolor:0xff0000%7Clabel:1%7C{{ game.spot.address.lat }},{{ game.spot.address.lng }}&key=AIzaSyC99uVW_9nOJ32T7BY3Yeqt0iMWqOrGuAQ">
+            <img class="card-img" src="https://maps.googleapis.com/maps/api/staticmap?center={{ game.spot.address.lat }},{{ game.spot.address.lng }}&zoom=13&scale=1&size=600x300&maptype=roadmap&format=png&visual_refresh=true&markers=size:mid%7Ccolor:0xff0000%7Clabel:o%7C{{ game.spot.address.lat }},{{ game.spot.address.lng }}&key=AIzaSyC99uVW_9nOJ32T7BY3Yeqt0iMWqOrGuAQ">
 
 
             <div class="card-body">
               <div class="display-4 mb-2">{% trans "Organizer" %}</div>
               <div class="media">
-                <img src="{% static 'images/avatars/4.png' %}" alt="" class="ui-w-60 rounded-circle">
+                {% if game.organizer.profile.avatar %}
+                  <img src="{{ game.organizer.profile.avatar.url }}" alt="" class="ui-w-60 rounded-circle">
+                {% else %}
+                  <img src="https://via.placeholder.com/150/005537/FFFFFF?text={{ game.organizer.initials }}" alt="" class="ui-w-60 rounded-circle">
+                {% endif %}
                 <div class="media-body pt-3 ml-3">
-                  <h4 class="mb-2">{{ game.organizer.name | default:"Sporty" }}</h4>
-                  <div class="text-muted small">member since: </div>
+                  <h4 class="mb-0">{{ game.organizer.name | default:"Sporty" }}</h4>
+                  <div class="text-muted small">{% trans "member since" %}: {{ game.organizer.created_at|timesince }}</div>
                 </div>
               </div>
             </div>

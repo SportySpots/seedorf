@@ -55,6 +55,10 @@ class User(AbstractUser, BasePropertiesModel):
     class Meta:
         ordering = ("-created_at",)
 
+    @property
+    def initials(self):
+        return "".join(i[0] for i in self.name.split()).upper()[0:2]
+
 
 class UserProfile(BasePropertiesModel):
 
