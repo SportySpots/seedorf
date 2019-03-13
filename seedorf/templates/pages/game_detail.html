@@ -32,7 +32,7 @@
               <div class="carousel-inner">
                 {% for image in game.spot.images.all %}
                   <div class="carousel-item {% if forloop.first %}active{% endif %}">
-                    <img class="d-block w-100" src="{{ image.image.url|imgix_url }}?fit=fill&fill=blur&w=250&h=250" />
+                    <img class="d-block w-100" src="{{ image.image.url|imgix_url }}?fit=fill&fill=blur&w=900&h=900" />
                   </div>
                 {% empty %}
                   <div class="carousel-item active">
