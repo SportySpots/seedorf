@@ -137,17 +137,12 @@ class MagicLoginLink(BasePropertiesModel):
         verbose_name=_("Magic login link"),
     )
 
-    token = models.TextField(
-        blank=False, null=False, verbose_name=_("Token"), unique=True
-    )
+    token = models.TextField(blank=False, null=False, verbose_name=_("Token"), unique=True)
 
     short_link = models.CharField(blank=False, null=False, max_length=50, verbose_name=_("Link"))
 
     def create_token(self):
-        jwt_payload = {
-            'email': self.user.email,
-            'name': self.user.name
-        }
+        jwt_payload = {"email": self.user.email, "name": self.user.name}
         jwt_encode_handler = api_settings.JWT_ENCODE_HANDLER
         self.token = jwt_encode_handler(jwt_payload)
 

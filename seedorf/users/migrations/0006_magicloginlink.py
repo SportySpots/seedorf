@@ -24,10 +24,7 @@ class Migration(migrations.Migration):
                 ),
                 ("modified_at", models.DateTimeField(auto_now=True, verbose_name="Modified At")),
                 ("deleted_at", models.DateTimeField(blank=True, editable=False, null=True, verbose_name="Deleted At")),
-                (
-                    "token",
-                    models.CharField(default="dummt", max_length=32, verbose_name="Token"),
-                ),
+                ("token", models.CharField(default="dummt", max_length=32, verbose_name="Token")),
                 ("short_link", models.CharField(max_length=50, verbose_name="Link")),
                 (
                     "user",

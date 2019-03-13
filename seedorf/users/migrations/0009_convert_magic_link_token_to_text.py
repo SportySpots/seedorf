@@ -5,14 +5,10 @@ from django.db import migrations, models
 
 class Migration(migrations.Migration):
 
-    dependencies = [
-        ('users', '0008_add_language_spanish'),
-    ]
+    dependencies = [("users", "0008_add_language_spanish")]
 
     operations = [
         migrations.AlterField(
-            model_name='magicloginlink',
-            name='token',
-            field=models.TextField(unique=True, verbose_name='Token'),
-        ),
+            model_name="magicloginlink", name="token", field=models.TextField(unique=True, verbose_name="Token")
+        )
     ]

@@ -12,8 +12,6 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name="magicloginlink",
             name="token",
-            field=models.CharField(
-                default="dummy", max_length=32, unique=True, verbose_name="Token"
-            ),
+            field=models.CharField(default="dummy", max_length=32, unique=True, verbose_name="Token"),
         )
     ]
