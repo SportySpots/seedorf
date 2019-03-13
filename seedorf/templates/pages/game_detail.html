@@ -82,9 +82,11 @@
                 </div>
               </div>
             </div>
-            <!-- https://*.sportyspots.com/* -->
-            <img class="card-img" src="https://maps.googleapis.com/maps/api/staticmap?center={{ game.spot.address.lat }},{{ game.spot.address.lng }}&zoom=13&scale=1&size=600x300&maptype=roadmap&format=png&visual_refresh=true&markers=size:mid%7Ccolor:0xff0000%7Clabel:o%7C{{ game.spot.address.lat }},{{ game.spot.address.lng }}&key=AIzaSyC99uVW_9nOJ32T7BY3Yeqt0iMWqOrGuAQ">
 
+            <!-- https://*.sportyspots.com/* -->
+            <a href="https://www.google.com/maps/dir/{{ game.spot.address.lat }},{{ game.spot.address.lng }}">
+              <img class="card-img" src="https://maps.googleapis.com/maps/api/staticmap?center={{ game.spot.address.lat }},{{ game.spot.address.lng }}&zoom=13&scale=1&size=600x300&maptype=roadmap&format=png&visual_refresh=true&markers=size:mid%7Ccolor:0xff0000%7Clabel:o%7C{{ game.spot.address.lat }},{{ game.spot.address.lng }}&key=AIzaSyC99uVW_9nOJ32T7BY3Yeqt0iMWqOrGuAQ">
+            </a>
 
             <div class="card-body">
               <div class="display-4 mb-2">{% trans "Organizer" %}</div>
