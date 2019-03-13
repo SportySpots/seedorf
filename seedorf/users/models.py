@@ -8,7 +8,6 @@ from django.db import models
 from django.urls import reverse
 from django.utils.translation import ugettext_lazy as _
 from django_countries.fields import CountryField
-from rest_auth.utils import jwt_encode
 from rest_framework_jwt.settings import api_settings
 from timezone_field import TimeZoneField
 
