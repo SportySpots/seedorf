@@ -21,7 +21,7 @@
               </div>
             </div>
 
-            <div id="spotImagesCarousel" class="carousel slide" data-ride="carousel">
+            <div id="spotImagesCarousel" class="carousel slide" data-ride="carousel" data-interval="false">
               <ol class="carousel-indicators">
                 {% for image in game.spot.images.all %}
                   <li data-target="#spotImagesCarousel" data-slide-to="{{ forloop.counter0 }}" class="{% if forloop.first %}active{% endif %}"></li>
