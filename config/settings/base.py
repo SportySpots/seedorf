@@ -217,7 +217,7 @@ TEMPLATES = [
                 "django.contrib.messages.context_processors.messages",
                 # Your stuff: custom template context processors go here
             ],
-            "libraries": {"seedorf": "seedorf.utils.templatetags.seedorf"},
+            "libraries": {"seedorf": "seedorf.utils.templatetags.tags"},
         },
     }
 ]
