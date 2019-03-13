@@ -2,6 +2,7 @@ import jwt
 from django.conf import settings
 from django.urls import reverse
 from rest_framework.test import APITestCase
+from rest_framework_jwt.settings import api_settings
 from unittest.mock import patch
 
 from seedorf.sports.tests.factories import SportFactory
@@ -263,6 +264,37 @@ class UserProfileAPIViewTest(APITestCase):
             ],
             response_spot.keys(),
         )
+
+
+class UserMagicLinkAPIViewTest(APITestCase):
+    def test_create_magic_link(self):
+        user = UserFactory(name="test", email='test@test.com')
+        url = reverse("account_create_magic_link")
+        body = {"email": user.email}
+        response = self.client.post(url, data=body)
+        self.assertEqual(201, response.status_code)
+        self.assertEqual(str(response.data), 'Email sent')
+
+        jwt_decode_handler = api_settings.JWT_DECODE_HANDLER
+        decoded_jwt = jwt_decode_handler(user.magic_link.token)
+        expected_decoded_jwt = {
+            "email": user.email,
+            "name": user.name,
+        }
+        self.assertDictEqual(expected_decoded_jwt, decoded_jwt)
+
+    def test_confirm_magic_link(self):
+        user = UserFactory(name="test", email='test@test.com')
+        user.create_magic_link()
+        url = reverse("account_confirm_magic_link")
+        body = {"token": user.magic_link.token}
+        response = self.client.post(url, data=body)
+        self.assertEqual(200, response.status_code)
+        self.assertTrue('token' in response.data)
+
+        jwt_decode_handler = api_settings.JWT_DECODE_HANDLER
+        decoded_jwt = jwt_decode_handler(response.data['token'])
+        self.assertEqual(str(user.uuid), decoded_jwt['uuid'])
 
 
 # Create Token Manually

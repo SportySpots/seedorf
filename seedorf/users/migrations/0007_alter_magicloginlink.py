@@ -13,7 +13,7 @@ class Migration(migrations.Migration):
             model_name="magicloginlink",
             name="token",
             field=models.CharField(
-                default=seedorf.users.models.random_string, max_length=32, unique=True, verbose_name="Token"
+                default="dummy", max_length=32, unique=True, verbose_name="Token"
             ),
         )
     ]

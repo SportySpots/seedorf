@@ -8,6 +8,7 @@ from django.db import models
 from django.urls import reverse
 from django.utils.translation import ugettext_lazy as _
 from django_countries.fields import CountryField
+from rest_framework_jwt.settings import api_settings
 from timezone_field import TimeZoneField
 
 from seedorf.utils.email import send_mail
@@ -45,6 +46,7 @@ class User(AbstractUser, BasePropertiesModel):
         except MagicLoginLink.DoesNotExist:
             pass
         magic_link = MagicLoginLink(user=self)
+        magic_link.create_token()
         magic_link.set_short_link()
         magic_link.save()
         return magic_link
@@ -125,10 +127,6 @@ class UserProfile(BasePropertiesModel):
 #     # followers
 
 
-def random_string():
-    return uuid.uuid4().hex
-
-
 class MagicLoginLink(BasePropertiesModel):
     user = models.OneToOneField(
         "users.User",
@@ -139,11 +137,19 @@ class MagicLoginLink(BasePropertiesModel):
         verbose_name=_("Magic login link"),
     )
 
-    token = models.CharField(
-        blank=False, null=False, max_length=32, verbose_name=_("Token"), unique=True, default=random_string
+    token = models.TextField(
+        blank=False, null=False, verbose_name=_("Token"), unique=True
     )
 
     short_link = models.CharField(blank=False, null=False, max_length=50, verbose_name=_("Link"))
+
+    def create_token(self):
+        jwt_payload = {
+            'email': self.user.email,
+            'name': self.user.name
+        }
+        jwt_encode_handler = api_settings.JWT_ENCODE_HANDLER
+        self.token = jwt_encode_handler(jwt_payload)
 
     def set_short_link(self):
         self.short_link = get_firebase_link(f"magic_link_login?token={self.token}")
