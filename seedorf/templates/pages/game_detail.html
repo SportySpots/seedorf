@@ -1,5 +1,5 @@
 {% extends "base_website.html" %}
-{% load i18n static %}
+{% load i18n static wagtailimages_tags %}
 
 {% block layout_content %}
   <div class="landing-block pb-5">
@@ -83,7 +83,8 @@
               </div>
             </div>
             <!-- https://*.sportyspots.com/* -->
-            <img class="card-img" src="https://maps.googleapis.com/maps/api/staticmap?center=Brooklyn+Bridge,New+York,NY&zoom=13&size=1200x300&maptype=roadmap&markers=color:blue%7Clabel:S%7C40.702147,-74.015794&markers=color:green%7Clabel:G%7C40.711614,-74.012318&markers=color:red%7Clabel:C%7C40.718217,-73.998284&key=AIzaSyC99uVW_9nOJ32T7BY3Yeqt0iMWqOrGuAQ">
+            <img class="card-img" src="https://maps.googleapis.com/maps/api/staticmap?center={{ game.spot.address.lat }},{{ game.spot.address.lng }}&zoom=13&scale=1&size=600x300&maptype=roadmap&format=png&visual_refresh=true&markers=size:mid%7Ccolor:0xff0000%7Clabel:1%7C{{ game.spot.address.lat }},{{ game.spot.address.lng }}&key=AIzaSyC99uVW_9nOJ32T7BY3Yeqt0iMWqOrGuAQ">
+
 
             <div class="card-body">
               <div class="display-4 mb-2">{% trans "Organizer" %}</div>
