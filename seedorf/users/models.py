@@ -1,3 +1,4 @@
+import time
 import uuid
 from datetime import date
 
@@ -142,7 +143,7 @@ class MagicLoginLink(BasePropertiesModel):
     short_link = models.CharField(blank=False, null=False, max_length=50, verbose_name=_("Link"))
 
     def create_token(self):
-        jwt_payload = {"email": self.user.email, "name": self.user.name}
+        jwt_payload = {"email": self.user.email, "name": self.user.name, "iat": int(time.time())}
         jwt_encode_handler = api_settings.JWT_ENCODE_HANDLER
         self.token = jwt_encode_handler(jwt_payload)
 

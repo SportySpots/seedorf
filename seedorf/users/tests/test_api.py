@@ -271,6 +271,7 @@ def mock_get_firebase_link(app_link, unguessable=True, **kwargs):
 
 
 @patch("seedorf.users.models.get_firebase_link", mock_get_firebase_link)
+@patch("seedorf.users.models.time.time", lambda: 12345)
 class UserMagicLinkAPIViewTest(APITestCase):
     def test_create_magic_link(self):
         user = UserFactory(name="test", email="test@test.com")
@@ -282,7 +283,7 @@ class UserMagicLinkAPIViewTest(APITestCase):
 
         jwt_decode_handler = api_settings.JWT_DECODE_HANDLER
         decoded_jwt = jwt_decode_handler(user.magic_link.token)
-        expected_decoded_jwt = {"email": user.email, "name": user.name}
+        expected_decoded_jwt = {"email": user.email, "name": user.name, "iat": 12345}
         self.assertDictEqual(expected_decoded_jwt, decoded_jwt)
 
     def test_confirm_magic_link(self):
