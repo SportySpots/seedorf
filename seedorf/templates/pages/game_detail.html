@@ -1,5 +1,5 @@
 {% extends "base_website.html" %}
-{% load i18n static wagtailimages_tags %}
+{% load i18n static seedorf %}
 
 {% block layout_content %}
   <div class="landing-block pb-5">
@@ -32,7 +32,7 @@
               <div class="carousel-inner">
                 {% for image in game.spot.images.all %}
                   <div class="carousel-item {% if forloop.first %}active{% endif %}">
-                    <img class="d-block w-100" src="{{ image.image.url }}">
+                    <img class="d-block w-100" src="{{ image.image.url|imgix_url }}?fit=fill&fill=blur&w=250&h=250" />
                   </div>
                 {% empty %}
                   <div class="carousel-item active">
