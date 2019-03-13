@@ -146,7 +146,7 @@ class MagicLoginLink(BasePropertiesModel):
     short_link = models.CharField(blank=False, null=False, max_length=50, verbose_name=_("Link"))
 
     def set_short_link(self):
-        self.short_link = get_firebase_link(f"magic_link_login?token={self.token}")
+        self.short_link = get_firebase_link(f"magic_link_login?token={self.token}&email={self.user.email}")
 
     def mail(self):
         context = {"name": self.user.name, "action_url": str(self)}
