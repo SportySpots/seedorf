@@ -90,7 +90,7 @@
               <div class="display-4 mb-2">{% trans "Organizer" %}</div>
               <div class="media">
                 {% if game.organizer.profile.avatar %}
-                  <img src="{{ game.organizer.profile.avatar.url }}" alt="" class="ui-w-60 rounded-circle">
+                  <img src="{{ game.organizer.profile.avatar.url|imgix_url }}?crop=faces&fit=crop&h=320&w=320" alt="" class="ui-w-60 rounded-circle">
                 {% else %}
                   <img src="https://via.placeholder.com/150/005537/FFFFFF?text={{ game.organizer.initials }}" alt="" class="ui-w-60 rounded-circle">
                 {% endif %}
