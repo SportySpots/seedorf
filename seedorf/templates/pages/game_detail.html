@@ -9,6 +9,7 @@
         <div class="col">
           <div class="card mb-4">
 
+            <!-- Activity Name -->
             <div class="card-header border-0">
               <div class="display-4">
                 {% if game.name %}
@@ -20,7 +21,9 @@
                 {% endif %}
               </div>
             </div>
+            <!--/ Activity Name -->
 
+            <!-- Spot Images -->
             <div id="spotImagesCarousel" class="carousel slide" data-ride="carousel" data-interval="false">
               <ol class="carousel-indicators">
                 {% for image in game.spot.images.all %}
@@ -49,7 +52,9 @@
                 <span class="sr-only">Next</span>
               </a>
             </div>
+            <!--/ Spot Images -->
 
+            <!-- Game Details -->
             <div class="card-body border-top border-bottom text-center p-0">
               <div class="row no-gutters row-bordered row-border-light">
                 <div class="d-flex col-md-3 flex-column text-dark py-3">
@@ -70,68 +75,103 @@
                   <div class="display-4 text-secondary mx-auto mb-3">
                     <span class="lnr lnr-calendar-full"></span>
                   </div>
-                  <div class="font-weight-bold">{{ game.start_time | date:"D d M Y" }}</div>
-                  <div class="text-muted small">{% trans "Day" %}</div>
+                  <div class="font-weight-bold">
+                    {{ game.start_time | date:"D d M Y" }}
+                  </div>
+                  <div class="text-muted small">
+                    {% trans "Day" %}
+                  </div>
                 </div>
                 <div class="d-flex col-md-3 flex-column text-dark py-3">
                   <div class="display-4 text-secondary mx-auto mb-3">
                     <span class="lnr lnr-clock"></span>
                   </div>
-                  <div class="font-weight-bold">{{ game.start_time | date:"H:s" }} - {{ game.end_time | time:"H:s" }}</div>
-                  <div class="text-muted small">{% trans "Time" %}</div>
+                  <div class="font-weight-bold">
+                    {{ game.start_time | date:"H:s" }} - {{ game.end_time | time:"H:s" }}
+                  </div>
+                  <div class="text-muted small">
+                    {% trans "Time" %}
+                  </div>
                 </div>
               </div>
             </div>
+            <!--/ Game Details -->
 
-            <!-- https://*.sportyspots.com/* -->
+            <!-- Location -->
             <a href="https://www.google.com/maps/dir/{{ game.spot.address.lat }},{{ game.spot.address.lng }}">
-              <img class="card-img" src="https://maps.googleapis.com/maps/api/staticmap?center={{ game.spot.address.lat }},{{ game.spot.address.lng }}&zoom=13&scale=1&size=600x300&maptype=roadmap&format=png&visual_refresh=true&markers=size:mid%7Ccolor:0xff0000%7Clabel:o%7C{{ game.spot.address.lat }},{{ game.spot.address.lng }}&key=AIzaSyC99uVW_9nOJ32T7BY3Yeqt0iMWqOrGuAQ">
+              <img class="card-img"
+                   src="https://maps.googleapis.com/maps/api/staticmap?center={{ game.spot.address.lat }},{{ game.spot.address.lng }}&zoom=13&scale=1&size=600x300&maptype=roadmap&format=png&visual_refresh=true&markers=size:mid%7Ccolor:0xff0000%7Clabel:o%7C{{ game.spot.address.lat }},{{ game.spot.address.lng }}&key=AIzaSyC99uVW_9nOJ32T7BY3Yeqt0iMWqOrGuAQ">
             </a>
+            <!--/ Location -->
 
-            <div class="card-body">
-              <div class="display-4 mb-2">{% trans "Organizer" %}</div>
-              <div class="media">
-                {% if game.organizer.profile.avatar %}
-                  <img src="{{ game.organizer.profile.avatar.url|imgix_url }}?crop=faces&fit=crop&h=320&w=320" alt="" class="ui-w-60 rounded-circle">
-                {% else %}
-                  <img src="https://via.placeholder.com/150/005537/FFFFFF?text={{ game.organizer.initials }}" alt="" class="ui-w-60 rounded-circle">
-                {% endif %}
-                <div class="media-body pt-3 ml-3">
-                  <h4 class="mb-0">{{ game.organizer.name | default:"Sporty" }}</h4>
-                  <div class="text-muted small">{% trans "member since" %}: {{ game.organizer.created_at|timesince }}</div>
+            <!-- Organizer -->
+            <div class="card">
+              <h6 class="card-header display-4">{% trans "Organizer" %}</h6>
+              <div class="card-body">
+                <div class="media pb-1 mb-3">
+                  {% if game.organizer.profile.avatar %}
+                    <img src="{{ game.organizer.profile.avatar.url|imgix_url }}?crop=faces&fit=crop&h=320&w=320" alt="" class="ui-w-60 rounded-circle">
+                  {% else %}
+                    <img src="https://via.placeholder.com/150/005537/FFFFFF?text={{ game.organizer.initials }}" alt="" class="ui-w-60 rounded-circle">
+                  {% endif %}
+                  <div class="media-body ml-3">
+                    <div class="mb-1">
+                      <strong class="font-weight-semibold">
+                        {{ game.organizer.name | default:"Sporty" }}
+                      </strong>
+                      <div class="text-muted small">
+                        {% trans "member since" %}: {{ game.organizer.created_at|timesince }}
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
+            <!--/ Organizer -->
 
-            <div class="card-body py-3">
-              <div class="display-4 mb-2">{% trans "Attending" %}</div>
-              <div class="d-flex flex-wrap">
-                <a href="javascript:void(0)" class="d-block mr-1 mb-1"><img src="{% static 'images/avatars/2-small.png' %}" alt="" class="ui-w-30 rounded-circle"></a>
-                <a href="javascript:void(0)" class="d-block mr-1 mb-1"><img src="{% static 'images/avatars/3-small.png' %}" alt="" class="ui-w-30 rounded-circle"></a>
-                <a href="javascript:void(0)" class="d-block mr-1 mb-1"><img src="{% static 'images/avatars/4-small.png' %}" alt="" class="ui-w-30 rounded-circle"></a>
-                <a href="javascript:void(0)" class="d-block mr-1 mb-1"><img src="{% static 'images/avatars/5-small.png' %}" alt="" class="ui-w-30 rounded-circle"></a>
-                <a href="javascript:void(0)" class="d-block mr-1 mb-1"><img src="{% static 'images/avatars/6-small.png' %}" alt="" class="ui-w-30 rounded-circle"></a>
+            <!-- Attendees -->
+            <div class="card mb-4">
+              <h6 class="card-header display-4">{% trans "Attending" %}</h6>
+              <div class="card-body">
+                {% for attendee in game.attendees.all %}
+                  {% if attendee.status == attendee.STATUS_ATTENDING %}
+                    <div class="media pb-1 mb-3">
+                      {% if attendee.user.profile.avatar %}
+                        <img src="{{ attendee.user.profile.avatar.url|imgix_url }}?crop=faces&fit=crop&h=320&w=320"
+                             class="d-block ui-w-40 rounded-circle">
+                      {% else %}
+                        <img src="https://via.placeholder.com/150/005537/FFFFFF?text={{ attendee.user.initials }}"
+                             class="ui-w-60 rounded-circle">
+                      {% endif %}
+                      <div class="media-body ml-3">
+                        <div class="mb-1">
+                          <strong class="font-weight-semibold">
+                            {{ attendee.name }}
+                          </strong>
+                          <div class="text-muted small">
+                            {% trans "signed up" %}: {{ attendee.created_at|timesince }}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  {% endif %}
+                {% empty %}
+                  <div class="media pb-1 mb-3">
+                    <img src="assets/img/avatars/6-small.png" class="d-block ui-w-40 rounded-circle" alt="">
+                    <div class="media-body ml-3">
+                      <div class="mb-1">
+                        <strong class="font-weight-semibold">Mae Gibson</strong> &nbsp;
+                        <div class="text-muted small">
+                          {% trans "member since" %}: {{ game.organizer.created_at|timesince }}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                {% endfor %}
               </div>
             </div>
+            <!--/ Attendees -->
 
-            <!--
-            <div class="card-body">
-
-              <div class="media mb-3">
-                <div class="ion ion-md-information-circle ui-w-30 text-center text-lighter mt-1"></div>
-                <div class="media-body ml-2">
-                  Lorem ipsum dolor sit amet, nibh suavitate qualisque ut nam.
-                  Ad harum primis electram duo, porro principes ei has.
-                </div>
-              </div>
-
-              <div class="media">
-                <div class="ion ion-md-globe ui-w-30 text-center text-lighter mt-1"></div>
-                <a href="#" class="media-body d-block ml-2">website.com/about</a>
-              </div>
-
-            </div>
-            -->
           </div>
         </div>
         <div class="col-lg-2"></div>
