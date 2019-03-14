@@ -129,7 +129,6 @@ urlpatterns = [
     path(settings.ADMIN_URL, admin.site.urls),
     # SportySpots
     # ------------------------------------------------------------------------------
-    path("home/", TemplateView.as_view(template_name="pages/website_home.html")),
     path("dashboard/", TemplateView.as_view(template_name="pages/dashboard_home.html")),
     path("register/", TemplateView.as_view(template_name="pages/login_register.html")),
     path("login/", TemplateView.as_view(template_name="pages/login_register.html")),
@@ -213,3 +212,6 @@ if settings.DEBUG:
         import debug_toolbar
 
         urlpatterns = [url(r"^__debug__/", include(debug_toolbar.urls))] + urlpatterns
+
+# If non of the above matches, pass it on to wagtail
+urlpatterns += [re_path(r"", include(wagtail_urls))]

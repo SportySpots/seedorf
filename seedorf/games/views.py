@@ -7,4 +7,4 @@ class GameDetailView(DetailView):
     model = Game
     slug_field = "uuid"
     slug_url_kwarg = "uuid"
-    template_name = "pages/game_detail.html"
+    template_name = "pages/website_game_detail.html"

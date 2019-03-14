@@ -1,0 +1,126 @@
+{% load static wagtailcore_tags i18n %}
+
+<div class="swiper-container swiper-container-horizontal swiper-container-autoheight" id="landing-slider-parallax">
+  <!-- Parallax background element -->
+  <div class="landing-slider-parallax-bg"
+       style="background-image: url({% static 'images/pages/landing-1-bg.png' %}); transform: translate3d(0%, 0px, 0px); transition-duration: 0ms;"
+       data-swiper-parallax="-23%">
+  </div>
+  <div class="swiper-wrapper" style="height: 671px; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;">
+
+    <div class="swiper-slide jumbotron ui-hero ui-mh-100vh bg-transparent overflow-hidden swiper-slide-active"
+         style="width: 1440px;">
+      <div class="container-fluid justify-content-center px-lg-5">
+        <div class="row justify-content-center w-100 pt-3">
+
+          <div class="col-lg-7 col-xl-6 text-lg-left text-center my-5"
+               data-swiper-parallax="-50%"
+               style="transform: translate3d(0%, 0px, 0px); transition-duration: 0ms;">
+            <h1 class="display-3 font-secondary font-weight-semibold mb-4">
+              Ontdek nieuwe sportplekken
+            </h1>
+            <p class="lead text-muted pb-3">
+              Krijg toegang tot een compleet overzicht van alle sportplekken bij jou in de buurt
+            </p>
+            <div class="mt-2">
+              <button type="button"
+                      class="landing-btn btn btn-lg btn-round btn-primary">
+                GET STARTED
+              </button>
+            </div>
+          </div>
+
+          <div class="col-lg-5 text-center pl-lg-5" data-swiper-parallax="100%" data-swiper-parallax-opacity="0"
+               style="opacity: 1; transform: translate3d(0%, 0px, 0px); transition-duration: 0ms;">
+            <div class="ui-presentation-right ui-device macbook float-left rounded">
+              <img class="device-img" src="{% static 'images/devices/macbook-gold.png' %}" alt="">
+              <div class="device-content">
+                <img src="{% static 'images/uikit/app.png' %}" alt="">
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <div class="swiper-slide jumbotron ui-hero bg-transparent py-0 m-0 swiper-slide-next" style="width: 1440px;">
+      <div class="d-flex flex-column w-100 ui-mh-100vh">
+
+        <div class="container d-flex justify-content-center align-items-center flex-grow-1">
+          <div class="row flex-basis-100 pt-5 mt-4 mt-sm-5">
+
+            <div class="col-lg-8 text-center py-5 mx-auto">
+              <h1 class="display-3 font-secondary font-weight-semibold mb-4"
+                  data-swiper-parallax-y="100"
+                  style="transform: translate3d(0px, -100px, 0px); transition-duration: 0ms;">
+                Organiseer een potje sport
+              </h1>
+              <p class="lead text-muted pb-3" data-swiper-parallax-y="0"
+                 style="transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;">
+                Organiseer een potje sport met vrienden of andere sporters
+              </p>
+              <div class="mt-2" data-swiper-parallax-y="-100"
+                   style="transform: translate3d(0px, 100px, 0px); transition-duration: 0ms;">
+                <button type="button" class="landing-btn btn btn-lg btn-round btn-primary">GET STARTED</button>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <div class="flex-grow-0 mx-3">
+          <div class="ui-window w-100 rounded-top mx-auto"
+               style="max-width: 800px; max-height: 250px; opacity: 0; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;"
+               data-swiper-parallax="0" data-swiper-parallax-opacity="0" data-swiper-parallax-duration="1500">
+            <div class="window-content">
+              <img src="{% static 'images/uikit/app.png' %}" alt="">
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="swiper-slide jumbotron ui-hero ui-mh-100vh bg-transparent" style="width: 1440px;">
+      <div class="container-fluid justify-content-center px-lg-5">
+        <div class="row justify-content-center w-100 pt-3">
+
+          <div class="col-lg-4 text-center my-5 my-sm-0" data-swiper-parallax="200" data-swiper-parallax-opacity="0"
+               style="opacity: 0; transform: translate3d(-200px, 0px, 0px); transition-duration: 0ms;">
+            <div class="ui-device iphone mw-100 mx-auto" style="width: 230px;">
+              <div class="device-content">
+                <img src="{% static 'images/uikit/app-phone.png' %}" alt="">
+              </div>
+              <img class="device-img" src="{% static 'images/devices/iphone.png' %}" alt="">
+            </div>
+          </div>
+
+          <div class="col-lg-7 col-xl-6 text-lg-left text-center mx-xl-5" data-swiper-parallax="-100"
+               style="transform: translate3d(100px, 0px, 0px); transition-duration: 0ms;">
+            <h1 class="display-3 font-secondary font-weight-semibold mb-4">
+              Doe mee met sport events
+            </h1>
+            <p class="lead text-muted pb-3">
+              Doe laagdrempelig mee met verschillende type sport events
+            </p>
+            <div class="mt-2">
+              <button type="button" class="landing-btn btn btn-lg btn-round btn-primary">GET STARTED</button>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <div id="landing-slider-next" class="swiper-button-next custom-icon" tabindex="0" role="button"
+       aria-label="Next slide" aria-disabled="false">
+    <i class="lnr lnr-chevron-right text-primary"></i>
+  </div>
+  <div id="landing-slider-prev" class="swiper-button-prev custom-icon swiper-button-disabled" tabindex="0" role="button"
+       aria-label="Previous slide" aria-disabled="true">
+    <i class="lnr lnr-chevron-left text-primary"></i>
+  </div>
+  <span class="swiper-notification" aria-live="assertive" aria-atomic="true"></span>
+</div>
