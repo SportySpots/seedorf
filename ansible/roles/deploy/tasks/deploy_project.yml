@@ -55,6 +55,8 @@
   register: git_update
   notify:
     - project_changed
+  tags:
+    - deploy
 
 
 - name: Slack alert git update
@@ -75,6 +77,8 @@
     chdir: "/home/ubuntu/sportyspots/{{ env }}/"
   notify:
     - restart_supervisor
+  tags:
+    - deploy
 
 - name: Copy .env file
   become_user: ubuntu
@@ -82,12 +86,16 @@
     src: "../../../../.envs/.env.{{ env }}"
     dest: "/home/ubuntu/sportyspots/{{ env }}/.env"
     mode: 0644
+  tags:
+    - deploy
 
 - name: Run migrations for {{ env }}
   become_user: ubuntu
   command: pipenv run ./manage.py migrate
   args:
     chdir: "/home/ubuntu/sportyspots/{{ env }}"
+  tags:
+    - deploy
 
 - name: Run collectstatic for {{ env }}
   become_user: ubuntu
@@ -96,6 +104,8 @@
     chdir: "/home/ubuntu/sportyspots/{{ env }}"
   notify:
     - flush_redis
+  tags:
+    - deploy
 
 - name: Generate supervisor config for {{ env }}
   become_user: root
@@ -104,3 +114,5 @@
     dest: "/etc/supervisor/conf.d/sportyspots-{{ env }}.conf"
   notify:
     - restart_supervisor
+  tags:
+    - deploy
