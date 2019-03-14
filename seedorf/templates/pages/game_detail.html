@@ -141,12 +141,12 @@
                              class="d-block ui-w-40 rounded-circle">
                       {% else %}
                         <img src="https://via.placeholder.com/150/005537/FFFFFF?text={{ attendee.user.initials }}"
-                             class="ui-w-60 rounded-circle">
+                             class="ui-w-40 rounded-circle">
                       {% endif %}
                       <div class="media-body ml-3">
                         <div class="mb-1">
                           <strong class="font-weight-semibold">
-                            {{ attendee.name }}
+                            {{ attendee.user.name }}
                           </strong>
                           <div class="text-muted small">
                             {% trans "signed up" %}: {{ attendee.created_at|timesince }}
