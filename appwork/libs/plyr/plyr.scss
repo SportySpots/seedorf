@@ -11,7 +11,7 @@ $plyr-control-spacing: 10px !default;
 $plyr-bp-screen-sm: 480px !default;
 $plyr-bp-screen-md: 768px !default;
 
-@import "../../node_modules/plyr/src/scss/plyr.scss";
+@import "../../node_modules/plyr/src/sass/plyr.scss";
 
 .plyr--audio .plyr__controls {
   padding: 0;

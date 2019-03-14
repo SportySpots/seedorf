@@ -1,0 +1,58 @@
+{% load static wagtailcore_tags i18n %}
+
+<div class="landing-block pb-5 {{ value.background }}">
+  <div class="container px-3">
+    <h1 class="display-4 text-center pb-4 mb-5">Contacts</h1>
+    <div class="row">
+      <div class="col-lg-4 py-lg-5 pb-5">
+
+        <div class="media align-items-center">
+          <div class="ui-icon border-0 text-large">&nbsp;</div>
+          <div class="media-body ml-2">
+            <h5 class="m-0">Our contacts</h5>
+          </div>
+        </div>
+
+        <div class="media">
+          <div class="ion ion-ios-call ui-icon border-0 text-lightest text-large"></div>
+          <div class="media-body pt-2 ml-2">
+
+            <div class="ui-company-text mb-2">+0 (123) 456 7891</div>
+            <div class="ui-company-text mb-2">+9 (876) 543 2198</div>
+          </div>
+        </div>
+
+        <div class="media align-items-center">
+          <div class="ion ion-ios-mail ui-icon border-0 text-lightest text-large"></div>
+          <div class="media-body ml-2">
+            <a href="mailto:support@example.com" class="ui-company-text text-dark">support@example.com</a>
+          </div>
+        </div>
+
+        <div class="media align-items-center mt-3">
+          <div class="ui-icon border-0 text-lightest text-large">&nbsp;</div>
+          <div class="media-body ml-2">
+            <h5 class="m-0">Our location</h5>
+          </div>
+        </div>
+
+        <div class="media">
+          <div class="ion ion-ios-navigate ui-icon border-0 text-lightest text-large"></div>
+          <div class="media-body pt-2 ml-2">
+
+            <div class="ui-company-text">
+              Office 154, 330 North Brand Boulevard, Glendale, CA 91203, USA
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <div class="col-lg-8 rounded" id="company-map-2" style="min-height: 350px;">
+        <a href="https://www.google.com/maps/dir/52.3673941,4.8732264">
+          <img class="card-img"
+               src="https://maps.googleapis.com/maps/api/staticmap?center=52.3673941,4.8732264&zoom=13&scale=1&size=600x300&maptype=roadmap&format=png&visual_refresh=true&markers=size:mid%7Ccolor:0xff0000%7Clabel:o%7C52.3673941,4.8732264&key=AIzaSyC99uVW_9nOJ32T7BY3Yeqt0iMWqOrGuAQ">
+        </a>
+      </div>
+    </div>
+  </div>
+</div>

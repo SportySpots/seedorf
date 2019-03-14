@@ -1,0 +1,56 @@
+{% load static wagtailcore_tags i18n %}
+
+<div class="landing-block pb-5 {{ value.background }}">
+  <div class="container px-3">
+    <h1 class="display-4 text-center pb-3 mb-5">What People Are Saying</h1>
+
+    <div class="row">
+      <div class="col-md-6 col-lg-4">
+
+        <div class="rounded ui-bordered text-center p-4 mb-4">
+          <img src="{% static 'images/avatars/4-small.png' %}" class="avatar ui-w-80 rounded-circle mb-4"
+               alt>
+          <div class="ui-company-text font-weight-light mb-3">
+            Lorem ipsum dolor sit amet, mel ea molestie erroribus
+            consequuntur, munere iracundia percipitur ne usu, his
+            saperet tractatos no.
+          </div>
+          <strong>Kenneth Frazier</strong><br>
+          <a href="#" class="text-muted small">example.com</a>
+        </div>
+
+      </div>
+
+      <div class="col-md-6 col-lg-4">
+
+        <div class="rounded ui-bordered text-center p-4 mb-4">
+          <img src="{% static 'images/avatars/5-small.png' %}" class="avatar ui-w-80 rounded-circle mb-4"
+               alt>
+          <div class="ui-company-text font-weight-light mb-3">
+            Te nusquam erroribus mei, sensibus vulputate posidonium nam an,
+            ad illud illum vel.
+          </div>
+          <strong>Nelle Maxwell</strong><br>
+          <a href="#" class="text-muted small">xyz.com</a>
+        </div>
+
+      </div>
+
+      <div class="col-md-6 col-lg-4">
+
+        <div class="rounded ui-bordered text-center p-4 mb-4">
+          <img src="{% static 'images/avatars/7-small.png' %}" class="avatar ui-w-80 rounded-circle mb-4"
+               alt>
+          <div class="ui-company-text font-weight-light mb-3">
+            Mea cu quaeque debitis, ut pro graeco insolens, exerci timeam
+            eos no. Ea eius simul placerat usu, augue delectus nec in.
+          </div>
+          <strong>Alice Hampton</strong><br>
+          <a href="#" class="text-muted small">Company Inc.</a>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+</div>

@@ -150,6 +150,7 @@ $(function() {
 
   // Introducing video
   //
+  plyr.default.setup(document.querySelectorAll(".plyr-video"));
 
   $('#landing-video').each(function() {
     plyr.setup(this, {
