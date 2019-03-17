@@ -22,17 +22,10 @@
   tags:
     - letsencrypt
 
-- name: Install certbot and generate cert - {{ sub_domain }}.{{ domain }}
-  command: "{{ certbot_script }} certonly --noninteractive --agree-tos --standalone --email {{ certbot_admin_email }} -d {{ sub_domain }}.{{ domain }}"
+- name: Install certbot and generate cert - {{ domain }}
+  command: "{{ certbot_script }} certonly --noninteractive --agree-tos --standalone --email {{ certbot_admin_email }} -d {{ domain }} -d www.{{ domain }} -d {{ sub_domain }}.{{ domain }} -d {{ env }}.{{ domain }}"
   args:
-    creates: "/etc/letsencrypt/live/{{ sub_domain }}.{{ domain }}"
-  tags:
-    - letsencrypt
-
-- name: Install certbot and generate cert - {{ env }}.{{ domain }}
-  command: "{{ certbot_script }} certonly --noninteractive --agree-tos --standalone --email {{ certbot_admin_email }} -d {{ env }}.{{ domain }}"
-  args:
-    creates: "/etc/letsencrypt/live/{{ env }}.{{ domain }}"
+    creates: "/etc/letsencrypt/live/{{ domain }}"
   tags:
     - letsencrypt
 
