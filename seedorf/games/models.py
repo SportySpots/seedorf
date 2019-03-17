@@ -5,6 +5,7 @@ from django.db import models
 from django.urls import reverse
 from django.utils.translation import ugettext as _
 from django_fsm import FSMField, transition
+from django.utils import timezone
 
 from seedorf.utils.email import send_mail
 from seedorf.utils.firebase import get_firebase_link
@@ -188,6 +189,23 @@ class Game(BasePropertiesModel):
 
     def __str__(self):
         return f"{self.name}"
+
+    @property
+    def started(self):
+        now = timezone.now()
+        return now > self.start_time
+
+    @property
+    def ended(self):
+        now = timezone.now()
+        return now > self.end_time
+
+    @property
+    def required_players(self):
+        rsvp_attendees = self.attendees.filter(status=RsvpStatus.STATUS_ATTENDING).count()
+        if self.capacity:
+            return self.capacity - rsvp_attendees
+        return None
 
     def get_absolute_url(self):
         return reverse("game-detail", args=[str(self.uuid)])
