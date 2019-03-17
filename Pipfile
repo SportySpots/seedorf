@@ -40,7 +40,7 @@ djangorestframework-jwt = "==1.11.0"
 drf-extensions = "==0.4.0"
 drf-nested-routers = "==0.91"
 drf-writable-nested = "==0.5.1"
-drf-yasg = {version = "==1.11.0",extras = ["validation"]}
+drf-yasg = "==1.11.0"
 gevent = "==1.3.6"
 gunicorn = "==19.9.0"
 hashids = "==1.2.0"
@@ -68,7 +68,9 @@ graphene-django-extras = {editable = true,git = "https://github.com/sportyspots/
 graphene-django = "==2.2.0"
 "iso8601" = "*"
 pendulum = "*"
-wagtail = "*"
+wagtail = "==2.4.0"
+# NOTE: Forced dependency because of pipenv installation errors
+sqlparse = "==0.3.0"
 
 [dev-packages]
 "flake8" = "==3.6.0"
@@ -94,7 +96,7 @@ werkzeug = "*"
 fabric = "*"
 
 [requires]
-python_version = "3.6.4"
+python_version = "3.6"
 
 [pipenv]
 "allow_prereleases" = true
