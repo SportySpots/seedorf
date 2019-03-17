@@ -141,9 +141,14 @@ $(function() {
       followFinger: false,
       threshold: 50,
       preventClicks: true,
+      autoplay: true,
       navigation: {
         nextEl: '#landing-slider-next',
         prevEl: '#landing-slider-prev'
+      },
+      pagination:{
+        el: '.swiper-pagination',
+        clickable: true,
       }
     });
   });
