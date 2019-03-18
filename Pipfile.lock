@@ -441,11 +441,10 @@
         },
         "drf-yasg": {
             "hashes": [
-                "sha256:24a02bbf56361ae0e304744f9c4aa96544270decd9d79b37d10dfd6dd04e5f22",
-                "sha256:b07192a6697ced6da49c5b016f1805960b0a7a1682fb21e86045a6bb572ffa99"
+                "sha256:a276bc90af1902b1bd9c11927f75658da1a62aad2d87022ae5f653106ed09a17",
+                "sha256:ca17555127f8ac59d51c2bf721eff83b46ae20a8626c033f186a4c4d7d6053f4"
             ],
-            "index": "pypi",
-            "version": "==1.11.0"
+            "version": "==1.14.0"
         },
         "gevent": {
             "hashes": [
