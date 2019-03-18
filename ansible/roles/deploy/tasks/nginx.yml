@@ -10,7 +10,7 @@
         state: present
         access_log: "/var/log/nginx/sportyspots-{{ env }}-access.log"
         error_log: "/var/log/nginx/sportyspots-{{ env }}-error.log"
-        return: "301 https://{{ sub_domain }}.{{ domain }}$request_uri"
+        return: "301 https://www.{{ domain }}$request_uri"
       - listen: "443 ssl http2"
         server_name: "{{ domain }} www.{{ domain }} {{ sub_domain }}.{{ domain }} {{ env }}.{{ domain }}"
         state: present
