@@ -9,7 +9,7 @@
 {% block layout_wrapper %}
   <!-- Navbar -->
   {% block layout_navbar %}
-  <nav class="landing-navbar navbar navbar-expand-lg navbar-light fixed-top pt-lg-4">
+  <nav class="landing-navbar navbar navbar-expand-lg navbar-light bg-white fixed-top pt-lg-4">
     <div class="container-fluid px-3">
       <a class="navbar-brand app-brand"
          href="/">
@@ -26,8 +26,9 @@
       <div class="collapse navbar-collapse"
            id="landing-navbar-collapse">
         <div class="navbar-nav align-items-lg-center ml-auto">
+
+          <a class="anchor-link nav-item nav-link" href="{% url 'web-game-list' %}">{% trans "Games" %}</a>
           <!--
-          <a class="anchor-link nav-item nav-link" href="#features">Activities</a>
           <a class="anchor-link nav-item nav-link" href="#screenshots">Features</a>
           <a class="anchor-link nav-item nav-link" href="#pricing">About</a>
           <a class="anchor-link nav-item nav-link" href="#subscribe">Subscribe</a>

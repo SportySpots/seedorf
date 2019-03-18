@@ -20,7 +20,7 @@ $(function() {
 
     navbarCustomClasses = {
       default: {
-        variant: 'navbar-light',
+        variant: 'bg-white',
         classes: 'pt-lg-4'
       },
       alt: {
@@ -68,12 +68,6 @@ $(function() {
         .find('> div')
         .addClass('container-fluid')
         .removeClass('container');
-
-        if ($(window).outerWidth() >= navbarBreakpoint || !$navbarCollapse.hasClass('show')) {
-          $navbar
-            .addClass(navbarCustomClasses.default.variant)
-            .removeClass(navbarCustomClasses.alt.variant);
-        }
     }
   });
 
