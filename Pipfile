@@ -72,7 +72,7 @@ sqlparse = "==0.3.0"
 
 flake8 = "==3.7.7"
 ansible = "==2.7.9"
-awscli = "==1.16.14"
+awscli = "==1.16.126"
 black = "==18.6b4"
 coreapi-cli = "==1.0.9"
 coverage = "==4.5.1"
