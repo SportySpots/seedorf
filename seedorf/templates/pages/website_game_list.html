@@ -21,6 +21,7 @@
             <!-- Activity Name -->
             <div class="card-header border-0">
               <div class="text-large">
+                <a href="{% url 'web-game-detail' game.uuid %}" class="text-dark">
                 {% if game.name %}
                   {{ game.name }}
                 {% else %}
@@ -28,19 +29,20 @@
                     {{ sport }} game
                   {% endblocktrans %}
                 {% endif %}
+                </a>
               </div>
             </div>
             <!--/ Activity Name -->
 
             <!-- Spot Images -->
             <div class="carousel slide">
-
+              <a href="{% url 'web-game-detail' game.uuid %}" class="text-dark">
               <div class="carousel-inner">
 
                 <!-- Spot Images -->
                 {% for image in game.spot.images.all %}
                   <div class="carousel-item {% if forloop.first %}active{% endif %}">
-                    <img class="d-block w-100" src="{{ image.image.url|imgix_url }}?fit=fill&fill=blur&w=900&h=900" />
+                      <img class="d-block w-100" src="{{ image.image.url|imgix_url }}?fit=fill&fill=blur&w=900&h=900" />
                   </div>
                 {% empty %}
                   <div class="carousel-item active">
@@ -82,7 +84,7 @@
                 <!--/ Badges -->
 
               </div>
-
+              </a>
             </div>
             <!--/ Spot Images -->
 
@@ -99,11 +101,13 @@
                 </div>
 
                 <div class="d-flex col-md-6 flex-column text-dark py-3">
-                  <div class="text-big mx-auto">
-                    <span class="lnr lnr-map-marker"></span>
-                  </div>
-                  <div class="font-weight-bold">{{ game.spot.address.formatted_address }}</div>
-                  <div class="text-muted small">{% trans "Address" %}</div>
+                  <a href="https://www.google.com/maps/dir/{{ game.spot.address.lat }},{{ game.spot.address.lng }}" class="text-dark">
+                    <div class="text-big mx-auto">
+                      <span class="lnr lnr-map-marker"></span>
+                    </div>
+                    <div class="font-weight-bold">{{ game.spot.address.formatted_address }}</div>
+                    <div class="text-muted small">{% trans "Address" %}</div>
+                  </a>
                 </div>
 
                 <div class="d-flex col-md-6 flex-column text-dark py-3">

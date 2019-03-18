@@ -132,8 +132,8 @@ urlpatterns = [
     path("login/", TemplateView.as_view(template_name="pages/login_register.html")),
     path("password-reset/", TemplateView.as_view(template_name="pages/password_reset.html")),
     path("confirm-email/", TemplateView.as_view(template_name="pages/confirm_email.html")),
-    path("games/<uuid:uuid>/", GameDetailView.as_view(), name="game-detail"),
-    path("games/", GameListView.as_view(), name="game-list"),
+    path("games/<uuid:uuid>/", GameDetailView.as_view(), name="web-game-detail"),
+    path("games/", GameListView.as_view(), name="web-game-list"),
     # Wagtail
     # ------------------------------------------------------------------------------
     re_path(r"^cms/", include(wagtailadmin_urls)),
