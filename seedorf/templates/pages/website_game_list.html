@@ -121,7 +121,7 @@
               <div class="row no-gutters row-bordered row-border-light">
 
                 <div class="d-flex col-md-6 flex-column text-dark py-3">
-                  <div class="text-big mx-auto mb-1">
+                  <div class="text-big mx-auto">
                     <span class="lnr lnr-star"></span>
                   </div>
                   <div class="font-weight-bold">{{ game.sport.get_category_display }}</div>
@@ -129,7 +129,7 @@
                 </div>
 
                 <div class="d-flex col-md-6 flex-column text-dark py-3">
-                  <div class="text-big mx-auto mb-1">
+                  <div class="text-big mx-auto">
                     <span class="lnr lnr-map-marker"></span>
                   </div>
                   <div class="font-weight-bold">{{ game.spot.address.formatted_address }}</div>
@@ -137,7 +137,7 @@
                 </div>
 
                 <div class="d-flex col-md-6 flex-column text-dark py-3">
-                  <div class="text-big mx-auto mb-1">
+                  <div class="text-big mx-auto">
                     <span class="lnr lnr-calendar-full"></span>
                   </div>
                   <div class="font-weight-bold">
@@ -149,7 +149,7 @@
                 </div>
 
                 <div class="d-flex col-md-6 flex-column text-dark py-3">
-                  <div class="text-big mx-auto mb-1">
+                  <div class="text-big mx-auto">
                     <span class="lnr lnr-clock"></span>
                   </div>
                   <div class="font-weight-bold">
@@ -170,74 +170,6 @@
                    src="https://maps.googleapis.com/maps/api/staticmap?center={{ game.spot.address.lat }},{{ game.spot.address.lng }}&zoom=13&scale=1&size=600x300&maptype=roadmap&format=png&visual_refresh=true&markers=size:mid%7Ccolor:0xff0000%7Clabel:o%7C{{ game.spot.address.lat }},{{ game.spot.address.lng }}&key=AIzaSyC99uVW_9nOJ32T7BY3Yeqt0iMWqOrGuAQ">
             </a>
             <!--/ Location -->
-
-            <!-- Organizer -->
-            <div class="card">
-              <h6 class="card-header display-4">{% trans "Organizer" %}</h6>
-              <div class="card-body">
-                <div class="media pb-1 mb-3">
-                  {% if game.organizer.profile.avatar %}
-                    <img src="{{ game.organizer.profile.avatar.url|imgix_url }}?crop=faces&fit=crop&h=320&w=320" alt="" class="ui-w-60 rounded-circle">
-                  {% else %}
-                    <img src="https://via.placeholder.com/150/005537/FFFFFF?text={{ game.organizer.initials }}" alt="" class="ui-w-60 rounded-circle">
-                  {% endif %}
-                  <div class="media-body ml-3">
-                    <div class="mb-1">
-                      <strong class="font-weight-bold">
-                        {{ game.organizer.name | default:"Sporty" }}
-                      </strong>
-                      <div class="text-muted small">
-                        {% trans "member since" %}: {{ game.organizer.created_at|timesince }}
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <!--/ Organizer -->
-
-            <!-- Attendees -->
-            <div class="card">
-              <h6 class="card-header display-4">{% trans "Attending" %}</h6>
-              <div class="card-body">
-                {% for attendee in game.attendees.all %}
-                  {% if attendee.status == attendee.STATUS_ATTENDING %}
-                    <div class="media pb-1 mb-3">
-                      {% if attendee.user.profile.avatar %}
-                        <img src="{{ attendee.user.profile.avatar.url|imgix_url }}?crop=faces&fit=crop&h=320&w=320"
-                             class="d-block ui-w-40 rounded-circle">
-                      {% else %}
-                        <img src="https://via.placeholder.com/150/005537/FFFFFF?text={{ attendee.user.initials }}"
-                             class="ui-w-40 rounded-circle">
-                      {% endif %}
-                      <div class="media-body ml-3">
-                        <div class="mb-1">
-                          <strong class="font-weight-bold">
-                            {{ attendee.user.name }}
-                          </strong>
-                          <div class="text-muted small">
-                            {% trans "signed up" %}: {{ attendee.created_at|timesince }}
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  {% endif %}
-                {% empty %}
-                  <div class="media pb-1 mb-3">
-                    <img src="assets/img/avatars/6-small.png" class="d-block ui-w-40 rounded-circle" alt="">
-                    <div class="media-body ml-3">
-                      <div class="mb-1">
-                        <strong class="font-weight-semibold">Mae Gibson</strong> &nbsp;
-                        <div class="text-muted small">
-                          {% trans "member since" %}: {{ game.organizer.created_at|timesince }}
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                {% endfor %}
-              </div>
-            </div>
-            <!--/ Attendees -->
 
           </div>
         </div>

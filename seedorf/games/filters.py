@@ -1,8 +1,35 @@
 from django.contrib.gis.geos import GEOSGeometry
 from django.contrib.gis.measure import D
 from django_filters import rest_framework as filters
+from django.utils import timezone
+from datetime import timedelta
 
 from .models import Game, RsvpStatus
+
+
+class GameWebFilter(filters.FilterSet):
+    distance = filters.CharFilter(field_name="spot__address__point", method="filter_by_distance")
+
+    class Meta:
+        model = Game
+        fields = {"sport__category": ["exact"], "start_time": ["gte"]}
+
+    @property
+    def qs(self):
+        start_time = timezone.now() - timedelta(hours=800)
+        parent = super(GameWebFilter, self).qs
+        return parent.filter(start_time__gte=start_time)
+
+    # REF: https://django-filter.readthedocs.io/en/master/ref/filters.html#method
+    @staticmethod
+    def filter_by_distance(queryset, name, value):
+        # TODO: Validate distance is integer, and the lat and lng values are valid
+        distance, lat, lng = value.split(":")
+
+        # REF: https://docs.djangoproject.com/en/2.0/ref/contrib/gis/db-api/#distance-lookups
+        ref_location = GEOSGeometry(f"POINT({lng} {lat})", srid=4326)
+        lookup = f"{name}__distance_lte"
+        return queryset.filter(**{lookup: (ref_location, D(m=int(distance)))})
 
 
 class GameFilter(filters.FilterSet):
