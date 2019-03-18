@@ -1,0 +1,296 @@
+{% extends "base_website.html" %}
+{% load i18n static seedorf %}
+
+{% block layout_content %}
+  <div class="landing-block pb-5">
+    <div class="container px-3">
+      <div class="row">
+        <div class="col">
+          <form action="" method="get">
+              {{ filter.form.as_p }}
+              <input type="submit" />
+          </form>
+        </div>
+      </div>
+
+      <div class="row">
+        {% for game in filter.qs %}
+        <div class="col-lg-4">
+          <div class="card mb-4">
+
+            <!-- Activity Name -->
+            <div class="card-header border-0">
+              <div class="text-large">
+                {% if game.name %}
+                  {{ game.name }}
+                {% else %}
+                  {% blocktrans with sport=game.sport.get_category_display %}
+                    {{ sport }} game
+                  {% endblocktrans %}
+                {% endif %}
+              </div>
+            </div>
+            <!--/ Activity Name -->
+
+            <!-- Spot Images -->
+            <div id="spotImagesCarousel"
+                 class="carousel slide"
+                 data-ride="carousel"
+                 data-interval="false">
+
+              <ol class="carousel-indicators">
+                {% for image in game.spot.images.all %}
+                  <li data-target="#spotImagesCarousel"
+                      data-slide-to="{{ forloop.counter0 }}"
+                      class="{% if forloop.first %}active{% endif %}"></li>
+                {% empty %}
+                  <li data-target="#spotImagesCarousel"
+                      data-slide-to="0"></li>
+                {% endfor %}
+              </ol>
+
+              <div class="carousel-inner">
+                <!-- Spot Images -->
+{#                {% for image in game.spot.images.all %}#}
+{#                  <div class="carousel-item {% if forloop.first %}active{% endif %}">#}
+{#                    <img class="d-block w-100" src="{{ image.image.url|imgix_url }}?fit=fill&fill=blur&w=900&h=900" />#}
+{#                  </div>#}
+{#                {% empty %}#}
+{#                  <div class="carousel-item active">#}
+{#                    <img class="d-block w-100" src="https://source.unsplash.com/1600x900/?{{ game.sport.get_category_display }}">#}
+{#                  </div>#}
+{#                {% endfor %}#}
+                <div class="carousel-item active">
+                    <img class="d-block w-100" src="https://source.unsplash.com/1600x900/?{{ game.sport.get_category_display }}">
+                </div>
+                <!--/ Spot Images -->
+
+                <!-- Badges -->
+                <div class="d-flex justify-content-between align-items-end ui-rect-content p-3">
+
+                  <!-- Game Status -->
+                  <div class="flex-shrink-1">
+                    {% if not game.started and game.required_players is not None %}
+                      {% if game.required_players > 0 %}
+                        <span class="badge badge-primary">{% trans "Open Spots" %}: {{ game.required_players }}</span>
+                      {% else %}
+                        <span class="badge badge-danger">{% trans "Game Full" %}</span>
+                      {% endif %}
+                    {% endif %}
+                  </div>
+                  <!--/ Game Status -->
+
+                  <!-- Game Time -->
+                  <div class="text">
+                    {% if not game.started %}
+                      <div class="badge badge-dark font-weight-bold">
+                      {% blocktrans with starts_in=game.start_time|timeuntil %}
+                        Starts in {{ starts_in }}
+                      {% endblocktrans %}
+                      </div>
+                    {% elif game.ended %}
+                      <div class="badge badge-danger font-weight-bold">{% trans "EXPIRED" %}</div>
+                    {% endif %}
+                  </div>
+                  <!--/ Game Time -->
+
+                </div>
+                <!--/ Badges -->
+
+              </div>
+
+              <a class="carousel-control-prev"
+                 href="#spotImagesCarousel"
+                 role="button"
+                 data-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="sr-only">Previous</span>
+              </a>
+              <a class="carousel-control-next"
+                 href="#spotImagesCarousel"
+                 role="button"
+                 data-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="sr-only">Next</span>
+              </a>
+            </div>
+            <!--/ Spot Images -->
+
+            <!-- Game Details -->
+            <div class="card-body border-top border-bottom text-center p-0">
+              <div class="row no-gutters row-bordered row-border-light">
+
+                <div class="d-flex col-md-6 flex-column text-dark py-3">
+                  <div class="text-big mx-auto mb-1">
+                    <span class="lnr lnr-star"></span>
+                  </div>
+                  <div class="font-weight-bold">{{ game.sport.get_category_display }}</div>
+                  <div class="text-muted small">{% trans "Sport" %}</div>
+                </div>
+
+                <div class="d-flex col-md-6 flex-column text-dark py-3">
+                  <div class="text-big mx-auto mb-1">
+                    <span class="lnr lnr-map-marker"></span>
+                  </div>
+                  <div class="font-weight-bold">{{ game.spot.address.formatted_address }}</div>
+                  <div class="text-muted small">{% trans "Address" %}</div>
+                </div>
+
+                <div class="d-flex col-md-6 flex-column text-dark py-3">
+                  <div class="text-big mx-auto mb-1">
+                    <span class="lnr lnr-calendar-full"></span>
+                  </div>
+                  <div class="font-weight-bold">
+                    {{ game.start_time | date:"D d M Y" }}
+                  </div>
+                  <div class="text-muted small">
+                    {% trans "Day" %}
+                  </div>
+                </div>
+
+                <div class="d-flex col-md-6 flex-column text-dark py-3">
+                  <div class="text-big mx-auto mb-1">
+                    <span class="lnr lnr-clock"></span>
+                  </div>
+                  <div class="font-weight-bold">
+                    {{ game.start_time | date:"H:s" }} - {{ game.end_time | time:"H:s" }}
+                  </div>
+                  <div class="text-muted small">
+                    {% trans "Time" %}
+                  </div>
+                </div>
+
+              </div>
+            </div>
+            <!--/ Game Details -->
+
+            <!-- Location -->
+            <a href="https://www.google.com/maps/dir/{{ game.spot.address.lat }},{{ game.spot.address.lng }}">
+              <img class="card-img"
+                   src="https://maps.googleapis.com/maps/api/staticmap?center={{ game.spot.address.lat }},{{ game.spot.address.lng }}&zoom=13&scale=1&size=600x300&maptype=roadmap&format=png&visual_refresh=true&markers=size:mid%7Ccolor:0xff0000%7Clabel:o%7C{{ game.spot.address.lat }},{{ game.spot.address.lng }}&key=AIzaSyC99uVW_9nOJ32T7BY3Yeqt0iMWqOrGuAQ">
+            </a>
+            <!--/ Location -->
+
+            <!-- Organizer -->
+            <div class="card">
+              <h6 class="card-header display-4">{% trans "Organizer" %}</h6>
+              <div class="card-body">
+                <div class="media pb-1 mb-3">
+                  {% if game.organizer.profile.avatar %}
+                    <img src="{{ game.organizer.profile.avatar.url|imgix_url }}?crop=faces&fit=crop&h=320&w=320" alt="" class="ui-w-60 rounded-circle">
+                  {% else %}
+                    <img src="https://via.placeholder.com/150/005537/FFFFFF?text={{ game.organizer.initials }}" alt="" class="ui-w-60 rounded-circle">
+                  {% endif %}
+                  <div class="media-body ml-3">
+                    <div class="mb-1">
+                      <strong class="font-weight-bold">
+                        {{ game.organizer.name | default:"Sporty" }}
+                      </strong>
+                      <div class="text-muted small">
+                        {% trans "member since" %}: {{ game.organizer.created_at|timesince }}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!--/ Organizer -->
+
+            <!-- Attendees -->
+            <div class="card">
+              <h6 class="card-header display-4">{% trans "Attending" %}</h6>
+              <div class="card-body">
+                {% for attendee in game.attendees.all %}
+                  {% if attendee.status == attendee.STATUS_ATTENDING %}
+                    <div class="media pb-1 mb-3">
+                      {% if attendee.user.profile.avatar %}
+                        <img src="{{ attendee.user.profile.avatar.url|imgix_url }}?crop=faces&fit=crop&h=320&w=320"
+                             class="d-block ui-w-40 rounded-circle">
+                      {% else %}
+                        <img src="https://via.placeholder.com/150/005537/FFFFFF?text={{ attendee.user.initials }}"
+                             class="ui-w-40 rounded-circle">
+                      {% endif %}
+                      <div class="media-body ml-3">
+                        <div class="mb-1">
+                          <strong class="font-weight-bold">
+                            {{ attendee.user.name }}
+                          </strong>
+                          <div class="text-muted small">
+                            {% trans "signed up" %}: {{ attendee.created_at|timesince }}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  {% endif %}
+                {% empty %}
+                  <div class="media pb-1 mb-3">
+                    <img src="assets/img/avatars/6-small.png" class="d-block ui-w-40 rounded-circle" alt="">
+                    <div class="media-body ml-3">
+                      <div class="mb-1">
+                        <strong class="font-weight-semibold">Mae Gibson</strong> &nbsp;
+                        <div class="text-muted small">
+                          {% trans "member since" %}: {{ game.organizer.created_at|timesince }}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                {% endfor %}
+              </div>
+            </div>
+            <!--/ Attendees -->
+
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+
+      <!-- App Store Block -->
+      <div id="app-stores" class="row">
+        <div class="col-md-10 col-lg-8 col-xl-7 text-center p-0 mx-auto">
+
+          <!-- Header -->
+          <h1 class="display-4 text-center">
+            <i class="lnr lnr-cloud-download text-primary text-big align-middle"></i>&nbsp;
+            <span class="align-middle">Downloads</span>
+          </h1>
+          <div class="lead text-muted mt-4 mb-5">
+            Download the app to start participating.
+          </div>
+          <!--/ Header -->
+
+          <!-- Apple App Store -->
+          <a href="https://itunes.apple.com/nl/app/sportyspots/id1391625376"
+             class="btn btn-lg btn-dark text-transform-none text-left m-3">
+            <span class="media align-items-center">
+              <span class="ion ion-logo-apple d-block"
+                    style="font-size: 40px"></span>
+              <span class="media-body d-block flex-basis-auto ml-3">
+                <small class="font-weight-light">Download on the</small><br>
+                <strong class="text-big line-height-1">AppStore</strong>
+              </span>
+            </span>
+          </a>
+          <!--/ Apple App Store -->
+
+          <!-- Google Play Store -->
+          <a href="https://play.google.com/store/apps/details?id=com.sportyspots.android"
+             class="btn btn-lg btn-dark text-transform-none text-left m-3">
+            <span class="media align-items-center">
+              <img width="25"
+                   class="d-block"
+                   src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACEAAAAoCAYAAABw65OnAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAWJJREFUeNrE2OENgjAQBWB0AkZwBEZwBDfRDWQD3UA30A10BJ1ANmidoF4Tm5Cmvd7Vu9rkxQj8+AI8KO2ccx1kgEyQ7fd/0wRA+LWQ22xbM4RJQPzYt0Q4BPKCrFshMIgfB0jfAlGC+H2bFogSxI8LZKWNoECMZJ1zCArESdUZQ1Ahoc69FoIDqa4zBcGB+HHinhUqggth1ZmD4ELCjbuSRnAhltKeGgQVYqNjsnWuRZQgMcBgdf4FkYNggGSdf0WkICWAi97OIogYQgWEMSw7mbEgbksPgbNgkctReo4cJS5H6iak1HeSujGxFmCQUaqilBrGkLvkw8oyamgoj21uO96QNeQBGSA3SI8c/4RYyXZwzoDVeJVzAGeNSQ0VMGlN76iAUWu2TQHcNaf8JYDfv9P8+CkBrtqfgRiAVbtaBAY4tlgayAGqa8dF5ACj+9PCmZGqHRcxX0LcuT8sIX4EGACCwMmlMqgohQAAAABJRU5ErkJggg==">
+              <span class="media-body d-block flex-basis-auto ml-3">
+                <small class="font-weight-light">GET IT ON</small><br>
+                <strong class="text-big line-height-1">Google Play</strong>
+              </span>
+            </span>
+          </a>
+          <!--/ Google Play Store -->
+
+        </div>
+      </div>
+      <!--/ App Store Block -->
+
+    </div>
+  </div>
+{% endblock layout_content %}
