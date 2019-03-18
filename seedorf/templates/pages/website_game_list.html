@@ -33,25 +33,12 @@
             <!--/ Activity Name -->
 
             <!-- Spot Images -->
-            <div id="spotImagesCarousel"
-                 class="carousel slide"
-                 data-ride="carousel"
-                 data-interval="false">
-
-              <ol class="carousel-indicators">
-                {% for image in game.spot.images.all %}
-                  <li data-target="#spotImagesCarousel"
-                      data-slide-to="{{ forloop.counter0 }}"
-                      class="{% if forloop.first %}active{% endif %}"></li>
-                {% empty %}
-                  <li data-target="#spotImagesCarousel"
-                      data-slide-to="0"></li>
-                {% endfor %}
-              </ol>
+            <div class="carousel slide">
 
               <div class="carousel-inner">
+              
                 <!-- Spot Images -->
-                {% for image in game.spot.images.all %}
+                {% for image in game.spot.images.first %}
                   <div class="carousel-item {% if forloop.first %}active{% endif %}">
                     <img class="d-block w-100" src="{{ image.image.url|imgix_url }}?fit=fill&fill=blur&w=900&h=900" />
                   </div>
@@ -60,9 +47,6 @@
                     <img class="d-block w-100" src="https://source.unsplash.com/1600x900/?{{ game.sport.get_category_display }}">
                   </div>
                 {% endfor %}
-                <div class="carousel-item active">
-                    <img class="d-block w-100" src="https://source.unsplash.com/1600x900/?{{ game.sport.get_category_display }}">
-                </div>
                 <!--/ Spot Images -->
 
                 <!-- Badges -->
@@ -99,20 +83,6 @@
 
               </div>
 
-              <a class="carousel-control-prev"
-                 href="#spotImagesCarousel"
-                 role="button"
-                 data-slide="prev">
-                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                <span class="sr-only">Previous</span>
-              </a>
-              <a class="carousel-control-next"
-                 href="#spotImagesCarousel"
-                 role="button"
-                 data-slide="next">
-                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                <span class="sr-only">Next</span>
-              </a>
             </div>
             <!--/ Spot Images -->
 
