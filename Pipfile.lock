@@ -360,10 +360,10 @@
         },
         "django-taggit": {
             "hashes": [
-                "sha256:a21cbe7e0879f1364eef1c88a2eda89d593bf000ebf51c3f00423c6927075dce",
-                "sha256:db4430ec99265341e05d0274edb0279163bd74357241f7b4d9274bdcb3338b17"
+                "sha256:01f41e4904f6675e00ddf58a074a7713214f2e2350dab7543c5fee5ef69cc544",
+                "sha256:33ec0ee82eae47566a986797423bfc6459b8e83f86bbad1a758d5f00ac4ff542"
             ],
-            "version": "==0.23.0"
+            "version": "==1.0.0"
         },
         "django-timezone-field": {
             "hashes": [
