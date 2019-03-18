@@ -16,7 +16,7 @@ class GameWebFilter(filters.FilterSet):
 
     @property
     def qs(self):
-        start_time = timezone.now() - timedelta(hours=800)
+        start_time = timezone.now() - timedelta(hours=1)
         parent = super(GameWebFilter, self).qs
         return parent.filter(start_time__gte=start_time)
 
