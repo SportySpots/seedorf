@@ -22,7 +22,7 @@
                 <select class="form-control mr-sm-2 mb-2 mb-sm-0"
                         id="selectSportCategory"
                         name="sport__category">
-                  {% for x,y in filter.form.fields.sport__category.choices %}
+                  {% for x,y in filterset.form.fields.sport__category.choices %}
                       <option value="{{ x }}" {% if x == request.GET.sport__category %}selected{% endif %}>{{ y }}</option>
                   {% endfor %}
                 </select>
@@ -43,11 +43,11 @@
                   <select class="form-control mr-sm-2 mb-2 mb-sm-0"
                           name="location"
                           id="location">
-                    <option value="" {% if not request.GET.distance %}selected{% endif %}>{% trans 'All Locations' %}</option>
-                    <option value="3000:52.3547321:4.8284118" {% if request.GET.distance == "3000:52.3547321:4.8284118" %}selected{% endif %}>{% trans 'Amsterdam' %}</option>
-                    <option value="3000:52.2233632:6.7983365" {% if request.GET.distance == "3000:52.2233632:6.7983365" %}selected{% endif %}>{% trans 'Enschede' %}</option>
-                    <option value="3000:51.9280572:4.420195" {% if request.GET.distance == "3000:51.9280572:4.420195" %}selected{% endif %}>{% trans 'Rotterdam' %}</option>
-                    <option value="3000:-34.6156624:-58.50351" {% if request.GET.distance == "3000:-34.6156624:-58.50351" %}selected{% endif %}>{% trans 'Buenos Aires' %}</option>
+                    <option value="" {% if not request.GET.location %}selected{% endif %}>{% trans 'All Locations' %}</option>
+                    <option value="20000:52.3547321:4.8284118" {% if request.GET.location == "20000:52.3547321:4.8284118" %}selected{% endif %}>{% trans 'Amsterdam' %}</option>
+                    <option value="20000:52.2233632:6.7983365" {% if request.GET.location == "20000:52.2233632:6.7983365" %}selected{% endif %}>{% trans 'Enschede' %}</option>
+                    <option value="20000:51.9280572:4.420195" {% if request.GET.location == "20000:51.9280572:4.420195" %}selected{% endif %}>{% trans 'Rotterdam' %}</option>
+                    <option value="20000:-34.6156624:-58.50351" {% if request.GET.location == "20000:-34.6156624:-58.50351" %}selected{% endif %}>{% trans 'Buenos Aires' %}</option>
                   </select>
 
                 </div>
@@ -77,7 +77,7 @@
       </div>
 
       <div class="row">
-        {% for game in filter.qs %}
+        {% for game in games %}
         <div class="col-lg-4">
           <div class="card mb-4">
 
@@ -214,10 +214,55 @@
         {% endfor %}
       </div>
 
+{#      {% if is_paginated %}#}
+{#        {% if page_obj.has_previous %}#}
+{#          <a href="?{% param_replace page=1 %}">First</a>#}
+{#          {% if page_obj.previous_page_number != 1 %}#}
+{#            <a href="?{% param_replace page=page_obj.previous_page_number %}">Previous</a>#}
+{#          {% endif %}#}
+{#        {% endif %}#}
+{##}
+{#        Page {{ page_obj.number }} of {{ paginator.num_pages }}#}
+{##}
+{#        {% if page_obj.has_next %}#}
+{#          {% if page_obj.next_page_number != paginator.num_pages %}#}
+{#            <a href="?{% param_replace page=page_obj.next_page_number %}">Next</a>#}
+{#          {% endif %}#}
+{#          <a href="?{% param_replace page=paginator.num_pages %}">Last</a>#}
+{#        {% endif %}#}
+{##}
+{#        <p>Objects {{ page_obj.start_index }}—{{ page_obj.end_index }}</p>#}
+{#      {% endif %}#}
+
+{#      Page {{ page_obj.number }} of {{ paginator.num_pages }}#}
       <!-- Pagination -->
-      <div class="d-flex justify-content-around mb-4">
+      {% if is_paginated %}
+        <div class="d-flex justify-content-around mb-4">
           <nav>
             <ul class="pagination">
+
+              {% if page_obj.has_previous %}
+                <li class="page-item active">
+                  <a class="page-link" href="?{% param_replace page=1 %}">First</a>
+                </li>
+                {% if page_obj.previous_page_number != 1 %}
+                <li class="page-item active">
+                  <a href="?{% param_replace page=page_obj.previous_page_number %}">Previous</a>
+                </li>
+                {% endif %}
+              {% endif %}
+
+              {% if page_obj.has_next %}
+                {% if page_obj.next_page_number != paginator.num_pages %}
+                  <li class="page-item active">
+                    <a class="page-link" href="?{% param_replace page=page_obj.next_page_number %}">Next</a></a>
+                  </li>
+                {% endif %}
+                 <li class="page-item active">
+                   <a class="page-link" href="?{% param_replace page=paginator.num_pages %}">Last</a>
+                 </li>
+              {% endif %}
+              <!--
               <li class="page-item disabled">
                 <a class="page-link" href="javascript:void(0)">«</a>
               </li>
@@ -227,21 +272,11 @@
               <li class="page-item">
                 <a class="page-link" href="javascript:void(0)">2</a>
               </li>
-              <li class="page-item">
-                <a class="page-link" href="javascript:void(0)">3</a>
-              </li>
-              <li class="page-item">
-                <a class="page-link" href="javascript:void(0)">4</a>
-              </li>
-              <li class="page-item">
-                <a class="page-link" href="javascript:void(0)">5</a>
-              </li>
-              <li class="page-item">
-                <a class="page-link" href="javascript:void(0)">»</a>
-              </li>
+              -->
             </ul>
           </nav>
       </div>
+      {% endif %}
       <!--/ Pagination -->
 
 
