@@ -315,7 +315,7 @@
         timePicker: true,
         timePickerIncrement: 15,
         timePicker24Hour: true,
-        startDate: moment().startOf('hour'),
+        startDate: {% if request.GET.start_time__gte %}moment("{{ request.GET.start_time__gte }}"){% else %}moment().startOf('hour'){% endif %},
         minDate: moment().startOf('hour'),
         maxDate: moment().startOf('hour').add(1, 'month'),
         locale: {
