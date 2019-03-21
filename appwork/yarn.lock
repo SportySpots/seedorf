@@ -1291,7 +1291,7 @@ bootstrap-datepicker@~1.8.0:
   dependencies:
     jquery ">=1.7.1 <4.0.0"
 
-bootstrap-daterangepicker@~3.0.2:
+bootstrap-daterangepicker@~3.0.3:
   version "3.0.3"
   resolved "https://registry.yarnpkg.com/bootstrap-daterangepicker/-/bootstrap-daterangepicker-3.0.3.tgz#670c638dc124a15a95ddf0440af34d1acee7cffc"
   integrity sha512-RJ0iOpVornF/6bf+L1jzPr95MoPM7zp3MILtNZ7ADu5RZFoMznHD4GbPu3URkPhcPABA2RqMnhk/CvO7iyNBtw==

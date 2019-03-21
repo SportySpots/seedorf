@@ -8,7 +8,7 @@ from .models import Game, RsvpStatus
 
 
 class GameWebFilter(filters.FilterSet):
-    distance = filters.CharFilter(field_name="spot__address__point", method="filter_by_distance")
+    location = filters.CharFilter(field_name="spot__address__point", method="filter_by_distance")
 
     class Meta:
         model = Game

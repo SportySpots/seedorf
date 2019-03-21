@@ -4,12 +4,75 @@
 {% block layout_content %}
   <div class="landing-block pb-5">
     <div class="container px-3">
-      <div class="row">
-        <div class="col">
-          <form action="" method="get">
-              {{ filter.form.as_p }}
-              <input type="submit" />
-          </form>
+      <div class="d-flex">
+        <div class="card mb-4 flex-grow-1">
+          <div class="card-body">
+            <form class="form-inline" method="get">
+              <div class="form-group">
+                <label class="sr-only form-label"
+                       for="selectSportCategory">
+                  {% trans 'Sport' %}
+                </label>
+               <div class="input-group mr-sm-2 mb-2 mb-sm-0">
+                  <div class="input-group-prepend">
+                    <div class="input-group-text">
+                      <span class="lnr lnr-bicycle"></span>
+                    </div>
+                  </div>
+                <select class="form-control mr-sm-2 mb-2 mb-sm-0"
+                        id="selectSportCategory"
+                        name="sport__category">
+                  {% for x,y in filter.form.fields.sport__category.choices %}
+                      <option value="{{ x }}" {% if x == request.GET.sport__category %}selected{% endif %}>{{ y }}</option>
+                  {% endfor %}
+                </select>
+               </div>
+              </div>
+
+              <div class="form-group">
+                <label class="sr-only form-label"
+                       for="location">
+                  {% trans 'Location' %}
+                </label>
+                <div class="input-group mr-sm-2 mb-2 mb-sm-0">
+                  <div class="input-group-prepend">
+                    <div class="input-group-text">
+                      <span class="lnr lnr-map-marker"></span>
+                    </div>
+                  </div>
+                  <select class="form-control mr-sm-2 mb-2 mb-sm-0"
+                          name="location"
+                          id="location">
+                    <option value="" {% if not request.GET.distance %}selected{% endif %}>{% trans 'All Locations' %}</option>
+                    <option value="3000:52.3547321:4.8284118" {% if request.GET.distance == "3000:52.3547321:4.8284118" %}selected{% endif %}>{% trans 'Amsterdam' %}</option>
+                    <option value="3000:52.2233632:6.7983365" {% if request.GET.distance == "3000:52.2233632:6.7983365" %}selected{% endif %}>{% trans 'Enschede' %}</option>
+                    <option value="3000:51.9280572:4.420195" {% if request.GET.distance == "3000:51.9280572:4.420195" %}selected{% endif %}>{% trans 'Rotterdam' %}</option>
+                    <option value="3000:-34.6156624:-58.50351" {% if request.GET.distance == "3000:-34.6156624:-58.50351" %}selected{% endif %}>{% trans 'Buenos Aires' %}</option>
+                  </select>
+
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="sr-only form-label">{% trans 'Start Time' %}</label>
+                <div class="input-group mr-sm-2 mb-2 mb-sm-0">
+                  <div class="input-group-prepend">
+                    <div class="input-group-text">
+                      <span class="lnr lnr-calendar-full"></span>
+                    </div>
+                  </div>
+                  <input id="datetimepicker"
+                         type="text"
+                         placeholder="{% trans 'Start Time' %}"
+                         class="form-control mr-sm-2 mb-2 mb-sm-0">
+                </div>
+              </div>
+
+              <input type="hidden" name="start_time__gte" value="">
+
+              <button type="submit" class="btn btn-primary">{% trans 'Search' %}</button>
+            </form>
+          </div>
         </div>
       </div>
 
@@ -151,6 +214,37 @@
         {% endfor %}
       </div>
 
+      <!-- Pagination -->
+      <div class="d-flex justify-content-around mb-4">
+          <nav>
+            <ul class="pagination">
+              <li class="page-item disabled">
+                <a class="page-link" href="javascript:void(0)">«</a>
+              </li>
+              <li class="page-item active">
+                <a class="page-link" href="javascript:void(0)">1</a>
+              </li>
+              <li class="page-item">
+                <a class="page-link" href="javascript:void(0)">2</a>
+              </li>
+              <li class="page-item">
+                <a class="page-link" href="javascript:void(0)">3</a>
+              </li>
+              <li class="page-item">
+                <a class="page-link" href="javascript:void(0)">4</a>
+              </li>
+              <li class="page-item">
+                <a class="page-link" href="javascript:void(0)">5</a>
+              </li>
+              <li class="page-item">
+                <a class="page-link" href="javascript:void(0)">»</a>
+              </li>
+            </ul>
+          </nav>
+      </div>
+      <!--/ Pagination -->
+
+
       <!-- App Store Block -->
       <div id="app-stores" class="row">
         <div class="col-md-10 col-lg-8 col-xl-7 text-center p-0 mx-auto">
@@ -201,3 +295,35 @@
     </div>
   </div>
 {% endblock layout_content %}
+
+{% block custom_css %}
+  <link rel="stylesheet" href="{% static 'libs/bootstrap-daterangepicker/bootstrap-daterangepicker.css' %}">
+  <style>
+    .default-style .daterangepicker .drp-selected {
+      display: none;
+    }
+  </style>
+{% endblock custom_css %}
+
+{% block custom_js %}
+  <script src="{% static 'libs/moment/moment.js' %}"></script>
+  <script src="{% static 'libs/bootstrap-daterangepicker/bootstrap-daterangepicker.js' %}"></script>
+  <script>
+    $(function() {
+      $('#datetimepicker').daterangepicker({
+        singleDatePicker: true,
+        timePicker: true,
+        timePickerIncrement: 15,
+        timePicker24Hour: true,
+        startDate: moment().startOf('hour'),
+        minDate: moment().startOf('hour'),
+        maxDate: moment().startOf('hour').add(1, 'month'),
+        locale: {
+          format: 'DD-MM-YYYY hh:mm'
+        }
+      }, function(start, end, label) {
+        $('input[name="start_time__gte"]').val(start.format());
+      });
+    });
+  </script>
+{% endblock custom_js %}
