@@ -49,5 +49,5 @@ class GameListView(FilteredListView):
             Game.STATUS_CANCELED,
             Game.STATUS_COMPLETED,
         ],
-        start_time__gte=timezone.now() - timedelta(days=1),
+        start_time__gte=timezone.now() - timedelta(hours=1),
     )
