@@ -5,8 +5,8 @@ from django.conf import settings
 
 
 def get_firebase_link(app_link, unguessable=True, **kwargs):
-    # https://firebase.google.com/docs/reference/dynamic-links/link-shortener
-    # https://firebase.google.com/docs/dynamic-links/create-manually
+    # REF: https://firebase.google.com/docs/reference/dynamic-links/link-shortener
+    # REF: https://firebase.google.com/docs/dynamic-links/create-manually
     firebase_url = f"https://firebasedynamiclinks.googleapis.com/v1/shortLinks?key={settings.FIREBASE_WEB_API_KEY}"
     long_dynamic_link_base = "https://sportyspots.page.link/?"
     long_dynamic_link_args = {

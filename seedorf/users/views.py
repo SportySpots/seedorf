@@ -23,7 +23,7 @@ def registration_status_view(request):
 @permission_classes((permissions.AllowAny,))
 def create_magic_link_view(request):
     try:
-        user = User.objects.get(email=request.data["email"])
+        user = User.objects.get(email__iexact=request.data["email"])
     except User.DoesNotExist:
         return Response(_("Email not registered"), status=status.HTTP_404_NOT_FOUND)
     user.create_magic_link()
