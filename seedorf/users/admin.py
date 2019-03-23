@@ -38,7 +38,8 @@ class UserProfileInline(admin.StackedInline):
 class SportySpotsUserAdmin(AuthUserAdmin):
     form = SportySpotsUserChangeForm
     add_form = SportySpotsUserCreationForm
-    fieldsets = (("User Profile", {"fields": ("name",)}),) + AuthUserAdmin.fieldsets
-    list_display = ("username", "name", "is_superuser")
+    fieldsets = (("User Profile", {"fields": ("uuid", "name")}),) + AuthUserAdmin.fieldsets
+    list_display = ("username", "email", "name", "is_superuser")
+    readonly_fields = ("uuid", "created_at", "modified_at")
     search_fields = ["name"]
     inlines = [UserProfileInline]
