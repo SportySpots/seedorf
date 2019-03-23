@@ -138,9 +138,6 @@ urlpatterns = [
     path("confirm-email/", TemplateView.as_view(template_name="pages/confirm_email.html")),
     path("games/<uuid:uuid>/", GameDetailView.as_view(), name="web-game-detail"),
     path("games/", GameListView.as_view(), name="web-game-list"),
-    # Push Notification
-    re_path(r"^device/apns/?$", APNSDeviceAuthorizedViewSet.as_view({"post": "create"}), name="create_apns_device"),
-    re_path(r"^device/fcm/?$", GCMDeviceAuthorizedViewSet.as_view({"post": "create"}), name="create_fcm_device"),
     # Wagtail
     # ------------------------------------------------------------------------------
     re_path(r"^cms/", include(wagtailadmin_urls)),
