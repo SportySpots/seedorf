@@ -57,7 +57,7 @@
                 <div class="d-flex justify-content-between align-items-end ui-rect-content p-3">
 
                   <!-- Game Status -->
-                  <div class="flex-shrink-1 text-large">
+                  <div class="flex-shrink-1 text-body">
                     {% if not game.started and game.required_players is not None %}
                       {% if game.required_players > 0 %}
                         <span class="badge badge-primary">{% trans "Open Spots" %}: {{ game.required_players }}</span>
@@ -69,7 +69,7 @@
                   <!--/ Game Status -->
 
                   <!-- Game Time -->
-                  <div class="text-large">
+                  <div class="text-body">
                     {% if not game.started %}
                       <div class="badge badge-dark font-weight-bold">
                       {% blocktrans with starts_in=game.start_time|timeuntil %}
