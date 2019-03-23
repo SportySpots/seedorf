@@ -33,4 +33,7 @@ class IsOwnerOrReadOnly(permissions.BasePermission):
 
         # Instance must have an attribute named `owner`.
         # or Instance is user itself (user can modify himself)
+        if hasattr(obj, "user"):
+            return obj.user == request.user
+
         return obj == request.user
