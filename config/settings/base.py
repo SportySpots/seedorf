@@ -84,6 +84,8 @@ THIRD_PARTY_APPS = [
     "wagtail.core",
     "modelcluster",
     "taggit",
+    # push notifications
+    "push_notifications",
 ]
 
 # Apps specific for this project go here.
@@ -469,3 +471,17 @@ FIREBASE_WEB_API_KEY = env.str("FIREBASE_WEB_API_KEY")
 # REF: http://docs.wagtail.io/en/v2.4/getting_started/integrating_into_django.html
 # ------------------------------------------------------------------------------
 WAGTAIL_SITE_NAME = "SportySpots"
+
+
+# Push Notifications
+# REF: https://github.com/jazzband/django-push-notifications
+# REF: https://stackoverflow.com/a/19421406 (Generate APS Push Certificate)
+# REF: Test APS Push Certificate
+# curl -d '{"aps":{"alert":"This is a test notification"}}' --cert SportySpotsApsPushCertificate.pem -H "apns-topic: com.sportyspots.ios" --http2  https://api.development.push.apple.com/3/device/YourDeviceToken
+# ------------------------------------------------------------------------------
+PUSH_NOTIFICATIONS_SETTINGS = {
+    "FCM_API_KEY": env.str("FCM_API_KEY", default=""),
+    "APNS_USE_SANDBOX": env.bool("APNS_USE_SANDBOX", True),
+    "APNS_CERTIFICATE": ROOT_DIR.path("ansible/settings/SportySpotsApsPushCertificate.pem"),
+    "APNS_TOPIC": "com.sportyspots.ios",
+}

@@ -17,6 +17,7 @@ from rest_framework_nested import routers
 from wagtail.admin import urls as wagtailadmin_urls
 from wagtail.core import urls as wagtail_urls
 from wagtail.documents import urls as wagtaildocs_urls
+from push_notifications.api.rest_framework import APNSDeviceAuthorizedViewSet, GCMDeviceAuthorizedViewSet
 
 from seedorf.core.views import apple_app_site_association
 from seedorf.games.views import GameDetailView, GameListView
@@ -74,6 +75,8 @@ router.register(r"sports", SportViewSet)
 # /api/users/
 router.register(r"users", UserViewSet)
 users_router = routers.NestedDefaultRouter(router, r"users", lookup="user")
+users_router.register(r"device/apns", APNSDeviceAuthorizedViewSet, base_name="user-ios-push-notification")
+users_router.register(r"device/fcm", GCMDeviceAuthorizedViewSet, base_name="user-fcm-push-notification")
 # /api/users/<uuid>/profile
 users_router.register(r"profile", UserProfileNestedViewSet, base_name="user-profile")
 users_profile_router = routers.NestedDefaultRouter(users_router, r"profile", lookup="profile")
@@ -81,6 +84,7 @@ users_profile_router = routers.NestedDefaultRouter(users_router, r"profile", loo
 users_profile_router.register(r"sports", UserProfileSportNestedViewSet, base_name="user-profile-sports")
 # /api/users/<uuid>/profile/<uuid>/spots/
 users_profile_router.register(r"spots", UserProfileSpotNestedViewSet, base_name="user-profile-spots")
+
 
 # Spots urls
 # ------------------------------------------------------------------------------
@@ -134,6 +138,9 @@ urlpatterns = [
     path("confirm-email/", TemplateView.as_view(template_name="pages/confirm_email.html")),
     path("games/<uuid:uuid>/", GameDetailView.as_view(), name="web-game-detail"),
     path("games/", GameListView.as_view(), name="web-game-list"),
+    # Push Notification
+    re_path(r"^device/apns/?$", APNSDeviceAuthorizedViewSet.as_view({"post": "create"}), name="create_apns_device"),
+    re_path(r"^device/fcm/?$", GCMDeviceAuthorizedViewSet.as_view({"post": "create"}), name="create_fcm_device"),
     # Wagtail
     # ------------------------------------------------------------------------------
     re_path(r"^cms/", include(wagtailadmin_urls)),

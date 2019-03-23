@@ -71,6 +71,7 @@ pendulum = "*"
 wagtail = "==2.4.0"
 # NOTE: Forced dependency because of pipenv installation errors
 sqlparse = "==0.3.0"
+django-push-notifications = "*"
 
 [dev-packages]
 "flake8" = "==3.6.0"
