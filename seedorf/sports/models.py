@@ -21,6 +21,7 @@ class Sport(BasePropertiesModel, TranslationModel):
     SKATING = "skating"
     SOCCER = "soccer"
     TENNIS = "tennis"
+    TABLE_TENNIS = "table_tennis"
 
     SPORTS = (
         (BASKETBALL, _("Basketball")),
@@ -32,6 +33,7 @@ class Sport(BasePropertiesModel, TranslationModel):
         (SKATING, _("Skating")),
         (SOCCER, _("Soccer")),
         (TENNIS, _("Tennis")),
+        (TABLE_TENNIS, _("Table Tennis")),
     )
 
     # Instance Fields

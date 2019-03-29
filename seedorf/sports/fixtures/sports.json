@@ -124,5 +124,19 @@
         "name": "Tennis",
         "description": "Tennis is a racket sport that can be played individually against a single opponent (singles) or between two teams of two players each (doubles). Each player uses a tennis racket that is strung with cord to strike a hollow rubber ball covered with felt over or around a net and into the opponent's court. The object of the game is to play the ball in such a way that the opponent is not able to play a valid return. The player who is unable to return the ball will not gain a point, while the opposite player will."
     }
+},
+{
+    "model": "sports.sport",
+    "pk": 10,
+    "fields": {
+        "uuid": "8ef143ce-22d5-4155-9e3a-8a2b5c5fdd5c",
+        "created_at": "2018-04-14T11:58:55.946Z",
+        "modified_at": "2018-04-14T11:58:55.949Z",
+        "deleted_at": null,
+        "translations": null,
+        "category": "table_tennis",
+        "name": "Table Tennis",
+        "description": "Table tennis, also known as ping-pong, is a sport in which two or four players hit a lightweight ball back and forth across a table using small rackets. The game takes place on a hard table divided by a net. Except for the initial serve, the rules are generally as follows: players must allow a ball played toward them to bounce one time on their side of the table, and must return it so that it bounces on the opposite side at least once. A point is scored when a player fails to return the ball within the rules. Play is fast and demands quick reactions. Spinning the ball alters its trajectory and limits an opponent's options, giving the hitter a great advantage."
+    }
 }
 ]
