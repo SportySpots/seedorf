@@ -167,7 +167,7 @@ class GameAPIViewTest(APITestCase):
     def test_game_create_rsvp_close_time_after_start_time_error(self):
         url = reverse("game-list")
         now = timezone.now()
-        rsvp_close_time = now + timedelta(days=2, hours=2)
+        rsvp_close_time = now + timedelta(days=2, hours=13)
         start_time = now + timedelta(days=2)
         end_time = now + timedelta(days=2, hours=8)
         data = {"name": "test game", "rsvp_close_time": rsvp_close_time, "start_time": start_time, "end_time": end_time}
