@@ -296,18 +296,21 @@ class GameSerializer(serializers.ModelSerializer):
         if start_time and end_time and end_time.diff(start_time).in_hours() > 12:
             raise serializers.ValidationError({"end_time": [_("Game cannot be greater than 12 hours long.")]})
 
-        # rsvp_open_time_limit = pendulum.now("UTC").subtract(hours=12)
-        #
-        # if rsvp_open_time and rsvp_open_time < rsvp_open_time_limit:
-        #     raise serializers.ValidationError(
-        #         {"rsvp_open_time": [_("RSVP open time cannot be more than 12 hours in the past.")]}
-        #     )
+        rsvp_open_time_limit = pendulum.now("UTC").subtract(hours=12)
+
+        # only check when rsvp_open_time is being set
+        if data.get("rsvp_open_time") and rsvp_open_time < rsvp_open_time_limit:
+            raise serializers.ValidationError(
+                {"rsvp_open_time": [_("RSVP open time cannot be more than 12 hours in the past.")]}
+            )
 
         if rsvp_open_time and rsvp_open_time > start_time:
-            raise serializers.ValidationError({"rsvp_open_time": [_("RSVP open time cannot be before start time.")]})
+            raise serializers.ValidationError({"rsvp_open_time": [_("RSVP open time cannot be after start time.")]})
 
-        if rsvp_close_time and rsvp_close_time > start_time:
-            raise serializers.ValidationError({"rsvp_close_time": [_("RSVP close time cannot be after start time.")]})
+        rsvp_close_time_limit = start_time.add(hours=12)
+
+        if rsvp_close_time and rsvp_close_time > rsvp_close_time_limit:
+            raise serializers.ValidationError({"rsvp_close_time": [_("RSVP close time cannot be more than 12 hours after start time.")]})
 
         if rsvp_open_time and rsvp_close_time and rsvp_close_time < rsvp_open_time:
             raise serializers.ValidationError(
