@@ -893,9 +893,9 @@
         },
         "pywebpush": {
             "hashes": [
-                "sha256:b7c39f10fdec78d13f87c56b82de51ae00ce06c7c2db1b1c78bca300e251035c"
+                "sha256:239711cb640904fee4646a5d5e262b93a091960904a151bfca6ce330eb5dcc4f"
             ],
-            "version": "==1.9.1"
+            "version": "==1.9.2"
         },
         "pyyaml": {
             "hashes": [
