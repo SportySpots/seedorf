@@ -226,6 +226,8 @@ class Game(BasePropertiesModel):
                 sd=self.description,
                 si=image.image.url,
                 ofl=f'https://www.sportyspots.com/games/{self.uuid}/',
+                afl=f'https://www.sportyspots.com/games/{self.uuid}/',
+                ifl=f'https://www.sportyspots.com/games/{self.uuid}/',
             )
         else:
             return get_firebase_link(
@@ -234,6 +236,8 @@ class Game(BasePropertiesModel):
                 st=self.name,
                 sd=self.description,
                 ofl=f'https://www.sportyspots.com/games/{self.uuid}/',
+                afl=f'https://www.sportyspots.com/games/{self.uuid}/',
+                ifl=f'https://www.sportyspots.com/games/{self.uuid}/',
             )
 
     def send_organizer_confirmation_mail(self):
