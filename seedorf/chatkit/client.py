@@ -65,17 +65,22 @@ class ChatkitClient:
 
 
     def post(self, url, data):
-        return requests.post(
+        response = requests.post(
             url=f'{self.base_url}/{self.instance_id}/{url}',
             json=data,
             headers=self.headers(),
-        ).json()
+        )
+        if 200 < response.status_code < 300:
+            return response.json()
+
+        response.raise_for_status()
+
 
     def get_user(self, user_id: str):
-        return self.get(f'/users/{user_id}')
+        return self.get(f'users/{user_id}')
 
     def list_users(self):
-        return self.get('/users')
+        return self.get('users')
 
     def create_user(self, id: str, name: str, avatar_url: str = None, custom_data: object = None):
         data = {
@@ -87,7 +92,7 @@ class ChatkitClient:
         if custom_data:
             data['custom_data'] = custom_data
 
-        return self.post('/users', data)
+        return self.post('users', data)
 
     def create_room(self, name: str = None, private=False, custom_data=None, user_ids=None):
         data = {}
@@ -100,7 +105,7 @@ class ChatkitClient:
         if user_ids:
             data['user_ids'] = user_ids
 
-        return self.post('/rooms', data)
+        return self.post('rooms', data)
 
 
 def create_client():
