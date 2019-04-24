@@ -14,7 +14,14 @@ from seedorf.users.tests.factories import UserFactory
 from .factories import GameFactory, RsvpStatusFactory
 from django.core import mail
 
+from unittest.mock import patch
 
+
+def mock_get_firebase_link(app_link, unguessable=True, **kwargs):
+    return f"https://mock.link/{app_link[0:10]}"
+
+
+@patch("seedorf.games.models.get_firebase_link", mock_get_firebase_link)
 class GameAPIViewTest(APITestCase):
     def setUp(self):
         self.user = UserFactory()
@@ -41,6 +48,7 @@ class GameAPIViewTest(APITestCase):
         self.assertIsNone(response.data["spot"])
         self.assertListEqual(response.data["rsvps"], [])
         self.assertEqual(response.data["status"], "draft")
+        self.assertIn('https://mock.link/games/', response.data['share_link'])
 
     def test_game_create_set_status_error(self):
         url = reverse("game-list")

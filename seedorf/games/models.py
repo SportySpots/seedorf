@@ -181,7 +181,13 @@ class Game(BasePropertiesModel):
     is_featured = models.BooleanField(
         blank=False, default=False, help_text=_("If this game is featured."), null=False, verbose_name=_("Is featured?")
     )
-
+    share_link = models.CharField(
+        blank=False,
+        null=False,
+        help_text=_("Shareable link (app/web) to this game."),
+        max_length=80,
+        verbose_name=_("Shareable link"),
+    )
     class Meta:
         verbose_name = _("Game")
         verbose_name_plural = _("Games")
@@ -210,8 +216,8 @@ class Game(BasePropertiesModel):
     def get_absolute_url(self):
         return reverse("game-detail", args=[str(self.uuid)])
 
-    def get_app_link(self):
-        image = self.spot.images.first()
+    def create_share_link(self):
+        image = self.spot.images.first() if self.spot else None
         if image:
             return get_firebase_link(
                 f"games/{self.uuid}", unguessable=False, st=self.name, sd=self.description, si=image.image.url
