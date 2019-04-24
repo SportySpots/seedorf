@@ -7,9 +7,6 @@ from django.conf import settings
 # https://pusher.com/docs/chatkit/reference/api
 # https://pusher.com/docs/chatkit/reference/api#endpoints
 # https://pusher.com/docs/chatkit/authentication#token-provider-generate-a-token
-from requests import HTTPError
-
-
 class ChatkitClient:
     def __init__(
         self,
