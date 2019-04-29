@@ -831,9 +831,9 @@
         },
         "py-vapid": {
             "hashes": [
-                "sha256:89417053a97c65a89d055397bd406711102f4cc7b48672e200ecd7e258749340"
+                "sha256:5ad1b28e2942d96a3bc755396c72951de2910ff185ae616c51d3c43b25256fac"
             ],
-            "version": "==1.4.0"
+            "version": "==1.5.0"
         },
         "pycparser": {
             "hashes": [
