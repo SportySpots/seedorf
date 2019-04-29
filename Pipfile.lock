@@ -681,10 +681,10 @@
         },
         "kombu": {
             "hashes": [
-                "sha256:750579c10e4ce82636cebdaad3cfc96970b4c7c483a040bb94fb52040bc53a48",
-                "sha256:b1a68fe8a1144eab0359be6bbae5e03b6684c98b9b53de7a17ce6d64ef24e4ea"
+                "sha256:389ba09e03b15b55b1a7371a441c894fd8121d174f5583bbbca032b9ea8c9edd",
+                "sha256:7b92303af381ef02fad6899fd5f5a9a96031d781356cd8e505fa54ae5ddee181"
             ],
-            "version": "==4.4.0"
+            "version": "==4.5.0"
         },
         "markdown": {
             "hashes": [
