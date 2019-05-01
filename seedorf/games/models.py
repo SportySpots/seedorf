@@ -226,15 +226,15 @@ class Game(BasePropertiesModel):
         try:
             image_url = self.spot.images.first().image.url
         except AttributeError:
-            image_url = settings.STATIC_URL+'images/sportyspots-logo.png'
+            image_url = settings.WEB_ROOT_URL+settings.STATIC_URL+'images/sportyspots-logo.png'
 
-        web_game_url = reverse('web-game-detail', kwargs={'uuid': self.uuid})
+        web_game_url = settings.WEB_ROOT_URL+reverse('web-game-detail', kwargs={'uuid': self.uuid})
 
         return get_firebase_link(
             f"games/{self.uuid}",
             unguessable=False,
             st=self.name,
-            sd=self.description,
+            sd=self.description or self.name,
             si=image_url,
             ofl=web_game_url,
             afl=web_game_url,

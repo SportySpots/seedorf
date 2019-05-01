@@ -493,3 +493,6 @@ CHATKIT_SETTINGS = {
     'KEY_ID': env.str('CHATKIT_KEY_ID', default=""),  # uuid4 string
     'KEY_SECRET': env.str('CHATKIT_KEY_SECRET', default=""),  # ~45 chars string
 }
+
+# Used to generate absolute URLS (for firebase links)
+WEB_ROOT_URL = env.str("WEB_ROOT_URL", default="https://www.sportyspots.com")
