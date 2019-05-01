@@ -485,3 +485,6 @@ PUSH_NOTIFICATIONS_SETTINGS = {
     "APNS_CERTIFICATE": ROOT_DIR.path("ansible/settings/SportySpotsApsPushCertificate.pem"),
     "APNS_TOPIC": "com.sportyspots.ios",
 }
+
+# Used to generate absolute URLS (for firebase links)
+WEB_ROOT_URL = env.str("WEB_ROOT_URL", default="https://www.sportyspots.com")
