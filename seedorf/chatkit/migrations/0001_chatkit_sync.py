@@ -12,7 +12,6 @@ def create_chatkit_rooms(apps, schema_editor):
         room = client.create_room(name=f'game/{str(game.uuid)}')
         game.chatkit_room_id = int(room['id'])
         game.save()
-        break
 
 
 def create_chatkit_users(apps, schema_editor):
@@ -30,7 +29,6 @@ def create_chatkit_users(apps, schema_editor):
             user_name,
             user_avatar,
         )
-        break
 
 
 class Migration(migrations.Migration):
