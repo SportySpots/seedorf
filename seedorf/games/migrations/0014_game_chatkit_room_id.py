@@ -15,6 +15,23 @@ def create_chatkit_rooms(apps, schema_editor):
         game.save()
 
 
+def create_chatkit_users(apps, schema_editor):
+    from seedorf.chatkit.client import create_client
+    client = create_client()
+    User = apps.get_model('users', 'User')
+
+    for user in User.objects.all():
+        user_uuid = str(user.uuid)
+        user_name = user.name
+        user_avatar = str(user.profile.avatar)
+        client.token = client.create_admin_token()
+        client.create_user(
+            user_uuid,
+            user_name,
+            user_avatar,
+        )
+
+
 class Migration(migrations.Migration):
 
     dependencies = [
@@ -29,4 +46,5 @@ class Migration(migrations.Migration):
             preserve_default=False,
         ),
         migrations.RunPython(create_chatkit_rooms),
+        migrations.RunPython(create_chatkit_users),
     ]

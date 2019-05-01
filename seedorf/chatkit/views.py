@@ -14,25 +14,10 @@ class ChatkitView(APIView):
     def post(self, request, *args, **kwargs):
         if request.user.is_authenticated:
             user_uuid = str(request.user.uuid)
-            avatar_url = str(request.user.profile.avatar)
-            user_name = request.user.name
         else:
             user_uuid = 'readonly'
-            avatar_url = ''
-            user_name = 'readonly'
 
         client = create_client()
-        client.token = client.create_admin_token()
-        try:
-            client.get_user(user_uuid)
-        except HTTPError as e:
-            if e.response.status_code == 404:
-                client.create_user(
-                    user_uuid,
-                    user_name,
-                    avatar_url,
-                )
-
         token = client.create_token(user_uuid)
         claims = jwt.decode(token, verify=False)
 

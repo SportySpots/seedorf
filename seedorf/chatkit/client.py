@@ -63,9 +63,30 @@ class ChatkitClient:
 
         response.raise_for_status()
 
+    def delete(self, url):
+        response = requests.delete(
+            url=f'{self.base_url}/{self.instance_id}/{url}',
+            headers=self.headers(),
+        )
+        if 200 < response.status_code < 300:
+            return response.json()
+
+        response.raise_for_status()
+
 
     def post(self, url, data):
         response = requests.post(
+            url=f'{self.base_url}/{self.instance_id}/{url}',
+            json=data,
+            headers=self.headers(),
+        )
+        if 200 < response.status_code < 300:
+            return response.json()
+
+        response.raise_for_status()
+
+    def put(self, url, data):
+        response = requests.put(
             url=f'{self.base_url}/{self.instance_id}/{url}',
             json=data,
             headers=self.headers(),
@@ -86,13 +107,23 @@ class ChatkitClient:
         data = {
             'id': id,
             'name': name,
+            'custom_data': custom_data or {},
+            'avatar_url': avatar_url or '',
         }
-        if avatar_url:
-            data['avatar_url'] = avatar_url
-        if custom_data:
-            data['custom_data'] = custom_data
 
         return self.post('users', data)
+
+    def update_user(self, id: str, name: str, avatar_url: str = None, custom_data: object = None):
+        data = {
+            'name': name,
+            'avatar_url': avatar_url or '',
+            'custom_data': custom_data or {},
+        }
+
+        return self.put(f'users/{id}', data)
+
+    def delete_user(self, id: str):
+        return self.delete(f'users/{id}')
 
     def create_room(self, name: str, private=False, custom_data=None, user_ids=None):
         """
