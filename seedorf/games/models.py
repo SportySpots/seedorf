@@ -217,28 +217,23 @@ class Game(BasePropertiesModel):
         return reverse("game-detail", args=[str(self.uuid)])
 
     def create_share_link(self):
-        image = self.spot.images.first() if self.spot else None
-        if image:
-            return get_firebase_link(
-                f"games/{self.uuid}",
-                unguessable=False,
-                st=self.name,
-                sd=self.description,
-                si=image.image.url,
-                ofl=f'https://www.sportyspots.com/games/{self.uuid}/',
-                afl=f'https://www.sportyspots.com/games/{self.uuid}/',
-                ifl=f'https://www.sportyspots.com/games/{self.uuid}/',
-            )
-        else:
-            return get_firebase_link(
-                f"games/{self.uuid}",
-                unguessable=False,
-                st=self.name,
-                sd=self.description,
-                ofl=f'https://www.sportyspots.com/games/{self.uuid}/',
-                afl=f'https://www.sportyspots.com/games/{self.uuid}/',
-                ifl=f'https://www.sportyspots.com/games/{self.uuid}/',
-            )
+        try:
+            image_url = self.spot.images.first().image.url
+        except AttributeError:
+            image_url = settings.STATIC_URL+'images/sportyspots-logo.png'
+
+        web_game_url = reverse('web-game-detail', kwargs={'uuid': self.uuid})
+
+        return get_firebase_link(
+            f"games/{self.uuid}",
+            unguessable=False,
+            st=self.name,
+            sd=self.description,
+            si=image_url,
+            ofl=web_game_url,
+            afl=web_game_url,
+            ifl=web_game_url,
+        )
 
     def send_organizer_confirmation_mail(self):
         context = {
