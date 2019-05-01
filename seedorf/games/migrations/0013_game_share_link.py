@@ -4,7 +4,7 @@ from django.db import migrations, models
 
 
 def set_share_links(apps, schema_editor):
-    from seedorf.games.models import Game
+    Game = apps.get_model('games', 'Game')
     for game in Game.objects.all():
         # triggers signal to set share_link
         game.save()

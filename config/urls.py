@@ -19,6 +19,7 @@ from wagtail.core import urls as wagtail_urls
 from wagtail.documents import urls as wagtaildocs_urls
 from push_notifications.api.rest_framework import APNSDeviceAuthorizedViewSet, GCMDeviceAuthorizedViewSet
 
+from seedorf.chatkit.views import ChatkitView
 from seedorf.core.views import apple_app_site_association
 from seedorf.games.views import GameDetailView, GameListView
 from seedorf.games.viewsets import GameRsvpStatusNestedViewset, GameViewSet
@@ -174,6 +175,10 @@ urlpatterns = [
         include(("rest_auth.registration.urls", "rest_auth.registration"), namespace="rest-auth-registration"),
     ),
     path("api/accounts/", include("allauth.urls")),
+
+    # Chatkit authentication
+    path("api/chatkit/auth/", ChatkitView.as_view(), name="chatkit_auth"),
+
     # REST API
     # ------------------------------------------------------------------------------
     path("api/", include(router.urls), name="api-core"),
@@ -200,6 +205,7 @@ urlpatterns = [
     # Apple ios deeplinking - app site association
     # ------------------------------------------------------------------------------
     path("apple-app-site-association/?", apple_app_site_association, name="apple-app-site-association"),
+
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 if settings.DEBUG:

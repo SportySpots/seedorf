@@ -98,6 +98,7 @@ LOCAL_APPS = [
     "seedorf.sports.apps.SportsConfig",
     "seedorf.spots.apps.SpotsConfig",
     "seedorf.reactions.apps.ReactionsConfig",
+    "seedorf.chatkit.apps.ChatkitConfig",
 ]
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
@@ -484,6 +485,13 @@ PUSH_NOTIFICATIONS_SETTINGS = {
     "APNS_USE_SANDBOX": env.bool("APNS_USE_SANDBOX", True),
     "APNS_CERTIFICATE": ROOT_DIR.path("ansible/settings/SportySpotsApsPushCertificate.pem"),
     "APNS_TOPIC": "com.sportyspots.ios",
+}
+
+# Settings for pusher ChatKit
+CHATKIT_SETTINGS = {
+    'INSTANCE_ID': env.str("CHATKIT_INSTANCE_ID", default=""),  # uuid4 string
+    'KEY_ID': env.str('CHATKIT_KEY_ID', default=""),  # uuid4 string
+    'KEY_SECRET': env.str('CHATKIT_KEY_SECRET', default=""),  # ~45 chars string
 }
 
 # Used to generate absolute URLS (for firebase links)
