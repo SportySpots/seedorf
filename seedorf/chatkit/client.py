@@ -106,19 +106,22 @@ class ChatkitClient:
     def create_user(self, id: str, name: str, avatar_url: str = None, custom_data: object = None):
         data = {
             'id': id,
-            'name': name,
+            'name': name or 'NoName',
             'custom_data': custom_data or {},
-            'avatar_url': avatar_url or '',
         }
+
+        if avatar_url:
+            data['avatar_url'] = avatar_url
 
         return self.post('users', data)
 
     def update_user(self, id: str, name: str, avatar_url: str = None, custom_data: object = None):
         data = {
             'name': name,
-            'avatar_url': avatar_url or '',
             'custom_data': custom_data or {},
         }
+        if avatar_url:
+            data['avatar_url'] = avatar_url
 
         return self.put(f'users/{id}', data)
 

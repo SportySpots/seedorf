@@ -20,6 +20,7 @@ def create_or_update_chatkit_user(sender, instance, created, **kwargs):
     try:
         from seedorf.chatkit.client import create_client
         client = create_client()
+        client.token = client.create_admin_token()
         user_uuid = str(instance.uuid)
         user_name = instance.name
         user_avatar = str(instance.profile.avatar)
@@ -46,6 +47,7 @@ def delete_chatkit_user(sender, instance, **kwargs):
     try:
         from seedorf.chatkit.client import create_client
         client = create_client()
+        client.token = client.create_admin_token()
         client.delete_user(str(instance.uuid))
     except Exception:
         pass
