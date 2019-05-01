@@ -25,7 +25,7 @@ def create_chatkit_users(apps, schema_editor):
     for user in User.objects.all():
         user_uuid = str(user.uuid)
         user_name = user.name
-        user_avatar = str(user.profile.avatar)
+        user_avatar = user.profile.avatar.url if user.profile.avatar else None
         client.create_user(user_uuid, user_name, user_avatar)
 
 
