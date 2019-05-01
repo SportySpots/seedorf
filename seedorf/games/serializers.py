@@ -207,8 +207,9 @@ class GameSerializer(serializers.ModelSerializer):
             "sport",
             "spot",
             "rsvps",
+            "share_link",
         )
-        read_only_fields = ("uuid", "created_at", "modified_at")
+        read_only_fields = ("uuid", "created_at", "modified_at", "share_link")
 
     @staticmethod
     def validate_start_time(start_time: datetime) -> datetime:
