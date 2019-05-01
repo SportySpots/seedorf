@@ -181,7 +181,7 @@ class Game(BasePropertiesModel):
     is_featured = models.BooleanField(
         blank=False, default=False, help_text=_("If this game is featured."), null=False, verbose_name=_("Is featured?")
     )
-    share_link = models.CharField(
+    share_link = models.URLField(
         blank=False,
         null=False,
         help_text=_("Shareable link (app/web) to this game."),

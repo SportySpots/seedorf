@@ -20,7 +20,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='game',
             name='share_link',
-            field=models.CharField(default='change_me', help_text='Shareable link (app/web) to this game.', max_length=80, verbose_name='Shareable link'),
+            field=models.URLField(default='change_me', help_text='Shareable link (app/web) to this game.', max_length=80, verbose_name='Shareable link'),
             preserve_default=False,
         ),
         migrations.RunPython(set_share_links),
