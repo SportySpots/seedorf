@@ -25,7 +25,6 @@ def create_or_update_chatkit_user(sender, instance, created, **kwargs):
         user_name = instance.name
         user_avatar = str(instance.profile.avatar)
         if created:
-            client.token = client.create_admin_token()
             client.create_user(
                 user_uuid,
                 user_name,
