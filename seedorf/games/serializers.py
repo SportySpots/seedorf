@@ -208,7 +208,7 @@ class GameSerializer(serializers.ModelSerializer):
             "spot",
             "rsvps",
             "share_link",
-            "chatkit_room_id"
+            "chatkit_room_id",
         )
         read_only_fields = ("uuid", "created_at", "modified_at", "share_link", "chatkit_room_id")
 
@@ -312,7 +312,9 @@ class GameSerializer(serializers.ModelSerializer):
         rsvp_close_time_limit = start_time.add(hours=12)
 
         if rsvp_close_time and rsvp_close_time > rsvp_close_time_limit:
-            raise serializers.ValidationError({"rsvp_close_time": [_("RSVP close time cannot be more than 12 hours after start time.")]})
+            raise serializers.ValidationError(
+                {"rsvp_close_time": [_("RSVP close time cannot be more than 12 hours after start time.")]}
+            )
 
         if rsvp_open_time and rsvp_close_time and rsvp_close_time < rsvp_open_time:
             raise serializers.ValidationError(
