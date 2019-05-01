@@ -181,7 +181,13 @@ class Game(BasePropertiesModel):
     is_featured = models.BooleanField(
         blank=False, default=False, help_text=_("If this game is featured."), null=False, verbose_name=_("Is featured?")
     )
-
+    share_link = models.URLField(
+        blank=False,
+        null=False,
+        help_text=_("Shareable link (app/web) to this game."),
+        max_length=80,
+        verbose_name=_("Shareable link"),
+    )
     class Meta:
         verbose_name = _("Game")
         verbose_name_plural = _("Games")
@@ -210,14 +216,24 @@ class Game(BasePropertiesModel):
     def get_absolute_url(self):
         return reverse("game-detail", args=[str(self.uuid)])
 
-    def get_app_link(self):
-        image = self.spot.images.first()
-        if image:
-            return get_firebase_link(
-                f"games/{self.uuid}", unguessable=False, st=self.name, sd=self.description, si=image.image.url
-            )
-        else:
-            return get_firebase_link(f"games/{self.uuid}", unguessable=False, st=self.name, sd=self.description)
+    def create_share_link(self):
+        try:
+            image_url = self.spot.images.first().image.url
+        except AttributeError:
+            image_url = settings.STATIC_URL+'images/sportyspots-logo.png'
+
+        web_game_url = reverse('web-game-detail', kwargs={'uuid': self.uuid})
+
+        return get_firebase_link(
+            f"games/{self.uuid}",
+            unguessable=False,
+            st=self.name,
+            sd=self.description,
+            si=image_url,
+            ofl=web_game_url,
+            afl=web_game_url,
+            ifl=web_game_url,
+        )
 
     def send_organizer_confirmation_mail(self):
         context = {
