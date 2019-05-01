@@ -16,6 +16,9 @@ USE_DOCKER=False
 # Domain name, used by caddy
 DOMAIN_NAME=sportyspots.com
 
+# Web root url, used for generating absolute URLs
+WEB_ROOT_URL=https://test.sportyspots.com
+
 # General settings
 DJANGO_READ_DOT_ENV_FILE=False
 DJANGO_DEBUG=True
