@@ -489,9 +489,9 @@ PUSH_NOTIFICATIONS_SETTINGS = {
 
 # Settings for pusher ChatKit
 CHATKIT_SETTINGS = {
-    'INSTANCE_ID': env.str("CHATKIT_INSTANCE_ID", default=""),  # uuid4 string
-    'KEY_ID': env.str('CHATKIT_KEY_ID', default=""),  # uuid4 string
-    'KEY_SECRET': env.str('CHATKIT_KEY_SECRET', default=""),  # ~45 chars string
+    "INSTANCE_ID": env.str("CHATKIT_INSTANCE_ID", default=""),  # uuid4 string
+    "KEY_ID": env.str("CHATKIT_KEY_ID", default=""),  # uuid4 string
+    "KEY_SECRET": env.str("CHATKIT_KEY_SECRET", default=""),  # ~45 chars string
 }
 
 # Used to generate absolute URLS (for firebase links)

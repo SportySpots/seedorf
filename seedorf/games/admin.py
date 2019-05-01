@@ -14,7 +14,23 @@ class GameAdmin(admin.ModelAdmin):
     search_fields = ("uuid", "name", "sport__name", "spot__name")
     inlines = [RsvpStatusAdmin]
     fieldsets = (
-        (None, {"fields": ("uuid", "name", "organizer", "sport", "spot", "status", "capacity", "description", "share_link", "chatkit_room_id")}),
+        (
+            None,
+            {
+                "fields": (
+                    "uuid",
+                    "name",
+                    "organizer",
+                    "sport",
+                    "spot",
+                    "status",
+                    "capacity",
+                    "description",
+                    "share_link",
+                    "chatkit_room_id",
+                )
+            },
+        ),
         (
             "Activity Time",
             {"classes": ("expand",), "fields": ("start_time", "start_timezone", "end_time", "end_timezone")},

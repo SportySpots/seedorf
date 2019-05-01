@@ -16,8 +16,8 @@ def update_share_link(sender, instance: Game, **kwargs):
 def create_chatkit_room_for_game(game: Game):
     client = create_client()
     client.token = client.create_admin_readonly_user_token()
-    room = client.create_room(name=f'game/{str(game.uuid)}')
-    game.chatkit_room_id = int(room['id'])
+    room = client.create_room(name=f"game/{str(game.uuid)}")
+    game.chatkit_room_id = int(room["id"])
     game.save()
 
 

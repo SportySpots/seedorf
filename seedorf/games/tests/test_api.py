@@ -54,8 +54,8 @@ class GameAPIViewTest(APITestCase):
         self.assertIsNone(response.data["spot"])
         self.assertListEqual(response.data["rsvps"], [])
         self.assertEqual(response.data["status"], "draft")
-        self.assertIn('https://mock.link/games/', response.data['share_link'])
-        self.assertEqual(response.data['chatkit_room_id'], 123)
+        self.assertIn("https://mock.link/games/", response.data["share_link"])
+        self.assertEqual(response.data["chatkit_room_id"], 123)
 
     def test_game_create_set_status_error(self):
         url = reverse("game-list")

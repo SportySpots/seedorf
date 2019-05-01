@@ -175,10 +175,8 @@ urlpatterns = [
         include(("rest_auth.registration.urls", "rest_auth.registration"), namespace="rest-auth-registration"),
     ),
     path("api/accounts/", include("allauth.urls")),
-
     # Chatkit authentication
     path("api/chatkit/auth/", ChatkitView.as_view(), name="chatkit_auth"),
-
     # REST API
     # ------------------------------------------------------------------------------
     path("api/", include(router.urls), name="api-core"),
@@ -205,7 +203,6 @@ urlpatterns = [
     # Apple ios deeplinking - app site association
     # ------------------------------------------------------------------------------
     path("apple-app-site-association/?", apple_app_site_association, name="apple-app-site-association"),
-
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 if settings.DEBUG:

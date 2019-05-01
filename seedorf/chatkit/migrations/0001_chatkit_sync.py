@@ -5,39 +5,32 @@ from django.db import migrations, models
 
 def create_chatkit_rooms(apps, schema_editor):
     from seedorf.chatkit.client import create_client
+
     client = create_client()
     client.token = client.create_admin_readonly_user_token()
-    Game = apps.get_model('games', 'Game')
+    Game = apps.get_model("games", "Game")
     for game in Game.objects.all():
-        room = client.create_room(name=f'game/{str(game.uuid)}')
-        game.chatkit_room_id = int(room['id'])
+        room = client.create_room(name=f"game/{str(game.uuid)}")
+        game.chatkit_room_id = int(room["id"])
         game.save()
 
 
 def create_chatkit_users(apps, schema_editor):
     from seedorf.chatkit.client import create_client
+
     client = create_client()
     client.token = client.create_admin_token()
-    User = apps.get_model('users', 'User')
+    User = apps.get_model("users", "User")
 
     for user in User.objects.all():
         user_uuid = str(user.uuid)
         user_name = user.name
         user_avatar = user.profile.avatar.url if user.profile.avatar else None
-        client.create_user(
-            user_uuid,
-            user_name,
-            user_avatar,
-        )
+        client.create_user(user_uuid, user_name, user_avatar)
 
 
 class Migration(migrations.Migration):
 
-    dependencies = [
-        ('games', '0014_game_chatkit_room_id'),
-    ]
+    dependencies = [("games", "0014_game_chatkit_room_id")]
 
-    operations = [
-        migrations.RunPython(create_chatkit_rooms),
-        migrations.RunPython(create_chatkit_users),
-    ]
+    operations = [migrations.RunPython(create_chatkit_rooms), migrations.RunPython(create_chatkit_users)]

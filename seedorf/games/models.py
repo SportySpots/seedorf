@@ -189,11 +189,9 @@ class Game(BasePropertiesModel):
         verbose_name=_("Shareable link"),
     )
     chatkit_room_id = models.IntegerField(
-        blank=True,
-        null=True,
-        help_text=_("ChatKit room ID."),
-        verbose_name=_("ChatKit room ID"),
+        blank=True, null=True, help_text=_("ChatKit room ID."), verbose_name=_("ChatKit room ID")
     )
+
     class Meta:
         verbose_name = _("Game")
         verbose_name_plural = _("Games")
@@ -226,9 +224,9 @@ class Game(BasePropertiesModel):
         try:
             image_url = self.spot.images.first().image.url
         except AttributeError:
-            image_url = settings.WEB_ROOT_URL+settings.STATIC_URL+'images/sportyspots-logo.png'
+            image_url = settings.WEB_ROOT_URL + settings.STATIC_URL + "images/sportyspots-logo.png"
 
-        web_game_url = settings.WEB_ROOT_URL+reverse('web-game-detail', kwargs={'uuid': self.uuid})
+        web_game_url = settings.WEB_ROOT_URL + reverse("web-game-detail", kwargs={"uuid": self.uuid})
 
         return get_firebase_link(
             f"games/{self.uuid}",
