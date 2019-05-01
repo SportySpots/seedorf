@@ -188,6 +188,12 @@ class Game(BasePropertiesModel):
         max_length=80,
         verbose_name=_("Shareable link"),
     )
+    chatkit_room_id = models.IntegerField(
+        blank=True,
+        null=True,
+        help_text=_("ChatKit room ID."),
+        verbose_name=_("ChatKit room ID"),
+    )
     class Meta:
         verbose_name = _("Game")
         verbose_name_plural = _("Games")

@@ -21,7 +21,13 @@ def mock_get_firebase_link(app_link, unguessable=True, **kwargs):
     return f"https://mock.link/{app_link[0:10]}"
 
 
+def mock_create_chatkit_room_for_game(game: Game):
+    game.chatkit_room_id = 123
+    game.save()
+
+
 @patch("seedorf.games.models.get_firebase_link", mock_get_firebase_link)
+@patch("seedorf.games.signals.create_chatkit_room_for_game", mock_create_chatkit_room_for_game)
 class GameAPIViewTest(APITestCase):
     def setUp(self):
         self.user = UserFactory()
@@ -49,6 +55,7 @@ class GameAPIViewTest(APITestCase):
         self.assertListEqual(response.data["rsvps"], [])
         self.assertEqual(response.data["status"], "draft")
         self.assertIn('https://mock.link/games/', response.data['share_link'])
+        self.assertEqual(response.data['chatkit_room_id'], 123)
 
     def test_game_create_set_status_error(self):
         url = reverse("game-list")

@@ -94,16 +94,29 @@ class ChatkitClient:
 
         return self.post('users', data)
 
-    def create_room(self, name: str = None, private=False, custom_data=None, user_ids=None):
-        data = {}
-        if name:
-            data['name'] = name
-        if private:
-            data['private'] = True
-        if custom_data:
-            data['custom_data'] = custom_data
-        if user_ids:
-            data['user_ids'] = user_ids
+    def create_room(self, name: str, private=False, custom_data=None, user_ids=None):
+        """
+        Create a Chatkit room.
+        :param name: name of the room
+        :param private: can not be listed/joined if true
+        :param custom_data: room custom data
+        :param user_ids: user ids to add as members (the owner of the token is auto added)
+        :return: {  'created_at': '2019-05-01T11:21:26Z',
+                    'created_by_id': 'readonly',
+                    'id': '19400196',
+                    'member_user_ids': ['readonly'],
+                    'name': 'test room',
+                    'private': False,
+                    'updated_at': '2019-05-01T11:21:26Z'
+                 }
+        """
+        data = {
+            # A room name must be no longer than 60 characters.
+            'name': name[:59],
+            'private': private,
+            'custom_data': custom_data or {},
+            'user_ids': user_ids or [],
+        }
 
         return self.post('rooms', data)
 
