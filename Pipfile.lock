@@ -1431,10 +1431,10 @@
         },
         "django-test-plus": {
             "hashes": [
-                "sha256:4c3ff61998c2ea9a36c9c6e085b03b68eace71d15c21f4b2fb044441d3f1b7ce"
+                "sha256:791707b16cb34a95a24a14a7827aea50194f27c2548b19966942f88e2876205c",
+                "sha256:c016fd761dec888068334766c940521089ac957951eaa4df3a2607d7d8cc36a1"
             ],
-            "index": "pypi",
-            "version": "==1.1.1"
+            "version": "==1.2.0"
         },
         "docutils": {
             "hashes": [
