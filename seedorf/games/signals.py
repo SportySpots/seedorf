@@ -7,10 +7,18 @@ from seedorf.games.models import Game
 
 @receiver(pre_save, sender=Game)
 def update_share_link(sender, instance: Game, **kwargs):
-    try:
-        instance.share_link = instance.create_share_link()
-    except Exception as e:
-        pass
+    game = instance
+    # if game changed to planned, or (not draft and important field changed).
+    if game.status != Game.STATUS_DRAFT and (
+        (game.tracker.has_changed("status") and game.status == Game.STATUS_PLANNED)
+        or game.tracker.has_changed("description")
+        or game.tracker.has_changed("name")
+        or game.tracker.has_changed("spot")
+    ):
+        try:
+            instance.share_link = instance.create_share_link()
+        except Exception as e:
+            pass
 
 
 def create_chatkit_room_for_game(game: Game):

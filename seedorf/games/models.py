@@ -6,6 +6,7 @@ from django.urls import reverse
 from django.utils.translation import ugettext as _
 from django_fsm import FSMField, transition
 from django.utils import timezone
+from model_utils import FieldTracker
 
 from seedorf.utils.email import send_mail
 from seedorf.utils.firebase import get_firebase_link
@@ -191,6 +192,10 @@ class Game(BasePropertiesModel):
     chatkit_room_id = models.IntegerField(
         blank=True, null=True, help_text=_("ChatKit room ID."), verbose_name=_("ChatKit room ID")
     )
+
+    # track changes to status, spot, description, title to appropriately update the share link
+    # inside the pre-save signal.
+    tracker = FieldTracker(fields=['status', 'spot', 'description', 'name'])
 
     class Meta:
         verbose_name = _("Game")
