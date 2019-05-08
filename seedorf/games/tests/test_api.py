@@ -321,7 +321,7 @@ class GameAPIViewTest(APITestCase):
 
         url = reverse("game-rsvps-detail", kwargs={"game_uuid": str(rsvp.game.uuid), "uuid": str(rsvp.uuid)})
         response = self.client.put(url, data, format="json")
-    #     self.assertEqual(400, response.status_code)
+        self.assertEqual(400, response.status_code)
 
     def test_share_link(self):
         game = GameFactory(status=Game.STATUS_DRAFT)
