@@ -36,7 +36,7 @@ class UserType(DjangoObjectType):
 
     class Meta:
         model = User
-        exclude_fields = ("password",)
+        exclude_fields = ("password", "email")
 
     def resolve_profile(self, info, **kwargs):
         return self.profile
