@@ -997,10 +997,10 @@
         },
         "rx": {
             "hashes": [
-                "sha256:27636fea3b94236fb8ccef3e01cb6c57930ba17eca62763b8232cd8f28472678",
-                "sha256:30782cdf08e5b7f4c40a243103edb3e5adb007ba4a278bfe2b2675bd2bd33010"
+                "sha256:283655a99696621c12680100baded358d2e4fa0e1a610bc1e824505f1ca523ac",
+                "sha256:496be2fade59e1be302264edee70667290a13b106543c94b63240747219d9301"
             ],
-            "version": "==3.0.0a3"
+            "version": "==3.0.0b2"
         },
         "s3transfer": {
             "hashes": [
