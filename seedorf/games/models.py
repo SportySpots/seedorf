@@ -247,8 +247,7 @@ class Game(BasePropertiesModel):
     def send_organizer_confirmation_mail(self):
         context = {
             "name": self.organizer.name,
-            # TODO: Fix game url hardcoding
-            "action_url": "https://www.sportyspots.com/games/{}".format(self.uuid),
+            "action_url": self.share_link,
         }
 
         send_mail(
@@ -272,8 +271,7 @@ class Game(BasePropertiesModel):
                 context = {
                     "name": attendee.name,
                     "invite_sender_name": self.organizer.name,
-                    # TODO: Fix game url hardcoding
-                    "action_url": f"https://www.sportyspots.com/games/{self.uuid}",
+                    "action_url": self.share_link,
                 }
 
                 send_mail(
@@ -436,8 +434,7 @@ class RsvpStatus(BasePropertiesModel):
         context = {
             "invite_sender_name": self.game.organizer.name,
             "name": self.user.name,
-            # TODO: Fix game url hardcoding
-            "action_url": f"https://www.sportyspots.com/games/{self.game.uuid}",
+            "action_url": self.game.share_link,
         }
 
         send_mail(
