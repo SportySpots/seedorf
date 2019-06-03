@@ -67,7 +67,7 @@ pendulum = "*"
 wagtail = "==2.5.1"
 sqlparse = "==0.3.0"
 django-push-notifications = "*"
-kombu = "==4.5.0"
+kombu = "==4.6.0"
 
 
 [dev-packages]
