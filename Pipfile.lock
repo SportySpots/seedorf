@@ -1813,11 +1813,10 @@
         },
         "sphinx": {
             "hashes": [
-                "sha256:95acd6648902333647a0e0564abdb28a74b0a76d2333148aa35e5ed1f56d3c4b",
-                "sha256:c091dbdd5cc5aac6eb95d591a819fd18bccec90ffb048ec465b165a48b839b45"
+                "sha256:2c5becc0fd6706dc0aeb4703f9f1f8a1d1eecacf02e9ac5943cbae48b11e5e42",
+                "sha256:7a359a91fb04054ec77d68ff97cb8728f8cc322e25f22dc94299d67e0e6a7123"
             ],
-            "index": "pypi",
-            "version": "==1.8.0"
+            "version": "==2.1.0"
         },
         "sphinxcontrib-websupport": {
             "hashes": [
