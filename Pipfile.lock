@@ -929,17 +929,17 @@
         },
         "regex": {
             "hashes": [
-                "sha256:020429dcf9b76cc7648a99c81b3a70154e45afebc81e0b85364457fe83b525e4",
-                "sha256:0552802b1c3f3c7e4fee8c85e904a13c48226020aa1a0593246888a1ac55aaaf",
-                "sha256:308965a80b92e1fec263ac1e4f1094317809a72bc4d26be2ec8a5fd026301175",
-                "sha256:4d627feef04eb626397aa7bdec772774f53d63a1dc7cc5ee4d1bd2786a769d19",
-                "sha256:93d1f9fcb1d25e0b4bd622eeba95b080262e7f8f55e5b43c76b8a5677e67334c",
-                "sha256:c3859bbf29b1345d694f069ddfe53d6907b0393fda5e3794c800ad02902d78e9",
-                "sha256:d56ce4c7b1a189094b9bee3b81c4aeb3f1ba3e375e91627ec8561b6ab483d0a8",
-                "sha256:ebc5ef4e10fa3312fa1967dc0a894e6bd985a046768171f042ac3974fadc9680",
-                "sha256:f9cd39066048066a4abe4c18fb213bc541339728005e72263f023742fb912585"
+                "sha256:0fd21bcff7115b5ab056c8b66d7ffc73f5542482708a59a174a43ac4285c50cf",
+                "sha256:1ca9f322d00ef5d3d28a61837909618931f9d6f5244251c95415a55fc5963aea",
+                "sha256:1f3a05f86b74de54d617d49183de060e225d6ada1e5ee7089c1b6c7b98d0c1f4",
+                "sha256:362563eb18aecde863e587e2f68ff01c72e9408f9e77b20114616a13e8ca039c",
+                "sha256:57e7fa3ed931cc9f10d239484b0e405f8988cc00de5489adeed7e816acb8653b",
+                "sha256:8f37e5a7e6e6f823da28c361419d5279e2ef9ef419fcbc5da217a028fd558f4b",
+                "sha256:95796000d83bfc6dbd8ad4c244fcfa5801ae1e0ac7c4893efff122b351ec0ee3",
+                "sha256:bebe83aadc01f307f0ec88c5a8a410543e5aab8b6838f32924ee74eb6f6e1415",
+                "sha256:d4fcb39dbdbd57f0470ca30e0af37f9f1f66a16f5920c59be95abeeb018a229d"
             ],
-            "version": "==2019.4.14"
+            "version": "==2019.06.02"
         },
         "requests": {
             "hashes": [
