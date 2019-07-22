@@ -864,11 +864,9 @@
         },
         "python-json-logger": {
             "hashes": [
-                "sha256:3e000053837500f9eb28d6228d7cb99fabfc1874d34b40c08289207292abaf2e",
-                "sha256:cf2caaf34bd2eff394915b6242de4d0245de79971712439380ece6f149748cde"
+                "sha256:b7a31162f2a01965a5efb94453ce69230ed208468b0bbc7fdfc56e6d8df2e281"
             ],
-            "index": "pypi",
-            "version": "==0.1.10"
+            "version": "==0.1.11"
         },
         "python3-openid": {
             "hashes": [
