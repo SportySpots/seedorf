@@ -1803,10 +1803,10 @@
         },
         "sphinxcontrib-websupport": {
             "hashes": [
-                "sha256:4044751a075b6560f155c96f9fec6bc5198cd5307e5db9f77c7b1c5247ac9a09",
-                "sha256:c1b918b1b41cde045cdb9755941086b4ce4ebbfd7bff41d10ffb6d325779cbf9"
+                "sha256:1501befb0fdf1d1c29a800fdbf4ef5dc5369377300ddbdd16d2cd40e54c6eefc",
+                "sha256:e02f717baf02d0b6c3dd62cf81232ffca4c9d5c331e03766982e3ff9f1d2bc3f"
             ],
-            "version": "==1.1.1.dev20190321"
+            "version": "==1.1.2"
         },
         "sqlparse": {
             "hashes": [
