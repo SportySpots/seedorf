@@ -1577,10 +1577,10 @@
         },
         "pbr": {
             "hashes": [
-                "sha256:6901995b9b686cb90cceba67a0f6d4d14ae003cd59bc12beb61549bdfbe3bc89",
-                "sha256:d950c64aeea5456bbd147468382a5bb77fe692c13c9f00f0219814ce5b642755"
+                "sha256:0ca44dc9fd3b04a22297c2a91082d8df2894862e8f4c86a49dac69eae9e85ca0",
+                "sha256:4aed6c1b1fa5020def0f22aed663d87b81bb3235f112490b07d2643d7a98c5b5"
             ],
-            "version": "==5.2.0"
+            "version": "==5.4.1"
         },
         "pexpect": {
             "hashes": [
