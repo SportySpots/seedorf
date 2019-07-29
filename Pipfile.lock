@@ -448,9 +448,9 @@
         },
         "draftjs-exporter": {
             "hashes": [
-                "sha256:8430b6c0f2a1c644ef9959b36f2f36f093f8209b94f81b4443216d3f386a3bce"
+                "sha256:503f222c81de9a0619158d8f88b638f9069af8de233dc020faa782c7a3b22100"
             ],
-            "version": "==2.1.5"
+            "version": "==2.1.6"
         },
         "drf-extensions": {
             "hashes": [
