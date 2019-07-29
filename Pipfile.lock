@@ -1037,9 +1037,10 @@
         },
         "swapper": {
             "hashes": [
-                "sha256:bcd162c85d3906f6aabd3970e854041b4327e67d0fc96d07e234a85d96131425"
+                "sha256:a5cf78bb9b5fcf458188067bb4fbcc248d4224205a3d1a54d1b835429b0d72c9",
+                "sha256:bc0928ad9badbd7a445588468e4c956ddf9d0dabc2ca27ea2cc73f646cb892b0"
             ],
-            "version": "==1.1.0"
+            "version": "==1.1.1"
         },
         "tqdm": {
             "hashes": [
