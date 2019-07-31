@@ -6,6 +6,7 @@ from django.urls import reverse
 from django.utils.translation import ugettext as _
 from django_fsm import FSMField, transition
 from django.utils import timezone
+from model_utils import FieldTracker
 
 from seedorf.utils.email import send_mail
 from seedorf.utils.firebase import get_firebase_link
@@ -192,6 +193,10 @@ class Game(BasePropertiesModel):
         blank=True, null=True, help_text=_("ChatKit room ID."), verbose_name=_("ChatKit room ID")
     )
 
+    # track changes to status, spot, description, title to appropriately update the share link
+    # inside the pre-save signal.
+    tracker = FieldTracker(fields=['status', 'spot', 'description', 'name'])
+
     class Meta:
         verbose_name = _("Game")
         verbose_name_plural = _("Games")
@@ -242,8 +247,7 @@ class Game(BasePropertiesModel):
     def send_organizer_confirmation_mail(self):
         context = {
             "name": self.organizer.name,
-            # TODO: Fix game url hardcoding
-            "action_url": "https://www.sportyspots.com/games/{}".format(self.uuid),
+            "action_url": self.share_link,
         }
 
         send_mail(
@@ -267,8 +271,7 @@ class Game(BasePropertiesModel):
                 context = {
                     "name": attendee.name,
                     "invite_sender_name": self.organizer.name,
-                    # TODO: Fix game url hardcoding
-                    "action_url": f"https://www.sportyspots.com/games/{self.uuid}",
+                    "action_url": self.share_link,
                 }
 
                 send_mail(
@@ -431,8 +434,7 @@ class RsvpStatus(BasePropertiesModel):
         context = {
             "invite_sender_name": self.game.organizer.name,
             "name": self.user.name,
-            # TODO: Fix game url hardcoding
-            "action_url": f"https://www.sportyspots.com/games/{self.game.uuid}",
+            "action_url": self.game.share_link,
         }
 
         send_mail(

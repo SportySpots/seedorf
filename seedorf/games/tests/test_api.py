@@ -15,10 +15,17 @@ from .factories import GameFactory, RsvpStatusFactory
 from django.core import mail
 
 from unittest.mock import patch
+import random
+import string
+
+
+def randomString(stringLength):
+    letters = string.ascii_letters
+    return ''.join(random.choice(letters) for i in range(stringLength))
 
 
 def mock_get_firebase_link(app_link, unguessable=True, **kwargs):
-    return f"https://mock.link/{app_link[0:10]}"
+    return f"https://mock.link/games/{randomString(5)}"
 
 
 def mock_create_chatkit_room_for_game(game: Game):
@@ -26,8 +33,13 @@ def mock_create_chatkit_room_for_game(game: Game):
     game.save()
 
 
+def do_nothing(*args, **kwargs):
+    pass
+
+
 @patch("seedorf.games.models.get_firebase_link", mock_get_firebase_link)
 @patch("seedorf.games.signals.create_chatkit_room_for_game", mock_create_chatkit_room_for_game)
+@patch("seedorf.users.signals.create_or_update_chatkit_user_for_user", do_nothing)
 class GameAPIViewTest(APITestCase):
     def setUp(self):
         self.user = UserFactory()
@@ -54,7 +66,7 @@ class GameAPIViewTest(APITestCase):
         self.assertIsNone(response.data["spot"])
         self.assertListEqual(response.data["rsvps"], [])
         self.assertEqual(response.data["status"], "draft")
-        self.assertIn("https://mock.link/games/", response.data["share_link"])
+        self.assertEquals(response.data["share_link"], "")
         self.assertEqual(response.data["chatkit_room_id"], 123)
 
     def test_game_create_set_status_error(self):
@@ -310,3 +322,30 @@ class GameAPIViewTest(APITestCase):
         url = reverse("game-rsvps-detail", kwargs={"game_uuid": str(rsvp.game.uuid), "uuid": str(rsvp.uuid)})
         response = self.client.put(url, data, format="json")
         self.assertEqual(400, response.status_code)
+
+    def test_share_link(self):
+        game = GameFactory(status=Game.STATUS_DRAFT)
+        game.save()
+        self.assertEqual(game.share_link, '')
+
+        # set to 'planned'
+        url = reverse("game-detail", kwargs={'uuid': str(game.uuid)})
+        data = {"status": str(Game.STATUS_PLANNED) }
+        response = self.client.patch(url, data, format="json")
+        self.assertEqual(200, response.status_code)
+
+        game.refresh_from_db()
+        self.assertIn("https://mock.link/games/", game.share_link)
+
+        data = {"capacity": 43}
+        response = self.client.patch(url, data, format="json")
+        self.assertEqual(200, response.status_code)
+        old_share_link = game.share_link
+        game.refresh_from_db()
+        self.assertEqual(game.share_link, old_share_link)
+
+        data = {"name": "new Name"}
+        response = self.client.patch(url, data, format="json")
+        self.assertEqual(200, response.status_code)
+        game.refresh_from_db()
+        self.assertNotEqual(game.share_link, old_share_link)
