@@ -579,10 +579,10 @@
         },
         "h2": {
             "hashes": [
-                "sha256:93cbd1013a2218539af05cdf9fc37b786655b93bbc94f5296b7dabd1c5cadf41",
-                "sha256:af35878673c83a44afbc12b13ac91a489da2819b5dc1e11768f3c2406f740fe9"
+                "sha256:ac377fcf586314ef3177bfd90c12c7826ab0840edeb03f0f24f511858326049e",
+                "sha256:b8a32bd282594424c0ac55845377eea13fa54fe4a8db012f3a198ed923dc3ab4"
             ],
-            "version": "==2.6.2"
+            "version": "==3.1.1"
         },
         "hashids": {
             "hashes": [
