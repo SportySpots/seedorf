@@ -1188,11 +1188,10 @@
         },
         "awscli": {
             "hashes": [
-                "sha256:27009baa405935d7229ca551d9433e029a05d68fbc99548e1cbe8fc759b5af43",
-                "sha256:6d1509d1b00618ad2bda119eb6e6f1a427b22eff006c0f705d3f8b5e3fea0932"
+                "sha256:2cf09d4fa67670bb265fc6522dd870ad3f86a2245a6bb578aec8ef8fba35bf22",
+                "sha256:3369bed215b5ee8314f5a4bbcfdc811fb41d1500a8a854c23fb6afe475e94437"
             ],
-            "index": "pypi",
-            "version": "==1.16.14"
+            "version": "==1.16.216"
         },
         "babel": {
             "hashes": [
