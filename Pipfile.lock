@@ -243,11 +243,10 @@
         },
         "django-anymail": {
             "hashes": [
-                "sha256:845edd136d9945972c507fa4d975286904bf5cb9da137925a0e44fd93caed875",
-                "sha256:8a845b6daf398e266b323c551a087d61f08215119e67acb4b496843afe301988"
+                "sha256:72549db8823c144a334bf88c8e749becb1fc82911658129549f46bfb84de311c",
+                "sha256:947c9c5de009036771ff9c4295da1836c950fdee4d7c27441181ce1021c370a8"
             ],
-            "index": "pypi",
-            "version": "==5.0"
+            "version": "==6.1.0"
         },
         "django-appconf": {
             "hashes": [
