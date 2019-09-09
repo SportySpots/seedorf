@@ -726,10 +726,10 @@
         },
         "nece": {
             "hashes": [
-                "sha256:b8675ff275d67883916b4959c05c6d76fabb78d664453cf0b050c2d9e318a438"
+                "sha256:953f2c352f60d3174987ff8e164fdcbd14017d51ea7d78c88ca4562803eaf2b9",
+                "sha256:dfa80fba1d20d113048af80c04e6a39aef7b5eee6681d7c28d99e330ef173609"
             ],
-            "index": "pypi",
-            "version": "==0.7.5"
+            "version": "==0.8.1"
         },
         "oauthlib": {
             "hashes": [
