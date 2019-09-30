@@ -32,10 +32,9 @@
         },
         "apistar": {
             "hashes": [
-                "sha256:4338b24468b49526ceac4a8f84046056081ee747f373ca8d0647bd6b2344c895"
+                "sha256:8da0d3f15748c8ed6e68914ba5b8f6dd5dff5afbe137950d07103575df0bce73"
             ],
-            "index": "pypi",
-            "version": "==0.6.0"
+            "version": "==0.7.2"
         },
         "apns2": {
             "hashes": [
