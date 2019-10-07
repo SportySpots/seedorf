@@ -38,10 +38,10 @@
         },
         "apns2": {
             "hashes": [
-                "sha256:59cd3bbdc059ffd99d673b7fac43f18c70b717ff1c3337bbea3ad9f02abb3fee",
-                "sha256:79947ab945fde558f27ba53c57170237afc6b98bae17097a9cb6ae54d0949939"
+                "sha256:0365be7c3b9f08b80b79adcff3969d41232f96bbd75b0e9debdd36a0e758405c",
+                "sha256:a20a68b47655f2b709f160df6bd5df6541a5b2cb2140e440682a751505431328"
             ],
-            "version": "==0.4.1"
+            "version": "==0.7.0"
         },
         "argon2-cffi": {
             "hashes": [
