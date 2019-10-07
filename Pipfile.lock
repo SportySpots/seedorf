@@ -336,11 +336,10 @@
         },
         "django-guardian": {
             "hashes": [
-                "sha256:8836ac9263c9bd8c162efa5fbd0729f7f8ef83008c8da298e8e2aa81ea624c47",
-                "sha256:c3c0ab257c9d94ce154b9ee32994e3cff8b350c384040705514e14a9fb7c8191"
+                "sha256:8cf4efd67a863eb32beafd4335a38ffb083630f8ab2045212d27f8f9c3abe5a6",
+                "sha256:e638c9a23eeac534bb68b133975539ed8782f733ab6f35c0b23b4c39cd06b1bb"
             ],
-            "index": "pypi",
-            "version": "==1.4.9"
+            "version": "==2.1.0"
         },
         "django-haystack": {
             "hashes": [
