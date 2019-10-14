@@ -1093,10 +1093,10 @@
         },
         "willow": {
             "hashes": [
-                "sha256:76a8874304356b7d86923405f5ca1df125c3540fb55b32747e7a33ba59bc1744",
-                "sha256:818ee11803c90a0a6d49c94b0453d6266be1ef83ae00de72731c45fae4d3e78c"
+                "sha256:277dd2d498aee1e2b48f0a9d30666f2a35cdbce1eb3dbf1257f74c69b5bc994d",
+                "sha256:c4aa64db2c2a34341c4998e7d063def8384f652e9e0654eda923fd756c9f1240"
             ],
-            "version": "==1.1"
+            "version": "==1.2"
         }
     },
     "develop": {
