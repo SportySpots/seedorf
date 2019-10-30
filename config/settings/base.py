@@ -465,6 +465,8 @@ GRAPHENE_DJANGO_EXTRAS = {
     "CACHE_TIMEOUT": 300,  # seconds
 }
 
+# Firebase
+# ------------------------------------------------------------------------------
 FIREBASE_WEB_API_KEY = env.str("FIREBASE_WEB_API_KEY")
 
 
@@ -487,7 +489,8 @@ PUSH_NOTIFICATIONS_SETTINGS = {
     "APNS_TOPIC": "com.sportyspots.ios",
 }
 
-# Settings for pusher ChatKit
+# Pusher ChatKit
+# ------------------------------------------------------------------------------
 CHATKIT_SETTINGS = {
     "INSTANCE_ID": env.str("CHATKIT_INSTANCE_ID", default=""),  # uuid4 string
     "KEY_ID": env.str("CHATKIT_KEY_ID", default=""),  # uuid4 string

@@ -11,6 +11,7 @@ class ChatkitClient:
     https://pusher.com/docs/chatkit/reference/api#endpoints
     https://pusher.com/docs/chatkit/authentication#token-provider-generate-a-token
     """
+
     def __init__(
         self,
         instance_id: str,
@@ -103,11 +104,7 @@ class ChatkitClient:
     def delete_user(self, user_id: str):
         return self.delete(f"users/{user_id}")
 
-    def create_room(self,
-                    name: str,
-                    private: bool = False,
-                    custom_data: dict = None,
-                    user_ids: list = None):
+    def create_room(self, name: str, private: bool = False, custom_data: dict = None, user_ids: list = None):
         """
         Create a Chatkit room.
         :param name: name of the room
