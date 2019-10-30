@@ -12,7 +12,14 @@
         error_log: "/var/log/nginx/sportyspots-{{ env }}-error.log"
         return: "301 https://www.{{ domain }}$request_uri"
       - listen: "443 ssl http2"
-        server_name: "{{ domain }} www.{{ domain }} {{ sub_domain }}.{{ domain }} {{ env }}.{{ domain }}"
+        server_name: "{{ domain }}"
+        filename: "{{ domain }}.default.conf"
+        state: present
+        access_log: "/var/log/nginx/sportyspots-{{ env }}-access.log"
+        error_log: "/var/log/nginx/sportyspots-{{ env }}-error.log"
+        return: "301 https://www.{{ domain }}$request_uri"
+      - listen: "443 ssl http2"
+        server_name: "{{ sub_domain }}.{{ domain }} {{ env }}.{{ domain }}"
         state: present
         filename: "{{ domain }}.443.conf"
         access_log: "/var/log/nginx/sportyspots-{{ env }}-access.log"
@@ -24,7 +31,7 @@
           ssl_ciphers         HIGH:!aNULL:!MD5;
 
           # deny illegal Host headers
-          if ($host !~* ^({{ domain }}|www.{{ domain }}|{{ env }}.{{ domain }}|{{ sub_domain }}.{{ domain }})$ ) {
+          if ($host !~* ^({{ env }}.{{ domain }}|{{ sub_domain }}.{{ domain }})$ ) {
               return 444;
           }
 
