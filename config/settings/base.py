@@ -133,7 +133,7 @@ MIDDLEWARE = [
     "wagtail.contrib.redirects.middleware.RedirectMiddleware",
 ]
 
-CORS_ORIGIN_WHITELIST = ["sportyspots.com", "www.sportyspots.com", "api.sportyspots.com"]
+CORS_ORIGIN_WHITELIST = ["https://sportyspots.com", "https://www.sportyspots.com", "https://api.sportyspots.com"]
 
 # MIGRATIONS CONFIGURATION
 # ------------------------------------------------------------------------------
