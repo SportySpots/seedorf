@@ -1,13 +1,16 @@
 import time
-import requests
+
 import jwt
+import requests
 from django.conf import settings
 
 
-# https://pusher.com/docs/chatkit/reference/api
-# https://pusher.com/docs/chatkit/reference/api#endpoints
-# https://pusher.com/docs/chatkit/authentication#token-provider-generate-a-token
 class ChatkitClient:
+    """
+    https://pusher.com/docs/chatkit/reference/api
+    https://pusher.com/docs/chatkit/reference/api#endpoints
+    https://pusher.com/docs/chatkit/authentication#token-provider-generate-a-token
+    """
     def __init__(
         self,
         instance_id: str,
@@ -38,11 +41,11 @@ class ChatkitClient:
 
     # create a JWT token for admin not associated with a user. Cannot create rooms.
     def create_admin_token(self):
-        return self.create_token(None, True)
+        return self.create_token(user_id=None, super_user=True)
 
     # create an admin JWT token for readonly user
     def create_admin_readonly_user_token(self):
-        return self.create_token("readonly", True)
+        return self.create_token(user_id="readonly", super_user=True)
 
     def headers(self):
         assert self.token, "Token needs to be set"
@@ -82,25 +85,29 @@ class ChatkitClient:
     def list_users(self):
         return self.get("users")
 
-    def create_user(self, id: str, name: str, avatar_url: str = None, custom_data: object = None):
-        data = {"id": id, "name": name or "NoName", "custom_data": custom_data or {}}
+    def create_user(self, user_id: str, name: str = "NA", avatar_url: str = None, custom_data: object = None):
+        data = {"id": user_id, "name": name, "custom_data": custom_data or {}}
 
         if avatar_url:
             data["avatar_url"] = avatar_url
 
         return self.post("users", data)
 
-    def update_user(self, id: str, name: str, avatar_url: str = None, custom_data: object = None):
+    def update_user(self, user_id: str, name: str, avatar_url: str = None, custom_data: object = None):
         data = {"name": name, "custom_data": custom_data or {}}
         if avatar_url:
             data["avatar_url"] = avatar_url
 
-        return self.put(f"users/{id}", data)
+        return self.put(f"users/{user_id}", data)
 
-    def delete_user(self, id: str):
-        return self.delete(f"users/{id}")
+    def delete_user(self, user_id: str):
+        return self.delete(f"users/{user_id}")
 
-    def create_room(self, name: str, private=False, custom_data=None, user_ids=None):
+    def create_room(self,
+                    name: str,
+                    private: bool = False,
+                    custom_data: dict = None,
+                    user_ids: list = None):
         """
         Create a Chatkit room.
         :param name: name of the room
