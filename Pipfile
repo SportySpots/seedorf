@@ -75,7 +75,7 @@ kombu = "==4.6.5"
 
 flake8 = "==3.7.9"
 ansible = "==2.9.0"
-awscli = "==1.16.269"
+awscli = "==1.16.272"
 black = "==19.10b0"
 coreapi-cli = "==1.0.9"
 coverage = "==4.5.4"
