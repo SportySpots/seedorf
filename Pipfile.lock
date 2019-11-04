@@ -106,10 +106,10 @@
         },
         "botocore": {
             "hashes": [
-                "sha256:13bf9d0d9b9cda278349c9ba0c35c96570795438d5bd29e5188e110b3f5a5183",
-                "sha256:cfce2c7d6a218d693ed6daa8a41040761e35d7a728d1cf43ae14c4132fb146f3"
+                "sha256:5cc7e0bfa41eb2789674485fdda62ce44ff5e3fee8accb4e0ef317ebdf1a319a",
+                "sha256:b565ce26203ce94fc94f8056951fedc16e1e0b02d1fbdbf8dca420e1fbe05d81"
             ],
-            "version": "==1.13.5"
+            "version": "==1.13.8"
         },
         "celery": {
             "hashes": [
@@ -1343,10 +1343,10 @@
         },
         "botocore": {
             "hashes": [
-                "sha256:13bf9d0d9b9cda278349c9ba0c35c96570795438d5bd29e5188e110b3f5a5183",
-                "sha256:cfce2c7d6a218d693ed6daa8a41040761e35d7a728d1cf43ae14c4132fb146f3"
+                "sha256:5cc7e0bfa41eb2789674485fdda62ce44ff5e3fee8accb4e0ef317ebdf1a319a",
+                "sha256:b565ce26203ce94fc94f8056951fedc16e1e0b02d1fbdbf8dca420e1fbe05d81"
             ],
-            "version": "==1.13.5"
+            "version": "==1.13.8"
         },
         "certifi": {
             "hashes": [
