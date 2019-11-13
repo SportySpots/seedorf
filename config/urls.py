@@ -130,7 +130,7 @@ urlpatterns = [
     # Django Admin, use {% url 'admin:index' %}
     # ------------------------------------------------------------------------------
     path(settings.ADMIN_URL, admin.site.urls),
-    # SportySpots
+    # SportySpots Static Web Frontend
     # ------------------------------------------------------------------------------
     path("dashboard/", TemplateView.as_view(template_name="pages/dashboard_home.html")),
     path("register/", TemplateView.as_view(template_name="pages/login_register.html")),
@@ -141,9 +141,9 @@ urlpatterns = [
     path("games/", GameListView.as_view(), name="web-game-list"),
     # Wagtail
     # ------------------------------------------------------------------------------
-    re_path(r"^cms/", include(wagtailadmin_urls)),
-    re_path(r"^documents/", include(wagtaildocs_urls)),
-    re_path(r"^pages/", include(wagtail_urls)),
+    path("cms/", include(wagtailadmin_urls)),
+    path("documents/", include(wagtaildocs_urls)),
+    path("pages/", include(wagtail_urls)),
     # Anymail
     # ------------------------------------------------------------------------------
     path("anymail/", include("anymail.urls")),
@@ -174,8 +174,11 @@ urlpatterns = [
         "api/auth/registration/",
         include(("rest_auth.registration.urls", "rest_auth.registration"), namespace="rest-auth-registration"),
     ),
+    # AllAuth
+    # ------------------------------------------------------------------------------
     path("api/accounts/", include("allauth.urls")),
     # Chatkit authentication
+    # ------------------------------------------------------------------------------
     path("api/chatkit/auth/", ChatkitView.as_view(), name="chatkit_auth"),
     # REST API
     # ------------------------------------------------------------------------------
