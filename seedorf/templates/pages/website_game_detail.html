@@ -58,9 +58,9 @@
 
                   <!-- Game Status -->
                   <div class="flex-shrink-1 text-body">
-                    {% if not game.started and game.required_players is not None %}
-                      {% if game.required_players > 0 %}
-                        <span class="badge badge-primary">{% trans "Open Spots" %}: {{ game.required_players }}</span>
+                    {% if not game.started and game.required_attendees is not None %}
+                      {% if game.required_attendees > 0 %}
+                        <span class="badge badge-primary">{% trans "Open Spots" %}: {{ game.required_attendees }}</span>
                       {% else %}
                         <span class="badge badge-danger">{% trans "Game Full" %}</span>
                       {% endif %}

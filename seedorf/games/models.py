@@ -52,8 +52,11 @@ class Game(BasePropertiesModel):
         (STATUS_STARTED, _("Started")),
     )
 
+    # The organizer needs to approve the participation
     INVITE_MODE_APPROVAL = "approval"
+    # Participants can join the activity only if they have an invite from the organizer
     INVITE_MODE_INVITE_ONLY = "invite_only"
+    # Everyone can join the activity.
     INVITE_MODE_OPEN = "open"
 
     INVITE_MODES = (
@@ -67,18 +70,41 @@ class Game(BasePropertiesModel):
 
     # Foreign Keys
     organizer = models.ForeignKey(
-        settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="game_organizers", verbose_name=_("Organizer")
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name="game_organizers",
+        verbose_name=_("Organizer"),
+        help_text=_("Organizer of the activity. An activity can have only one organizer."),
     )
     sport = models.ForeignKey(
-        "sports.Sport", on_delete=models.CASCADE, related_name="sport_games", verbose_name=_("Sport"), null=True
+        "sports.Sport",
+        on_delete=models.CASCADE,
+        related_name="sport_games",
+        verbose_name=_("Sport"),
+        null=True,
+        help_text=_("Sport for which the activity is created. An activity can have only one sport associated with it."),
     )
     spot = models.ForeignKey(
-        "spots.Spot", on_delete=models.CASCADE, related_name="spot_games", verbose_name=_("Spot"), null=True
+        "spots.Spot",
+        on_delete=models.CASCADE,
+        related_name="spot_games",
+        verbose_name=_("Spot"),
+        null=True,
+        help_text=_("Spot on which the activity is created. An activity can hanve only one spot associated with it."),
     )
 
     # Instance Fields
     # TODO: Maybe auto generate the game name based on the organizer, e.g. Soccer with Sam at Oosterpark
-    name = models.CharField(blank=True, default="", max_length=255, null=False)
+    name = models.CharField(
+        blank=True,
+        default="",
+        max_length=255,
+        null=False,
+        help_text=_(
+            "Name of the activity. The name can be an empty string. The name can be maximum 255 characters. "
+            "The name is not localized in the language of the user or location of the activity."
+        ),
+    )
 
     description = models.TextField(
         blank=True, default="", help_text=_("Description of the game."), null=False, verbose_name=_("Description")
@@ -95,14 +121,14 @@ class Game(BasePropertiesModel):
 
     rsvp_open_time = models.DateTimeField(
         blank=True,
-        help_text=_("UTC time before that RSVPs will no longer be accepted, though organizers may close RSVPs earlier"),
+        help_text=_("UTC time before which RSVPs will not be accepted."),
         null=True,
         verbose_name=_("RSVP Open Time (UTC)"),
     )
 
     rsvp_close_time = models.DateTimeField(
         blank=True,
-        help_text=_("UTC time after that RSVPs will no longer be accepted, though organizers may close RSVPs earlier"),
+        help_text=_("UTC time after which RSVPs will not be accepted, though organizers may close RSVPs earlier"),
         null=True,
         verbose_name=_("RSVP Close Time (UTC)"),
     )
@@ -110,7 +136,7 @@ class Game(BasePropertiesModel):
     rsvp_closed = models.BooleanField(
         blank=False,
         default=False,
-        help_text=_("Is RSVPing explicitly closed for the game."),
+        help_text=_("Are RSVPs closed for the activity ?"),
         null=False,
         verbose_name=_("RSVP Closed"),
     )
@@ -119,7 +145,7 @@ class Game(BasePropertiesModel):
         blank=False,
         choices=TIMEZONES,
         default=pytz.UTC.zone,
-        help_text=_("Timezone of the start time of the game."),
+        help_text=_("Timezone of the start time of the activity."),
         max_length=50,
         null=False,
         verbose_name=_("Start Time Timezone"),
@@ -128,7 +154,7 @@ class Game(BasePropertiesModel):
         blank=False,
         choices=TIMEZONES,
         default=pytz.UTC.zone,
-        help_text=_("Timezone of the end time of the game."),
+        help_text=_("Timezone of the end time of the activity."),
         max_length=50,
         null=False,
         verbose_name=_("End Time Timezone"),
@@ -137,7 +163,7 @@ class Game(BasePropertiesModel):
         blank=False,
         choices=INVITE_MODES,
         default=INVITE_MODE_OPEN,
-        help_text=_("If the game is open for everyone to join or based on organizers approval or is invite only."),
+        help_text=_("An activity can be open for everyone to join or based on organizers approval or is invite only."),
         max_length=25,
         null=False,
         verbose_name=_("Invite Mode"),
@@ -155,31 +181,39 @@ class Game(BasePropertiesModel):
         blank=True,
         null=True,
         validators=[MinValueValidator(limit_value=2), MaxValueValidator(limit_value=50)],
+        help_text=_(
+            "Maximum number of participants that can attend the activity. "
+            "The minimum number of attendees is 2 and the maximum number is 50."
+        ),
         verbose_name=_("Capacity"),
     )
     show_remaining = models.BooleanField(
         blank=False,
         default=True,
-        help_text=_("If the game page should show the number of open player spots left."),
+        help_text=_("Show No. of Remaining Participants Required."),
         null=False,
-        verbose_name=_("Show Remaining Player Required Spots"),
+        verbose_name=_("Show Remaining"),
     )
     is_listed = models.BooleanField(
         blank=False,
         default=True,
-        help_text=_("If this game is publicly searchable on SportySpots."),
+        help_text=_("Is this activity is publicly viewable ?"),
         null=False,
-        verbose_name=_("Is Listed?"),
+        verbose_name=_("Is Listed ?"),
     )
     is_shareable = models.BooleanField(
         blank=False,
         default=True,
-        help_text=_("If this game shows social sharing buttons."),
+        help_text=_("Should this activity show the social sharing buttons ?"),
         null=False,
-        verbose_name=_("Is Shareable?"),
+        verbose_name=_("Is Shareable ?"),
     )
     is_featured = models.BooleanField(
-        blank=False, default=False, help_text=_("If this game is featured."), null=False, verbose_name=_("Is featured?")
+        blank=False,
+        default=False,
+        help_text=_("Is this activity featured."),
+        null=False,
+        verbose_name=_("Is featured ?"),
     )
     share_link = models.URLField(
         blank=False,
@@ -188,13 +222,14 @@ class Game(BasePropertiesModel):
         max_length=80,
         verbose_name=_("Shareable link"),
     )
+    # TODO: Move chatkit to its own model
     chatkit_room_id = models.IntegerField(
         blank=True, null=True, help_text=_("ChatKit room ID."), verbose_name=_("ChatKit room ID")
     )
 
     class Meta:
-        verbose_name = _("Game")
-        verbose_name_plural = _("Games")
+        verbose_name = _("Activity")
+        verbose_name_plural = _("Activities")
         ordering = ("start_time",)
 
     def __str__(self):
@@ -211,7 +246,7 @@ class Game(BasePropertiesModel):
         return now > self.end_time
 
     @property
-    def required_players(self):
+    def required_attendees(self):
         rsvp_attendees = self.attendees.filter(status=RsvpStatus.STATUS_ATTENDING).count()
         if self.capacity:
             return self.capacity - rsvp_attendees
@@ -243,7 +278,7 @@ class Game(BasePropertiesModel):
         context = {
             "name": self.organizer.name,
             # TODO: Fix game url hardcoding
-            "action_url": "https://www.sportyspots.com/games/{}".format(self.uuid),
+            "action_url": f"https://www.sportyspots.com/games/{self.uuid}",
         }
 
         send_mail(
@@ -274,7 +309,7 @@ class Game(BasePropertiesModel):
                 send_mail(
                     to=attendee.email,
                     template_prefix="CancelledGame",
-                    subject=_(f"Sport activity has been cancelled."),
+                    subject=_("Activity has been cancelled."),
                     language=attendee.profile.language,
                     context=context,
                 )
@@ -477,8 +512,7 @@ class RsvpStatus(BasePropertiesModel):
         permission=lambda instance, user: instance.user.uuid == user.uuid,
     )
     def attend(self):
-        # TODO: Send a confirmation email to the user
-        # TODO: Send a confirmation emeail to organizer
+        # TODO: Do not send a confirmation email to organizer
         self.send_user_confirmation_mail()
 
     @transition(
@@ -497,8 +531,7 @@ class RsvpStatus(BasePropertiesModel):
         permission=lambda instance, user: instance.user.uuid == user.uuid,
     )
     def decline(self):
-        # TODO: Send the organizer an email, if he had invited the user
-        self.send_user_confirmation_mail()
+        pass
 
     @transition(
         field=status,
