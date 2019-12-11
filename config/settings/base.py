@@ -134,6 +134,9 @@ MIDDLEWARE = [
 ]
 
 CORS_ORIGIN_WHITELIST = ["https://sportyspots.com", "https://www.sportyspots.com", "https://api.sportyspots.com"]
+CORS_ORIGIN_REGEX_WHITELIST = [
+    r"^https://neeskens-.*\.now\.sh$",
+]
 
 # MIGRATIONS CONFIGURATION
 # ------------------------------------------------------------------------------
