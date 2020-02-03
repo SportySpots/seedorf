@@ -1947,11 +1947,10 @@
         },
         "pytest-django": {
             "hashes": [
-                "sha256:497e8d967d2ec82b3388267b2f1f037761ff34c10ebb13c534d8c5804846e4eb",
-                "sha256:b6c900461a6a7c450dcf11736cabc289a90f5d6f28ef74c46e32e86ffd16a4bd"
+                "sha256:456fa6854d04ee625d6bbb8b38ca2259e7040a6f93333bfe8bc8159b7e987203",
+                "sha256:489b904f695f9fb880ce591cf5a4979880afb467763b1f180c07574554bdfd26"
             ],
-            "index": "pypi",
-            "version": "==3.6.0"
+            "version": "==3.8.0"
         },
         "python-dateutil": {
             "hashes": [
