@@ -1,12 +1,15 @@
 [[source]]
+
 url = "https://pypi.python.org/simple"
 verify_ssl = true
 name = "pypi"
 
+
 [packages]
-"argon2-cffi" = "==19.2.0"
-"boto3" = "==1.10.5"
-"psycopg2" = "==2.7.3.1"
+
+argon2-cffi = "==19.2.0"
+boto3 = "==1.11.9"
+psycopg2 = "==2.7.3.1"
 apistar = "==0.7.2"
 awesome-slugify = "==1.6.5"
 celery = "==4.3.0"
@@ -58,30 +61,19 @@ rules = "==2.1"
 structlog = "==19.2.0"
 wheel = "==0.33.6"
 whitenoise = "==4.1.4"
-
-
-# REF: https://github.com/eamigo86/graphene-django-extras/pull/42
-# REF: https://github.com/eamigo86/graphene-django-extras/issues/43
-#graphene-django-extras = {editable = true, git = "https://github.com/eamigo86/graphene-django-extras.git"}
-#graphene-django-extras = {editable = true,git = "https://github.com/sportyspots/graphene-django-extras.git"}
 graphene-django-extras = "==0.4.8"
-
-# REF: https://github.com/flavors/django-graphql-geojson/issues/1
-#graphene-django = { git = "https://github.com/graphql-python/graphene-django.git@master" }
 graphene-django = "==2.6.0"
-
-"iso8601" = "*"
+iso8601 = "*"
 pendulum = "==2.0.5"
 wagtail = "==2.6.3"
-
-# NOTE: Forced dependency because of pipenv installation errors
 sqlparse = "==0.3.0"
-
 django-push-notifications = "==1.6.1"
 kombu = "==4.5.0"
 
+
 [dev-packages]
-"flake8" = "==3.7.9"
+
+flake8 = "==3.7.9"
 ansible = "==2.6.4"
 awscli = "==1.16.269"
 black = "==19.10b0"
@@ -102,14 +94,13 @@ requests = "==2.22.0"
 scrapy = "==1.8.0"
 sphinx = "==2.2.1"
 werkzeug = "==0.16.0"
-# awsebcli = "*"
-# NOTE: Disable pytest-sugar till the following issues are fixed
-# REF: https://github.com/pydanny/cookiecutter-django/pull/1472
-# REF: https://github.com/pytest-dev/pytest/issues/3170
-# pytest-sugar = "==0.9.0"
+
 
 [requires]
+
 python_version = "3.6"
 
+
 [pipenv]
-"allow_prereleases" = true
+
+allow_prereleases = true
