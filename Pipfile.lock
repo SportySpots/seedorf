@@ -1578,11 +1578,10 @@
         },
         "googlemaps": {
             "hashes": [
-                "sha256:dbcccc41fc19b4b7b304a837ab2348f7a7a0db56390ea4e08abbc29ad41bea98",
-                "sha256:fc51565fa5e008391dc1df526997a029424dc7be60517ab12fc07708c2bf5930"
+                "sha256:63ccaca222b2bdb2b14bf09292fe833e21a98bbc4324d1e5fc6912fcca28fd8a",
+                "sha256:ca175728e455eee04bd48d6da5a15db5e2f9164d2ee54efd1850e430a576b736"
             ],
-            "index": "pypi",
-            "version": "==3.1.4"
+            "version": "==4.1.0"
         },
         "hyperlink": {
             "hashes": [
