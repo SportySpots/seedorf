@@ -1196,10 +1196,10 @@
         },
         "willow": {
             "hashes": [
-                "sha256:76a8874304356b7d86923405f5ca1df125c3540fb55b32747e7a33ba59bc1744",
-                "sha256:818ee11803c90a0a6d49c94b0453d6266be1ef83ae00de72731c45fae4d3e78c"
+                "sha256:4f84c46f65b6a1982e63dbd4d94c6bae705ff21f839164c31e105c3e251bec37",
+                "sha256:8897a6827c0bb7dee2ac908af53f0d358720bd6032ed20bab3175507e34d739a"
             ],
-            "version": "==1.1"
+            "version": "==1.3"
         },
         "zipp": {
             "hashes": [
