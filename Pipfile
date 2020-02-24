@@ -9,7 +9,7 @@ name = "pypi"
 
 argon2-cffi = "==19.2.0"
 boto3 = "==1.12.5"
-psycopg2 = "==2.7.3.1"
+psycopg2 = "==2.8.4"
 apistar = "==0.7.2"
 awesome-slugify = "==1.6.5"
 celery = "==4.3.0"
