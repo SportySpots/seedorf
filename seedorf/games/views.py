@@ -65,35 +65,38 @@ class GameListView(FilteredListView):
 @api_view(["POST"])
 @permission_classes((permissions.AllowAny,))
 def web_rsvp(request):
-    email = request.data['email']
-    name = request.data['name']
-    gameUUID = request.data['game']
-
-    game = None
     try:
-        game = Game.objects.get(uuid=gameUUID)
-    except Game.DoesNotExist:
-        return Response("Game not found", status=status.HTTP_404_NOT_FOUND)
+        email = request.data['email']
+        name = request.data['name']
+        gameUUID = request.data['game']
 
-    user = None
-    try:
-        user = User.objects.get(email=email)
-    except User.DoesNotExist:
-        # There is no internal API for creating users, so using the REST api here.
-        data = {
-            'email': email,
-            'name': name,
-            'password': FuzzyText(length=20).fuzz()
-        }
-        client = Client()
-        response = client.post("/api/auth/registration/", data, format='json')
-        if response.status_code != 201:
-            return Response(response.data, status=response.status_code)
-        user = User.objects.get(email=email)
+        game = None
+        try:
+            game = Game.objects.get(uuid=gameUUID)
+        except Game.DoesNotExist:
+            return Response("Game not found", status=status.HTTP_404_NOT_FOUND)
 
-    rsvp = RsvpStatus.objects.create(game=game, user=user)
+        user = None
+        try:
+            user = User.objects.get(email=email)
+        except User.DoesNotExist:
+            # There is no internal API for creating users, so using the REST api here.
+            data = {
+                'email': email,
+                'name': name,
+                'password': FuzzyText(length=20).fuzz()
+            }
+            client = Client()
+            response = client.post("/api/auth/registration/", data, format='json')
+            if response.status_code != 201:
+                return Response(response.data, status=response.status_code)
+            user = User.objects.get(email=email)
 
-    if not game.attendees.filter(id=user.id).exists():
-        game.attendees.add(rsvp)
+        rsvp = RsvpStatus.objects.create(game=game, user=user)
 
-    return Response("OK", status=status.HTTP_200_OK)
+        if not game.attendees.filter(id=user.id).exists():
+            game.attendees.add(rsvp)
+
+        return Response("OK", status=status.HTTP_200_OK)
+    except Exception as e:
+        return Response(str(e), status=status.HTTP_400_BAD_REQUEST)
