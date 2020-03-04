@@ -10,6 +10,7 @@ from seedorf.sports.models import Sport
 from seedorf.sports.tests.factories import SportFactory
 from seedorf.spots.models import Spot
 from seedorf.spots.tests.factories import SpotFactory
+from seedorf.users.models import User
 from seedorf.users.tests.factories import UserFactory
 from .factories import GameFactory, RsvpStatusFactory
 from django.core import mail
@@ -309,4 +310,56 @@ class GameAPIViewTest(APITestCase):
 
         url = reverse("game-rsvps-detail", kwargs={"game_uuid": str(rsvp.game.uuid), "uuid": str(rsvp.uuid)})
         response = self.client.put(url, data, format="json")
+        self.assertEqual(400, response.status_code)
+
+
+@patch("seedorf.games.models.get_firebase_link", mock_get_firebase_link)
+@patch("seedorf.games.signals.create_chatkit_room_for_game", mock_create_chatkit_room_for_game)
+class WebRSVPAPIViewTest(APITestCase):
+    def test_website_rsvp_user_exists(self):
+        game = GameFactory()
+        user = UserFactory()
+        url = reverse("web-rsvp")
+        data = {
+            "game": game.uuid,
+            "name": "Tom",
+            "email": user.email
+        }
+        response = self.client.post(url, data, format="json")
+        self.assertEqual(200, response.status_code)
+        self.assertTrue(game.attendees.filter(user_id=user.id).exists())
+
+    def test_website_rsvp_user_not_exists(self):
+        game = GameFactory()
+        url = reverse("web-rsvp")
+        data = {
+            "game": game.uuid,
+            "name": "Tom",
+            "email": "i@am.new"
+        }
+        response = self.client.post(url, data, format="json")
+        self.assertEqual(200, response.status_code)
+        user = User.objects.get(email="i@am.new")
+        self.assertTrue(game.attendees.filter(user_id=user.id).exists())
+
+    def test_website_rsvp_game_not_exists(self):
+        user = UserFactory()
+        url = reverse("web-rsvp")
+        data = {
+            "game": 'fd945b3e-ed69-451c-a042-37321811be7a',
+            "name": "Tom",
+            "email": user.email
+        }
+        response = self.client.post(url, data, format="json")
+        self.assertEqual(404, response.status_code)
+
+    def test_website_rsvp_invalid_email(self):
+        game = GameFactory()
+        url = reverse("web-rsvp")
+        data = {
+            "game": game.uuid,
+            "name": "Tom",
+            "email": 'invalid'
+        }
+        response = self.client.post(url, data, format="json")
         self.assertEqual(400, response.status_code)
