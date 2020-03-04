@@ -21,7 +21,7 @@ from push_notifications.api.rest_framework import APNSDeviceAuthorizedViewSet, G
 
 from seedorf.chatkit.views import ChatkitView
 from seedorf.core.views import apple_app_site_association
-from seedorf.games.views import GameDetailView, GameListView
+from seedorf.games.views import GameDetailView, GameListView, web_rsvp
 from seedorf.games.viewsets import GameRsvpStatusNestedViewset, GameViewSet
 from seedorf.graphql.schema import schema
 from seedorf.sports.viewsets import GameSportNestedViewSet, SportViewSet, SpotSportsNestedViewSet
@@ -173,6 +173,11 @@ urlpatterns = [
     path(
         "api/auth/registration/",
         include(("rest_auth.registration.urls", "rest_auth.registration"), namespace="rest-auth-registration"),
+    ),
+    path(
+        "api/web_rsvp/",
+        web_rsvp,
+        name="web-rsvp"
     ),
     # AllAuth
     # ------------------------------------------------------------------------------
