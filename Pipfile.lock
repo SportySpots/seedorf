@@ -364,10 +364,10 @@
         },
         "django-modelcluster": {
             "hashes": [
-                "sha256:59672386191d38c69d6f994c3f9aaab3ff93910ec71e78a0bb6aa9abd4d1b90a",
-                "sha256:eea507f2dd8bd283600c1cfa4de6776501a28f199089bb00613c1621505e80cc"
+                "sha256:09e4242119f04e81bfab25c77b09cb6e9d469dc14b14e71f04cd358c7256bc2a",
+                "sha256:6f857bb0251c0982afeb35474aeedb3ec72260df81a0262188df8108067467ba"
             ],
-            "version": "==4.4"
+            "version": "==5.0.1"
         },
         "django-push-notifications": {
             "hashes": [
