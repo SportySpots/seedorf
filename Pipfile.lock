@@ -341,11 +341,10 @@
         },
         "django-fsm-log": {
             "hashes": [
-                "sha256:2b0fe39953c74a7142965aae842ac77fd038b860da43391e5804d9e617089ea8",
-                "sha256:98b729167954b8aaa8871c649c67173554a5e945eeb33fdc3a3f73af905a76f7"
+                "sha256:506e6be634f85eb7c2e6b57529b1243755b4bece91d9048eb7b14ee2adb1b86e",
+                "sha256:a1ec9a09f9b29e1e914eab29e1ce385b1e56b142839475550f3fe076f7a38449"
             ],
-            "index": "pypi",
-            "version": "==1.6.2"
+            "version": "==2.0.1"
         },
         "django-guardian": {
             "hashes": [
