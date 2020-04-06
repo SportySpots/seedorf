@@ -1056,10 +1056,9 @@
         },
         "rules": {
             "hashes": [
-                "sha256:2c0a3707e5e935a883ef8fe65fd080e7169f67ac1ef0c5e2d2e6932cb3ef5318"
+                "sha256:9bae429f9d4f91a375402990da1541f9e093b0ac077221d57124d06eeeca4405"
             ],
-            "index": "pypi",
-            "version": "==2.1"
+            "version": "==2.2"
         },
         "rx": {
             "hashes": [
