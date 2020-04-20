@@ -93,7 +93,7 @@ pytest-django = "==3.9.0"
 requests = "==2.23.0"
 scrapy = "==2.0.1"
 sphinx = "==3.0.2"
-werkzeug = "==0.16.0"
+werkzeug = "==1.0.1"
 
 
 [requires]
