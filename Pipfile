@@ -67,7 +67,7 @@ iso8601 = "*"
 pendulum = "==2.1.0"
 wagtail = "==2.8.1"
 sqlparse = "==0.3.1"
-django-push-notifications = "==1.6.1"
+django-push-notifications = "==2.0.0"
 kombu = "==4.5.0"
 
 
