@@ -1602,11 +1602,10 @@
         },
         "fabric": {
             "hashes": [
-                "sha256:160331934ea60036604928e792fa8e9f813266b098ef5562aa82b88527740389",
-                "sha256:24842d7d51556adcabd885ac3cf5e1df73fc622a1708bf3667bf5927576cdfa6"
+                "sha256:47f184b070272796fd2f9f0436799e18f2ccba4ee8ee587796fca192acd46cd2",
+                "sha256:7a71714b8b8f28cf828eceb155196f43ebac1bd4c849b7161ed5993d1cbcaa40"
             ],
-            "index": "pypi",
-            "version": "==2.5.0"
+            "version": "==2.6.0"
         },
         "factory-boy": {
             "hashes": [
