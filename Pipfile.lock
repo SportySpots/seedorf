@@ -1377,9 +1377,10 @@
         },
         "typesystem": {
             "hashes": [
-                "sha256:ba2bd10f1c5844d08dd8841e777bdee55bfca569bf21cb96cd0f91e0a4f66cd8"
+                "sha256:26b2368d00fc981fbe7aef85ea1f44f90132e10a33b2f0ea3f3b5774774fee8d",
+                "sha256:cc3f03d101fadbb60356993ce600fdfbf4bbce90ce5cb444766962be33f53ce1"
             ],
-            "version": "==0.2.4"
+            "version": "==0.4.1"
         },
         "unidecode": {
             "hashes": [
