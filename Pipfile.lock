@@ -1561,10 +1561,10 @@
         },
         "django-coverage-plugin": {
             "hashes": [
-                "sha256:8810678115ea541f85f4fdfa248e2bf703f05ac6740f6dbd9860d11a9861672f"
+                "sha256:4206c85ffba0301f83aecc38e5b01b1b9a4b45a545d9456a827e3fabea18d952",
+                "sha256:e91e3a0c8de2b3766a144cdd30dbbf7a79e5c532a5dcc1373ce7eaad83b358b3"
             ],
-            "index": "pypi",
-            "version": "==1.6.0"
+            "version": "==2.0.2"
         },
         "django-debug-toolbar": {
             "hashes": [
