@@ -89,7 +89,7 @@
     "spinkit": "~1.2.5",
     "sweetalert2": "~7.28.4",
     "swiper": "~4.4.1",
-    "tableexport.jquery.plugin": "~1.10.1",
+    "tableexport.jquery.plugin": "~1.25.0",
     "text-mask-addons": "~3.8.0",
     "timepicker": "~1.11.12",
     "toastr": "~2.1.4",
