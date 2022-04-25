@@ -447,11 +447,10 @@
         },
         "drf-extensions": {
             "hashes": [
-                "sha256:78e3ac3c944774878c28ae335d91bbd6c43889bee610c48cf893faffb7685dce",
-                "sha256:a3869f2bb668ee05acc78e9076e658527611efa9a4ba319f0817f89b0ec01bf4"
+                "sha256:007910437e64aa1d5ad6fc47266a4ac4280e31761e6458eb30fcac7494ac7d4e",
+                "sha256:90abfc11a2221e8daf4cd54457e41ed38cd71134678de9622e806193db027db1"
             ],
-            "index": "pypi",
-            "version": "==0.5.0"
+            "version": "==0.7.1"
         },
         "drf-nested-routers": {
             "hashes": [
