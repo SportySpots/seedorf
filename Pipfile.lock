@@ -1496,10 +1496,10 @@
         },
         "automat": {
             "hashes": [
-                "sha256:269a09dfb063a3b078983f4976d83f0a0d3e6e7aaf8e27d8df1095e09dc4a484",
-                "sha256:81c93c55d2742c55e74e6497a48e048a859fa01d7aa0b91a032be432229837e2"
+                "sha256:7979803c74610e11ef0c0d68a2942b152df52da55336e0c9d58daf1831cbdf33",
+                "sha256:b6feb6455337df834f6c9962d6ccf771515b7d939bca142b29c20c2376bc6111"
             ],
-            "version": "==0.8.0"
+            "version": "==20.2.0"
         },
         "awscli": {
             "hashes": [
