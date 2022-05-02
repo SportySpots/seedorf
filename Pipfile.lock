@@ -2142,9 +2142,10 @@
         },
         "protego": {
             "hashes": [
-                "sha256:a682771bc7b51b2ff41466460896c1a5a653f9a1e71639ef365a72e66d8734b4"
+                "sha256:04419b18f20e8909f1691c6b678392988271cc2a324a72f9663cb3af838b4bf7",
+                "sha256:df666d4304dab774e2dc9feb208bb1ac8d71ea5ceec12f4c99eba30fbd642ff2"
             ],
-            "version": "==0.1.16"
+            "version": "==0.2.1"
         },
         "ptyprocess": {
             "hashes": [
