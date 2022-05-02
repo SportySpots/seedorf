@@ -5,7 +5,7 @@ verify_ssl = true
 
 [dev-packages]
 ansible = "==5.7.0"
-awscli = "==1.16.269"
+awscli = "==1.23.5"
 black = "==19.10b0"
 coreapi = "==2.3.3"
 coreapi-cli = "==1.0.9"
