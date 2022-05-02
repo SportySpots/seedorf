@@ -1575,11 +1575,10 @@
         },
         "django-test-plus": {
             "hashes": [
-                "sha256:92de585c6f5526aa0d8ddbe6d26d859ba27ef30285a847edbf27004f8bbf530f",
-                "sha256:c7005c4c4fe1587f895b6465a34439f08a933ce997a6d733c73a73c7473bf0b0"
+                "sha256:ca7d8b27df04a9d38667c8f7c6e8df9679d765d3931ffb45b94571a24047a0e9",
+                "sha256:e8826e9715cd52b8bf2a426cda0a6bb900a45aee5b2d7837fc6d2ca81dabee6f"
             ],
-            "index": "pypi",
-            "version": "==1.3.1"
+            "version": "==2.2.0"
         },
         "docopt": {
             "hashes": [
