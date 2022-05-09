@@ -250,10 +250,10 @@
         },
         "django-cities": {
             "hashes": [
-                "sha256:e4c537f04cea1b63485ef4f96e92104b17dbedba32666d9b12d585644502d957"
+                "sha256:1fc2a4406e5a81a5ce92590eb076b1823a437ecba15cd291fb8972fdd40b77c7",
+                "sha256:4cdb0f661ff43dc5ae542869f7fa8e7551cb8e1d0a0721efdb9d8c08dd7460ab"
             ],
-            "index": "pypi",
-            "version": "==0.5.0.6"
+            "version": "==0.6"
         },
         "django-compressor": {
             "hashes": [
