@@ -1631,11 +1631,9 @@
         },
         "googlemaps": {
             "hashes": [
-                "sha256:dbcccc41fc19b4b7b304a837ab2348f7a7a0db56390ea4e08abbc29ad41bea98",
-                "sha256:fc51565fa5e008391dc1df526997a029424dc7be60517ab12fc07708c2bf5930"
+                "sha256:2cc88cdf206deccc18e7fdfd23a0ed244209a08b2f0561fd8739c4c277325241"
             ],
-            "index": "pypi",
-            "version": "==3.1.4"
+            "version": "==4.6.0"
         },
         "hyperlink": {
             "hashes": [
