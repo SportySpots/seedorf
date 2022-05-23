@@ -271,11 +271,10 @@
         },
         "django-countries": {
             "hashes": [
-                "sha256:1cefad9ec804d6a0318b91c5394b5aef00336755928f44d0a6420507719d65c8",
-                "sha256:22e96236101783cfe5222ef5174972242a7e8176336d119a4dc111aedce35897"
+                "sha256:0df6d34193667c2343da8935cbfb8a2bd4fb0c97baf01ac10db4628ba1557a82",
+                "sha256:27fc8a0f66a87c9d839493f3926b4e0f4dd873ef66465aa8cd3e953f99758cc9"
             ],
-            "index": "pypi",
-            "version": "==5.5"
+            "version": "==7.3.2"
         },
         "django-crispy-forms": {
             "hashes": [
