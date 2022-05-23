@@ -257,11 +257,10 @@
         },
         "django-compressor": {
             "hashes": [
-                "sha256:47c86347f75c64954a06afbbfc820a750619e10c23a49272b865020a407b7edd",
-                "sha256:da9ee5ce4fc8b9211dcecd2229520514a4ba9ac3bcdc59b48092ec4d7f6b96b0"
+                "sha256:1db91b6d04293636a68bd1328dc7bb90d636b0295f67b1cc6d4fa102b9fd25f6",
+                "sha256:b4fe15cc23bf39420b37cb0030572bd0971104ca1ec3764f502c0f179e576dff"
             ],
-            "index": "pypi",
-            "version": "==2.3"
+            "version": "==4.0"
         },
         "django-cors-headers": {
             "hashes": [
