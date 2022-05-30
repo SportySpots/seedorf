@@ -23,7 +23,7 @@ mock = "==4.0.3"
 pytest-django = "==4.5.2"
 requests = "==2.27.1"
 scrapy = "==2.6.1"
-sphinx = "==2.2.1"
+sphinx = "==5.0.0"
 werkzeug = "==0.16.0"
 
 [packages]
