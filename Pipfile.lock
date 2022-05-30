@@ -46,27 +46,10 @@
         },
         "argon2-cffi": {
             "hashes": [
-                "sha256:00e94a65d46c3f6f2ffab769e860efc21f77e55bd8fcdfde422bd07c632b3fcc",
-                "sha256:0920cfe813cd82e85c4fa84c8a01801a7cb376a8ed8267a1608e70a886953ac7",
-                "sha256:0abe0ab4f3ba927367812a5c345dc6ae7d58129e0c47732746da8058cccdfd55",
-                "sha256:13082f670904dcb7f4ef39216139ace2d981f9050a8f3766e566f845e8c634fc",
-                "sha256:184fee11f483b9168a32afaea8064abe464c1bb090d320f64f3609f1bbbdb691",
-                "sha256:246860c7955aa614518a19277b06dda34902c54535aefd9220d07c774391890e",
-                "sha256:27cb7791793a854ca9f9de5cc62e93c1a7812d11d600ef3ca14fe93ae7426799",
-                "sha256:49ec16a14e8182ed63daa5d7a13d12da6bfc46eebaac4b238c8d15533b621cf0",
-                "sha256:5335f4caae27c00097bdd17c6a07a0ef32f47364cff3141451229c481f82abc6",
-                "sha256:61d2b16c08ce5c24f91d2d2917c2300a90bb78672060876a335e1014727ced57",
-                "sha256:72fae6bf37c25fdb9b4d30c2b9d658a72ac775249dd132ab3ac03adde619dc14",
-                "sha256:73976c0b9d0fc847f967835fce93a9d1c07bf7422f74de2316e25ef6d59ee07e",
-                "sha256:748b565d4006a7e9f2b71f9d6ff660b4e150cc38faa29ca1b64b58e238c013b0",
-                "sha256:e09d644829887c956478db83c47d1ad26f167b8f08e2ccebc6b78e59aeca60b5",
-                "sha256:e27488da690afac92e87cb61ba9cf9a22bff790413f55655ad017456cd58f22c",
-                "sha256:f2c7f3cd5fe6770fa21ee3d4bb7ba0e1c207e18ead511d912cbf9571c598c345",
-                "sha256:f79045e7673d72ed0f33d78a5e104702f989eb1a0e0eb0ab5534cebc9cdb9142",
-                "sha256:ffaa623eea77b497ffbdd1a51e941b33d3bf552c60f14dbee274c4070677bda3"
+                "sha256:8c976986f2c5c0e5000919e6de187906cfd81fb1c72bf9d88c01177e77da7f80",
+                "sha256:d384164d944190a7dd7ef22c6aa3ff197da12962bd04b17f64d4e93d934dba5b"
             ],
-            "index": "pypi",
-            "version": "==19.2.0"
+            "version": "==21.3.0"
         },
         "attrs": {
             "hashes": [
