@@ -2089,10 +2089,10 @@
         },
         "paramiko": {
             "hashes": [
-                "sha256:920492895db8013f6cc0179293147f830b8c7b21fdfc839b6bad760c27459d9f",
-                "sha256:9c980875fa4d2cb751604664e9a2d0f69096643f5be4db1b99599fe114a97b2f"
+                "sha256:003e6bee7c034c21fbb051bf83dc0a9ee4106204dd3c53054c71452cc4ec3938",
+                "sha256:655f25dc8baf763277b933dfcea101d636581df8d6b9774d1fb653426b72c270"
             ],
-            "version": "==2.7.1"
+            "version": "==2.11.0"
         },
         "parsel": {
             "hashes": [
