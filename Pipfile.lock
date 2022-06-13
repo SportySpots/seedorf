@@ -353,11 +353,10 @@
         },
         "django-push-notifications": {
             "hashes": [
-                "sha256:bc0b64930410985e08982b98f6fd93c5a455c9bd60f12e61b2df41c06a227717",
-                "sha256:d5b5c34f2389ee1c7be40e917b97e99ff3016976e57b65607ce90a11e82bf0e0"
+                "sha256:8c2e06a19872d21d60a09f6923f78b2772f38f4890e71e5ce8f25245e2429b9f",
+                "sha256:a9752f6ab920d68a24a4099a4e4f309560c24c9e07d41a50346f27048ea3edc3"
             ],
-            "index": "pypi",
-            "version": "==1.6.1"
+            "version": "==3.0.0"
         },
         "django-redis": {
             "hashes": [
