@@ -556,10 +556,10 @@
         },
         "graphql-relay": {
             "hashes": [
-                "sha256:870b6b5304123a38a0b215a79eace021acce5a466bf40cd39fa18cb8528afabb",
-                "sha256:ac514cb86db9a43014d7e73511d521137ac12cf0101b2eaa5f0a3da2e10d913d"
+                "sha256:1ff1c51298356e481a0be009ccdff249832ce53f30559c1338f22a0e0d17250c",
+                "sha256:c9b22bd28b170ba1fe674c74384a8ff30a76c8e26f88ac3aa1584dd3179953e5"
             ],
-            "version": "==2.0.1"
+            "version": "==3.2.0"
         },
         "greenlet": {
             "hashes": [
