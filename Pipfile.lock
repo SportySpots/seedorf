@@ -974,11 +974,10 @@
         },
         "redis": {
             "hashes": [
-                "sha256:3613daad9ce5951e426f460deddd5caf469e08a3af633e9578fc77d362becf62",
-                "sha256:8d0fc278d3f5e1249967cba2eb4a5632d19e45ce5c09442b8422d15ee2c22cc2"
+                "sha256:2f7a57cf4af15cd543c4394bcbe2b9148db2606a37edba755368836e3a1d053e",
+                "sha256:f57f8df5d238a8ecf92f499b6b21467bfee6c13d89953c27edf1e2bc673622e7"
             ],
-            "index": "pypi",
-            "version": "==3.3.11"
+            "version": "==4.3.3"
         },
         "regex": {
             "hashes": [
