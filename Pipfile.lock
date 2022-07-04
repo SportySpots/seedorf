@@ -644,10 +644,10 @@
         },
         "h2": {
             "hashes": [
-                "sha256:93cbd1013a2218539af05cdf9fc37b786655b93bbc94f5296b7dabd1c5cadf41",
-                "sha256:af35878673c83a44afbc12b13ac91a489da2819b5dc1e11768f3c2406f740fe9"
+                "sha256:03a46bcf682256c95b5fd9e9a99c1323584c3eec6440d379b9903d709476bc6d",
+                "sha256:a83aca08fbe7aacb79fec788c9c0bac936343560ed9ec18b82a13a12c28d2abb"
             ],
-            "version": "==2.6.2"
+            "version": "==4.1.0"
         },
         "hashids": {
             "hashes": [
