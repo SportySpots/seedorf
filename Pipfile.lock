@@ -1091,10 +1091,10 @@
         },
         "rules": {
             "hashes": [
-                "sha256:2c0a3707e5e935a883ef8fe65fd080e7169f67ac1ef0c5e2d2e6932cb3ef5318"
+                "sha256:12c8bbab5f54560e68528fcca7abc0e162c35ac882e3cc0daed40ac49c963070",
+                "sha256:bf7bea8b724b73c36a622714c1b3557620c187a2ee05321a2ac8ab7472dc4464"
             ],
-            "index": "pypi",
-            "version": "==2.1"
+            "version": "==3.3"
         },
         "rx": {
             "hashes": [
