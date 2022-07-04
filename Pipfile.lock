@@ -1701,10 +1701,9 @@
         },
         "ipdb": {
             "hashes": [
-                "sha256:473fdd798a099765f093231a8b1fabfa95b0b682fce12de0c74b61a4b4d8ee57"
+                "sha256:951bd9a64731c444fd907a5ce268543020086a697f6be08f7cc2c9a752a278c5"
             ],
-            "index": "pypi",
-            "version": "==0.12.2"
+            "version": "==0.13.9"
         },
         "ipython": {
             "hashes": [
