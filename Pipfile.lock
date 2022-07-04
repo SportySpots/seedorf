@@ -677,11 +677,10 @@
         },
         "jsonschema": {
             "hashes": [
-                "sha256:2fa0684276b6333ff3c0b1b27081f4b2305f0a36cf702a23db50edb141893c3f",
-                "sha256:94c0a13b4a0616458b42529091624e66700a17f847453e52279e35509a5b7631"
+                "sha256:5eb781753403847fb320f05e9ab2191725b58c5e7f97f1bed63285ca423159bc",
+                "sha256:ec2802e6a37517f09d47d9ba107947589ae1d25ff557b925d83a321fc2aa5d3b"
             ],
-            "index": "pypi",
-            "version": "==3.1.1"
+            "version": "==4.6.1"
         },
         "kombu": {
             "hashes": [
