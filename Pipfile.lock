@@ -542,10 +542,10 @@
         },
         "graphene": {
             "hashes": [
-                "sha256:09165f03e1591b76bf57b133482db9be6dac72c74b0a628d3c93182af9c5a896",
-                "sha256:2cbe6d4ef15cfc7b7805e0760a0e5b80747161ce1b0f990dfdc0d2cf497c12f9"
+                "sha256:73332510a14b94fcb925dae4563ad6a028d414144704fdcc191565af72608798",
+                "sha256:99becdccd2683c2db1a8486e98d007b5e64fa2ff0922e6c1b08e19233031368d"
             ],
-            "version": "==2.1.8"
+            "version": "==3.1"
         },
         "graphene-django": {
             "hashes": [
