@@ -417,11 +417,10 @@
         },
         "djangorestframework-gis": {
             "hashes": [
-                "sha256:35527c51e083ccc93f6e6d90a6515c132bbeb2c5648b166ac5b1a48c4ea8e2a4",
-                "sha256:e645c6c8aedee53ac0a4851abcdf8121fff66813eebae1b040b1ccb941cb248b"
+                "sha256:921c5adbc9a7c0502c905957a6695b67f55d7bf6582e1ab837888b55a1fce5a6",
+                "sha256:bb715f05a111c02b9acc4021b17566e40c0b90dd833c583bac3d67f92be9667d"
             ],
-            "index": "pypi",
-            "version": "==0.14"
+            "version": "==1.0"
         },
         "djangorestframework-jwt": {
             "hashes": [
