@@ -1328,12 +1328,8 @@
             "version": "==3.0.0"
         },
         "flake8": {
-            "hashes": [
-                "sha256:45681a117ecc81e870cbf1262835ae4af5e7a8b08e40b944a8a6e6b895914cfb",
-                "sha256:49356e766643ad15072a789a20915d3c91dc89fd313ccd71802303fd67e4deca"
-            ],
-            "index": "pypi",
-            "version": "==3.7.9"
+            "hashes": [],
+            "version": "==4.0.1"
         },
         "googlemaps": {
             "hashes": [
