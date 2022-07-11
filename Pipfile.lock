@@ -1249,12 +1249,8 @@
             "version": "==0.3"
         },
         "fabric": {
-            "hashes": [
-                "sha256:160331934ea60036604928e792fa8e9f813266b098ef5562aa82b88527740389",
-                "sha256:24842d7d51556adcabd885ac3cf5e1df73fc622a1708bf3667bf5927576cdfa6"
-            ],
-            "index": "pypi",
-            "version": "==2.5.0"
+            "hashes": [],
+            "version": "==2.7.0"
         },
         "factory-boy": {
             "hashes": [
