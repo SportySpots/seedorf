@@ -275,11 +275,8 @@
             "version": "==2.4.0"
         },
         "django-haystack": {
-            "hashes": [
-                "sha256:8b54bcc926596765d0a3383d693bcdd76109c7abb6b2323b3984a39e3576028c"
-            ],
-            "index": "pypi",
-            "version": "==2.8.1"
+            "hashes": [],
+            "version": "==3.2.1"
         },
         "django-model-utils": {
             "hashes": [
