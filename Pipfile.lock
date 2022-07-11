@@ -899,10 +899,8 @@
             "version": "==0.8.3"
         },
         "pathspec": {
-            "hashes": [
-                "sha256:e285ccc8b0785beadd4c18e5708b12bb8fcf529a1e61215b3feff1d1e559ea5c"
-            ],
-            "version": "==0.6.0"
+            "hashes": [],
+            "version": "==0.9.0"
         },
         "pexpect": {
             "hashes": [
