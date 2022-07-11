@@ -836,11 +836,8 @@
             "version": "==0.13.9"
         },
         "ipython": {
-            "hashes": [
-                "sha256:190a279bd3d4fc585a611e9358a88f1048cc57fd688254a86f9461889ee152a6",
-                "sha256:762d79a62b6aa96b04971e920543f558dfbeedc0468b899303c080c8068d4ac2"
-            ],
-            "version": "==7.10.2"
+            "hashes": [],
+            "version": "==8.4.0"
         },
         "ipython-genutils": {
             "hashes": [
