@@ -916,12 +916,8 @@
             "version": "==0.3.0"
         },
         "structlog": {
-            "hashes": [
-                "sha256:4287058cf4ce1a59bc5dea290d6386d37f29a37529c9a51cdf7387e51710152b",
-                "sha256:6640e6690fc31d5949bc614c1a630464d3aaa625284aeb7c6e486c3010d73e12"
-            ],
-            "index": "pypi",
-            "version": "==19.2.0"
+            "hashes": [],
+            "version": "==21.5.0"
         },
         "swapper": {
             "hashes": [
