@@ -1106,11 +1106,8 @@
             "version": "==1.26.10"
         },
         "w3lib": {
-            "hashes": [
-                "sha256:847704b837b2b973cddef6938325d466628e6078266bc2e1f7ac49ba85c34823",
-                "sha256:8b1854fef570b5a5fc84d960e025debd110485d73fd283580376104762774315"
-            ],
-            "version": "==1.21.0"
+            "hashes": [],
+            "version": "==1.22.0"
         },
         "wcwidth": {
             "hashes": [
