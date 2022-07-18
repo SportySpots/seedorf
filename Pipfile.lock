@@ -1028,11 +1028,8 @@
             "version": "==2.6.1"
         },
         "service-identity": {
-            "hashes": [
-                "sha256:001c0707759cb3de7e49c078a7c0c9cd12594161d3bf06b9c254fdcb1a60dc36",
-                "sha256:0858a54aabc5b459d1aafa8a518ed2081a285087f349fe3e55197989232e2e2d"
-            ],
-            "version": "==18.1.0"
+            "hashes": [],
+            "version": "==21.1.0"
         },
         "six": {
             "hashes": [],
