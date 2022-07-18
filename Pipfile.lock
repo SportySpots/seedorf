@@ -887,11 +887,8 @@
             "version": "==21.3"
         },
         "paramiko": {
-            "hashes": [
-                "sha256:920492895db8013f6cc0179293147f830b8c7b21fdfc839b6bad760c27459d9f",
-                "sha256:9c980875fa4d2cb751604664e9a2d0f69096643f5be4db1b99599fe114a97b2f"
-            ],
-            "version": "==2.7.1"
+            "hashes": [],
+            "version": "==2.11.0"
         },
         "parsel": {
             "hashes": [
