@@ -253,10 +253,8 @@
             "version": "==0.19"
         },
         "draftjs-exporter": {
-            "hashes": [
-                "sha256:5839cbc29d7bce2fb99837a404ca40c3a07313f2a20e2700de7ad6aa9a9a18fb"
-            ],
-            "version": "==2.1.7"
+            "hashes": [],
+            "version": "==5.0.0"
         },
         "drf-extensions": {
             "hashes": [],
