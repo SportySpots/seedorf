@@ -63,11 +63,8 @@
             "version": "==1.24.32"
         },
         "botocore": {
-            "hashes": [
-                "sha256:49791fada1e15bb2aafb36a16c2c2d568279c9274e0ad6a9ac7fbc0f6cb17f57",
-                "sha256:a4409008c32a3305b9c469c5cc92edb5b79d6fcbf6f56fe126886b545f0a4f3f"
-            ],
-            "version": "==1.13.44"
+            "hashes": [],
+            "version": "==1.27.32"
         },
         "celery": {
             "hashes": [],
@@ -1043,11 +1040,8 @@
             "version": "==22.6.0"
         },
         "botocore": {
-            "hashes": [
-                "sha256:49791fada1e15bb2aafb36a16c2c2d568279c9274e0ad6a9ac7fbc0f6cb17f57",
-                "sha256:a4409008c32a3305b9c469c5cc92edb5b79d6fcbf6f56fe126886b545f0a4f3f"
-            ],
-            "version": "==1.13.44"
+            "hashes": [],
+            "version": "==1.27.32"
         },
         "certifi": {
             "hashes": [
