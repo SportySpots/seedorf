@@ -301,12 +301,8 @@
             "version": "==1.6.1"
         },
         "django-redis": {
-            "hashes": [
-                "sha256:af0b393864e91228dd30d8c85b5c44d670b5524cb161b7f9e41acc98b6e5ace7",
-                "sha256:f46115577063d00a890867c6964ba096057f07cb756e78e0503b89cd18e4e083"
-            ],
-            "index": "pypi",
-            "version": "==4.10.0"
+            "hashes": [],
+            "version": "==5.2.0"
         },
         "django-rest-auth": {
             "hashes": [
