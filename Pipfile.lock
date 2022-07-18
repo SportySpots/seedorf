@@ -621,11 +621,8 @@
             "version": "==6.2.0"
         },
         "willow": {
-            "hashes": [
-                "sha256:76a8874304356b7d86923405f5ca1df125c3540fb55b32747e7a33ba59bc1744",
-                "sha256:818ee11803c90a0a6d49c94b0453d6266be1ef83ae00de72731c45fae4d3e78c"
-            ],
-            "version": "==1.1"
+            "hashes": [],
+            "version": "==1.4.1"
         },
         "zipp": {
             "hashes": [
