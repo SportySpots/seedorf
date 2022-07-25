@@ -406,12 +406,8 @@
             "version": "==2.6.0"
         },
         "graphene-django-extras": {
-            "hashes": [
-                "sha256:5bf2348c9d0850f7db919637ce4c6b4410666d911f02ca91db9217960c06aabc",
-                "sha256:a91b4e9bf0593f4bf03ff0f3d148e3a6e83d917147b2fbd7e56548d067597e8d"
-            ],
-            "index": "pypi",
-            "version": "==0.4.8"
+            "hashes": [],
+            "version": "==0.5.2"
         },
         "graphql-core": {
             "hashes": [
