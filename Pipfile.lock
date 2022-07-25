@@ -983,11 +983,8 @@
             "version": "==0.7.12"
         },
         "ansible": {
-            "hashes": [
-                "sha256:e06b795372fd7a6d0b46b8f105497fb637fbd323f5aec1d8e51fd60cd98047e1"
-            ],
-            "index": "pypi",
-            "version": "==2.6.4"
+            "hashes": [],
+            "version": "==6.1.0"
         },
         "appdirs": {
             "hashes": [
