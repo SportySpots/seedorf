@@ -221,11 +221,8 @@
             "version": "==1.12.3"
         },
         "django-taggit": {
-            "hashes": [
-                "sha256:710b4d15ec1996550cc68a0abbc41903ca7d832540e52b1336e6858737e410d8",
-                "sha256:bb8f27684814cd1414b2af75b857b5e26a40912631904038a7ecacd2bfafc3ac"
-            ],
-            "version": "==0.24.0"
+            "hashes": [],
+            "version": "==3.0.0"
         },
         "django-timezone-field": {
             "hashes": [],
