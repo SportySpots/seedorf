@@ -550,11 +550,8 @@
             "version": "==3.2.0"
         },
         "s3transfer": {
-            "hashes": [
-                "sha256:6efc926738a3cd576c2a79725fed9afde92378aa5c6a957e3af010cb019fac9d",
-                "sha256:b780f2411b824cb541dbcd2c713d0cb61c7d1bcadae204cdddda2b35cef493ba"
-            ],
-            "version": "==0.2.1"
+            "hashes": [],
+            "version": "==0.6.0"
         },
         "simplejson": {
             "hashes": [
@@ -1242,11 +1239,8 @@
             "version": "==3.4.2"
         },
         "s3transfer": {
-            "hashes": [
-                "sha256:6efc926738a3cd576c2a79725fed9afde92378aa5c6a957e3af010cb019fac9d",
-                "sha256:b780f2411b824cb541dbcd2c713d0cb61c7d1bcadae204cdddda2b35cef493ba"
-            ],
-            "version": "==0.2.1"
+            "hashes": [],
+            "version": "==0.6.0"
         },
         "scrapy": {
             "hashes": [],
