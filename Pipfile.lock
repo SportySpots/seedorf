@@ -227,11 +227,8 @@
             "version": "==1.0.3"
         },
         "django-cities": {
-            "hashes": [
-                "sha256:e4c537f04cea1b63485ef4f96e92104b17dbedba32666d9b12d585644502d957"
-            ],
-            "index": "pypi",
-            "version": "==0.5.0.6"
+            "hashes": [],
+            "version": "==0.6"
         },
         "django-compressor": {
             "hashes": [
