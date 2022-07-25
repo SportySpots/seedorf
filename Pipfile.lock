@@ -551,12 +551,8 @@
             "version": "==0.9.4"
         },
         "jsonschema": {
-            "hashes": [
-                "sha256:2fa0684276b6333ff3c0b1b27081f4b2305f0a36cf702a23db50edb141893c3f",
-                "sha256:94c0a13b4a0616458b42529091624e66700a17f847453e52279e35509a5b7631"
-            ],
-            "index": "pypi",
-            "version": "==3.1.1"
+            "hashes": [],
+            "version": "==4.7.2"
         },
         "kombu": {
             "hashes": [
