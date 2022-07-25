@@ -469,11 +469,8 @@
             "version": "==2022.1"
         },
         "pytzdata": {
-            "hashes": [
-                "sha256:84c52b9a47d097fcd483f047a544979de6c3a86e94c845e3569e9f8acd0fa071",
-                "sha256:fac06f7cdfa903188dc4848c655e4adaee67ee0f2fe08e7daf815cf2a761ee5e"
-            ],
-            "version": "==2019.3"
+            "hashes": [],
+            "version": "==2020.1"
         },
         "pywebpush": {
             "hashes": [
