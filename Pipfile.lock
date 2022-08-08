@@ -757,11 +757,8 @@
             "version": "==6.10.0"
         },
         "rcssmin": {
-            "hashes": [
-                "sha256:ca87b695d3d7864157773a61263e5abb96006e9ff0e021eff90cbe0e1ba18270"
-            ],
-            "index": "pypi",
-            "version": "==1.0.6"
+            "hashes": [],
+            "version": "==1.1.1"
         },
         "redis": {
             "hashes": [
