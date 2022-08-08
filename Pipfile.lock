@@ -320,12 +320,8 @@
             "version": "==2.2.0"
         },
         "django-storages": {
-            "hashes": [
-                "sha256:87287b7ad2e789cd603373439994e1ac6f94d9dc2e5f8173d2a87aa3ed458bd9",
-                "sha256:f3b3def96493d3ccde37b864cea376472baf6e8a596504b209278801c510b807"
-            ],
-            "index": "pypi",
-            "version": "==1.7.2"
+            "hashes": [],
+            "version": "==1.13.1"
         },
         "django-taggit": {
             "hashes": [
