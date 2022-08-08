@@ -1705,12 +1705,8 @@
             "version": "==0.2.1"
         },
         "scrapy": {
-            "hashes": [
-                "sha256:4352c64c7ffc70148a7988db837bb25bccafb3350ab9c978c1f9a8930521959b",
-                "sha256:fe06576f9a4971de9dc0175c60fd92561e8275f2bad585c1cb5d65c5181b2db0"
-            ],
-            "index": "pypi",
-            "version": "==1.8.0"
+            "hashes": [],
+            "version": "==2.6.2"
         },
         "service-identity": {
             "hashes": [
