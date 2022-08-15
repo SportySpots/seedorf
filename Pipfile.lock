@@ -251,12 +251,8 @@
             "version": "==0.9.0"
         },
         "django-extensions": {
-            "hashes": [
-                "sha256:a9db7c56a556d244184f589f2437b4228de86ee45e5ebb837fb20c6d54e95ea5",
-                "sha256:b58320d3fe3d6ae7d1d8e38959713fa92272f4921e662d689058d942a5b444f7"
-            ],
-            "index": "pypi",
-            "version": "==2.2.5"
+            "hashes": [],
+            "version": "==3.2.0"
         },
         "django-filter": {
             "hashes": [
