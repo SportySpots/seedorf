@@ -658,11 +658,8 @@
             "version": "==22.1.0"
         },
         "automat": {
-            "hashes": [
-                "sha256:269a09dfb063a3b078983f4976d83f0a0d3e6e7aaf8e27d8df1095e09dc4a484",
-                "sha256:81c93c55d2742c55e74e6497a48e048a859fa01d7aa0b91a032be432229837e2"
-            ],
-            "version": "==0.8.0"
+            "hashes": [],
+            "version": "==20.2.0"
         },
         "awscli": {
             "hashes": [],
