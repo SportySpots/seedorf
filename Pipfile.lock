@@ -186,11 +186,8 @@
             "version": "==3.2.1"
         },
         "django-model-utils": {
-            "hashes": [
-                "sha256:9cf882e5b604421b62dbe57ad2b18464dc9c8f963fc3f9831badccae66c1139c",
-                "sha256:adf09e5be15122a7f4e372cb5a6dd512bbf8d78a23a90770ad0983ee9d909061"
-            ],
-            "version": "==4.0.0"
+            "hashes": [],
+            "version": "==4.2.0"
         },
         "django-modelcluster": {
             "hashes": [
