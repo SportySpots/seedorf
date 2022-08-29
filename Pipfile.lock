@@ -446,10 +446,8 @@
             "version": "==3.0.9"
         },
         "pyrsistent": {
-            "hashes": [
-                "sha256:f3b280d030afb652f79d67c5586157c5c1355c9a58dfc7940566e28d28f3df1b"
-            ],
-            "version": "==0.15.6"
+            "hashes": [],
+            "version": "==0.18.1"
         },
         "python-dateutil": {
             "hashes": [
