@@ -243,12 +243,8 @@
             "version": "==7.3.2"
         },
         "django-crispy-forms": {
-            "hashes": [
-                "sha256:0320b303420fec9ce94e045321dfd180ca0e31e0336211c5d30ad0bda5ebbb5d",
-                "sha256:22b6634e3a6316623e4eb062527fe5be5f97ea8b83020c65bcd8fac4747807b5"
-            ],
-            "index": "pypi",
-            "version": "==1.8.0"
+            "hashes": [],
+            "version": "==1.14.0"
         },
         "django-environ": {
             "hashes": [
