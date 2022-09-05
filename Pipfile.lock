@@ -345,12 +345,8 @@
             "version": "==3.13.1"
         },
         "djangorestframework-gis": {
-            "hashes": [
-                "sha256:35527c51e083ccc93f6e6d90a6515c132bbeb2c5648b166ac5b1a48c4ea8e2a4",
-                "sha256:e645c6c8aedee53ac0a4851abcdf8121fff66813eebae1b040b1ccb941cb248b"
-            ],
-            "index": "pypi",
-            "version": "==0.14"
+            "hashes": [],
+            "version": "==1.0"
         },
         "djangorestframework-jwt": {
             "hashes": [
