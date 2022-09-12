@@ -582,10 +582,8 @@
             "version": "==4.64.1"
         },
         "typesystem": {
-            "hashes": [
-                "sha256:ba2bd10f1c5844d08dd8841e777bdee55bfca569bf21cb96cd0f91e0a4f66cd8"
-            ],
-            "version": "==0.2.4"
+            "hashes": [],
+            "version": "==0.4.1"
         },
         "unidecode": {
             "hashes": [
