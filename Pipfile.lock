@@ -398,12 +398,8 @@
             "version": "==2.1.8"
         },
         "graphene-django": {
-            "hashes": [
-                "sha256:0d1404ab1ba7873a8e848d87d138f615391d100ed0c046482c164429cfb992ef",
-                "sha256:fa9e815f63e3c972773adc96c3f3c81e537dba0edcd0f1be92c799bc0b6ed0a8"
-            ],
-            "index": "pypi",
-            "version": "==2.6.0"
+            "hashes": [],
+            "version": "==2.15.0"
         },
         "graphene-django-extras": {
             "hashes": [],
