@@ -805,11 +805,8 @@
             "version": "==4.6.0"
         },
         "hyperlink": {
-            "hashes": [
-                "sha256:4288e34705da077fada1111a24a0aa08bb1e76699c9ce49876af722441845654",
-                "sha256:ab4a308feb039b04f855a020a6eda3b18ca5a68e6d8f8c899cbe9e653721d04f"
-            ],
-            "version": "==19.0.0"
+            "hashes": [],
+            "version": "==21.0.0"
         },
         "idna": {
             "hashes": [],
