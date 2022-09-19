@@ -1013,11 +1013,8 @@
             "version": "==2.28.1"
         },
         "rsa": {
-            "hashes": [
-                "sha256:25df4e10c263fb88b5ace923dd84bf9aa7f5019687b5e55382ffcdb8bede9db5",
-                "sha256:43f682fea81c452c98d09fc316aae12de6d30c4b5c84226642cf8f8fd1c93abd"
-            ],
-            "version": "==3.4.2"
+            "hashes": [],
+            "version": "==4.9"
         },
         "s3transfer": {
             "hashes": [],
