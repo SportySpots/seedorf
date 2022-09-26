@@ -21,11 +21,8 @@
             "version": "==5.1.1"
         },
         "aniso8601": {
-            "hashes": [
-                "sha256:513d2b6637b7853806ae79ffaca6f3e8754bdd547048f5ccc1420aec4b714f1e",
-                "sha256:d10a4bf949f619f719b227ef5386e31f49a2b6d453004b21f02661ccc8670c7b"
-            ],
-            "version": "==7.0.0"
+            "hashes": [],
+            "version": "==9.0.1"
         },
         "apistar": {
             "hashes": [
