@@ -473,10 +473,8 @@
             "version": "==2020.1"
         },
         "pywebpush": {
-            "hashes": [
-                "sha256:e80ae0ea978b2e3b7860d2a9ae836528f5fa2e13936673e0b6613589965937ee"
-            ],
-            "version": "==1.10.1"
+            "hashes": [],
+            "version": "==1.14.0"
         },
         "pyyaml": {
             "hashes": [
