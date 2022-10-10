@@ -430,10 +430,8 @@
             "version": "==1.8.2"
         },
         "pycparser": {
-            "hashes": [
-                "sha256:a988718abfad80b6b157acce7bf130a30876d27603738ac39f140993246b25b3"
-            ],
-            "version": "==2.19"
+            "hashes": [],
+            "version": "==2.21"
         },
         "pygments": {
             "hashes": [],
@@ -1207,10 +1205,8 @@
             "version": "==2.5.0"
         },
         "pycparser": {
-            "hashes": [
-                "sha256:a988718abfad80b6b157acce7bf130a30876d27603738ac39f140993246b25b3"
-            ],
-            "version": "==2.19"
+            "hashes": [],
+            "version": "==2.21"
         },
         "pydispatcher": {
             "hashes": [
