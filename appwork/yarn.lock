@@ -613,10 +613,10 @@
     lodash "^4.17.11"
     to-fast-properties "^2.0.0"
 
-"@claviska/jquery-minicolors@~2.3.2":
-  version "2.3.4"
-  resolved "https://registry.yarnpkg.com/@claviska/jquery-minicolors/-/jquery-minicolors-2.3.4.tgz#8f5c4af3e7d55396890288b357742711b368f75a"
-  integrity sha512-YSa2enAGxtPNGqI86a49XY3BO+dkEaX0XA6dBpk2+OG60zwNdDmbsoiaQ39dS48jdIEmNTYigw3Kt1YiWc1Q3A==
+"@claviska/jquery-minicolors@~2.3.6":
+  version "2.3.6"
+  resolved "https://registry.yarnpkg.com/@claviska/jquery-minicolors/-/jquery-minicolors-2.3.6.tgz#0f3dfe9baf11e93a3b1b1dcf2448177cf4c32e3e"
+  integrity sha512-8Ro6D4GCrmOl41+6w4NFhEOpx8vjxwVRI69bulXsFDt49uVRKhLU5TnzEV7AmOJrylkVq+ugnYNMiGHBieeKUQ==
 
 "@flowjs/flow.js@~2.13.0":
   version "2.13.1"
