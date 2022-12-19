@@ -293,12 +293,8 @@
             "version": "==4.4"
         },
         "django-push-notifications": {
-            "hashes": [
-                "sha256:bc0b64930410985e08982b98f6fd93c5a455c9bd60f12e61b2df41c06a227717",
-                "sha256:d5b5c34f2389ee1c7be40e917b97e99ff3016976e57b65607ce90a11e82bf0e0"
-            ],
-            "index": "pypi",
-            "version": "==1.6.1"
+            "hashes": [],
+            "version": "==3.0.0"
         },
         "django-redis": {
             "hashes": [],
