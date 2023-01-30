@@ -32,11 +32,8 @@
             "version": "==0.7.2"
         },
         "apns2": {
-            "hashes": [
-                "sha256:a4d5b367fb2faff47d3a71699a348045dd0c21b3a663054cbb48fa2af3c309c5",
-                "sha256:d30dcf227f11948e24a4fd30af82887dcf743aab60b8a4b0624ead5ed3476f03"
-            ],
-            "version": "==0.5.0"
+            "hashes": [],
+            "version": "==0.7.2"
         },
         "argon2-cffi": {
             "hashes": [],
