@@ -331,12 +331,8 @@
             "version": "==0.24.0"
         },
         "django-timezone-field": {
-            "hashes": [
-                "sha256:1a7bbcf984ae191c6dfe713994b4ff4062dc21e47a909356c93e76d027c87c8f",
-                "sha256:a25af66b86d13709aa8c69a361c1ea68322cda64b5bbf9141fb67b8b44aa4e43"
-            ],
-            "index": "pypi",
-            "version": "==3.1"
+            "hashes": [],
+            "version": "==5.0"
         },
         "django-treebeard": {
             "hashes": [
