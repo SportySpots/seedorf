@@ -855,11 +855,8 @@
             "version": "==0.2.0"
         },
         "rules": {
-            "hashes": [
-                "sha256:2c0a3707e5e935a883ef8fe65fd080e7169f67ac1ef0c5e2d2e6932cb3ef5318"
-            ],
-            "index": "pypi",
-            "version": "==2.1"
+            "hashes": [],
+            "version": "==3.3"
         },
         "rx": {
             "hashes": [
