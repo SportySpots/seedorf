@@ -263,11 +263,8 @@
             "version": "==2.8.1"
         },
         "django-fsm-admin": {
-            "hashes": [
-                "sha256:b10a75688bbd3714aef97db03121218b9a5963436c7805e1524bbd48a0e6c0a4"
-            ],
-            "index": "pypi",
-            "version": "==1.2.4"
+            "hashes": [],
+            "version": "==1.2.5"
         },
         "django-fsm-log": {
             "hashes": [
