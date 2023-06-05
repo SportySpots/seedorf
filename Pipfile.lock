@@ -904,11 +904,8 @@
             "version": "==1.11.0"
         },
         "pyasn1": {
-            "hashes": [
-                "sha256:39c7e2ec30515947ff4e87fb6f456dfc6e84857d34be479c9d4a4ba4bf46aa5d",
-                "sha256:aef77c9fb94a3ac588e87841208bdec464471d9871bd5050a287cc9a475cd0ba"
-            ],
-            "version": "==0.4.8"
+            "hashes": [],
+            "version": "==0.5.0"
         },
         "pyasn1-modules": {
             "hashes": [
