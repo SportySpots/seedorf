@@ -24,7 +24,7 @@ pytest-django = "==4.5.2"
 requests = "==2.31.0"
 scrapy = "==2.10.0"
 sphinx = "==7.1.2"
-werkzeug = "==0.16.0"
+werkzeug = "==2.3.7"
 
 [packages]
 apistar = "==0.7.2"
