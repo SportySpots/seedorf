@@ -362,11 +362,8 @@
             "version": "==3.1.2"
         },
         "jmespath": {
-            "hashes": [
-                "sha256:3720a4b1bd659dd2eecad0666459b9788813e032b83e7ba58578e48254e0a0e6",
-                "sha256:bde2aef6f44302dfb30320115b17d030798de8c4110e28d5cf6cf91a7a31074c"
-            ],
-            "version": "==0.9.4"
+            "hashes": [],
+            "version": "==1.0.1"
         },
         "jsonschema": {
             "hashes": [],
@@ -1094,11 +1091,8 @@
             "version": "==3.1.2"
         },
         "jmespath": {
-            "hashes": [
-                "sha256:3720a4b1bd659dd2eecad0666459b9788813e032b83e7ba58578e48254e0a0e6",
-                "sha256:bde2aef6f44302dfb30320115b17d030798de8c4110e28d5cf6cf91a7a31074c"
-            ],
-            "version": "==0.9.4"
+            "hashes": [],
+            "version": "==1.0.1"
         },
         "lxml": {
             "hashes": [
