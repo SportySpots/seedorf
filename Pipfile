@@ -22,7 +22,7 @@ ipdb = "==0.13.13"
 mock = "==5.1.0"
 pytest-django = "==4.8.0"
 requests = "==2.31.0"
-scrapy = "==1.8.0"
+scrapy = "==2.11.1"
 sphinx = "==2.2.1"
 werkzeug = "==0.16.0"
 
