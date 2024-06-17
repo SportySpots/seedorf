@@ -86,7 +86,7 @@ redis = "==5.0.6"
 rules = "==3.4"
 sqlparse = "==0.3.0"
 structlog = "==24.2.0"
-wagtail = "==2.6.3"
+wagtail = "==6.1.2"
 wheel = "==0.43.0"
 whitenoise = "==6.6.0"
 
