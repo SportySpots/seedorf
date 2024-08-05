@@ -321,10 +321,8 @@
             "version": "==1.1"
         },
         "http-ece": {
-            "hashes": [
-                "sha256:932ebc2fa7c216954c320a188ae9c1f04d01e67bec9cdce1bfbc912813b0b4f8"
-            ],
-            "version": "==1.1.0"
+            "hashes": [],
+            "version": "==1.2.0"
         },
         "hyper": {
             "hashes": [
